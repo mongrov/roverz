@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { FormLabel } from 'react-native-elements';
 
 // Consts and Libs
-import { AppColors, AppFonts } from '@theme/';
+import { AppColors, AppFonts } from '../../theme/';
 
 /* Component ==================================================================== */
 class CustomFormLabel extends Component {

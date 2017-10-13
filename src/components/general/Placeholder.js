@@ -11,10 +11,10 @@ import PropTypes from 'prop-types';
 import { View } from 'react-native';
 
 // Consts and Libs
-import { AppStyles } from '@theme/';
+import { AppStyles } from '../../theme/';
 
 // Components
-import { Text } from '@ui/';
+import { Text } from '../ui/';
 
 /* Component ==================================================================== */
 const Placeholder = ({ text }) => (

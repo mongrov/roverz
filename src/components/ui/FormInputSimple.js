@@ -10,7 +10,7 @@ import React, { Component, PropTypes } from 'react';
 import { FormInput } from 'react-native-elements';
 
 // Consts and Libs
-import { AppColors, AppFonts } from '@theme/';
+import { AppColors, AppFonts } from '../../theme/';
 
 /* Component ==================================================================== */
 class CustomFormInputSimple extends Component {

@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
 
 // Consts and Libs
-import { AppColors, AppFonts, AppSizes } from '@theme/';
+import { AppColors, AppFonts, AppSizes } from '../../theme/';
 
 /* Component ==================================================================== */
 class CustomButton extends Component {

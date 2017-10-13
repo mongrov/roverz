@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 
 // Components
-import { Spacer, Text } from '@ui/';
+import { Spacer, Text } from './';
 
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({

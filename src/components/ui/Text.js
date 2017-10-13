@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { Text } from 'react-native';
 
 // Consts and Libs
-import { AppStyles } from '@theme/';
+import { AppStyles } from '../../theme/';
 
 /* Component ==================================================================== */
 class CustomText extends Component {

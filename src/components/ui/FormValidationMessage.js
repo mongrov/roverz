@@ -10,7 +10,7 @@ import React, { Component, PropTypes } from 'react';
 import { FormValidationMessage } from 'react-native-elements';
 
 // Consts and Libs
-import { AppFonts } from '@theme/';
+import { AppFonts } from '../../theme/';
 
 /* Component ==================================================================== */
 class CustomFormValidationMessage extends Component {

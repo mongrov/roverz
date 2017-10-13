@@ -11,10 +11,10 @@ import PropTypes from 'prop-types';
 import { View, ActivityIndicator } from 'react-native';
 
 // Consts and Libs
-import { AppStyles } from '@theme/';
+import { AppStyles } from '../../theme/';
 
 // Components
-import { Spacer, Text } from '@ui/';
+import { Spacer, Text } from '../ui/';
 
 /* Component ==================================================================== */
 const Loading = ({ text, transparent }) => (

@@ -15,11 +15,11 @@ import {
 } from 'react-native';
 
 // Consts and Libs
-import { AppColors, AppStyles } from '@theme/';
+import { AppColors, AppStyles } from '../../theme/';
 
 // Components
-import Loading from '@components/general/Loading';
-import Error from '@components/general/Error';
+import Loading from './Loading';
+import Error from './Error';
 
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({

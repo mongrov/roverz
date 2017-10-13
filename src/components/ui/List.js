@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { List } from 'react-native-elements';
 
 // Consts and Libs
-import { AppColors } from '@theme/';
+import { AppColors } from '../../theme/';
 
 /* Component ==================================================================== */
 class CustomList extends Component {

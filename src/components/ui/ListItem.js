@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { ListItem } from 'react-native-elements';
 
 // Consts and Libs
-import { AppColors, AppStyles } from '@theme/';
+import { AppColors, AppStyles } from '../../theme/';
 
 /* Component ==================================================================== */
 class CustomListItem extends Component {

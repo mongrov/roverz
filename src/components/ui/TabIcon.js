@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { AppColors } from '@theme/';
+import { AppColors } from '../../theme/';
 
 /* Component ==================================================================== */
 const TabIcon = ({ icon, selected, subTitle }) => (
