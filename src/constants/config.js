@@ -1,8 +1,7 @@
 /**
- * Global App Config
+ * Module App Config
  */
 /* global __DEV__ */
-import { AppColors, AppStyles, AppSizes } from '@theme/';
 
 export default {
   // App Details
@@ -29,8 +28,7 @@ export default {
     resetPassword: null,
     signUp: null,
     SERVER_URL: null,
-    PREFERENCES_URL: null,
-    METEOR_URL: null,
+    WS_URL: null,
   },
 
   init() {
@@ -46,22 +44,10 @@ export default {
   reset(space) {
     this.space = space;
     this.instance = `${this.space}.${this.brand}`;
+    this.urls.resetPassword = `https://${this.instance}`;
     this.urls.signUp = `https://${this.instance}`;
     this.urls.SERVER_URL = `https://${this.instance}`;
-    this.urls.PREFERENCES_URL = `https://${this.instance}/account/preferences`;
-    this.urls.METEOR_URL = `wss://${this.instance}/websocket`;
+    this.urls.WS_URL = `wss://${this.instance}/websocket`;
   },
 
-  // Navbar Props
-  navbarProps: {
-    hideNavBar: false,
-    titleStyle: AppStyles.navbarTitle,
-    navigationBarStyle: AppStyles.navbar,
-    leftButtonIconStyle: AppStyles.navbarButton,
-    rightButtonIconStyle: AppStyles.navbarButton,
-    sceneStyle: {
-      backgroundColor: AppColors.background,
-      paddingTop: AppSizes.navbarHeight,
-    },
-  },
 };

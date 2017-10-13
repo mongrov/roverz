@@ -2,8 +2,8 @@
  * App Constants
  */
 
-import AppConfig from './config';
+import ModuleConfig from './config';
 import APIConfig from './api';
 import ErrorMessages from './errors';
 
-export { AppConfig, APIConfig, ErrorMessages };
+export { ModuleConfig, APIConfig, ErrorMessages };
