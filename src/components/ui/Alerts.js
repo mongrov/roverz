@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   msg_text: {
     textAlign: 'center',
     color: '#16693c',
-    fontWeight: '500',
+    fontWeight: '300',
   },
 
   // Error
