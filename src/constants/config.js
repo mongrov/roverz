@@ -2,6 +2,7 @@
  * Module App Config
  */
 /* global __DEV__ */
+import { GoogleAnalyticsTracker } from 'react-native-google-analytics-bridge';
 
 export default {
   // App Details
@@ -18,9 +19,14 @@ export default {
   space: 'workspace',
   brand: 'domain',
   instance: null,
+  ga: null,
 
   get brandName() {
     return this.brand;
+  },
+
+  get gaTracker() {
+    return this.ga;
   },
 
   // URLs
@@ -34,6 +40,9 @@ export default {
   init() {
     if (this.instance == null) {
       this.reset(this.space);
+    }
+    if (this.ga == null) {
+      this.ga = new GoogleAnalyticsTracker(this.gaTrackingId);
     }
   },
 

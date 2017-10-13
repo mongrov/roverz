@@ -1,13 +1,8 @@
 /**
  * Custom Redux Middleware to track Redux Actions
  */
-import { GoogleAnalyticsTracker } from 'react-native-google-analytics-bridge';
-
 // Consts and Libs
-import { AppConfig } from '@constants/';
-
-// Google Analytics
-const GoogleAnalytics = new GoogleAnalyticsTracker(AppConfig.gaTrackingId);
+import { AppConfig } from '../constants/';
 
 const track = store => next => (action) => {
   // Track each screen view to Redux
@@ -21,7 +16,7 @@ const track = store => next => (action) => {
             : action.scene.analyticsDesc;
 
           // Send to Google Analytics
-          GoogleAnalytics.trackScreenView(screenName);
+          AppConfig.gaTracker.trackScreenView(screenName);
         } catch (err) {
           console.log(store);
           console.log(err);

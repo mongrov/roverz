@@ -1,7 +1,7 @@
 /**
  * Global Util Functions
  */
-import { AppConfig } from '@constants/';
+import { AppConfig } from '../constants/';
 
 const Entities = require('html-entities').AllHtmlEntities;
 

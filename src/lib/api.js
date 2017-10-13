@@ -4,11 +4,11 @@
  /* global fetch console */
 import DeviceInfo from 'react-native-device-info';
 
-import JWT from '@lib/api.jwt';
+import JWT from './api.jwt';
 
 // Consts and Libs
-import { AppConfig, APIConfig, ErrorMessages } from '@constants/';
-import AppUtil from '@lib/util';
+import { AppConfig, APIConfig, ErrorMessages } from '../constants/';
+import AppUtil from './util';
 
 // We'll use JWT for API Authentication
 // const Token = {};
