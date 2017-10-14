@@ -2,7 +2,7 @@
  * Custom Redux Middleware to track Redux Actions
  */
 // Consts and Libs
-import { AppConfig } from '../constants/';
+import { ModuleConfig } from '../constants/';
 
 const track = store => next => (action) => {
   // Track each screen view to Redux
@@ -16,7 +16,7 @@ const track = store => next => (action) => {
             : action.scene.analyticsDesc;
 
           // Send to Google Analytics
-          AppConfig.gaTracker.trackScreenView(screenName);
+          ModuleConfig.gaTracker.trackScreenView(screenName);
         } catch (err) {
           console.log(store);
           console.log(err);

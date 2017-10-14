@@ -7,7 +7,7 @@ import DeviceInfo from 'react-native-device-info';
 import JWT from './api.jwt';
 
 // Consts and Libs
-import { AppConfig, APIConfig, ErrorMessages } from '../constants/';
+import { ModuleConfig, APIConfig, ErrorMessages } from '../constants/';
 import AppUtil from './util';
 
 // We'll use JWT for API Authentication
@@ -21,12 +21,12 @@ const ENDPOINTS = APIConfig.endpoints;
 let USER_AGENT;
 try {
   // Build user agent string
-  USER_AGENT = `${AppConfig.appName} ` +
+  USER_AGENT = `${ModuleConfig.appName} ` +
     `${DeviceInfo.getVersion()}; ${DeviceInfo.getSystemName()}  ` +
     `${DeviceInfo.getSystemVersion()}; ${DeviceInfo.getBrand()} ` +
     `${DeviceInfo.getDeviceId()}`;
 } catch (e) {
-  USER_AGENT = `${AppConfig.appName}`;
+  USER_AGENT = `${ModuleConfig.appName}`;
 }
 
 // Number each API request (used for debugging)

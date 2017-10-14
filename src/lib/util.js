@@ -1,7 +1,7 @@
 /**
  * Global Util Functions
  */
-import { AppConfig } from '../constants/';
+import { ModuleConfig } from '../constants/';
 
 const Entities = require('html-entities').AllHtmlEntities;
 
@@ -12,7 +12,7 @@ function striptags(input) {
 }
 
 // Enable debug output when in Debug mode
-const DEBUG_MODE = AppConfig.DEV;
+const DEBUG_MODE = ModuleConfig.DEV;
 
 const UTIL = {
   /**

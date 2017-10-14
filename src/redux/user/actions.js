@@ -2,8 +2,8 @@
  * User Actions
  */
 
-import AppAPI from '@lib/api';
 import Meteor from 'react-native-meteor';
+import AppAPI from '../../lib/api';
 
 /**
   * Login to API and receive Token

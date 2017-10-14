@@ -6,8 +6,8 @@ import { AsyncStorage } from 'react-native';
 import jwtDecode from 'jwt-decode';
 
 // Consts and Libs
-import AppAPI from '@lib/api';
-import { APIConfig } from '@constants/';
+import AppAPI from './api';
+import { APIConfig } from '../constants';
 
 export default class JWT {
   static apiToken = ''
