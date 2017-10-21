@@ -8,10 +8,9 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
+import { FormInputSimple, FormLabelSimple } from 'roverz-chat';
 
 import { AppStyles, AppSizes, AppColors } from '../../theme/';
-
-import { FormInputSimple, FormLabelSimple } from 'roverz-chat';
 
 /* Component ==================================================================== */
 
