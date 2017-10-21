@@ -54,10 +54,17 @@ class ListItemAvatar extends React.Component {
     if (this.state.showAvatar) {
       return (
         <View
-          style={{ width: 60, height: 60, justifyContent: 'center', alignItems: 'center' }}
+          style={{
+            width: this.state.imageHeight,
+            height: this.state.imageHeight,
+            justifyContent: 'center',
+            alignItems: 'center' }}
         >
           <CachedImage
-            style={{ width: 60, height: 60, borderRadius: 30 }}
+            style={{
+              width: this.state.imageHeight,
+              height: this.state.imageHeight,
+              borderRadius: this.state.imageHeight / 2 }}
             source={{ uri: this.state.avatarUri }}
             onError={() => { this._hideAvatarView(); }}
           />
@@ -66,11 +73,15 @@ class ListItemAvatar extends React.Component {
     }
     return (
       <View
-        style={{ width: 60, height: 60, justifyContent: 'center', alignItems: 'center' }}
+        style={{
+          width: this.state.imageHeight,
+          height: this.state.imageHeight,
+          justifyContent: 'center',
+          alignItems: 'center' }}
       >
         <UserAvatar
           name={titleCase(this.state.avatarName)}
-          size={60}
+          size={this.state.imageHeight}
         />
       </View>
     );

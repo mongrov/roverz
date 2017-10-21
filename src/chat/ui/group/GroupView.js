@@ -229,7 +229,7 @@ class GroupList extends Component {
                 borderRadius: 5,
               }}
             >
-              <Text style={{ color: '#fff', fontFamily: 'OpenSans-Regular', fontSize: 12 }}>Loading messages...</Text>
+              <Text style={{ color: '#fff', fontFamily: 'OpenSans-Regular', fontSize: 12 }}>Connecting...</Text>
             </View>
           </View>
         }

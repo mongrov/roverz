@@ -11,12 +11,12 @@ import {
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
-import Network from '@network';
+import Network from '../network';
 import Meteor from 'react-native-meteor';
 import { Alerts, Spacer, Button, AppUtil } from 'roverz-chat';
 
-import { AppColors, AppStyles } from '@theme/';
-import AppConfig from '@app/config';
+import { AppColors, AppStyles } from '../theme/';
+import ModuleConfig from '../constants/config';
 
 const styles = StyleSheet.create({
   preview: {
@@ -184,7 +184,7 @@ export default class SelectServer extends React.Component {
     // Validation for alphanumeric, dash and dots
     const regexp = /^[a-zA-Z0-9-.]+$/;
     if (inputServerVal) {
-      inputServerVal = inputServerVal.replace(`.${AppConfig.base.brandName}`, '');
+      inputServerVal = inputServerVal.replace(`.${ModuleConfig.brandName}`, '');
       if (regexp.test(inputServerVal)) {
         this.setState({ isLoading: true });
         this.connectToServer(inputServerVal);
@@ -257,7 +257,7 @@ export default class SelectServer extends React.Component {
             <View style={[AppStyles.row]}>
               <View style={[AppStyles.flex1, { height: 40 }]}>
                 <TextInput
-                  placeholder={`[workspace].${AppConfig.base.brandName}`}
+                  placeholder={`[workspace].${ModuleConfig.brandName}`}
                   autoCapitalize={'none'}
                   style={[styles.textInput]}
                   onChangeText={(text) => { this.setState({ serverUrl: text }); }}

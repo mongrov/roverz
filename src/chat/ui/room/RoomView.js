@@ -17,7 +17,7 @@ import emoji from 'node-emoji';
 
 import {
   GiftedChat,
-  Bubble,
+  // Bubble,
   Composer,
   // Actions as GCActions,
  } from 'react-native-gifted-chat';
@@ -37,6 +37,7 @@ import SendImageMessage from './SendImageMessage';
 import MessageImage from './MessageImage';
 import ChatAvatar from './ChatAvatar';
 import CustomView from './CustomView';
+import Bubble from './Bubble';
 
 const NO_OF_MSGS = 20;
 
