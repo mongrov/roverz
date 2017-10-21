@@ -34,6 +34,8 @@ import SearchListView from './src/chat/ui/group/SearchListView';
 import VideoPlayer from './src/chat/VideoPlayer';
 import MessageImageView from './src/chat/ui/room/MessageImageView';
 import AboutView from './src/containers/ui/Menu/AboutView';
+import GroupList from './src/chat/ui/group/GroupView';
+import { NavbarMenuButton } from './src/containers/ui/NavbarMenuButton/NavbarMenuButtonContainer';
 
 export {
     // general components
@@ -52,6 +54,8 @@ export {
     VideoPlayer,
     MessageImageView,
     AboutView,
+    GroupList,
+    NavbarMenuButton,
 
     // auth
     ProfileEditView,
