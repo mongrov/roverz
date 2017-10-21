@@ -11,10 +11,10 @@ import {
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
-import Network from '../network';
 import Meteor from 'react-native-meteor';
 import { Alerts, Spacer, Button, AppUtil } from 'roverz-chat';
 
+import Network from '../network';
 import { AppColors, AppStyles } from '../theme/';
 import ModuleConfig from '../constants/config';
 
@@ -217,7 +217,7 @@ export default class SelectServer extends React.Component {
         {this.state.isLoading === true &&
         <View style={[AppStyles.windowSize, AppStyles.containerCentered]}>
           <Image
-            source={require('../images/logo.png')}
+            source={ModuleConfig.logo}
             style={[AppStyles.loginLogoSplash, { opacity: 1, width: 150 }]}
           />
           <Text
@@ -242,7 +242,7 @@ export default class SelectServer extends React.Component {
               }}
               >
                 <Image
-                  source={require('../images/logo.png')}
+                  source={ModuleConfig.logo}
                   style={[AppStyles.loginLogoSplash]}
                 />
                 <Alerts

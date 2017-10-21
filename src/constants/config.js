@@ -19,6 +19,7 @@ export default {
   space: 'workspace',
   brand: 'domain',
   instance: null,
+  logo: null,
   ga: null,
 
   get brandName() {
@@ -44,6 +45,13 @@ export default {
     if (this.ga == null) {
       this.ga = new GoogleAnalyticsTracker(this.gaTrackingId);
     }
+    if (this.logo == null) {
+      this.logo = require('../images/logo.png');  // eslint-disable-line global-require
+    }
+  },
+
+  setLogo(logo) {
+    this.logo = logo;
   },
 
   setUserId(uid) {

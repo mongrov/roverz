@@ -84,7 +84,7 @@ const styles = {
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.2)',
     marginHorizontal: 5,
-  }
+  },
 };
 
 export default class Bubble extends React.Component {

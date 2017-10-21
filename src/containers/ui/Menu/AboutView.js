@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import { AppStyles, AppColors } from '../../../theme';
+import AppConfig from '../../../constants/config';
 
 const styles = StyleSheet.create({
   paraText: {
@@ -46,7 +47,7 @@ export default class AboutView extends React.Component {
           }}
         >
           <Image
-            source={require('../../../images/logo.png')} // eslint-disable-line global-require
+            source={AppConfig.logo} // eslint-disable-line global-require
             style={{
               opacity: 1,
               width: 150,

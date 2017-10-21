@@ -19,10 +19,10 @@ import PropTypes from 'prop-types';
  } from 'react-native-gifted-chat'; */
 
 // import { Actions } from 'react-native-router-flux';
+import { Loading, FormInputSimple, FormLabelSimple } from 'roverz-chat';
 import Network from '../../../network';
 import Group from '../../../models/group';
 import { AppStyles, AppSizes } from '../../../theme/';
-import { Loading, FormInputSimple, FormLabelSimple } from 'roverz-chat';
 
 const memberListData = [];
 

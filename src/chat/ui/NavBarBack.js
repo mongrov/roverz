@@ -4,10 +4,10 @@ import {
   View,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { AppStyles } from '../../theme/';
 import { NavButton } from 'react-native-nav';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
+import { AppStyles } from '../../theme/';
 
 export default class NavBarBack extends React.Component {
   constructor(props) {

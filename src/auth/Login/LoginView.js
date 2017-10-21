@@ -18,6 +18,7 @@ import { Alerts, Spacer, Text, Button, AppAPI, AppUtil } from 'roverz-chat';
 
 import Network from '../../network';
 import { AppStyles, AppColors } from '../../theme/';
+import AppConfig from '../../constants/config';
 
 /* Styles ==================================================================== */
 // const styles = StyleSheet.create({
@@ -299,7 +300,7 @@ class Login extends Component {
         <StatusBar barStyle="light-content" />
         <View style={{ flex: 1, backgroundColor: '#373856', alignItems: 'center', justifyContent: 'center' }}>
           <Image
-            source={require('../../images/logo.png')}
+            source={AppConfig.logo}
             style={[AppStyles.loginLogo, { flex: 1, marginTop: 30 }]}
           />
           <TouchableOpacity

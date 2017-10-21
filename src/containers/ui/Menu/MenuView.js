@@ -21,6 +21,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import { Text, Network, AppSizes, AppColors } from 'roverz-chat';
+import AppConfig from '../../../constants/config';
 
 /* Styles ==================================================================== */
 const MENU_BG_COLOR = '#345291';
@@ -313,7 +314,7 @@ class Menu extends Component {
             }}
           >
             <Image
-              source={require('../../../images/logo.png')}
+              source={AppConfig.logo}
               style={{
                 width: 150,
                 height: 100,

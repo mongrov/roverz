@@ -15,12 +15,12 @@ import {
   View,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { Loading } from 'roverz-chat';
 
 import Network from '../../../network';
 import Group from '../../../models/group';
 import { AppStyles, AppSizes, AppColors } from '../../../theme/';
 import ModuleConfig from '../../../constants/config';
-import { Loading } from 'roverz-chat';
 
 const memberListData = [];
 

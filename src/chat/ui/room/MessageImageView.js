@@ -27,7 +27,7 @@ import UserAvatar from 'react-native-user-avatar';
 import emoji from 'node-emoji';
 
 import Network from '../../../network';
-import Group from '../../../models/group';
+// import Group from '../../../models/group';
 import { AppStyles, AppColors } from '../../../theme/';
 import ModuleConfig from '../../../constants/config';
 import { Send } from '../';
@@ -699,7 +699,7 @@ export default class MessageImageView extends React.Component {
             { onChangeVisibleRows: this.onChangeVisibleRow }
           }
           user={{
-            _id: AppConfig.base.userId,
+            _id: ModuleConfig.userId,
           }}
         />
       </View>

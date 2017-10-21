@@ -15,15 +15,14 @@ import { ListView } from 'realm/react-native';
 import moment from 'moment';
 import Meteor from 'react-native-meteor';
 import { Loading, List, ListItem } from 'roverz-chat';
+import { Badge, Icon } from 'react-native-elements';
 
 // Consts and Libs
 import { AppStyles, AppSizes, AppColors } from '../../../theme/';
-
 import Network from '../../../network';
 import {
   ListItemAvatar,
 } from '../';
-import { Badge, Icon } from 'react-native-elements';
 
 /* Styles ==================================================================== */
 
