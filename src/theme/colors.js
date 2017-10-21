@@ -18,6 +18,10 @@ const brand = {
     fifth: '#636AFF',
     sixth: '#4C4D75',
   },
+  chat: {
+    bubbleRight: '#638BD5',
+    textRight: '#FFF',
+  },
 };
 
 const text = {
