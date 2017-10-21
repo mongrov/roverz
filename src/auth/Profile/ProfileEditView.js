@@ -9,10 +9,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { AppStyles, AppSizes, AppColors } from '@theme/';
+import { AppStyles, AppSizes, AppColors } from '../../theme/';
 
 import { FormInputSimple, FormLabelSimple } from 'roverz-chat';
-import Network from '@network';
 
 /* Component ==================================================================== */
 
@@ -20,7 +19,6 @@ class ProfileEditView extends Component {
 
   constructor(props) {
     super(props);
-    this.net = new Network(); // getCurrentUser
 
     this.state = {
       name: 'Your Name',
@@ -31,7 +29,7 @@ class ProfileEditView extends Component {
   }
 
   componentDidMount() {
-    console.log(this.net.chat.getCurrentUser());
+    // console.log(this.net.chat.getCurrentUser());
     // console.log('kkkk', this.net.chat.pullFullUserData('kumar'));
     // console.log('kkkk', this.net.chat.getUserAsList('6Qk76sozAy6oNSopT'));
   }

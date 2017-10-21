@@ -15,11 +15,24 @@ import rootReducer from './src/redux/index';
 import * as SideMenuActions from './src/redux/sidemenu/actions';
 import * as UserActions from './src/redux/user/actions';
 
+import ProfileEditView from './src/auth/Profile/ProfileEditView';
+import AuthWebView from './src/auth/WebView';
+import AuthLogin from './src/auth/Login/LoginContainer';
+import SelectServer from './src/auth/SelectServer';
+import SSOTest from './src/auth/SSOTest';
+
 export {
     // general components
     Placeholder,
     Loading,
     WebView,
+
+    // auth
+    ProfileEditView,
+    AuthWebView,
+    AuthLogin,
+    SelectServer,
+    SSOTest,
 
     // utils
     Analytics,
