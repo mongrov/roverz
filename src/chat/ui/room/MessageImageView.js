@@ -26,10 +26,11 @@ import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
 import emoji from 'node-emoji';
 
-import AppConfig from '@app/config';
-import { AppStyles, AppColors } from '@theme/';
-import Network from '@network';
-import { Send } from '@chat/ui/';
+import Network from '../../../network';
+import Group from '../../../models/group';
+import { AppStyles, AppColors } from '../../../theme/';
+import ModuleConfig from '../../../constants/config';
+import { Send } from '../';
 import ChatAvatar from './ChatAvatar';
 
 const NO_OF_MSGS = 20;

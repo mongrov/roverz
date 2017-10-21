@@ -20,13 +20,7 @@ import {
 
 import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
-import { Text } from 'roverz-chat';
-
-// Consts and Libs
-import { AppSizes, AppColors } from '@theme/';
-
-// Components
-import Network from '@network';
+import { Text, Network, AppSizes, AppColors } from 'roverz-chat';
 
 /* Styles ==================================================================== */
 const MENU_BG_COLOR = '#345291';

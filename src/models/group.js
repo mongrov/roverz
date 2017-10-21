@@ -1,7 +1,7 @@
 /*
  * Group data structure
  */
-import AppConfig from '@app/config';
+import AppConfig from '../constants/config';
 import Constants from './constants';
 
 const GroupSchema = {
@@ -25,7 +25,7 @@ const GroupSchema = {
 
 export default class Group {
   get avatar() {
-    return `${AppConfig.base.urls.SERVER_URL}/avatar/${this.name}`;
+    return `${AppConfig.urls.SERVER_URL}/avatar/${this.name}`;
   }
   get heading() {
     return this.title ? this.title : this.name;

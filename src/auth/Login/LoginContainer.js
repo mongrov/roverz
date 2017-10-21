@@ -2,7 +2,7 @@
  * Login Container
  */
 import { connect } from 'react-redux';
-import { UserActions } from 'roverz-chat';
+import * as UserActions from '../../redux/user/actions';
 
 // The component we're mapping to
 import LoginRender from './LoginView';

@@ -6,10 +6,8 @@ import {
 import Meteor from 'react-native-meteor';
 import WebView from 'roverz-chat';
 
-import Network from '@network';
-import AppConfig from '@app/config';
-
-// import SSOAuth from '../../lib/ssoauth/';
+import Network from '../network';
+import ModuleConfig from '../constants/config';
 
 export default class SSOTest extends React.Component {
   constructor(props) {
@@ -54,16 +52,16 @@ export default class SSOTest extends React.Component {
       >
         <StatusBar barStyle={'dark-content'} />
         <WebView
-          url={`https://${this.serverUrl}.${AppConfig.base.brandName}`}
+          url={`https://${this.serverUrl}.${ModuleConfig.brandName}`}
           onNavigationStateChange={(event) => {
             console.log('event');
             console.log(event);
-            if (event.startsWith(`https://${this.serverUrl}.${AppConfig.base.brandName}/_saml/authorize/yap/`)) {
+            if (event.startsWith(`https://${this.serverUrl}.${ModuleConfig.brandName}/_saml/authorize/yap/`)) {
               console.log('******Credential is ****');
-              credential = event.replace(`https://${this.serverUrl}.${AppConfig.base.brandName}/_saml/authorize/yap/`, '');
+              credential = event.replace(`https://${this.serverUrl}.${ModuleConfig.brandName}/_saml/authorize/yap/`, '');
               console.log(credential);
             }
-            if (event.startsWith(`https://${this.serverUrl}.${AppConfig.base.brandName}/_saml/validate/yap`)) {
+            if (event.startsWith(`https://${this.serverUrl}.${ModuleConfig.brandName}/_saml/validate/yap`)) {
               this.n.chat.loginWithSaml(credential);
               console.log('Logged in check ****');
               console.log(Meteor.user());

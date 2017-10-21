@@ -3,8 +3,8 @@ import Meteor from 'react-native-meteor';
 import { Actions } from 'react-native-router-flux';
 import { AppUtil } from 'roverz-chat';
 
-import AppConfig from '@app/config';
-import Network from '@network';
+import AppConfig from '../constants/config';
+import Network from '../network';
 import Constants from './constants';
 
 const PushNotification = require('react-native-push-notification');
@@ -101,8 +101,8 @@ class PushService {
       const data = {
         id: Math.random().toString(36).slice(2), // Generate random string
         token: null,
-        appName: AppConfig.base.appName || 'main',
-        userId: AppConfig.base.userId,
+        appName: AppConfig.appName || 'main',
+        userId: AppConfig.userId,
         metadata: {},
       };
 

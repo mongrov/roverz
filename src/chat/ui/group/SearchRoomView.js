@@ -16,12 +16,11 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-// import { Actions } from 'react-native-router-flux';
-import Network from '@network';
-import Group from '@models/group';
-import { AppStyles, AppSizes, AppColors } from '@theme/';
+import Network from '../../../network';
+import Group from '../../../models/group';
+import { AppStyles, AppSizes, AppColors } from '../../../theme/';
+import ModuleConfig from '../../../constants/config';
 import { Loading } from 'roverz-chat';
-import AppConfig from '@app/config';
 
 const memberListData = [];
 
@@ -98,7 +97,7 @@ export default class SearchRoomView extends Component {
         subtitle={rowData.username ? `@${rowData.username}` : ''}
         subtitleStyle={AppStyles.memberListSubTitle}
         avatar={{
-          uri: `${AppConfig.base.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`,
+          uri: `${ModuleConfig.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`,
         }}
         onPress={() => this.createRoom(rowData.username, rowData._id)}
       />

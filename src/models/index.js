@@ -6,7 +6,7 @@ import {
 import emoji from 'node-emoji';
 import { AppUtil } from 'roverz-chat';
 
-import AppConfig from '@app/config';
+import AppConfig from '../constants/config';
 
 import SchemaV1 from './schema';
 import Constants from './constants';

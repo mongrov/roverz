@@ -12,9 +12,9 @@ import PropTypes from 'prop-types';
 
 import PhotoBrowser from 'react-native-photo-browser';
 import { Actions } from 'react-native-router-flux';
-import Network from '@network';
-import Group from '@models/group';
-import { AppStyles } from '@theme';
+import Network from '../network';
+import Group from '../models/group';
+import { AppStyles } from '../theme';
 
 class UploadedPhotos extends Component {
 

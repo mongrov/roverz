@@ -3,9 +3,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import { AppStyles } from '@theme/';
-import AppConfig from '@app/config';
-import { NavbarMenuButton } from '@containers/ui/NavbarMenuButton/NavbarMenuButtonContainer';
+import { AppStyles } from '../../theme/';
+import ModuleConfig from '../../constants/config';
+import { NavbarMenuButton } from '../../containers/ui/NavbarMenuButton/NavbarMenuButtonContainer';
 
 class ListViewNav extends React.Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class ListViewNav extends React.Component {
 
   componentWillMount() {
     this.setState({
-      title: AppConfig.base.instance,
+      title: ModuleConfig.instance,
     });
   }
 

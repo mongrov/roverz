@@ -5,7 +5,7 @@
  * https://github.com/mcnamee/react-native-starter-app
  */
 import { connect } from 'react-redux';
-import { UserActions } from 'roverz-chat';
+import * as UserActions from '../../../redux/user/actions';
 
 // The component we're mapping to
 import MenuRender from './MenuView';

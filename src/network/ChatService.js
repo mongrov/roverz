@@ -2,8 +2,8 @@ import Meteor from 'react-native-meteor';
 import { Actions } from 'react-native-router-flux';
 import { AppUtil } from 'roverz-chat';
 
-import AppConfig from '@app/config';
-import { showCallScreen } from '@webrtc/ui';
+import AppConfig from '../constants/config';
+// import { showCallScreen } from '@webrtc/ui';
 import Constants from './constants';
 
 class ChatService {
@@ -19,7 +19,7 @@ class ChatService {
     this._monStreamNotifyRoom = null;
     this._cache = db.remotefiles ? db.remotefiles.cacheList : {};
     // set the userId (to last loaded from db)
-    AppConfig.base.setUserId(db.userId);
+    AppConfig.setUserId(db.userId);
   }
 
   resetDbHandle(newDb) {
@@ -40,7 +40,7 @@ class ChatService {
 
     // save the user to db
     this.db.setUserId(uid);
-    AppConfig.base.setUserId(uid);
+    AppConfig.setUserId(uid);
 
     // Need to vet all these and see what all we actually use in client
     // this._subscribe('stream-notify-all', "public-settings-changed", false);
@@ -104,7 +104,7 @@ class ChatService {
           console.log('WebRTC updates', results);
           if (results[0].args[0] === 'call') {
             // new incoming call, lets for now show ios call
-            showCallScreen(results[0].args[1]);
+            // showCallScreen(results[0].args[1]);
           }
         }
       }
@@ -188,7 +188,7 @@ class ChatService {
       grptype = 'channel';
     }
     const msgObj = argGroup.findMessageById(argMessageId);
-    const replyForMsg = `[ ](${AppConfig.base.urls.SERVER_URL}/${grptype}/${argGroup.name}?msg=${msgObj._id})`;
+    const replyForMsg = `[ ](${AppConfig.urls.SERVER_URL}/${grptype}/${argGroup.name}?msg=${msgObj._id})`;
 
     const testMsg = `${replyForMsg} ${argMsgText}`;
     this.meteor.call('sendMessage', {
@@ -256,7 +256,7 @@ class ChatService {
         if (!err) {
           // lets call login / resume and see if we get the user id
           Meteor._loginWithToken(res.token);
-          AppConfig.base.setUserId(res.id);
+          AppConfig.setUserId(res.id);
           setTimeout(() => {
             console.log(Meteor.user());
             console.log(Meteor.userId());
@@ -325,7 +325,7 @@ class ChatService {
             }
             if (atM.image_url) {
               m.image = atM.image_url.startsWith('http') ||
-              atM.image_url.startsWith('//') ? atM.image_url : `${AppConfig.base.urls.SERVER_URL}${atM.image_url}`;
+              atM.image_url.startsWith('//') ? atM.image_url : `${AppConfig.urls.SERVER_URL}${atM.image_url}`;
               if (inM.file) {
                 m.remoteFile = inM.file._id;
               }
@@ -619,7 +619,7 @@ class ChatService {
         tmp.image = tmp.video;
         tmp.remoteFile = orig.file._id;
       }
-      tmp.user.avatar = `${AppConfig.base.urls.SERVER_URL}/avatar/${tmp.user.username}?_dc=undefined`;
+      tmp.user.avatar = `${AppConfig.urls.SERVER_URL}/avatar/${tmp.user.username}?_dc=undefined`;
       urlMessages[i] = tmp;
       if (tmp.remoteFile) {
         imageReqs.push(tmp.remoteFile);  // just save the fileid
@@ -680,7 +680,7 @@ class ChatService {
         }
         if (atM.image_url) {
           m.image = atM.image_url.startsWith('http') ||
-          atM.image_url.startsWith('//') ? atM.image_url : `${AppConfig.base.urls.SERVER_URL}${atM.image_url}`;
+          atM.image_url.startsWith('//') ? atM.image_url : `${AppConfig.urls.SERVER_URL}${atM.image_url}`;
           if (inM.file) {
             m.remoteFile = inM.file._id;
           }

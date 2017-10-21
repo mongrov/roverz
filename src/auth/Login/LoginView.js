@@ -16,10 +16,8 @@ import Meteor from 'react-native-meteor';
 import { Actions } from 'react-native-router-flux';
 import { Alerts, Spacer, Text, Button, AppAPI, AppUtil } from 'roverz-chat';
 
-import Network from '@network';
-
-// Consts and Libs
-import { AppStyles, AppColors } from '@theme/';
+import Network from '../../network';
+import { AppStyles, AppColors } from '../../theme/';
 
 /* Styles ==================================================================== */
 // const styles = StyleSheet.create({

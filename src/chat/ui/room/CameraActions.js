@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements';
 import Camera from 'react-native-camera';
 import { Actions } from 'react-native-router-flux';
-import { AppColors } from '@theme/';
+import { AppColors } from '../../../theme/';
 
 // import Loading from '@components/general/Loading';
 import ImageUtil from './ImageUtil';

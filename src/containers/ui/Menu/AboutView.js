@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 
-import { AppStyles, AppColors } from '@theme';
+import { AppStyles, AppColors } from '../../../theme';
 
 const styles = StyleSheet.create({
   paraText: {

@@ -19,11 +19,11 @@ import PropTypes from 'prop-types';
 import { Loading } from 'roverz-chat';
 
 // import { Actions } from 'react-native-router-flux';
-import Network from '@network';
-import Group from '@models/group';
-import { AppStyles, AppSizes, AppColors } from '@theme/';
-import { ListItemAvatar } from '@chat/ui/';
-import AppConfig from '@app/config';
+import Network from '../../../network';
+import Group from '../../../models/group';
+import { AppStyles, AppSizes, AppColors } from '../../../theme/';
+import { ListItemAvatar } from '../';
+import ModuleConfig from '../../../constants/config';
 
 const memberListData = [];
 
@@ -103,7 +103,7 @@ export default class MemberListView extends Component {
         onPress={() => Actions.memberDetail({ memberId: rowData._id })}
         leftIcon={
           <ListItemAvatar
-            source={`${AppConfig.base.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`}
+            source={`${ModuleConfig.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`}
             name={rowData.name}
             size={36}
           />}

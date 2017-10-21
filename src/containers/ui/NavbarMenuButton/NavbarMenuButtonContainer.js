@@ -5,7 +5,7 @@
  * https://github.com/mcnamee/react-native-starter-app
  */
 import { connect } from 'react-redux';
-import { SideMenuActions } from 'roverz-chat';
+import * as SideMenuActions from '../../../redux/sidemenu/actions';
 
 // The component we're mapping to
 import NavbarMenuButtonRender from './NavbarMenuButtonView';

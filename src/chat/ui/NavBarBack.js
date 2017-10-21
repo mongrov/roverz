@@ -4,7 +4,7 @@ import {
   View,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { AppStyles } from '@theme/';
+import { AppStyles } from '../../theme/';
 import { NavButton } from 'react-native-nav';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';

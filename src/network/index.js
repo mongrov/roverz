@@ -1,5 +1,5 @@
 // import AppConfig from '@app/config';
-import Database from '@models';
+import Database from '../models';
 
 import Constants from './constants';
 import PushService from './PushService';

@@ -17,15 +17,12 @@ import Meteor from 'react-native-meteor';
 import { Loading, List, ListItem } from 'roverz-chat';
 
 // Consts and Libs
-import { AppStyles, AppSizes, AppColors } from '@theme/';
+import { AppStyles, AppSizes, AppColors } from '../../../theme/';
 
-import Network from '@network';
-// import VideoConference from '@video';
-
-// Components
+import Network from '../../../network';
 import {
   ListItemAvatar,
-} from '@chat/ui/';
+} from '../';
 import { Badge, Icon } from 'react-native-elements';
 
 /* Styles ==================================================================== */
