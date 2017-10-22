@@ -9,7 +9,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements';
-import { AppColors } from '@theme/';
+import { AppColors } from '../../../theme/';
 
 const styles = StyleSheet.create({
   container: {

@@ -26,12 +26,12 @@ import { MarkdownView } from 'react-native-markdown-view';
 import { Actions } from 'react-native-router-flux';
 
 // Components
-import Network from '@network';
-import Group from '@models/group';
+import Network from '../../../network';
+import Group from '../../../models/group';
 import { AppUtil } from 'roverz-chat';
-import { Send, ProgressBar } from '@chat/ui/';
-import { AppStyles, AppSizes, AppColors } from '@theme/';
-import AppConfig from '@app/config';
+import { Send, ProgressBar } from '../../../chat/ui/';
+import { AppStyles, AppSizes, AppColors } from '../../../theme/';
+import AppConfig from '../../../constants/config';
 
 import SendImageMessage from './SendImageMessage';
 import MessageImage from './MessageImage';
@@ -576,7 +576,7 @@ class ChatRoomView extends React.Component {
           onLoadEarlier={this.onLoadEarlier}
           isLoadingEarlier={this.state.isLoadingEarlier}
           user={{
-            _id: AppConfig.base.userId,
+            _id: AppConfig.userId,
           }}
         />
       </View>

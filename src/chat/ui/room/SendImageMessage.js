@@ -12,7 +12,7 @@ import {
 import PropTypes from 'prop-types';
 
 import { Actions } from 'react-native-router-flux';
-import Group from '@models/group';
+import Group from '../../../models/group';
 
 const styles = StyleSheet.create({
   viewContainer: {
