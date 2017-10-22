@@ -2,8 +2,6 @@
  * API Functions
  */
  /* global fetch console */
-import DeviceInfo from 'react-native-device-info';
-
 import JWT from './api.jwt';
 
 // Consts and Libs
@@ -17,21 +15,14 @@ const Token = new JWT();
 // Config
 const HOSTNAME = APIConfig.hostname;
 const ENDPOINTS = APIConfig.endpoints;
+let USER_AGENT = `${ModuleConfig.appName}`;
 
-let USER_AGENT;
-try {
-  // Build user agent string
-  USER_AGENT = `${ModuleConfig.appName} ` +
-    `${DeviceInfo.getVersion()}; ${DeviceInfo.getSystemName()}  ` +
-    `${DeviceInfo.getSystemVersion()}; ${DeviceInfo.getBrand()} ` +
-    `${DeviceInfo.getDeviceId()}`;
-} catch (e) {
-  USER_AGENT = `${ModuleConfig.appName}`;
+function setUserAgent(ua) {
+  USER_AGENT = ua;
 }
 
 // Number each API request (used for debugging)
 let requestCounter = 0;
-
 
 /* Helper Functions ==================================================================== */
 
@@ -205,6 +196,7 @@ const AppAPI = {
   handleError,
   getToken: Token.getToken,
   deleteToken: Token.deleteToken,
+  setUserAgent,
 };
 
 ENDPOINTS.forEach((endpoint, key) => {
