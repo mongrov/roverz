@@ -33,6 +33,7 @@ import MemberDetailView from './src/chat/ui/group/MemberDetailView';
 import SearchListView from './src/chat/ui/group/SearchListView';
 import VideoPlayer from './src/chat/VideoPlayer';
 import MessageImageView from './src/chat/ui/room/MessageImageView';
+import PhotoPreview from './src/chat/ui/room/PhotoPreview';
 import AboutView from './src/containers/ui/Menu/AboutView';
 import GroupList from './src/chat/ui/group/GroupView';
 import RoomView from './src/chat/ui/room/RoomView';
@@ -54,6 +55,7 @@ export {
     SearchListView,
     VideoPlayer,
     MessageImageView,
+    PhotoPreview,
     AboutView,
     GroupList,
     NavbarMenuButton,

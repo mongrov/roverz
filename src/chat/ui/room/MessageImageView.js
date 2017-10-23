@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   StatusBar,
-  Modal,
   Alert,
+  Platform,
+  ActionSheetIOS,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements';
@@ -150,6 +151,7 @@ export default class MessageImageView extends React.Component {
     this.onChangeVisibleRow = this.onChangeVisibleRow.bind(this);
     this._progressCallback = this._progressCallback.bind(this);
     this.subscriptions();
+    this._onActionButton = this._onActionButton.bind(this);
   }
 
   componentDidMount() {
@@ -344,6 +346,19 @@ export default class MessageImageView extends React.Component {
     this.setState({
       showAvatar: false,
     });
+  }
+
+  _onActionButton(media, index) {
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showShareActionSheetWithOptions({
+        url: media.photo,
+        message: media.caption,
+      },
+      () => {},
+      () => {});
+    } else {
+      console.log(`handle sharing on android for ${media.photo}, index: ${index}`);
+    }
   }
 
   iconType() {
@@ -600,44 +615,6 @@ export default class MessageImageView extends React.Component {
         {this.renderNav()}
         <StatusBar barStyle="light-content" />
         <View>
-          <Modal
-            animationType="slide"
-            transparent={false}
-            visible={this.state.modalVisible}
-            onRequestClose={() => { console.log('Modal has been closed.'); }}
-          >
-            <View style={{
-              backgroundColor: '#000',
-            }}
-            >
-              <TouchableOpacity
-                style={{
-                  position: 'absolute',
-                  top: 20,
-                  left: 20,
-                  padding: 15,
-                  backgroundColor: 'white',
-                  borderRadius: 40,
-                  zIndex: 999,
-                }}
-                onPress={() => { this.setModalVisible(false); }}
-              >
-                <Icon
-                  name="arrow-back"
-                  size={20}
-                  color="#000"
-                  width={20}
-                />
-              </TouchableOpacity>
-              <View>
-                <CachedImage
-                  style={{ width, height, resizeMode: 'contain' }}
-                  source={{ uri: this.state.previewImageUri }}
-                  onLoad={this.loadingComplete}
-                />
-              </View>
-            </View>
-          </Modal>
           <View
             style={{
               alignItems: 'center',
@@ -646,7 +623,13 @@ export default class MessageImageView extends React.Component {
             }}
           >
             <TouchableOpacity
-              onPress={() => { this.setModalVisible(true); }}
+              onPress={() => {
+                Actions.photoPreview({
+                  imgUrl: this.state.previewImageUri,
+                  imgTitle: this.state.msgTitle,
+                });
+              }}
+
             >
               <CachedImage
                 style={{ width, height: imgHeight, resizeMode: 'cover' }}

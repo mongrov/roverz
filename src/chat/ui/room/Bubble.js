@@ -8,7 +8,9 @@ import {
   View,
   ViewPropTypes,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 /* import MessageText from './MessageText';
 import MessageImage from './MessageImage';
@@ -21,6 +23,7 @@ import {
 } from 'react-native-gifted-chat';
 import { Icon } from 'react-native-elements';
 
+import Network from '../../../network';
 import { isSameUser, isSameDay, warnDeprecated } from './utils';
 
 const styles = {
@@ -90,10 +93,77 @@ const styles = {
 export default class Bubble extends React.Component {
   constructor(props) {
     super(props);
+    this._network = new Network();
+    this.obj = this.props.obj;
     this.onLongPress = this.onLongPress.bind(this);
+    const likes = this.props.currentMessage.likes;
+    const original = JSON.parse(this.props.currentMessage.original);
     this.state = {
       showActions: false,
+      likes,
+      original,
     };
+  }
+
+  onLongPress() {
+    if (this.props.onLongPress) {
+      this.props.onLongPress(this.context, this.props.currentMessage);
+    } else if (this.props.currentMessage.text) {
+      const options = [
+        'Copy Text',
+        'Cancel',
+      ];
+      const cancelButtonIndex = options.length - 1;
+      this.context.actionSheet().showActionSheetWithOptions({
+        options,
+        cancelButtonIndex,
+      },
+      (buttonIndex) => {
+        switch (buttonIndex) { // eslint-disable-line default-case
+          case 0:
+            Clipboard.setString(this.props.currentMessage.text);
+            break;
+        }
+      });
+    }
+  }
+
+  toggleActions = () => {
+    const action = this.state.showActions;
+    this.setState({ showActions: !action });
+  }
+
+  _onPressLike = () => {
+    console.log('**** like pressed **** ');
+    this._network.chat.setPhotoLike(this.state.original._id);
+  }
+
+  _deleteMessage = () => {
+    Alert.alert(
+      'Delete',
+      'Do you want to delete the image?',
+      [
+        { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: 'Yes',
+          onPress: () => {
+            this._network.chat.deleteMessage(this.state.original._id);
+          },
+        },
+      ],
+      { cancelable: false },
+    );
+  }
+
+  _handleComments = () => {
+    if (this.state.original.file) {
+      Actions.imagePreview({
+        imageUri: this.props.currentMessage.image,
+        obj: this.props.obj,
+        msgId: this.props.currentMessage._id,
+        msgLikes: this.props.currentMessage.likes,
+        msgTitle: this.props.currentMessage.text,
+      });
+    }
   }
 
   handleBubbleToNext() {
@@ -123,6 +193,17 @@ export default class Bubble extends React.Component {
         return this.props.renderMessageText(messageTextProps);
       }
       return <MessageText {...messageTextProps} />;
+    }
+    return null;
+  }
+
+  renderReply() {
+    if (this.state.original.attachments) {
+      if (this.state.original.attachments[0].message_link) {
+        return (
+          <Text>{this.state.original.attachments[0].message_link}</Text>
+        );
+      }
     }
     return null;
   }
@@ -175,7 +256,7 @@ export default class Bubble extends React.Component {
   }
 
   renderActions() {
-    if (this.state.showActions) {
+    if (this.state.showActions || this.state.likes > 0) {
       return (
         <View
           style={{
@@ -192,7 +273,7 @@ export default class Bubble extends React.Component {
           >
             <TouchableOpacity
               style={[styles.actionBtn]}
-              onPress={() => { alert('1'); }}
+              onPress={this._onPressLike}
             >
               <Icon
                 name={'heart-outline'}
@@ -200,18 +281,22 @@ export default class Bubble extends React.Component {
                 size={14}
                 color={'#FFF'}
               />
-              <Text
-                style={{
-                  fontFamily: 'OpenSans-Regular',
-                  fontSize: 12,
-                  color: '#fff',
-                  marginLeft: 5,
-                }}
-              >1</Text>
+              {
+                (this.state.likes > 0 &&
+                  <Text
+                    style={{
+                      fontFamily: 'OpenSans-Regular',
+                      fontSize: 12,
+                      color: '#fff',
+                      marginLeft: 5,
+                    }}
+                  >{this.state.likes > 0 ? this.state.likes : 'no'}</Text>
+                )
+              }
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.actionBtn]}
-              onPress={() => { alert('2'); }}
+              onPress={this._handleComments}
             >
               <Icon
                 name={'comment-multiple-outline'}
@@ -219,18 +304,10 @@ export default class Bubble extends React.Component {
                 size={14}
                 color={'#FFF'}
               />
-              <Text
-                style={{
-                  fontFamily: 'OpenSans-Regular',
-                  fontSize: 12,
-                  color: '#fff',
-                  marginLeft: 5,
-                }}
-              >10</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.actionBtn]}
-              onPress={() => { alert('3'); }}
+              onPress={this._deleteMessage}
             >
               <Icon
                 name={'delete'}
@@ -245,35 +322,8 @@ export default class Bubble extends React.Component {
     }
   }
 
-  toggleActions = () => {
-    const action = this.state.showActions;
-    this.setState({ showActions: !action });
-  }
-
-  onLongPress() {
-    if (this.props.onLongPress) {
-      this.props.onLongPress(this.context, this.props.currentMessage);
-    } else if (this.props.currentMessage.text) {
-      const options = [
-        'Copy Text',
-        'Cancel',
-      ];
-      const cancelButtonIndex = options.length - 1;
-      this.context.actionSheet().showActionSheetWithOptions({
-        options,
-        cancelButtonIndex,
-      },
-      (buttonIndex) => {
-        switch (buttonIndex) {
-          case 0:
-            Clipboard.setString(this.props.currentMessage.text);
-            break;
-        }
-      });
-    }
-  }
-
   render() {
+    console.log('bubble mess', this.props.currentMessage);
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
         <View style={[
@@ -296,7 +346,6 @@ export default class Bubble extends React.Component {
                 {this.renderActions()}
                 <View>
                   {this.renderTime()}
-                  {this.renderTicks()}
                 </View>
               </View>
             </View>
@@ -335,19 +384,22 @@ Bubble.defaultProps = {
   // TODO: remove in next major release
   isSameDay: warnDeprecated(isSameDay),
   isSameUser: warnDeprecated(isSameUser),
+  obj: {},
+  renderTicks: {},
+  user: {},
 };
 
 Bubble.propTypes = {
-  touchableProps: PropTypes.object,
+  touchableProps: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onLongPress: PropTypes.func,
   renderMessageImage: PropTypes.func,
   renderMessageText: PropTypes.func,
   renderCustomView: PropTypes.func,
   renderTime: PropTypes.func,
   position: PropTypes.oneOf(['left', 'right']),
-  currentMessage: PropTypes.object,
-  nextMessage: PropTypes.object,
-  previousMessage: PropTypes.object,
+  currentMessage: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  nextMessage: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  previousMessage: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   containerStyle: PropTypes.shape({
     left: ViewPropTypes.style,
     right: ViewPropTypes.style,
@@ -372,4 +424,7 @@ Bubble.propTypes = {
   // TODO: remove in next major release
   isSameDay: PropTypes.func,
   isSameUser: PropTypes.func,
+  obj: React.PropTypes.object,    // eslint-disable-line react/forbid-prop-types
+  renderTicks: React.PropTypes.object,    // eslint-disable-line react/forbid-prop-types
+  user: React.PropTypes.object,    // eslint-disable-line react/forbid-prop-types
 };

@@ -36,6 +36,7 @@ export default class MessageImage extends React.Component {
     const obj = this.props.obj;
     this.state = {
       obj,
+      modalVisible: false,
     };
   }
   render() {
@@ -43,13 +44,19 @@ export default class MessageImage extends React.Component {
     return (
       <View style={[styles.container, this.props.containerStyle]}>
         <TouchableOpacity
-          onPress={() => Actions.imagePreview({
+          /* onPress={() => Actions.imagePreview({
             imageUri: this.props.currentMessage.image,
             obj: this.props.obj,
             msgId: this.props.currentMessage._id,
             msgLikes: this.props.currentMessage.likes,
             msgTitle: this.props.currentMessage.text,
-          })}
+          })} */
+          onPress={() => {
+            Actions.photoPreview({
+              imgUrl: this.props.currentMessage.image,
+              imgTitle: this.props.currentMessage.text,
+            });
+          }}
         >
           <CachedImage
             {...this.props.imageProps}

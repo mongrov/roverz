@@ -24,11 +24,11 @@ import {
 // import Markdown from 'react-native-simple-markdown'
 import { MarkdownView } from 'react-native-markdown-view';
 import { Actions } from 'react-native-router-flux';
+import { AppUtil } from 'roverz-chat';
 
 // Components
 import Network from '../../../network';
 import Group from '../../../models/group';
-import { AppUtil } from 'roverz-chat';
 import { Send, ProgressBar } from '../../../chat/ui/';
 import { AppStyles, AppSizes, AppColors } from '../../../theme/';
 import AppConfig from '../../../constants/config';
@@ -268,6 +268,7 @@ class ChatRoomView extends React.Component {
     return (
       <Bubble
         {...props}
+        obj={this._group}
         wrapperStyle={{
           left: {
             // backgroundColor: '#FFF',
