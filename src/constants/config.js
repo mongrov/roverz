@@ -26,14 +26,6 @@ export default {
     return this.brand;
   },
 
-  get space() {
-    return this.space;
-  },
-
-  get instance() {
-    return this.instance;
-  },
-
   get gaTracker() {
     return this.ga;
   },
@@ -76,12 +68,15 @@ export default {
     this.resetInstance(this.instance);
   },
 
-  resetInstance(instance){
-    const noOfDots = (instance.match(/./g) || []).length;
-    let instanceIp = instance;
+  resetInstance(instanceUrl){
+    const noOfDots = (instanceUrl.match(/./g) || []).length;
+    if(noOfDots<=1){
+      instanceUrl = `${instanceUrl}.${this.brand}`;
+    }
+    let instanceIp = instanceUrl;
     let brandIp = this.brand;
     if(noOfDots>1){
-      var res = instance.split(".");
+      var res = instanceUrl.split(".");
       instanceIp = res[0];
       var i;
       for(i = 1; i < res.length-2; i++){
@@ -91,7 +86,7 @@ export default {
       this.setBrand(brandIp);
     }
     this.space = instanceIp;
-    this.instance = instance;
+    this.instance = instanceUrl;
     this.urls.resetPassword = `https://${this.instance}`;
     this.urls.signUp = `https://${this.instance}`;
     this.urls.SERVER_URL = `https://${this.instance}`;

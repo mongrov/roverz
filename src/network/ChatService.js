@@ -387,6 +387,7 @@ class ChatService {
     console.log(`Last Sync:${lastSync}`);
     console.log('--- [Network] --- ====================================');
     this.db.app.setLastSync();
+    const noOfMsgs = 5;
     const req1 = this.meteor.traceCall('rooms/get', { $date: lastSync });
     const req2 = this.meteor.call('subscriptions/get', { $date: lastSync });
     Promise.all([req1, req2]).then((results) => {
@@ -408,13 +409,13 @@ class ChatService {
           const tempGroup = _super.db.groups.findById(subsResult[k].rid);
           console.log(subsResult[k].rid, tempGroup);
           if (tempGroup) {
-            _super.fetchMessages(tempGroup, 50);
+            _super.fetchMessages(tempGroup, noOfMsgs);
           }
         } else if (new Date(lastSync).getTime() < subsResult[k]._updatedAt.getTime()) {
           const tempGroup = _super.db.groups.findById(subsResult[k].rid);
           console.log(subsResult[k]._updatedAt.$date, subsResult[k].rid, tempGroup);
           if (tempGroup) { // if no msgs try to fetch last msg
-            _super.fetchMessages(tempGroup, 50);
+            _super.fetchMessages(tempGroup, noOfMsgs);
           }
         }
       });

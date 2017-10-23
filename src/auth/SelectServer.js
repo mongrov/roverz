@@ -118,8 +118,7 @@ export default class SelectServer extends React.Component {
     setTimeout(() => {
       const serverUrl = this._net.getServer();
       if (serverUrl && !this.state.switchServer) {
-//        ModuleConfig.resetInstance(serverUrl);
-//        const instanceIp = `${ModuleConfig.space}`;
+        ModuleConfig.resetInstance(serverUrl);
         this.connectToServer(serverUrl);
       } else {
         this.setState({ isLoading: false });
@@ -188,10 +187,9 @@ export default class SelectServer extends React.Component {
 //      inputServerVal = inputServerVal.replace(`.${ModuleConfig.brandName}`, '');
       ModuleConfig.resetInstance(inputServerVal);
       const regexp = /^[a-zA-Z0-9-.]+$/;
-      var instanceIp = `${ModuleConfig.space}`;
-      if (regexp.test(instanceIp)) {
+      if (regexp.test(`${ModuleConfig.instance}`)) {
         this.setState({ isLoading: true });
-        this.connectToServer(instanceIp);
+        this.connectToServer(`${ModuleConfig.instance}`);
         // Method to verify Server URL
         // this._net.setServer(inputServerVal, this.settingsCallback);
         // Actions.login();
