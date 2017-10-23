@@ -26,6 +26,14 @@ export default {
     return this.brand;
   },
 
+  get space() {
+    return this.space;
+  },
+
+  get instance() {
+    return this.instance;
+  },
+
   get gaTracker() {
     return this.ga;
   },
@@ -40,7 +48,7 @@ export default {
 
   init() {
     if (this.instance == null) {
-      this.reset(this.space);
+      this.resetInstance(`${this.space}.${this.brand}`);
     }
     if (this.ga == null) {
       this.ga = new GoogleAnalyticsTracker(this.gaTrackingId);
@@ -58,13 +66,37 @@ export default {
     this.userId = uid;
   },
 
+  setBrand(brandName) {
+    this.brand = brandName;
+  },
+
   reset(space) {
     this.space = space;
     this.instance = `${this.space}.${this.brand}`;
+    this.resetInstance(this.instance);
+  },
+
+  resetInstance(instance){
+    const noOfDots = (instance.match(/./g) || []).length;
+    let instanceIp = instance;
+    let brandIp = this.brand;
+    if(noOfDots>1){
+      var res = instance.split(".");
+      instanceIp = res[0];
+      var i;
+      for(i = 1; i < res.length-2; i++){
+        instanceIp = instanceIp + '.' +res[i];
+      }
+      brandIp = res[res.length-2]+'.'+res[res.length-1];
+      this.setBrand(brandIp);
+    }
+    this.space = instanceIp;
+    this.instance = instance;
     this.urls.resetPassword = `https://${this.instance}`;
     this.urls.signUp = `https://${this.instance}`;
     this.urls.SERVER_URL = `https://${this.instance}`;
     this.urls.WS_URL = `wss://${this.instance}/websocket`;
-  },
+    
+  }
 
 };

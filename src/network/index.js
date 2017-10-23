@@ -5,6 +5,7 @@ import Constants from './constants';
 import PushService from './PushService';
 import MeteorService from './MeteorService';
 import ChatService from './ChatService';
+import AppConfig from '../constants/config';
 
 class Network {
 
@@ -37,8 +38,8 @@ class Network {
     Network._meteor.init();
     Network._chat.init(Network._meteor, Network._db);
     // save the db
-    this.db.setServer(serverName).then(() => {
-      Network._serverName = serverName;
+    this.db.setServer(AppConfig.instance).then(() => {
+      Network._serverName = AppConfig.space;
       // lets set the server name to db
       // Network._db = new Database(AppConfig.base.instance, Constants.DEFAULT_USER);
 
@@ -53,7 +54,7 @@ class Network {
       Network._meteor.getCurrentUser().username :
       Constants.DEFAULT_USER;
     // lets set the user to db
-    this.db.switchDb(Network._serverName, userName);
+    this.db.switchDb(AppConfig.instance, userName);
     this.chat.resetDbHandle(Network._db);
     // do some basic setup for this user
     this.chat.initSubscriptions();

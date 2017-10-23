@@ -146,7 +146,7 @@ class Database {
   // save server name
   setServer = async (serverName) => {
     const server = serverName.trim().toLowerCase();
-    AppConfig.reset(server);
+    AppConfig.resetInstance(server);
     Database._servers = [server];
     try {
       await AsyncStorage.setItem(Constants.Servers, JSON.stringify(Database._servers));
