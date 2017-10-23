@@ -499,12 +499,12 @@ class ChatRoomView extends React.Component {
             paragraph: {
               paddingLeft: 10,
               paddingRight: 10,
-              color: (props.position === 'left' ? 'black' : 'white'),
+              color: (props.position === 'left' ? AppColors.chat.textLeft : AppColors.chat.textRight),
               fontFamily: 'OpenSans-Regular',
-              fontSize: 14,
+              fontSize: 15,
             },
             link: {
-              color: (props.position === 'left' ? '#0000EE' : '#FFF'),
+              color: (props.position === 'left' ? AppColors.chat.linkLeft : AppColors.chat.linkRight),
               textDecorationLine: 'underline',
             },
           }}
@@ -556,8 +556,14 @@ class ChatRoomView extends React.Component {
     });
     // AppUtil.debug(filteredMessages, '[Performance] RoomView render');
     return (
-      <View style={{ backgroundColor: '#FFF', flex: 1, marginTop: AppSizes.navbarHeight }}>
-        <StatusBar barStyle="light-content" />
+      <View
+        style={[AppStyles.container, {
+          marginTop: AppSizes.navbarHeight,
+          position: 'relative',
+          backgroundColor: '#FFF',
+        }]}
+      >
+        <StatusBar barStyle="light-content" hidden={false} />
         <GiftedChat
           messages={filteredMessages}// this.state.messages
           onSend={this.onSend}

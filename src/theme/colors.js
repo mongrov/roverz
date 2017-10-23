@@ -19,8 +19,12 @@ const brand = {
     sixth: '#4C4D75',
   },
   chat: {
-    bubbleRight: '#638BD5',
+    bubbleLeft: '#f0f0f0',
+    textLeft: '#000',
+    linkLeft: '#0000EE',
+    bubbleRight: '#0084ff',
     textRight: '#FFF',
+    linkRight: '#FFF',
   },
 };
 

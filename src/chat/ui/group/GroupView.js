@@ -236,7 +236,7 @@ class GroupList extends Component {
             position: 'relative',
           }]}
         >
-          <StatusBar barStyle="light-content" />
+          <StatusBar barStyle="light-content" hidden={false} />
           <List style={{ paddingBottom: 110 }}>
             <ListView
               renderRow={this.renderRow}
