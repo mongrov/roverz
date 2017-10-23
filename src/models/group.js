@@ -100,5 +100,14 @@ export default class Group {
     });
     return nonExisting;
   }
+
+  commentsList(msgId) {
+    if (msgId) {
+      return this.messages.filtered(`text CONTAINS[c] "?msg=${msgId}"`);
+    } else {
+      return null;
+    }
+  }
+
 }
 Group.schema = GroupSchema;
