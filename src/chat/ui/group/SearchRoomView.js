@@ -116,7 +116,7 @@ export default class SearchRoomView extends Component {
         <StatusBar barStyle="light-content" />
         <View
           style={{
-            borderBottomColor: AppColors.brand.third,
+            borderBottomColor: AppColors.brand().third,
             borderBottomWidth: 1,
             marginHorizontal: 10,
           }}

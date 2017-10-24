@@ -36,7 +36,7 @@ export default class AboutView extends React.Component {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: AppColors.brand.secondary,
+          backgroundColor: AppColors.brand().secondary,
           padding: 15,
         }}
       >

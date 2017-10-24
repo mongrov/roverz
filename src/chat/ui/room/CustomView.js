@@ -40,7 +40,7 @@ export default class CustomView extends React.Component {
             <Icon
               name="video-library"
               size={48}
-              color={AppColors.brand.third}
+              color={AppColors.brand().third}
             />
             <Text>Play Video</Text>
           </TouchableOpacity>

@@ -227,7 +227,7 @@ class Menu extends Component {
             paddingBottom: 7,
             alignItems: 'center',
             borderBottomWidth: 1,
-            borderBottomColor: AppColors.brand.sixth,
+            borderBottomColor: AppColors.brand().sixth,
           }}
         >
           <Icon
@@ -280,7 +280,7 @@ class Menu extends Component {
                   source={require('../../../images/empty_photo.png')}
                   style={[styles.avatarImage, {
                     zIndex: 0,
-                    backgroundColor: AppColors.brand.secondary,
+                    backgroundColor: AppColors.brand().secondary,
                   }]}
                 />
               </View>

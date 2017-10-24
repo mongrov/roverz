@@ -246,7 +246,7 @@ export default class PhotoLibrary extends React.Component {
               <Icon
                 name="send"
                 size={34}
-                color={AppColors.brand.third}
+                color={AppColors.brand().third}
               />
             </TouchableOpacity>
           </View>

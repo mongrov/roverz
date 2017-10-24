@@ -375,7 +375,7 @@ export default class MessageImageView extends React.Component {
   }
 
   iconColor() {
-    return AppColors.brand.fourth;
+    return AppColors.brand().fourth;
   }
 
   chooseAvIcon(icon) {
@@ -643,7 +643,7 @@ export default class MessageImageView extends React.Component {
                 right: 15,
                 top: 15,
                 padding: 5,
-                backgroundColor: AppColors.brand.third,
+                backgroundColor: AppColors.brand().third,
                 borderRadius: 3,
                 flexDirection: 'row',
                 alignItems: 'center',

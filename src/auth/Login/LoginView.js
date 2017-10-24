@@ -263,7 +263,7 @@ class Login extends Component {
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: AppColors.brand.third,
+              backgroundColor: AppColors.brand().third,
               height: 40,
               borderRadius: 5,
               marginBottom: 15,

@@ -180,7 +180,7 @@ export default class SelectServer extends React.Component {
   }
 
   sendServerUrl = () => {
-    let inputServerVal = this.state.serverUrl ? this.state.serverUrl.trim() : undefined;
+    const inputServerVal = this.state.serverUrl ? this.state.serverUrl.trim() : undefined;
     // inputServerVal = inputServerVal.trim();
     // Validation for alphanumeric, dash and dots
     if (inputServerVal) {
@@ -211,7 +211,7 @@ export default class SelectServer extends React.Component {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: AppColors.brand.secondary,
+          backgroundColor: AppColors.brand().secondary,
           padding: 15,
         }}
       >

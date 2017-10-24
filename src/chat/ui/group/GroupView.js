@@ -180,7 +180,7 @@ class GroupList extends Component {
             width: 45,
             height: 45,
             borderRadius: 23,
-            backgroundColor: AppColors.brand.third,
+            backgroundColor: AppColors.brand().third,
             position: 'absolute',
             bottom: 90,
             right: 30,
@@ -218,7 +218,7 @@ class GroupList extends Component {
           >
             <View
               style={{
-                backgroundColor: AppColors.brand.third,
+                backgroundColor: AppColors.brand().third,
                 paddingVertical: 5,
                 paddingHorizontal: 15,
                 borderRadius: 5,

@@ -10,7 +10,7 @@ const app = {
 };
 
 const brand = {
-  brand: {
+  brandColors: {
     primary: '#373856',
     secondary: '#50527F',
     third: '#7377C9',
@@ -18,13 +18,21 @@ const brand = {
     fifth: '#636AFF',
     sixth: '#4C4D75',
   },
-  chat: {
+  chatColors: {
     bubbleLeft: '#f0f0f0',
     textLeft: '#000',
     linkLeft: '#0000EE',
     bubbleRight: '#0084ff',
     textRight: '#FFF',
     linkRight: '#FFF',
+  },
+  brand() { return this.brandColors; },
+  chat() { return this.chatColors; },
+  setBrandColors(obj) {
+    this.brandColors = obj;
+  },
+  setChatColors(obj) {
+    this.chatColors = obj;
   },
 };
 

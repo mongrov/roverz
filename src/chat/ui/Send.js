@@ -48,7 +48,7 @@ export default class Send extends React.Component {
             name="send"
             size={24}
             style={[styles.icon]}
-            color={AppColors.brand.third}
+            color={AppColors.brand().third}
           />
         </TouchableOpacity>
       );

@@ -55,7 +55,7 @@ class CustomButton extends Component {
       },
       ...this.props,
       backgroundColor: this.props.backgroundColor && this.props.backgroundColor !== 'transparent' ?
-        this.props.backgroundColor : AppColors.brand.primary,
+        this.props.backgroundColor : AppColors.brand().primary,
       small: false,
       large: false,
       icon: (this.props.icon && this.props.icon.name)
@@ -94,13 +94,13 @@ class CustomButton extends Component {
     if (this.props.outlined) {
       props.raised = false;
       props.backgroundColor = this.props.backgroundColor || 'transparent';
-      props.color = AppColors.brand.primary;
+      props.color = AppColors.brand().primary;
       props.buttonStyle.borderWidth = 1;
-      props.buttonStyle.borderColor = AppColors.brand.primary;
+      props.buttonStyle.borderColor = AppColors.brand().primary;
 
       if (props.icon && props.icon.name) {
         props.icon = {
-          color: AppColors.brand.primary,
+          color: AppColors.brand().primary,
           ...props.icon,
         };
       }

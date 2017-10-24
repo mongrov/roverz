@@ -129,7 +129,7 @@ export default class MemberListView extends Component {
           style={{
             width: this.state.layout.width,
             height: 150,
-            backgroundColor: AppColors.brand.fourth,
+            backgroundColor: AppColors.brand().fourth,
             resizeMode: 'contain',
           }}
         />

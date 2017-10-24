@@ -277,7 +277,7 @@ class ChatRoomView extends React.Component {
             borderRadius: 8,
           },
           right: {
-            backgroundColor: AppColors.chat.bubbleRight,
+            backgroundColor: AppColors.chat().bubbleRight,
             borderRadius: 8,
           },
         }}
@@ -287,7 +287,7 @@ class ChatRoomView extends React.Component {
             fontFamily: 'OpenSans-Regular',
           },
           right: {
-            color: AppColors.chat.textRight,
+            color: AppColors.chat().textRight,
             fontFamily: 'OpenSans-Regular',
           },
         }}
@@ -501,12 +501,12 @@ class ChatRoomView extends React.Component {
             paragraph: {
               paddingLeft: 10,
               paddingRight: 10,
-              color: (props.position === 'left' ? AppColors.chat.textLeft : AppColors.chat.textRight),
+              color: (props.position === 'left' ? AppColors.chat().textLeft : AppColors.chat().textRight),
               fontFamily: 'OpenSans-Regular',
               fontSize: 15,
             },
             link: {
-              color: (props.position === 'left' ? AppColors.chat.linkLeft : AppColors.chat.linkRight),
+              color: (props.position === 'left' ? AppColors.chat().linkLeft : AppColors.chat().linkRight),
               textDecorationLine: 'underline',
             },
           }}

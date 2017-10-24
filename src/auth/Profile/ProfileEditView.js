@@ -65,7 +65,7 @@ class ProfileEditView extends Component {
             padding: 12,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: AppColors.brand.secondary,
+            backgroundColor: AppColors.brand().secondary,
             margin: 15,
             borderRadius: 5,
           }}
