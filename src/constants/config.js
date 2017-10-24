@@ -75,23 +75,27 @@ export default {
 
   resetInstance(instanceUrl) {
     const noOfDots = (instanceUrl.match(/./g) || []).length;
-    if (noOfDots <= 1) {
-      instanceUrl = `${instanceUrl}.${this.brand}`;
-    }
-    let instanceIp = instanceUrl;
+    let instanceIp = instanceUrl; // ib.elix.yap.im
     let brandIp = this.brand;
-    if (noOfDots > 1) {
-      var res = instanceUrl.split(".");
-      instanceIp = res[0];
-      var i;
-      for (i = 1; i < res.length - 2; i++) {
-        instanceIp = instanceIp + '.' + res[i];
+    let resetInstanceUrl = '';
+    console.log('conff', instanceIp, brandIp);
+    if (noOfDots <= 1) {
+      resetInstanceUrl = `${instanceIp}.${this.brand}`;
+    } else {
+      const res = instanceUrl.split('.'); // [ib,elix,yap,im]
+      instanceIp = res[0]; // elix
+      let i;
+      let newInstanceIp = '';
+      for (i = 1; i < res.length; i += 1) {
+        newInstanceIp = `${newInstanceIp}.${res[i]}`; // .yap.im
       }
-      brandIp = res[res.length - 2] + '.' + res[res.length - 1];
+      brandIp = `${res[res.length - 2]}.${res[res.length - 1]}`; // yap.im
+      instanceIp = instanceUrl.replace(`.${brandIp}`, '');
+      resetInstanceUrl = instanceUrl;
       this.setBrand(brandIp);
     }
     this.space = instanceIp;
-    this.instance = instanceUrl;
+    this.instance = resetInstanceUrl;
     this.urls.resetPassword = `https://${this.instance}`;
     this.urls.signUp = `https://${this.instance}`;
     this.urls.SERVER_URL = `https://${this.instance}`;

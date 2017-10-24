@@ -180,14 +180,14 @@ export default class SelectServer extends React.Component {
   }
 
   sendServerUrl = () => {
-    let inputServerVal = this.state.serverUrl ? this.state.serverUrl : undefined;
-    inputServerVal = inputServerVal.trim();
+    let inputServerVal = this.state.serverUrl ? this.state.serverUrl.trim() : undefined;
+    // inputServerVal = inputServerVal.trim();
     // Validation for alphanumeric, dash and dots
     if (inputServerVal) {
 //      inputServerVal = inputServerVal.replace(`.${ModuleConfig.brandName}`, '');
-      ModuleConfig.resetInstance(inputServerVal);
       const regexp = /^[a-zA-Z0-9-.]+$/;
-      if (regexp.test(`${ModuleConfig.instance}`)) {
+      if (regexp.test(inputServerVal)) {
+        ModuleConfig.resetInstance(inputServerVal);
         this.setState({ isLoading: true });
         this.connectToServer(`${ModuleConfig.instance}`);
         // Method to verify Server URL

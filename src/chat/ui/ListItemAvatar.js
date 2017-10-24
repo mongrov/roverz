@@ -55,6 +55,7 @@ class ListItemAvatar extends React.Component {
       return (
         <View
           style={{
+            position: 'relative',
             width: this.state.imageHeight,
             height: this.state.imageHeight,
             justifyContent: 'center',
@@ -62,11 +63,23 @@ class ListItemAvatar extends React.Component {
         >
           <CachedImage
             style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
               width: this.state.imageHeight,
               height: this.state.imageHeight,
               borderRadius: this.state.imageHeight / 2 }}
             source={{ uri: this.state.avatarUri }}
             onError={() => { this._hideAvatarView(); }}
+          />
+          <UserAvatar
+            name={titleCase(this.state.avatarName)}
+            size={this.state.imageHeight}
+            style={{
+              position: 'absolute',
+              zIndex: -200,
+              left: -(this.state.imageHeight / 2),
+              top: -(this.state.imageHeight / 2) }}
           />
         </View>
       );
