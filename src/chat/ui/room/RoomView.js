@@ -168,7 +168,7 @@ class ChatRoomView extends React.Component {
       }
     });
     this._didMount = true;
-    if(this._group.moreMessages && this._group.sortedMessages.length < NO_OF_MSGS) {
+    if (this._group.moreMessages && this._group.sortedMessages.length < NO_OF_MSGS) {
       this._network.chat.fetchMessages(this._group, NO_OF_MSGS);
     }
     // quick hack to see if this works for this scroll bug

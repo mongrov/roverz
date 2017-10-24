@@ -73,21 +73,21 @@ export default {
     this.resetInstance(this.instance);
   },
 
-  resetInstance(instanceUrl){
+  resetInstance(instanceUrl) {
     const noOfDots = (instanceUrl.match(/./g) || []).length;
-    if(noOfDots<=1){
+    if (noOfDots <= 1) {
       instanceUrl = `${instanceUrl}.${this.brand}`;
     }
     let instanceIp = instanceUrl;
     let brandIp = this.brand;
-    if(noOfDots>1){
+    if (noOfDots > 1) {
       var res = instanceUrl.split(".");
       instanceIp = res[0];
       var i;
-      for(i = 1; i < res.length-2; i++){
-        instanceIp = instanceIp + '.' +res[i];
+      for (i = 1; i < res.length - 2; i++) {
+        instanceIp = instanceIp + '.' + res[i];
       }
-      brandIp = res[res.length-2]+'.'+res[res.length-1];
+      brandIp = res[res.length - 2] + '.' + res[res.length - 1];
       this.setBrand(brandIp);
     }
     this.space = instanceIp;
@@ -96,7 +96,7 @@ export default {
     this.urls.signUp = `https://${this.instance}`;
     this.urls.SERVER_URL = `https://${this.instance}`;
     this.urls.WS_URL = `wss://${this.instance}/websocket`;
-    
+
   }
 
 };

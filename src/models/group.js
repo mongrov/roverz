@@ -104,9 +104,8 @@ export default class Group {
   commentsList(msgId) {
     if (msgId) {
       return this.messages.filtered(`text CONTAINS[c] "?msg=${msgId}"`);
-    } else {
-      return null;
     }
+    return null;
   }
 
 }

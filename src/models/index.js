@@ -141,7 +141,7 @@ class Database {
   // get server and username/password - if present
   getServer() {
     if (Database._servers.length <= 0) {
-      return AppConfig.bootstrapUrl ===  null ? undefined : AppConfig.bootstrapUrl;
+      return AppConfig.bootstrapUrl === null ? undefined : AppConfig.bootstrapUrl;
     }
     return Database._servers[0];
   }
