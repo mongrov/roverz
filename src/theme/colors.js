@@ -39,8 +39,8 @@ const brand = {
 const text = {
   textPrimary: '#222222',
   textSecondary: '#777777',
-  headingPrimary: brand.brand.primary,
-  headingSecondary: brand.brand.primary,
+  headingPrimary: brand.brand().primary,
+  headingSecondary: brand.brand().primary,
   brandP: '#63659c',
   brandS: '#50527F',
   brandT: '#6b6b6b',

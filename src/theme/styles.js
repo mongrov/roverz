@@ -150,7 +150,7 @@ export default {
   },
   link: {
     textDecorationLine: 'underline',
-    color: Colors.brand.primary,
+    color: Colors.brand().primary,
   },
   subtext: {
     fontFamily: Fonts.base.family,
@@ -194,13 +194,13 @@ export default {
   memberDetailsLG: {
     fontFamily: Fonts.base.family,
     fontSize: 30,
-    color: Colors.brand.secondary,
+    color: Colors.brand().secondary,
     fontWeight: '300',
   },
   memberDetailsMD: {
     fontFamily: Fonts.base.family,
     fontSize: 16,
-    color: Colors.brand.third,
+    color: Colors.brand().third,
     fontWeight: '400',
   },
   memberDetailsSM: {
@@ -299,7 +299,7 @@ export default {
     paddingTop: (Platform.OS === 'ios') ? 20 : 0,
   },
   navbar: {
-    backgroundColor: Colors.brand.secondary,
+    backgroundColor: Colors.brand().secondary,
     borderBottomWidth: 0,
   },
   navbarTitle: {
@@ -335,30 +335,30 @@ export default {
     borderRadius: 15,
     borderWidth: 0.5,
     borderColor: '#d6d7da',
-    backgroundColor: Colors.brand.third,
+    backgroundColor: Colors.brand().third,
   },
   loginButtonBig: {
     borderRadius: 35,
     borderWidth: 1,
     height: 50,
-    borderColor: Colors.brand.third,
-    backgroundColor: Colors.brand.third,
+    borderColor: Colors.brand().third,
+    backgroundColor: Colors.brand().third,
   },
   selectServerButton: {
     borderRadius: 5,
     height: 50,
-    borderColor: Colors.brand.third,
-    backgroundColor: Colors.brand.third,
+    borderColor: Colors.brand().third,
+    backgroundColor: Colors.brand().third,
   },
   loginButtonSmall: {
     borderRadius: 35,
     borderWidth: 1,
     height: 30,
     width: 100,
-    borderColor: Colors.brand.third,
-    backgroundColor: Colors.brand.third,
+    borderColor: Colors.brand().third,
+    backgroundColor: Colors.brand().third,
   },
   listItemTest: {
-    backgroundColor: Colors.brand.third,
+    backgroundColor: Colors.brand().third,
   },
 };
