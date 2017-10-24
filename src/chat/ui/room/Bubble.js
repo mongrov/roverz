@@ -323,7 +323,7 @@ export default class Bubble extends React.Component {
   }
 
   render() {
-    console.log('bubble mess', this.props.currentMessage);
+    // console.log('bubble mess', this.props.currentMessage);
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
         <View style={[

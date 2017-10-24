@@ -39,7 +39,7 @@ import ChatAvatar from './ChatAvatar';
 import CustomView from './CustomView';
 import Bubble from './Bubble';
 
-const NO_OF_MSGS = 20;
+const NO_OF_MSGS = 30;
 
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({
@@ -168,7 +168,9 @@ class ChatRoomView extends React.Component {
       }
     });
     this._didMount = true;
-    // this._network.chat.fetchMessages(this._group, NO_OF_MSGS);
+    if(this._group.moreMessages && this._group.sortedMessages.length < NO_OF_MSGS) {
+      this._network.chat.fetchMessages(this._group, NO_OF_MSGS);
+    }
     // quick hack to see if this works for this scroll bug
     // https://github.com/facebook/react-native/issues/1831, &
     // https://github.com/facebook/react-native/issues/1831#issuecomment-231069668
