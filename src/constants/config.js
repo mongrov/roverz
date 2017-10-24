@@ -20,6 +20,7 @@ export default {
   brand: 'domain',
   instance: null,
   logo: null,
+  bootstrapUrl: null,
   ga: null,
 
   get brandName() {
@@ -39,8 +40,12 @@ export default {
   },
 
   init() {
-    if (this.instance == null) {
-      this.resetInstance(`${this.space}.${this.brand}`);
+    if (this.instance === null) {
+      if (this.bootstrapUrl !== null) {
+        this.resetInstance(this.bootstrapUrl);
+      } else {
+        this.resetInstance(`${this.space}.${this.brand}`);
+      }
     }
     if (this.ga == null) {
       this.ga = new GoogleAnalyticsTracker(this.gaTrackingId);
