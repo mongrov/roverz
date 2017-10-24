@@ -96,7 +96,6 @@ export default {
     this.urls.signUp = `https://${this.instance}`;
     this.urls.SERVER_URL = `https://${this.instance}`;
     this.urls.WS_URL = `wss://${this.instance}/websocket`;
-
-  }
+  },
 
 };

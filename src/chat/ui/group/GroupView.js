@@ -57,13 +57,12 @@ class GroupList extends Component {
         this.setState({ connected: true });
       }
     });
-    this._mounted = true;
     this._insideStateUpdate = false;
     this.state._db.groups.list.addListener(() => {
       // this.state._db.groups.list.addListener((groups, changes) => {
       //   console.log('***** list changed **** ');
       // console.log(changes);
-      if (!this._mounted || this._insideStateUpdate) return;
+      if (!this._mounted || this._insideStateUpdate || !this.state._network.meteor.getCurrentUser()) return;
       this._insideStateUpdate = true;
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(this.state.items),
