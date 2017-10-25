@@ -163,14 +163,15 @@ export default class Bubble extends React.Component {
         msgLikes: this.props.currentMessage.likes,
         msgTitle: this.props.currentMessage.text,
       });
+    } else {
+      Actions.replyMessage({
+        obj: this.props.obj,
+        msgId: this.props.currentMessage._id,
+        actualMessage: this.props.currentMessage.text,
+        msgLikes: this.props.currentMessage.likes,
+        msgTitle: this.props.currentMessage.text,
+      });
     }
-    Actions.replyMessage({
-      obj: this.props.obj,
-      msgId: this.props.currentMessage._id,
-      actualMessage: this.props.currentMessage.text,
-      msgLikes: this.props.currentMessage.likes,
-      msgTitle: this.props.currentMessage.text,
-    });
   }
 
   handleBubbleToNext() {

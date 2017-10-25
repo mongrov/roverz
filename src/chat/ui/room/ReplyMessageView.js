@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Text,
   View,
-  Dimensions,
   ActivityIndicator,
   TouchableOpacity,
   StyleSheet,
@@ -375,7 +374,7 @@ export default class ReplyMessageView extends React.Component {
   }
 
   iconColor() {
-    return AppColors.brand.fourth;
+    return AppColors.brand().fourth;
   }
 
   chooseAvIcon(icon) {
@@ -421,7 +420,7 @@ export default class ReplyMessageView extends React.Component {
               fontSize: 14,
             }]}
           >
-            {this.state.msgTitle}
+            Reply
           </Text>
         </View>
         <NavButton
@@ -599,11 +598,6 @@ export default class ReplyMessageView extends React.Component {
       return null;
     });
 
-    const { width, height } = Dimensions.get('window');
-    let imgHeight = height / 2;
-    if (width > height) {
-      imgHeight = height / 3;
-    }
     return (
       <View
         style={{
@@ -617,19 +611,25 @@ export default class ReplyMessageView extends React.Component {
         <View>
           <View
             style={{
-              alignItems: 'center',
-              height: imgHeight,
+              // alignItems: 'center',
               position: 'relative',
+              backgroundColor: '#f0f0f0',
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
+              padding: 15,
             }}
           >
-            <Text>{this.state.actualMessage}</Text>
+            <Text
+              style={{
+                fontSize: 16,
+                flex: 1,
+              }}
+            >{this.state.actualMessage}</Text>
             <View
               style={{
-                position: 'absolute',
-                right: 15,
-                top: 15,
                 padding: 5,
-                backgroundColor: AppColors.brand.third,
+                backgroundColor: AppColors.brand().third,
                 borderRadius: 3,
                 flexDirection: 'row',
                 alignItems: 'center',
