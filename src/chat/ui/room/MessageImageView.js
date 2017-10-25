@@ -137,6 +137,7 @@ export default class MessageImageView extends React.Component {
       showAvatar: true,
       roomType: this.roomType,
       modalVisible: false,
+      imgHeight: 200,
     };
     this.loadingComplete = this.loadingComplete.bind(this);
     this.renderActions = this.renderActions.bind(this);
@@ -600,9 +601,9 @@ export default class MessageImageView extends React.Component {
     });
 
     const { width, height } = Dimensions.get('window');
-    let imgHeight = height / 2;
+    let imgHeight = height / 3;
     if (width > height) {
-      imgHeight = height / 3;
+      imgHeight = height / 8;
     }
     return (
       <View
@@ -614,11 +615,13 @@ export default class MessageImageView extends React.Component {
       >
         {this.renderNav()}
         <StatusBar barStyle="light-content" />
-        <View>
+        <View
+          style={{
+          }}
+        >
           <View
             style={{
               alignItems: 'center',
-              height: imgHeight,
               position: 'relative',
             }}
           >
@@ -678,12 +681,14 @@ export default class MessageImageView extends React.Component {
           renderAvatar={this.renderAvatar}
           renderMessageImage={this.renderMessageImage}
           renderAvatarOnTop={true}
+          isAnimated={true}
           listViewProps={
             { onChangeVisibleRows: this.onChangeVisibleRow }
           }
           user={{
             _id: ModuleConfig.userId,
           }}
+          style={{ height: 200 }}
         />
       </View>
     );
