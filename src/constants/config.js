@@ -20,6 +20,7 @@ export default {
   brand: 'domain',
   instance: null,
   logo: null,
+  navLogo: null,
   bootstrapUrl: null,
   ga: null,
 
@@ -57,6 +58,10 @@ export default {
 
   setLogo(logo) {
     this.logo = logo;
+  },
+
+  setNavLogo(logo) {
+    this.navLogo = logo;
   },
 
   setUserId(uid) {

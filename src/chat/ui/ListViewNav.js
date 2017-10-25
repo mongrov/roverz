@@ -2,8 +2,9 @@ import React from 'react';
 import {
   Text,
   View,
+  Image,
 } from 'react-native';
-import { AppStyles } from '../../theme/';
+import { AppStyles, AppColors } from '../../theme/';
 import ModuleConfig from '../../constants/config';
 import { NavbarMenuButton } from '../../containers/ui/NavbarMenuButton/NavbarMenuButtonContainer';
 
@@ -25,6 +26,21 @@ class ListViewNav extends React.Component {
 
   }
 
+  renderNavBrand() {
+    if (ModuleConfig.navLogo) {
+      return (
+        <Image
+          source={ModuleConfig.navLogo}
+          style={{ opacity: 1, width: 130, height: 30 }}
+          resizeMode={'contain'}
+        />
+      );
+    }
+    return (
+      <Text style={[AppStyles.navbarTitle, { paddingHorizontal: 43 }]}>{this.state.title}</Text>
+    );
+  }
+
   render() {
     return (
       <View style={[AppStyles.navbar, AppStyles.navbarHeight, {
@@ -35,13 +51,14 @@ class ListViewNav extends React.Component {
         flex: 1,
         paddingLeft: 0,
         flexDirection: 'row',
+        backgroundColor: AppColors.brand().secondary,
       }]}
       >
         <View style={{ padding: 7, marginLeft: 3 }}>
           <NavbarMenuButton />
         </View>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginRight: 45 }}>
-          <Text style={[AppStyles.navbarTitle, { paddingHorizontal: 43 }]}>{this.state.title}</Text>
+          {this.renderNavBrand()}
         </View>
       </View>
     );
