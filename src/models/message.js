@@ -15,7 +15,10 @@ const MessageSchema = {
     updatedAt: { type: 'date', optional: true },
     status: { type: 'int', default: 0 }, // delivered, read
     original: { type: 'string', optional: true }, // optional - store the original message
-    user: { type: Constants.User },
+    user: { type: Constants.User, optional: true },
+    type: { type: 'int', default: 0 }, // text, image
+    replyMessageId: { type: 'string', optional: true },
+    isReply: { type: 'bool', default: false },
     likes: { type: 'int', default: 0 }, // thumsup value
   },
 };
