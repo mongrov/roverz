@@ -58,6 +58,8 @@ class ListItemAvatar extends React.Component {
             position: 'relative',
             width: this.state.imageHeight,
             height: this.state.imageHeight,
+            backgroundColor: '#f0f0f0',
+            borderRadius: this.state.imageHeight / 2,
             justifyContent: 'center',
             alignItems: 'center' }}
         >
@@ -68,7 +70,6 @@ class ListItemAvatar extends React.Component {
               top: 0,
               width: this.state.imageHeight,
               height: this.state.imageHeight,
-              backgroundColor: 'red',
               borderRadius: this.state.imageHeight / 2 }}
             source={{ uri: this.state.avatarUri }}
             onError={() => { this._hideAvatarView(); }}

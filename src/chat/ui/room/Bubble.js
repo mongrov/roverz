@@ -11,6 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { CachedImage } from 'react-native-img-cache';
 
 /* import MessageText from './MessageText';
 import MessageImage from './MessageImage';
@@ -32,6 +33,12 @@ const styles = {
       flex: 1,
       alignItems: 'flex-start',
     },
+    replyContainer: {
+      backgroundColor: 'rgba(0,0,0,0.07)',
+    },
+    replyText: {
+      color: '#000',
+    },
     wrapper: {
       borderRadius: 15,
       backgroundColor: '#f0f0f0',
@@ -50,6 +57,12 @@ const styles = {
     container: {
       flex: 1,
       alignItems: 'flex-end',
+    },
+    replyContainer: {
+      backgroundColor: 'rgba(255,255,255,0.1)',
+    },
+    replyText: {
+      color: '#FFF',
     },
     wrapper: {
       borderRadius: 15,
@@ -88,6 +101,16 @@ const styles = {
     backgroundColor: 'rgba(0,0,0,0.2)',
     marginHorizontal: 5,
   },
+  replyWrapper: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    padding: 10,
+    margin: 5,
+    borderRadius: 5,
+    borderColor: 'rgba(0,0,0,0.1)',
+    borderWidth: 1,
+  },
 };
 
 export default class Bubble extends React.Component {
@@ -97,12 +120,37 @@ export default class Bubble extends React.Component {
     this.obj = this.props.obj;
     this.onLongPress = this.onLongPress.bind(this);
     const likes = this.props.currentMessage.likes;
+    const isReply = this.props.currentMessage.isReply;
     const original = JSON.parse(this.props.currentMessage.original);
     this.state = {
       showActions: false,
       likes,
+      isReply,
       original,
+      parentMessage: null,
     };
+  }
+
+  componentWillMount() {
+    const _super = this;
+    if (this.state.isReply) {
+      const getReplyMess = this.obj.findMessageById(this.props.currentMessage.replyMessageId);
+      // this._network.chat.fixYapImageUrls(Array.prototype.slice.call([replyMessage]),
+      if (getReplyMess) {
+        const replyMessage = [getReplyMess];
+        console.log('replyMessage k', replyMessage);
+        this.prepareMessages(replyMessage, (parentMessage) => {
+          console.log('this.state.isReply', parentMessage[0]);
+          _super.setState({
+            parentMessage: parentMessage[0],
+          });
+        });
+      }
+    }
+  }
+
+  componentDidMount() {
+    console.log('this.state.isReply state', this.state.parentMessage);
   }
 
   onLongPress() {
@@ -174,6 +222,12 @@ export default class Bubble extends React.Component {
     }
   }
 
+  prepareMessages(messages, callback) {
+    this._network.chat.fixYapImageUrls(Array.prototype.slice.call(messages), (msg) => {
+      callback(msg);
+    });
+  }
+
   handleBubbleToNext() {
     if (isSameUser(this.props.currentMessage, this.props.nextMessage)
     && isSameDay(this.props.currentMessage, this.props.nextMessage)) {
@@ -207,14 +261,41 @@ export default class Bubble extends React.Component {
   }
 
   renderReply() {
-    if (this.state.original.attachments) {
-      if (this.state.original.attachments[0].message_link) {
-        return (
-          <Text>{this.state.original.attachments[0].message_link}</Text>
-        );
-      }
+    if (this.state.parentMessage) {
+      return (
+        <View
+          style={[styles.replyWrapper, styles[this.props.position].replyContainer]}
+        >
+          <View
+            style={{
+              flexDirection: 'column',
+              minWidth: 100,
+            }}
+          >
+            <Text
+              style={[
+                styles[this.props.position].replyText, { fontWeight: '500' },
+              ]}
+              numberOfLines={1}
+            >{`${this.state.parentMessage.user.name}:`}</Text>
+            <Text
+              style={[styles[this.props.position].replyText]}
+            >{this.state.parentMessage.text}</Text>
+          </View>
+          {
+            (this.state.parentMessage.image &&
+              <CachedImage
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 2 }}
+                source={{ uri: this.state.parentMessage.image }}
+              />
+            )
+          }
+        </View>
+      );
     }
-    return null;
   }
 
   renderMessageImage() {
@@ -349,6 +430,7 @@ export default class Bubble extends React.Component {
           >
             <View>
               {this.renderCustomView()}
+              {this.renderReply()}
               {this.renderMessageImage()}
               {this.renderMessageText()}
               <View style={[styles.bottom, this.props.bottomContainerStyle[this.props.position]]}>
