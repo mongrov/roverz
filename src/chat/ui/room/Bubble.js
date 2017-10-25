@@ -80,7 +80,7 @@ const styles = {
     marginRight: 10,
   },
   actionBtn: {
-    padding: 5,
+    padding: 10,
     borderRadius: 3,
     borderColor: '#fff',
     flexDirection: 'row',
@@ -164,6 +164,13 @@ export default class Bubble extends React.Component {
         msgTitle: this.props.currentMessage.text,
       });
     }
+    Actions.replyMessage({
+      obj: this.props.obj,
+      msgId: this.props.currentMessage._id,
+      actualMessage: this.props.currentMessage.text,
+      msgLikes: this.props.currentMessage.likes,
+      msgTitle: this.props.currentMessage.text,
+    });
   }
 
   handleBubbleToNext() {
@@ -190,6 +197,7 @@ export default class Bubble extends React.Component {
     if (this.props.currentMessage.text) {
       const { containerStyle, wrapperStyle, ...messageTextProps } = this.props;
       if (this.props.renderMessageText) {
+        console.log('renderMessageText', messageTextProps);
         return this.props.renderMessageText(messageTextProps);
       }
       return <MessageText {...messageTextProps} />;
@@ -299,7 +307,7 @@ export default class Bubble extends React.Component {
               onPress={this._handleComments}
             >
               <Icon
-                name={'comment-multiple-outline'}
+                name={'comment-text-outline'}
                 type={'material-community'}
                 size={14}
                 color={'#FFF'}
@@ -323,7 +331,7 @@ export default class Bubble extends React.Component {
   }
 
   render() {
-    // console.log('bubble mess', this.props.currentMessage);
+    console.log('bubble mess', this.props.currentMessage);
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
         <View style={[

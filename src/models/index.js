@@ -195,25 +195,18 @@ class Database {
       Object.keys(missingMessages).forEach((k) => {
         const obj = missingMessages[k];
         obj.user = this.users.findOrCreate(obj.user._id, obj.user.username, obj.user.name);
+        obj.original = JSON.stringify(obj.original);
         obj.likes = messages[k].likes;
         if (messages[k].likes) {
           obj.likes = messages[k].likes;
         } else {
           obj.likes = 0;
         }
-        if (obj.text) {
-        // convert any emojis in the text
-          obj.text = emoji.emojify(obj.text);
-          obj.isReply = obj.text.includes(`${group.name}?msg=`);
-          if (obj.isReply) {
-            let res = obj.text.split(`${group.name}?msg=`);
-            res = res[res.length - 1].split(')');
-            const replyMsgId = res[0];
-            obj.replyMessageId = replyMsgId;
-          }
-        }
         AppUtil.debug(obj, null);
-        obj.original = JSON.stringify(obj.original);
+        // convert any emojis in the text
+        if (obj.text) {
+          obj.text = emoji.emojify(obj.text);
+        }
         group.messages.push(obj);
         // update attachment
         if (obj.remoteFile) {
