@@ -210,6 +210,9 @@ class Database {
             res = res[res.length - 1].split(')');
             const replyMsgId = res[0];
             obj.replyMessageId = replyMsgId;
+            if (res[1]) {
+              obj.text = res[1].trim();
+            }
           }
         }
         AppUtil.debug(obj, null);

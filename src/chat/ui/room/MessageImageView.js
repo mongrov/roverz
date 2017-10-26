@@ -168,7 +168,15 @@ export default class MessageImageView extends React.Component {
       if (_super._changeListener == null) return;
       console.log(`***** [chat-${_super._group.name}] got updated  **** `);
       // @todo: there seems to be a bug in realm that doesn't remove the listener
-      console.log(changes);
+      console.log(changes.modifications, changes.modifications.length);
+      if (changes.modifications && changes.modifications.length > 0) {
+        const msg = this._group.findMessageById(this.state.msgId);
+        if (msg) {
+          _super.setState({
+            msgLikes: msg.likes,
+          });
+        }
+      }
 
       // first mark the channel as read
       // @todo: There is a scenario, when this msg and subscription message is out of order

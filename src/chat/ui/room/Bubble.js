@@ -134,13 +134,14 @@ export default class Bubble extends React.Component {
   componentWillMount() {
     const _super = this;
     if (this.state.isReply) {
-      const getReplyMess = this.obj.findMessageById(this.props.currentMessage.replyMessageId);
+      let getReplyMess = this.obj.findMessageById(this.props.currentMessage.replyMessageId);
+      while (getReplyMess && getReplyMess.isReply) {
+        getReplyMess = this.obj.findMessageById(getReplyMess.replyMessageId);
+      }
       // this._network.chat.fixYapImageUrls(Array.prototype.slice.call([replyMessage]),
       if (getReplyMess) {
         const replyMessage = [getReplyMess];
-        console.log('replyMessage k', replyMessage);
         this.prepareMessages(replyMessage, (parentMessage) => {
-          console.log('this.state.isReply', parentMessage[0]);
           _super.setState({
             parentMessage: parentMessage[0],
           });
@@ -150,7 +151,6 @@ export default class Bubble extends React.Component {
   }
 
   componentDidMount() {
-    console.log('this.state.isReply state', this.state.parentMessage);
   }
 
   onLongPress() {
@@ -252,7 +252,6 @@ export default class Bubble extends React.Component {
     if (this.props.currentMessage.text) {
       const { containerStyle, wrapperStyle, ...messageTextProps } = this.props;
       if (this.props.renderMessageText) {
-        console.log('renderMessageText', messageTextProps);
         return this.props.renderMessageText(messageTextProps);
       }
       return <MessageText {...messageTextProps} />;
@@ -413,7 +412,6 @@ export default class Bubble extends React.Component {
   }
 
   render() {
-    console.log('bubble mess', this.props.currentMessage);
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
         <View style={[
