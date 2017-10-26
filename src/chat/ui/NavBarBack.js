@@ -7,7 +7,7 @@ import { Icon } from 'react-native-elements';
 import { NavButton } from 'react-native-nav';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
-import { AppStyles } from '../../theme/';
+import { AppStyles, AppColors } from '../../theme/';
 
 export default class NavBarBack extends React.Component {
   constructor(props) {
@@ -38,6 +38,7 @@ export default class NavBarBack extends React.Component {
         paddingLeft: 0,
         flexDirection: 'row',
         alignItems: 'center',
+        backgroundColor: AppColors.brand().secondary,
       }]}
       >
         <NavButton

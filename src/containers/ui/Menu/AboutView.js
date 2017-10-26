@@ -65,23 +65,23 @@ export default class AboutView extends React.Component {
           <View style={{ alignItems: 'center' }}>
             <Text
               style={[styles.headText]}
-            >Version: 2.0.1</Text>
+            >{`Version: ${AppConfig.aboutDetails.version}`}</Text>
             <Text
               style={[styles.paraText]}
-            >Build: 1020</Text>
+            >{`Build: ${AppConfig.aboutDetails.build}`}</Text>
           </View>
           <View style={{ alignItems: 'center' }}>
             <Text
               style={[styles.paraText]}
-            >www.mongrov.com</Text>
+            >{AppConfig.aboutDetails.website}</Text>
             <Text
               style={[styles.paraText]}
-            >support@mongrov.com</Text>
+            >{AppConfig.aboutDetails.email}</Text>
           </View>
           <View>
             <Text
               style={[styles.paraTextLight]}
-            >Powered by Mongrov, Inc.</Text>
+            >{AppConfig.aboutDetails.company}</Text>
           </View>
         </View>
       </View>

@@ -24,6 +24,14 @@ export default {
   bootstrapUrl: null,
   ga: null,
 
+  aboutDetails: {
+    version: '2.0.1',
+    build: '1027',
+    website: 'www.mongrov.com',
+    email: 'support@mongrov.com',
+    company: 'Powered by Mongrov, Inc.',
+  },
+
   get brandName() {
     return this.brand;
   },
@@ -70,6 +78,10 @@ export default {
 
   setBrand(brandName) {
     this.brand = brandName;
+  },
+
+  setAboutDetails(about) {
+    this.aboutDetails = about;
   },
 
   reset(space) {

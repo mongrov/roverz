@@ -25,6 +25,7 @@ import {
 import { Icon } from 'react-native-elements';
 
 import Network from '../../../network';
+import { AppColors } from '../../../theme/';
 import { isSameUser, isSameDay, warnDeprecated } from './utils';
 
 const styles = {
@@ -34,10 +35,11 @@ const styles = {
       alignItems: 'flex-start',
     },
     replyContainer: {
-      backgroundColor: 'rgba(0,0,0,0.07)',
+      backgroundColor: AppColors.chat().replyBubbleL,
     },
     replyText: {
-      color: '#000',
+      fontSize: 12,
+      color: AppColors.chat().replyTextL,
     },
     wrapper: {
       borderRadius: 15,
@@ -59,10 +61,11 @@ const styles = {
       alignItems: 'flex-end',
     },
     replyContainer: {
-      backgroundColor: 'rgba(255,255,255,0.1)',
+      backgroundColor: AppColors.chat().replyBubbleR,
     },
     replyText: {
-      color: '#FFF',
+      fontSize: 12,
+      color: AppColors.chat().replyTextR,
     },
     wrapper: {
       borderRadius: 15,
@@ -105,9 +108,9 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    padding: 10,
+    padding: 8,
     margin: 5,
-    borderRadius: 5,
+    borderRadius: 3,
     borderColor: 'rgba(0,0,0,0.1)',
     borderWidth: 1,
   },
@@ -134,14 +137,13 @@ export default class Bubble extends React.Component {
   componentWillMount() {
     const _super = this;
     if (this.state.isReply) {
-      let getReplyMess = this.obj.findMessageById(this.props.currentMessage.replyMessageId);
-      while (getReplyMess && getReplyMess.isReply) {
-        getReplyMess = this.obj.findMessageById(getReplyMess.replyMessageId);
-      }
+      const getReplyMess = this.obj.findMessageById(this.props.currentMessage.replyMessageId);
       // this._network.chat.fixYapImageUrls(Array.prototype.slice.call([replyMessage]),
       if (getReplyMess) {
         const replyMessage = [getReplyMess];
+        console.log('replyMessage k', replyMessage);
         this.prepareMessages(replyMessage, (parentMessage) => {
+          console.log('this.state.isReply', parentMessage[0]);
           _super.setState({
             parentMessage: parentMessage[0],
           });
@@ -151,6 +153,7 @@ export default class Bubble extends React.Component {
   }
 
   componentDidMount() {
+    console.log('this.state.isReply state', this.state.parentMessage);
   }
 
   onLongPress() {
@@ -252,6 +255,7 @@ export default class Bubble extends React.Component {
     if (this.props.currentMessage.text) {
       const { containerStyle, wrapperStyle, ...messageTextProps } = this.props;
       if (this.props.renderMessageText) {
+        console.log('renderMessageText', messageTextProps);
         return this.props.renderMessageText(messageTextProps);
       }
       return <MessageText {...messageTextProps} />;
@@ -412,6 +416,7 @@ export default class Bubble extends React.Component {
   }
 
   render() {
+    console.log('bubble mess', this.props.currentMessage);
     return (
       <View style={[styles[this.props.position].container, this.props.containerStyle[this.props.position]]}>
         <View style={[

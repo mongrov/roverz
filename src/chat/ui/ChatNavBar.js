@@ -11,7 +11,7 @@ import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
 import md5 from 'md5';
-import { AppStyles } from '../../theme/';
+import { AppStyles, AppColors } from '../../theme/';
 import Group from '../../models/group';
 import Network from '../../network';
 
@@ -217,6 +217,7 @@ class ChatNavBar extends React.Component {
         flexDirection: 'row',
         paddingRight: 10,
         alignItems: 'center',
+        backgroundColor: AppColors.brand().secondary,
       }]}
       >
         <NavButton
