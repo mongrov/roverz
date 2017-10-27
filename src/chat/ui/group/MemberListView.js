@@ -55,6 +55,7 @@ export default class MemberListView extends Component {
       },
     };
     this._membersCallback = this._membersCallback.bind(this);
+    this._offlineMembersCallback = this._offlineMembersCallback.bind(this);
   }
 
   componentDidMount() {
@@ -66,7 +67,7 @@ export default class MemberListView extends Component {
   }
 
   getMembers() {
-    this.state._network.chat.getMembersList(this._group._id, this._membersCallback);
+    this.state._network.chat.getMembersList(this._group._id, this._membersCallback, null);
   }
 
   _onLayout = (event) => {
@@ -82,11 +83,20 @@ export default class MemberListView extends Component {
     const _su = this;
     if (msg === 'SUCCESS') {
       _su.memberListData = data.records;
-      console.log('_membersCallback', data, msg);
       _su.setState({
-        dataSource: _su.state.dataSource.cloneWithRows(_su.memberListData),
         totalMembers: data.total,
         onlineMembers: _su.memberListData.length,
+      });
+      this.state._network.chat.getMembersList(this._group._id, this._offlineMembersCallback, data.records);
+    }
+  }
+
+  _offlineMembersCallback(data, msg) {
+    const _su = this;
+    if (msg === 'SUCCESS') {
+      _su.memberListData = data.records;
+      _su.setState({
+        dataSource: _su.state.dataSource.cloneWithRows(_su.memberListData),
         loaded: true,
       });
     }

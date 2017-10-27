@@ -278,13 +278,26 @@ class ChatService {
   }
 
 
-  getMembersList(groupId, callBack) {
+  getMembersList(groupId, callBack, onlineUserList) {
     const _super = this;
-    this.meteor.call('getUsersOfRoom', groupId, false, (err, res) => {
+    const offline = !!onlineUserList;
+    this.meteor.call('getUsersOfRoom', groupId, offline, (err, res) => {
       if (res && res.records) {
         for (let i = 0; i < res.records.length; i += 1) {
-           // need to have findorupdate with realm  in UM
-          _super.db.users.updateStatus(res.records[i]._id, res.records[i].username, res.records[i].name, 'online');
+          // need to have findorupdate with realm  in UM
+          let updateStatus = true;
+          if (onlineUserList) {
+            for (let j = 0; j < onlineUserList.length; j += 1) {
+              if (onlineUserList[j]._id === res.records[i]._id) {
+                updateStatus = false;
+                break;
+              }
+            }
+          }
+          if (updateStatus) {
+            _super.db.users.updateStatus(
+              res.records[i]._id, res.records[i].username, res.records[i].name, offline ? 'offline' : 'online');
+          }
         }
         callBack(res, 'SUCCESS');
       } else {
