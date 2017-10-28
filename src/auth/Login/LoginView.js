@@ -208,6 +208,7 @@ class Login extends Component {
             value={this.state.form_values}
             options={this.state.options}
           />
+          <Spacer size={10} />
           <View style={[AppStyles.row]}>
             <View style={[AppStyles.flex1]}>
               <Button
@@ -219,14 +220,6 @@ class Login extends Component {
             </View>
           </View>
           <Spacer size={20} />
-          <TouchableOpacity onPress={Actions.passwordReset}>
-            <Text p style={[{ color: '#BABABA', textAlign: 'center', marginTop: 0, fontSize: 14 }]}>
-              Forgot your password?
-            </Text>
-          </TouchableOpacity>
-
-          <Spacer size={10} />
-
         </View>
       );
     }
@@ -298,7 +291,12 @@ class Login extends Component {
         style={[AppStyles.windowSize]}
       >
         <StatusBar barStyle="light-content" />
-        <View style={{ flex: 1, backgroundColor: '#373856', alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{
+          flex: 1,
+          backgroundColor: AppColors.brand().secondary,
+          alignItems: 'center',
+          justifyContent: 'center' }}
+        >
           <Image
             source={AppConfig.logo}
             style={[AppStyles.loginLogo, { flex: 1, marginTop: 30 }]}
