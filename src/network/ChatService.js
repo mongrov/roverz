@@ -151,7 +151,7 @@ class ChatService {
 
   clearLoginSettings() {
     if(this.db.loginSettings) {
-      this.db.deleteAll();
+      this.db.loginSettings.deleteAll();
     } else {
       this._loginSettings = [];
     }
@@ -159,7 +159,7 @@ class ChatService {
 
   addLoginSettings(loginDetails) {
     if(this.db.loginSettings) {
-      this.db.addAll(loginDetails);
+      this.db.loginSettings.addAll(loginDetails);
     } else {
       this._loginSettings = this._loginSettings.concat(loginDetails);
     }
