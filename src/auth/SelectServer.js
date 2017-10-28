@@ -189,7 +189,7 @@ export default class SelectServer extends React.Component {
       if (regexp.test(inputServerVal)) {
         ModuleConfig.resetInstance(inputServerVal);
         this.setState({ isLoading: true });
-        this.connectToServer(`${ModuleConfig.instance}`);
+        this.connectToServer(ModuleConfig.instance);
         // Method to verify Server URL
         // this._net.setServer(inputServerVal, this.settingsCallback);
         // Actions.login();

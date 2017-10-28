@@ -91,11 +91,10 @@ export default {
   },
 
   resetInstance(instanceUrl) {
-    const noOfDots = (instanceUrl.match(/./g) || []).length;
+    const noOfDots = (instanceUrl.match(/\./g) || []).length;
     let instanceIp = instanceUrl; // ib.elix.yap.im
     let brandIp = this.brand;
     let resetInstanceUrl = '';
-    console.log('conff', instanceIp, brandIp);
     if (noOfDots <= 1) {
       resetInstanceUrl = `${instanceIp}.${this.brand}`;
     } else {
@@ -111,11 +110,12 @@ export default {
       resetInstanceUrl = instanceUrl;
       this.setBrand(brandIp);
     }
+    console.log('Resetting instance to:', instanceIp, resetInstanceUrl);
     this.space = instanceIp;
     this.instance = resetInstanceUrl;
     this.urls.resetPassword = `https://${this.instance}`;
-    this.urls.signUp = `https://${this.instance}`;
-    this.urls.SERVER_URL = `https://${this.instance}`;
+    this.urls.signUp = this.urls.resetPassword;
+    this.urls.SERVER_URL = this.urls.resetPassword;
     this.urls.WS_URL = `wss://${this.instance}/websocket`;
   },
 
