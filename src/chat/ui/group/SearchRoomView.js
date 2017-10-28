@@ -21,6 +21,9 @@ import Network from '../../../network';
 import Group from '../../../models/group';
 import { AppStyles, AppSizes, AppColors } from '../../../theme/';
 import ModuleConfig from '../../../constants/config';
+import {
+  ListItemAvatar,
+} from '../';
 
 const memberListData = [];
 
@@ -96,10 +99,12 @@ export default class SearchRoomView extends Component {
         titleStyle={AppStyles.memberListTitle}
         subtitle={rowData.username ? `@${rowData.username}` : ''}
         subtitleStyle={AppStyles.memberListSubTitle}
-        avatar={{
-          uri: `${ModuleConfig.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`,
-        }}
         onPress={() => this.createRoom(rowData.username, rowData._id)}
+        leftIcon={
+          <ListItemAvatar
+            source={`${ModuleConfig.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`}
+            name={rowData.name}
+          />}
       />
     );
   }
