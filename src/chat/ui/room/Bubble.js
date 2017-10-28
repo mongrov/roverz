@@ -28,6 +28,10 @@ import Network from '../../../network';
 import { AppColors } from '../../../theme/';
 import { isSameUser, isSameDay, warnDeprecated } from './utils';
 
+const chatColors = {
+  replyBubbleR: AppColors.chat().replyBubbleR,
+};
+
 const styles = {
   left: StyleSheet.create({
     container: {
@@ -61,7 +65,7 @@ const styles = {
       alignItems: 'flex-end',
     },
     replyContainer: {
-      backgroundColor: AppColors.chat().replyBubbleR,
+      backgroundColor: chatColors.replyBubbleR,
     },
     replyText: {
       fontSize: 12,
@@ -264,10 +268,15 @@ export default class Bubble extends React.Component {
   }
 
   renderReply() {
+    const { replyStyle } = this.props;
     if (this.state.parentMessage) {
       return (
         <View
-          style={[styles.replyWrapper, styles[this.props.position].replyContainer]}
+          style={[
+            styles.replyWrapper,
+            styles[this.props.position].replyContainer,
+            replyStyle[this.props.position].replyBubble,
+          ]}
         >
           <View
             style={{
@@ -277,12 +286,17 @@ export default class Bubble extends React.Component {
           >
             <Text
               style={[
-                styles[this.props.position].replyText, { fontWeight: '500' },
+                styles[this.props.position].replyText,
+                replyStyle[this.props.position].replyText,
+                { fontWeight: '500' },
               ]}
               numberOfLines={1}
             >{`${this.state.parentMessage.user.name}:`}</Text>
             <Text
-              style={[styles[this.props.position].replyText]}
+              style={[
+                styles[this.props.position].replyText,
+                replyStyle[this.props.position].replyText,
+              ]}
             >{this.state.parentMessage.text}</Text>
           </View>
           {
@@ -291,6 +305,7 @@ export default class Bubble extends React.Component {
                 style={{
                   width: 50,
                   height: 50,
+                  marginLeft: 5,
                   borderRadius: 2 }}
                 source={{ uri: this.state.parentMessage.image }}
               />
@@ -470,6 +485,7 @@ Bubble.defaultProps = {
   nextMessage: {},
   previousMessage: {},
   containerStyle: {},
+  replyStyle: {},
   wrapperStyle: {},
   bottomContainerStyle: {},
   tickStyle: {},
@@ -498,6 +514,7 @@ Bubble.propTypes = {
     left: ViewPropTypes.style,
     right: ViewPropTypes.style,
   }),
+  replyStyle: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
   wrapperStyle: PropTypes.shape({
     left: ViewPropTypes.style,
     right: ViewPropTypes.style,

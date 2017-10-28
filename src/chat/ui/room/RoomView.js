@@ -291,6 +291,16 @@ class ChatRoomView extends React.Component {
             fontFamily: 'OpenSans-Regular',
           },
         }}
+        replyStyle={{
+          left: {
+            replyBubble: { backgroundColor: AppColors.chat().replyBubbleL },
+            replyText: { color: AppColors.chat().replyTextL },
+          },
+          right: {
+            replyBubble: { backgroundColor: AppColors.chat().replyBubbleR },
+            replyText: { color: AppColors.chat().replyTextR },
+          },
+        }}
         imageStyle={{
           width: AppStyles.windowSize.width - 90,
           height: 150,
