@@ -125,7 +125,7 @@ class Login extends Component {
     if (serverUrl) {
       this.setState({ serverUrl });
     }
-    const saml = this._net.getLoginSetting('service');
+    const saml = this._net.chat.getLoginSetting('service');
     if (saml && saml === 'saml') {
       this.setState({ showSSO: true });
     }

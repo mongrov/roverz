@@ -69,10 +69,6 @@ class Network {
     return this.serverSettings ? this.serverSettings[key] : null;
   }
 
-  getLoginSetting(key) {
-    return this.db.loginSettings ? this.db.loginSettings.findByKey(key) : null;
-  }
-
   _publicSettingsCallback(data) {
     Network._publicSettings = data;
     Network._uiCallback(data);

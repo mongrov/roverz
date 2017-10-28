@@ -18,6 +18,7 @@ class ChatService {
     this._monStreamRoomMessages = null;
     this._monStreamNotifyRoom = null;
     this._cache = db.remotefiles ? db.remotefiles.cacheList : {};
+    this._loginSettings = [];
     // set the userId (to last loaded from db)
     AppConfig.setUserId(db.userId);
   }
@@ -143,16 +144,50 @@ class ChatService {
     });
   }
 
+  /* Need to see if these are required, remove it from db? */
+  get loginSettings() {
+    return this.db.loginSettings?this.db.loginSettings:this._loginSettings;    
+  }
+
+  clearLoginSettings() {
+    if(this.db.loginSettings) {
+      this.db.deleteAll();
+    } else {
+      this._loginSettings = [];
+    }
+  }
+
+  addLoginSettings(loginDetails) {
+    if(this.db.loginSettings) {
+      this.db.addAll(loginDetails);
+    } else {
+      this._loginSettings = this._loginSettings.concat(loginDetails);
+    }
+  }
+
+  getLoginSetting(key) {
+    console.log(this._loginSettings);
+    if(this.db.loginSettings) {      
+      return this.db.loginSettings.findByKey(key);
+    }
+    for(let i=0;i<this._loginSettings.length;i++) {
+      if(Object.prototype.hasOwnProperty.call(this._loginSettings[i], key)) {
+        // @todo: sending just 'saml' is stupidity, need to send the whole array
+        return this._loginSettings[i][key];
+      }
+    }
+    return null;
+  }
+
+  /* @todo: meteor when called again for login settings, the new subcription still gets old table
+   * values - To be fixed
+   */
   getLoginSettings() {
     const _super = this;
-    if (this.db.loginSettings) {
-      this.db.loginSettings.deleteAll();
-    }
+    this.clearLoginSettings();
     this.meteor.subscribe('meteor.loginServiceConfiguration');
     this.meteor.monitorChanges('meteor_accounts_loginServiceConfiguration', (results) => {
-      if (this.db.loginSettings) {
-        _super.db.loginSettings.addAll(results);
-      }
+      this.addLoginSettings(results);
     });
   }
 
