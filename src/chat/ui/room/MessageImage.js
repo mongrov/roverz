@@ -39,6 +39,11 @@ export default class MessageImage extends React.Component {
       modalVisible: false,
     };
   }
+
+  handleLongPress = () => {
+    this.props.pressLong();
+  }
+
   render() {
     console.log('this.props.currentMessage', this.props.currentMessage);
     return (
@@ -57,6 +62,7 @@ export default class MessageImage extends React.Component {
               imgTitle: this.props.currentMessage.text,
             });
           }}
+          onLongPress={this.handleLongPress}
         >
           <CachedImage
             {...this.props.imageProps}
@@ -78,6 +84,7 @@ MessageImage.defaultProps = {
   imageProps: {},
   lightboxProps: {},
   obj: {},
+  pressLong: null,
 };
 
 MessageImage.propTypes = {
@@ -87,4 +94,5 @@ MessageImage.propTypes = {
   imageProps: React.PropTypes.object,       // eslint-disable-line react/forbid-prop-types
   lightboxProps: React.PropTypes.object,    // eslint-disable-line react/forbid-prop-types
   obj: React.PropTypes.object,    // eslint-disable-line react/forbid-prop-types
+  pressLong: React.PropTypes.func,
 };

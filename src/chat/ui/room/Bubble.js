@@ -19,10 +19,11 @@ import Time from './Time'; */
 
 import {
   MessageText,
-  MessageImage,
+  // MessageImage,
   Time,
 } from 'react-native-gifted-chat';
 import { Icon } from 'react-native-elements';
+import MessageImage from './MessageImage';
 
 import Network from '../../../network';
 import { AppColors } from '../../../theme/';
@@ -126,6 +127,7 @@ export default class Bubble extends React.Component {
     this._network = new Network();
     this.obj = this.props.obj;
     this.onLongPress = this.onLongPress.bind(this);
+    this.pressLong = this.pressLong.bind(this);
     const likes = this.props.currentMessage.likes;
     const isReply = this.props.currentMessage.isReply;
     const original = JSON.parse(this.props.currentMessage.original);
@@ -259,6 +261,10 @@ export default class Bubble extends React.Component {
     return null;
   }
 
+  pressLong = () => {
+    this.toggleActions();
+  }
+
   renderMessageText() {
     if (this.props.currentMessage.text) {
       const { containerStyle, wrapperStyle, ...messageTextProps } = this.props;
@@ -322,11 +328,12 @@ export default class Bubble extends React.Component {
 
   renderMessageImage() {
     if (this.props.currentMessage.image) {
-      const { containerStyle, wrapperStyle, ...messageImageProps } = this.props;
-      if (this.props.renderMessageImage) {
-        return this.props.renderMessageImage(messageImageProps);
-      }
-      return <MessageImage {...messageImageProps} />;
+      return (
+        <MessageImage
+          {...this.props}
+          pressLong={this.pressLong}
+        />
+      );
     }
     return null;
   }

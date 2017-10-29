@@ -34,7 +34,6 @@ import { AppStyles, AppSizes, AppColors } from '../../../theme/';
 import AppConfig from '../../../constants/config';
 
 import SendImageMessage from './SendImageMessage';
-import MessageImage from './MessageImage';
 import ChatAvatar from './ChatAvatar';
 import CustomView from './CustomView';
 import Bubble from './Bubble';
@@ -120,7 +119,6 @@ class ChatRoomView extends React.Component {
     this.renderBubble = this.renderBubble.bind(this);
     this.renderSend = this.renderSend.bind(this);
     this.renderComposer = this.renderComposer.bind(this);
-    this.renderMessageImage = this.renderMessageImage.bind(this);
     this.renderMessageText = this.renderMessageText.bind(this);
     this.renderAvatar = this.renderAvatar.bind(this);
     this.renderInputToolbar = this.renderInputToolbar.bind(this);
@@ -527,15 +525,6 @@ class ChatRoomView extends React.Component {
     );
   }
 
-  renderMessageImage(props) {
-    return (
-      <MessageImage
-        {...props}
-        obj={this._group}
-      />
-    );
-  }
-
   renderCustomView(props) {
     return (
       <CustomView
@@ -586,7 +575,6 @@ class ChatRoomView extends React.Component {
           renderComposer={this.renderComposer}
           renderCustomView={this.renderCustomView}
           renderMessageText={this.renderMessageText}
-          renderMessageImage={this.renderMessageImage}
           renderAvatar={this.renderAvatar}
           renderAvatarOnTop={true}
           // renderInputToolbar={this.renderInputToolbar}
