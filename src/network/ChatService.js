@@ -146,11 +146,11 @@ class ChatService {
 
   /* Need to see if these are required, remove it from db? */
   get loginSettings() {
-    return this.db.loginSettings?this.db.loginSettings:this._loginSettings;    
+    return this.db.loginSettings ? this.db.loginSettings : this._loginSettings;
   }
 
   clearLoginSettings() {
-    if(this.db.loginSettings) {
+    if (this.db.loginSettings) {
       this.db.loginSettings.deleteAll();
     } else {
       this._loginSettings = [];
@@ -158,7 +158,7 @@ class ChatService {
   }
 
   addLoginSettings(loginDetails) {
-    if(this.db.loginSettings) {
+    if (this.db.loginSettings) {
       this.db.loginSettings.addAll(loginDetails);
     } else {
       this._loginSettings = this._loginSettings.concat(loginDetails);
@@ -166,12 +166,11 @@ class ChatService {
   }
 
   getLoginSetting(key) {
-    console.log(this._loginSettings);
-    if(this.db.loginSettings) {      
+    if (this.db.loginSettings) {
       return this.db.loginSettings.findByKey(key);
     }
-    for(let i=0;i<this._loginSettings.length;i++) {
-      if(Object.prototype.hasOwnProperty.call(this._loginSettings[i], key)) {
+    for (let i = 0; i < this._loginSettings.length; i += 1) {
+      if (Object.prototype.hasOwnProperty.call(this._loginSettings[i], key)) {
         // @todo: sending just 'saml' is stupidity, need to send the whole array
         return this._loginSettings[i][key];
       }
@@ -183,7 +182,6 @@ class ChatService {
    * values - To be fixed
    */
   getLoginSettings() {
-    const _super = this;
     this.clearLoginSettings();
     this.meteor.subscribe('meteor.loginServiceConfiguration');
     this.meteor.monitorChanges('meteor_accounts_loginServiceConfiguration', (results) => {

@@ -41,6 +41,7 @@
     "react-native-google-analytics-bridge": "5.3.3",
     "react-native-img-cache": "^1.4.0",
     "react-native-markdown-view": "1.1.4",
+    "react-native-md5": "^1.0.0",
     "react-native-meteor": "https://github.com/elarasu/react-native-meteor#e87746b614626aa2588101003463b1ab452803b9",
     "react-native-nav": "2.0.2",
     "react-native-photo-browser": "https://github.com/elarasu/react-native-photo-browser",
