@@ -34,8 +34,6 @@ import ModuleConfig from '../../../constants/config';
 import { Send } from '../';
 import ChatAvatar from './ChatAvatar';
 
-const NO_OF_MSGS = 20;
-
 const textStyle = {
   // fontSize: 30,
   // lineHeight: 20,
