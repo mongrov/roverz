@@ -155,7 +155,7 @@ export default class ReplyMessageView extends React.Component {
 
   componentDidMount() {
     const _super = this;
-    this._network.chat.fetchMessages(this._group, NO_OF_MSGS);
+    // this._network.chat.fetchMessages(this._group, NO_OF_MSGS);
     this._network.chat.fixYapImageUrls(Array.prototype.slice.call(this._group.sortedMessages), (msg) => {
       _super.setState({
         messages: msg,
