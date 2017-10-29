@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "pretest": "./node_modules/.bin/eslint -c .eslintrc --ext .js src",
+    "lint": "eslint . && flow"
     "test": "jest"
   },
   "main": "index.js",
