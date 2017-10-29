@@ -157,10 +157,6 @@ export default class Bubble extends React.Component {
     }
   }
 
-  componentDidMount() {
-    console.log('this.state.isReply state', this.state.parentMessage);
-  }
-
   onLongPress() {
     if (this.props.onLongPress) {
       this.props.onLongPress(this.context, this.props.currentMessage);
