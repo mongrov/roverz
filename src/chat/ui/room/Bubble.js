@@ -161,6 +161,7 @@ export default class Bubble extends React.Component {
     if (this.props.onLongPress) {
       this.props.onLongPress(this.context, this.props.currentMessage);
     } else if (this.props.currentMessage.text) {
+      /* Action Sheet Code
       const options = [
         'Copy Text',
         'Cancel',
@@ -177,6 +178,8 @@ export default class Bubble extends React.Component {
             break;
         }
       });
+      */
+      this.toggleActions();
     }
   }
 
@@ -224,6 +227,10 @@ export default class Bubble extends React.Component {
         msgTitle: this.props.currentMessage.text,
       });
     }
+  }
+
+  _handleCopy = () => {
+    Clipboard.setString(this.props.currentMessage.text);
   }
 
   prepareMessages(messages, callback) {
@@ -405,6 +412,17 @@ export default class Bubble extends React.Component {
             >
               <Icon
                 name={'comment-text-outline'}
+                type={'material-community'}
+                size={14}
+                color={'#FFF'}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.actionBtn]}
+              onPress={this._handleCopy}
+            >
+              <Icon
+                name={'content-copy'}
                 type={'material-community'}
                 size={14}
                 color={'#FFF'}
