@@ -114,7 +114,10 @@ class GroupList extends Component {
     return (
       <ListItem
         key={`list-row-${sectionID}`}
-        onPress={() => Actions.chatDetail({ obj: data, title: data.heading })}
+        onPress={() => {
+          console.log('list-row-', data);
+          Actions.chatDetail({ obj: data, title: data.heading });
+        }}
         title={data.heading}
         titleStyle={{ paddingRight: 40 }}
         subtitle={

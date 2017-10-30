@@ -10,6 +10,7 @@ import ProgressBar from './ProgressBar';
 import ListViewNav from './ListViewNav';
 import NavBarBack from './NavBarBack';
 import NavBackAbs from './NavBackAbs';
+import NavBarMessages from './NavBarMessages';
 
 export {
     ChatNavBar,
@@ -19,4 +20,5 @@ export {
     ListViewNav,
     NavBarBack,
     NavBackAbs,
+    NavBarMessages,
 };
