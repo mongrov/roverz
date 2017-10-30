@@ -12,12 +12,14 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 
 import {
   Icon,
 } from 'react-native-elements';
 
+import RNExitApp from 'react-native-exit-app';
 import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import { Text, Network, AppSizes, AppColors } from 'roverz-chat';
@@ -136,9 +138,26 @@ class Menu extends Component {
           title: 'Logout',
           icon: 'logout-variant',
           onPress: () => {
-            this.props.closeSideMenu();
-            this.net.chat.logout();
-            Actions.login();
+            Alert.alert(
+              'Logout',
+              'Do you want to logout?',
+              [
+                { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                { text: 'Yes',
+                  onPress: () => {
+                    this.net.meteor.logout();
+                    this.net.db.setUserId(null);
+                    AppConfig.setUserId(null);
+                    this.net.chat.logout();
+                    this.props.closeSideMenu();
+                    setTimeout(() => {
+                      RNExitApp.exitApp();
+                    }, 100);
+                  },
+                },
+              ],
+              { cancelable: false },
+            );
           },
         },
       ],

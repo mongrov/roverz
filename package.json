@@ -38,6 +38,7 @@
     "react-native-camera": "0.10.0",
     "react-native-camera-roll-picker": "1.2.2",
     "react-native-elements": "0.17.0",
+    "react-native-exit-app": "^1.0.0",
     "react-native-gifted-chat": "^0.2.8",
     "react-native-google-analytics-bridge": "5.3.3",
     "react-native-img-cache": "^1.4.0",
