@@ -72,6 +72,14 @@ class GroupList extends Component {
       this._insideStateUpdate = false;
     });
     this._mounted = true;
+    setTimeout(() => {
+      if (this._mounted && this.state.items && this.state.items.length > 0 && !this.state.loaded) {
+        this.setState({
+          loaded: true,
+          dataSource: this.state.dataSource.cloneWithRows(this.state.items),
+        });
+      }
+    }, 100);
   }
 
   componentWillUnmount() {
