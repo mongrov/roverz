@@ -26,7 +26,7 @@ import { Icon } from 'react-native-elements';
 import MessageImage from './MessageImage';
 
 import Network from '../../../network';
-import { AppColors } from '../../../theme/';
+import { AppSizes, AppColors } from '../../../theme/';
 import { isSameUser, isSameDay, warnDeprecated } from './utils';
 
 const chatColors = {
@@ -101,7 +101,7 @@ const styles = {
     marginRight: 10,
   },
   actionBtn: {
-    padding: 10,
+    padding: 7,
     borderRadius: 3,
     borderColor: '#fff',
     flexDirection: 'row',
@@ -233,6 +233,7 @@ export default class Bubble extends React.Component {
 
   _handleCopy = () => {
     Clipboard.setString(this.props.currentMessage.text);
+    this.handleMsgCopy();
   }
 
   prepareMessages(messages, callback) {
@@ -263,6 +264,10 @@ export default class Bubble extends React.Component {
 
   pressLong = () => {
     this.toggleActions();
+  }
+
+  handleMsgCopy = () => {
+    this.props.msgCopy();
   }
 
   renderMessageText() {
@@ -397,7 +402,7 @@ export default class Bubble extends React.Component {
               <Icon
                 name={'heart-outline'}
                 type={'material-community'}
-                size={14}
+                size={22}
                 color={'#FFF'}
               />
               {
@@ -420,7 +425,7 @@ export default class Bubble extends React.Component {
               <Icon
                 name={'comment-text-outline'}
                 type={'material-community'}
-                size={14}
+                size={22}
                 color={'#FFF'}
               />
             </TouchableOpacity>
@@ -431,7 +436,7 @@ export default class Bubble extends React.Component {
               <Icon
                 name={'content-copy'}
                 type={'material-community'}
-                size={14}
+                size={22}
                 color={'#FFF'}
               />
             </TouchableOpacity>
@@ -442,7 +447,7 @@ export default class Bubble extends React.Component {
               <Icon
                 name={'delete'}
                 type={'material-community'}
-                size={14}
+                size={22}
                 color={'#FFF'}
               />
             </TouchableOpacity>
@@ -519,6 +524,7 @@ Bubble.defaultProps = {
   obj: {},
   renderTicks: {},
   user: {},
+  msgCopy: null,
 };
 
 Bubble.propTypes = {
@@ -560,4 +566,5 @@ Bubble.propTypes = {
   obj: React.PropTypes.object,    // eslint-disable-line react/forbid-prop-types
   renderTicks: React.PropTypes.object,    // eslint-disable-line react/forbid-prop-types
   user: React.PropTypes.object,    // eslint-disable-line react/forbid-prop-types
+  msgCopy: PropTypes.func,
 };

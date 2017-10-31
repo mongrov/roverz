@@ -112,6 +112,7 @@ class ChatRoomView extends React.Component {
       showActions: true,
       loadEarlier: true,
       isLoadingEarlier: false,
+      msgCopied: false,
     };
     this.onSend = this.onSend.bind(this);
     this.renderCustomActions = this.renderCustomActions.bind(this);
@@ -125,6 +126,7 @@ class ChatRoomView extends React.Component {
     this.renderK = this.renderK.bind(this);
     this.onLoadEarlier = this.onLoadEarlier.bind(this);
     this._progressCallback = this._progressCallback.bind(this);
+    this.messageCopy = this.messageCopy.bind(this);
     this.subscriptions();
     this._didMount = false;
   }
@@ -252,6 +254,13 @@ class ChatRoomView extends React.Component {
     }
   }
 
+  messageCopy = () => {
+    this.setState({ msgCopied: true });
+    setTimeout(() => {
+      this.setState({ msgCopied: false });
+    }, 1000);
+  }
+
   renderCustomActions(props) {
     if (this.state.showActions) {
       return (
@@ -269,6 +278,7 @@ class ChatRoomView extends React.Component {
       <Bubble
         {...props}
         obj={this._group}
+        msgCopy={this.messageCopy}
         wrapperStyle={{
           left: {
             // backgroundColor: '#FFF',
@@ -543,6 +553,35 @@ class ChatRoomView extends React.Component {
     );
   }
 
+  renderToast() {
+    if (this.state.msgCopied) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            position: 'absolute',
+            top: 10,
+            width: AppSizes.screen.width,
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 999,
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: AppColors.brand().third,
+              paddingVertical: 5,
+              paddingHorizontal: 15,
+              borderRadius: 5,
+            }}
+          >
+            <Text style={{ color: '#fff', fontFamily: 'OpenSans-Regular', fontSize: 12 }}>Copied to clipboard</Text>
+          </View>
+        </View>
+      );
+    }
+  }
+
 // renderMessageText={this.renderMessageText}
 
   render() {
@@ -565,6 +604,7 @@ class ChatRoomView extends React.Component {
         }]}
       >
         <StatusBar barStyle="light-content" hidden={false} />
+        {this.renderToast()}
         <GiftedChat
           messages={filteredMessages}// this.state.messages
           onSend={this.onSend}

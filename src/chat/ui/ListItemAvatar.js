@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
+import { AppColors } from '../../theme/';
 
 function titleCase(str) {
   return (str.toLowerCase().split(' ').map(word => word.replace(word[0], word[0].toUpperCase())).join(' '))
@@ -77,6 +78,7 @@ class ListItemAvatar extends React.Component {
           />
           <UserAvatar
             name={titleCase(this.state.avatarName)}
+            colors={AppColors.avatar()}
             size={this.state.imageHeight}
             style={{
               zIndex: 190,
@@ -100,6 +102,7 @@ class ListItemAvatar extends React.Component {
       >
         <UserAvatar
           name={titleCase(this.state.avatarName)}
+          colors={AppColors.avatar()}
           size={this.state.imageHeight}
         />
       </View>

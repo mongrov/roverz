@@ -30,13 +30,18 @@ const brand = {
     replyBubbleR: 'rgba(255,255,255,0.1)',
     replyTextR: 'rgba(255,255,255,0.6)',
   },
+  avatarColors: ['#6A6C99', '#8385B2', '#9D9FCC', '#B6B8E5', '#50527F'],
   brand() { return this.brandColors; },
   chat() { return this.chatColors; },
+  avatar() { return this.avatarColors; },
   setBrandColors(obj) {
     this.brandColors = obj;
   },
   setChatColors(obj) {
     this.chatColors = obj;
+  },
+  setAvatarColors(array) {
+    this.avatarColors = array;
   },
 };
 
