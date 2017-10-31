@@ -30,7 +30,7 @@ const brand = {
     replyBubbleR: 'rgba(255,255,255,0.1)',
     replyTextR: 'rgba(255,255,255,0.6)',
   },
-  avatarColors: ['#6A6C99', '#8385B2', '#9D9FCC', '#B6B8E5', '#50527F'],
+  avatarColors: ['#339194', '#93a42a', '#cac640', '#fb6b41', '#a70267', '#0065a4', '#76787a', '#76787a', '#65a400', '#2fadd2', '#2a53c3', '#613177'],
   brand() { return this.brandColors; },
   chat() { return this.chatColors; },
   avatar() { return this.avatarColors; },
