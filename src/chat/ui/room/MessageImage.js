@@ -4,6 +4,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
@@ -37,6 +38,7 @@ export default class MessageImage extends React.Component {
     this.state = {
       obj,
       modalVisible: false,
+      loaded: false,
     };
   }
 
@@ -68,7 +70,28 @@ export default class MessageImage extends React.Component {
             {...this.props.imageProps}
             style={[styles.image, this.props.imageStyle]}
             source={{ uri: this.props.currentMessage.image }}
-          />
+            onLoad={() => { this.setState({ loaded: true }); }}
+          >
+            {
+              !this.state.loaded &&
+              (
+                <View
+                  style={{
+                    flex: 1,
+                    height: 150,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <ActivityIndicator
+                    animating
+                    size={'large'}
+                    color={'#AAA'}
+                  />
+                </View>
+              )
+            }
+          </CachedImage>
         </TouchableOpacity>
       </View>
     );

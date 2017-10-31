@@ -104,6 +104,7 @@ export default class SearchRoomView extends Component {
           <ListItemAvatar
             source={`${ModuleConfig.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`}
             name={rowData.name}
+            size={32}
           />}
       />
     );

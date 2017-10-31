@@ -177,8 +177,8 @@ class Login extends Component {
               resultMsg: { success: 'Awesome, you\'re now logged in!' },
             });
           }
-        }).catch((err) => {
-          const error = AppAPI.handleError(err);
+        }).catch(() => {
+          const error = 'Login failed'; // AppAPI.handleError(err);
           this.setState({ resultMsg: { error } });
         });
       });
@@ -312,13 +312,13 @@ class Login extends Component {
           >
             <Text
               style={{
-                fontSize: 10,
+                fontSize: 12,
                 color: '#FFF',
               }}
             >WORKSPACE</Text>
             <Text
               style={{
-                fontSize: 14,
+                fontSize: 15,
                 color: '#FFF',
               }}
             >{this.state.serverUrl}</Text>
