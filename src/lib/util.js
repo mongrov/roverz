@@ -72,6 +72,21 @@ const UTIL = {
   },
 
   /**
+    * Avatar Initials
+    */
+  avatarInitials: (str) => {
+    var avatarStr = '';
+    if (str && str.trim().length > 0) {
+      const tempArr = str.split(/(\s+)/).filter(e => e.trim().length > 0);
+      avatarStr = tempArr[0].charAt(0).toUpperCase();
+      if (tempArr.length > 1) {
+        avatarStr += tempArr[1].trim().charAt(0).toUpperCase();
+      }
+    }
+    return avatarStr;
+  },
+
+  /**
     * Convert all HTMLEntities when Array
     */
   convertHtmlEntitiesArray: (arr) => {

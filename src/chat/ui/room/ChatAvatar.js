@@ -5,11 +5,7 @@ import {
 // import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
-
-function titleCase(str) {
-  return (str.toLowerCase().split(' ').map(word => word.replace(word[0], word[0].toUpperCase())).join(' '))
-  .replace(/(([^\s]+\s\s*){2})(.*)/, '$1');
-}
+import { AppUtil } from 'roverz-chat';
 
 export default class ChatAvatar extends React.Component {
   constructor(props) {
@@ -69,7 +65,7 @@ export default class ChatAvatar extends React.Component {
         style={{ width: this.state.size, height: this.state.size, justifyContent: 'center', alignItems: 'center' }}
       >
         <UserAvatar
-          name={this.state.displayTitle ? titleCase(this.state.displayTitle) : 'A'}
+          name={this.state.displayTitle ? AppUtil.avatarInitials(this.state.displayTitle) : 'A'}
           size={this.state.size}
           style={{
             borderRadius: this.state.borderRad ? this.state.borderRad : this.state.size / 2,

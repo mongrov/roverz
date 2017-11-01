@@ -4,11 +4,7 @@ import {
 } from 'react-native';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
-
-function titleCase(str) {
-  return (str.toLowerCase().split(' ').map(word => word.replace(word[0], word[0].toUpperCase())).join(' '))
-  .replace(/(([^\s]+\s\s*){2})(.*)/, '$1');
-}
+import { AppUtil } from 'roverz-chat';
 
 class ListItemAvatar extends React.Component {
   constructor(props) {
@@ -76,7 +72,7 @@ class ListItemAvatar extends React.Component {
             onError={() => { this._hideAvatarView(); }}
           />
           <UserAvatar
-            name={titleCase(this.state.avatarName)}
+            name={AppUtil.avatarInitials(this.state.avatarName)}
             size={this.state.imageHeight}
             style={{
               zIndex: 190,
@@ -99,7 +95,7 @@ class ListItemAvatar extends React.Component {
           alignItems: 'center' }}
       >
         <UserAvatar
-          name={titleCase(this.state.avatarName)}
+          name={AppUtil.avatarInitials(this.state.avatarName)}
           size={this.state.imageHeight}
         />
       </View>

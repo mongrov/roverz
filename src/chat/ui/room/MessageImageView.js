@@ -26,6 +26,7 @@ import { MarkdownView } from 'react-native-markdown-view';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
 import emoji from 'node-emoji';
+import { AppUtil } from 'roverz-chat';
 
 import Network from '../../../network';
 // import Group from '../../../models/group';
@@ -96,11 +97,6 @@ const bubbleStyl = {
     },
   }),
 };
-
-function titleCase(str) {
-  return (str.toLowerCase().split(' ').map(word => word.replace(word[0], word[0].toUpperCase())).join(' '))
-  .replace(/(([^\s]+\s\s*){2})(.*)/, '$1');
-}
 
 export default class MessageImageView extends React.Component {
   constructor(props) {
@@ -342,7 +338,7 @@ export default class MessageImageView extends React.Component {
         style={{ width: 50, height: 50, justifyContent: 'center', alignItems: 'center' }}
       >
         <UserAvatar
-          name={titleCase(this.state.displayTitle ? this.state.displayTitle : this.state.displayName)}
+          name={AppUtil.avatarInitials(this.state.displayTitle ? this.state.displayTitle : this.state.displayName)}
           size={36}
         />
       </View>

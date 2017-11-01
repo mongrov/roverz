@@ -12,6 +12,7 @@ import {
 import PropTypes from 'prop-types';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
+import { AppUtil } from 'roverz-chat';
 // import { Icon } from 'react-native-elements';
 
 import Network from '../../../network';
@@ -19,14 +20,6 @@ import Group from '../../../models/group';
 import { AppStyles, AppSizes } from '../../../theme/';
 
 var { height, width } = Dimensions.get('window');
-
-function titleCase(str) {
-  if (str && str !== '') {
-    return (str.toLowerCase().split(' ').map(word => word.replace(word[0], word[0].toUpperCase())).join(' '))
-    .replace(/(([^\s]+\s\s*){2})(.*)/, '$1');
-  }
-  return 'Yap';
-}
 
 export default class MemberDetailView extends Component {
 
@@ -158,7 +151,7 @@ export default class MemberDetailView extends Component {
             }}
           />
           <UserAvatar
-            name={titleCase(this.state.memberDetail.name)}
+            name={AppUtil.avatarInitials(this.state.memberDetail.name)}
             size={300}
             style={{
               width: this.state.layout.width,
