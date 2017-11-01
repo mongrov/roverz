@@ -21,6 +21,7 @@ import {
 
 import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
+import RNRestart from 'react-native-restart';
 import { Text, Network, AppSizes, AppColors } from 'roverz-chat';
 import AppConfig from '../../../constants/config';
 
@@ -149,7 +150,9 @@ class Menu extends Component {
                     AppConfig.setUserId(null);
                     this.net.chat.logout();
                     this.props.closeSideMenu();
-                    Actions.login();
+                    setTimeout(() => {
+                      RNRestart.Restart();
+                    }, 300);
                   },
                 },
               ],

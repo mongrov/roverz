@@ -26,7 +26,7 @@ import { Icon } from 'react-native-elements';
 import MessageImage from './MessageImage';
 
 import Network from '../../../network';
-import { AppSizes, AppColors } from '../../../theme/';
+import { AppColors } from '../../../theme/';
 import { isSameUser, isSameDay, warnDeprecated } from './utils';
 
 const chatColors = {
