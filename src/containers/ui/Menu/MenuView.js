@@ -19,7 +19,6 @@ import {
   Icon,
 } from 'react-native-elements';
 
-import RNExitApp from 'react-native-exit-app';
 import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import { Text, Network, AppSizes, AppColors } from 'roverz-chat';
@@ -150,9 +149,7 @@ class Menu extends Component {
                     AppConfig.setUserId(null);
                     this.net.chat.logout();
                     this.props.closeSideMenu();
-                    setTimeout(() => {
-                      RNExitApp.exitApp();
-                    }, 100);
+                    Actions.login();
                   },
                 },
               ],
