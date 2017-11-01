@@ -3,7 +3,7 @@ import {
   View,
   Text,
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+// import { Actions } from 'react-native-router-flux';
 import { RoomView } from 'roverz-chat';
 
 import { AppStyles, AppSizes } from '../../../theme/';
