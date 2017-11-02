@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { NavButton } from 'react-native-nav';
-import { Actions, ActionConst } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
 import { AppUtil } from 'roverz-chat';
