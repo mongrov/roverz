@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { NavButton } from 'react-native-nav';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
 import { AppUtil } from 'roverz-chat';
@@ -53,23 +53,59 @@ class ChatNavBar extends React.Component {
     if (this.state.showAvatar) {
       return (
         <View
-          style={{ width: 50, height: 50, justifyContent: 'center', alignItems: 'center' }}
+          style={{
+            width: 36,
+            height: 36,
+            paddingHorizontal: 7,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
         >
           <CachedImage
-            style={{ width: 36, height: 36, borderRadius: 18 }}
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: 18,
+              position: 'absolute',
+              zIndex: 20,
+              left: 0,
+              top: 0,
+            }}
             source={{ uri: this.avatarUri }}
             onError={() => { this._hideAvatarView(); }}
+          />
+          <UserAvatar
+            name={AppUtil.avatarInitials(this.state.displayTitle ? this.state.displayTitle : this.state.displayName)}
+            size={36}
+            style={{
+              position: 'absolute',
+              zIndex: 10,
+              left: -18,
+              top: -18,
+            }}
           />
         </View>
       );
     }
     return (
       <View
-        style={{ width: 50, height: 50, justifyContent: 'center', alignItems: 'center' }}
+        style={{
+          width: 36,
+          height: 36,
+          paddingHorizontal: 7,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
       >
         <UserAvatar
           name={AppUtil.avatarInitials(this.state.displayTitle ? this.state.displayTitle : this.state.displayName)}
           size={36}
+          style={{
+            position: 'absolute',
+            zIndex: 20,
+            left: -18,
+            top: -18,
+          }}
         />
       </View>
     );
@@ -110,7 +146,7 @@ class ChatNavBar extends React.Component {
     );
   }
 
-  goToRoomInfo = () => {
+  goToRoomInfo() {
     if (this.state.roomType !== 'direct') {
       Actions.roomInfo({
         group: this.state.obj,
@@ -219,7 +255,7 @@ class ChatNavBar extends React.Component {
       >
         <NavButton
           style={{ width: 35, paddingRight: 15, justifyContent: 'center', alignItems: 'flex-start' }}
-          onPress={Actions.pop}
+          onPress={() => { Actions.groups({ duration: 0 }); }}
         >
           <Icon
             name="keyboard-arrow-left"
@@ -237,7 +273,7 @@ class ChatNavBar extends React.Component {
           onPress={this.goToRoomInfo}
         >
           {this._renderAvatar()}
-          <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
+          <View style={{ flex: 1, zIndex: 200, flexDirection: 'column', justifyContent: 'center' }}>
             <View style={{ flexDirection: 'row' }}>
               {this.renderAvIcon()}
               <Text

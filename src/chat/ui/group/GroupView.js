@@ -116,7 +116,7 @@ class GroupList extends Component {
         key={`list-row-${sectionID}`}
         onPress={() => {
           console.log('list-row-', data);
-          Actions.chatDetail({ obj: data, title: data.heading });
+          Actions.chatDetail({ obj: data, title: data.heading, duration: 0 });
         }}
         title={data.heading}
         titleStyle={{ paddingRight: 40 }}

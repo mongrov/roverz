@@ -9,6 +9,7 @@ import {
   StatusBar,
   Platform,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
@@ -113,6 +114,7 @@ class ChatRoomView extends React.Component {
       loadEarlier: true,
       isLoadingEarlier: false,
       msgCopied: false,
+      loaded: true,
     };
     this.onSend = this.onSend.bind(this);
     this.renderCustomActions = this.renderCustomActions.bind(this);
@@ -148,6 +150,7 @@ class ChatRoomView extends React.Component {
         this._network.chat.setRoomAsRead(_super._group._id);
       }
       _super.prepareMessages();
+      setTimeout(() => { this.setState({ loaded: true }); }, 100);
     };
     this._group.messages.addListener(this._changeListener);
 
@@ -582,31 +585,29 @@ class ChatRoomView extends React.Component {
     }
   }
 
-// renderMessageText={this.renderMessageText}
-
-  render() {
-    let filteredMessages = this.state.messages;
-    // mess = mess.slice(0, 1);
-    filteredMessages = filteredMessages.filter((obj) => {
-      const objOriginal = JSON.parse(obj.original);
-      if (!objOriginal.msg.includes('[ ](msg=')) {
-        return (obj);
-      }
-      return null;
-    });
-    // AppUtil.debug(filteredMessages, '[Performance] RoomView render');
+  renderLoading() {
     return (
       <View
-        style={[AppStyles.container, {
-          marginTop: AppSizes.navbarHeight,
-          position: 'relative',
-          backgroundColor: '#FFF',
-        }]}
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
       >
-        <StatusBar barStyle="light-content" hidden={false} />
-        {this.renderToast()}
+        <ActivityIndicator
+          animating
+          size={'large'}
+          color={'rgba(0,0,0,0.3)'}
+        />
+      </View>
+    );
+  }
+
+  renderChat() {
+    if (this.state.loaded) {
+      return (
         <GiftedChat
-          messages={filteredMessages}// this.state.messages
+          messages={this.state.messages}
           onSend={this.onSend}
           renderActions={this.renderCustomActions}
           renderFooter={this.renderFooter}
@@ -622,10 +623,44 @@ class ChatRoomView extends React.Component {
           loadEarlier={this.state.loadEarlier}
           onLoadEarlier={this.onLoadEarlier}
           isLoadingEarlier={this.state.isLoadingEarlier}
+          renderLoading={this.renderLoading}
           user={{
             _id: AppConfig.userId,
           }}
         />
+      );
+    }
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator
+          animating
+          size={'large'}
+          color={'rgba(0,0,0,0.3)'}
+        />
+      </View>
+    );
+  }
+
+// renderMessageText={this.renderMessageText}
+
+  render() {
+    return (
+      <View
+        style={[AppStyles.container, {
+          marginTop: AppSizes.navbarHeight,
+          position: 'relative',
+          backgroundColor: '#FFF',
+        }]}
+      >
+        <StatusBar barStyle="light-content" hidden={false} />
+        {this.renderToast()}
+        {this.renderChat()}
       </View>
     );
   }
