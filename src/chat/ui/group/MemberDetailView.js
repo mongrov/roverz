@@ -131,39 +131,41 @@ export default class MemberDetailView extends Component {
         }]}
         onLayout={this._onLayout}
       >
-        <View
-          style={{
-            position: 'relative',
-            // flex: 3,
-            height: 300,
-          }}
-        >
-          <CachedImage
-            source={{ uri: this.state.memberDetail.avatar }}
+        {
+          this.state.memberDetail.name !== '' &&
+          <View
             style={{
-              width: this.state.layout.width,
+              position: 'relative',
+              // flex: 3,
               height: 300,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              zIndex: 999,
-              backgroundColor: 'rgba(0,0,0,0.05)',
             }}
-          />
-          <UserAvatar
-            name={AppUtil.avatarInitials(this.state.memberDetail.name)}
-            size={300}
-            style={{
-              width: this.state.layout.width,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              zIndex: 0,
-              borderRadius: 0,
-            }}
-          />
-        </View>
-
+          >
+            <CachedImage
+              source={{ uri: this.state.memberDetail.avatar }}
+              style={{
+                width: this.state.layout.width,
+                height: 300,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                zIndex: 999,
+                backgroundColor: 'rgba(0,0,0,0.05)',
+              }}
+            />
+            <UserAvatar
+              name={AppUtil.avatarInitials(this.state.memberDetail.name)}
+              size={300}
+              style={{
+                width: this.state.layout.width,
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                zIndex: 0,
+                borderRadius: 0,
+              }}
+            />
+          </View>
+        }
         <View
           style={{
             alignItems: 'center',
@@ -175,16 +177,13 @@ export default class MemberDetailView extends Component {
           >{ this.state.memberDetail.name }</Text>
           <Text
             style={[AppStyles.memberDetailsMD]}
-          >@{ this.state.memberDetail.username }</Text>
-          {/* <Text
-            style={[AppStyles.memberDetailsSM, { paddingVertical: 3 }]}
-          >{ this.state.memberDetail.type }</Text> */}
+          >{ `@${this.state.memberDetail.username}` }</Text>
           <Text
             style={[AppStyles.memberDetailsSM]}
           >{ this.state.memberDetail.email }</Text>
           <Text
             style={[AppStyles.memberDetailsSM]}
-          >Time Zone: GMT { this.state.memberDetail.utcOffset }</Text>
+          >{ `Time Zone: GMT ${this.state.memberDetail.utcOffset}` }</Text>
           <View
             style={{
               borderTopColor: 'rgba(0,0,0,0.1)',
