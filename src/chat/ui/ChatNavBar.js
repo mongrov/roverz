@@ -257,7 +257,8 @@ class ChatNavBar extends React.Component {
       >
         <NavButton
           style={{ width: 35, paddingRight: 15, justifyContent: 'center', alignItems: 'flex-start' }}
-          onPress={() => { Actions.groups({ duration: 0 }); }}
+          // onPress={() => { Actions.groups({ duration: 0 }); }}
+          onPress={() => { Actions.pop(); }}
         >
           <Icon
             name="keyboard-arrow-left"
