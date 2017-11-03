@@ -81,11 +81,11 @@ export default class SearchRoomView extends Component {
     }
   }
 
-  _createRoomCallback(data, msg) {
-    // { rid: 'iShcWCPEu9vANd6zQrxRs9yFCKjs8yoPLX' }, 'SUCCESS'
-    console.log('_createRoomCallback', data, msg);
-    Actions.pop();
-    // Actions.chatDetail({ obj: {}, title: '' });
+  _createRoomCallback(data) {
+    const gObj = this.state._network.db.groups.findById(data.rid);
+    if (gObj) {
+      Actions.chatDetail({ obj: gObj, title: gObj.heading });
+    }
   }
 
   renderRow = (rowData, sectionID) => {

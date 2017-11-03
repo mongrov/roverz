@@ -50,8 +50,8 @@ class CustomListItem extends Component {
       ...this.props,
       containerStyle: [{
         backgroundColor: AppColors.listItemBackground,
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingTop: 12,
+        paddingBottom: 12,
         borderTopColor: AppColors.border,
         borderBottomColor: AppColors.border,
       }],
