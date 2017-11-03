@@ -34,6 +34,7 @@ class ChatNavBar extends React.Component {
       showAvatar: true,
       roomType: this.roomType,
     };
+    this.goToRoomInfo = this.goToRoomInfo.bind(this);
   }
 
   componentDidMount() {
@@ -152,11 +153,12 @@ class ChatNavBar extends React.Component {
         group: this.state.obj,
         roomName: this.state.displayName,
         roomTitle: this.state.displayTitle,
+        duration: 0,
       });
     } else {
       const user = this._net.chat.findUserByUserName(this.state.displayName);
       if (user) {
-        Actions.memberDetail({ memberId: user._id });
+        Actions.memberDetail({ memberId: user._id, duration: 0 });
       }
     }
   }

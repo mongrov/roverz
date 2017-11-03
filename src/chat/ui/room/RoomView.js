@@ -104,7 +104,6 @@ class ChatRoomView extends React.Component {
     this._network = new Network();
     this._db = this._network.db;
     this._group = props.obj;
-    AppUtil.debug(this._group, '[Performance] RoomView');
     this.state = {
       messages: [],
       typingText: null,
@@ -135,6 +134,7 @@ class ChatRoomView extends React.Component {
 
   componentDidMount() {
     const _super = this;
+    AppUtil.debug(new Date().toLocaleString(), '[Performance] RoomView');
     this._callOutstanding = false;
     this._changeListener = (messages, changes) => {
       // @todo: This check can be removed after upgrading to react-native 0.45
@@ -178,6 +178,7 @@ class ChatRoomView extends React.Component {
     // https://github.com/facebook/react-native/issues/1831, &
     // https://github.com/facebook/react-native/issues/1831#issuecomment-231069668
     _super.prepareMessages();
+    AppUtil.debug(new Date().toLocaleString(), '[Performance] RoomView');
   }
 
   componentWillUnmount() {
@@ -257,7 +258,7 @@ class ChatRoomView extends React.Component {
     }
   }
 
-  messageCopy = () => {
+  messageCopy() {
     this.setState({ msgCopied: true });
     setTimeout(() => {
       this.setState({ msgCopied: false });
@@ -567,7 +568,7 @@ class ChatRoomView extends React.Component {
             width: AppSizes.screen.width,
             alignItems: 'center',
             justifyContent: 'center',
-            zIndex: 999,
+            zIndex: 200,
           }}
         >
           <View
@@ -627,6 +628,7 @@ class ChatRoomView extends React.Component {
           user={{
             _id: AppConfig.userId,
           }}
+          style={{ backgroundColor: 'red', zIndex: 100 }}
         />
       );
     }
@@ -659,8 +661,8 @@ class ChatRoomView extends React.Component {
         }]}
       >
         <StatusBar barStyle="light-content" hidden={false} />
-        {this.renderToast()}
         {this.renderChat()}
+        {this.renderToast()}
       </View>
     );
   }

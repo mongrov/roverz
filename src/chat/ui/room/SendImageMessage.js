@@ -53,6 +53,7 @@ export default class SendImageMessage extends React.Component {
           onPress={() => Actions.photoLibrary({
             groupId: this.state.groupId,
             progressCallback: this.props.progressCallback,
+            duration: 0,
           })}
         >
           <View style={[styles.iconContainer]}>

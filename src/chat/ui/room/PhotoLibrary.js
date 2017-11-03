@@ -170,7 +170,7 @@ export default class PhotoLibrary extends React.Component {
       >
         <NavButton onPress={() => {
           this.setState({ imageData: {} });
-          Actions.pop();
+          Actions.pop({ duration: 0 });
         }}
         >
           <NavButtonText style={{

@@ -195,7 +195,7 @@ class GroupList extends Component {
             position: 'absolute',
             bottom: 90,
             right: 30,
-            zIndex: 999,
+            zIndex: 200,
             shadowColor: '#000000',
             shadowOffset: {
               width: 1,
@@ -224,7 +224,7 @@ class GroupList extends Component {
               width: AppSizes.screen.width,
               alignItems: 'center',
               justifyContent: 'center',
-              zIndex: 999,
+              zIndex: 100,
             }}
           >
             <View

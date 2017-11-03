@@ -138,6 +138,7 @@ export default class Bubble extends React.Component {
       original,
       parentMessage: null,
     };
+    this.handleMsgCopy = this.handleMsgCopy.bind(this);
   }
 
   componentWillMount() {
@@ -198,7 +199,7 @@ export default class Bubble extends React.Component {
   _deleteMessage = () => {
     Alert.alert(
       'Delete',
-      'Do you want to delete the image?',
+      'Do you want to delete the message?',
       [
         { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
         { text: 'Yes',
@@ -266,7 +267,7 @@ export default class Bubble extends React.Component {
     this.toggleActions();
   }
 
-  handleMsgCopy = () => {
+  handleMsgCopy() {
     this.props.msgCopy();
   }
 
