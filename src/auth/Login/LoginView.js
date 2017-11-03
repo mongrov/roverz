@@ -76,6 +76,7 @@ class Login extends Component {
       loading: true,
       showForm: false,
       showSSO: false,
+      ssoText: 'SSO Login',
       form_fields: FormValidation.struct({
         Email_or_Username: validEmail,
         Password: validPassword,
@@ -127,7 +128,11 @@ class Login extends Component {
     }
     const saml = this._net.chat.getLoginSetting('service');
     if (saml && saml === 'saml') {
+      const tempText = this._net.chat.getLoginSetting('buttonLabelText');
       this.setState({ showSSO: true });
+      if (tempText) {
+        this.setState({ ssoText: tempText });
+      }
     }
     const loginFormConf = this._net.getServerSetting('Accounts_ShowFormLogin');
     this.setState({ showForm: loginFormConf && loginFormConf.value });
@@ -263,7 +268,7 @@ class Login extends Component {
             }}
             onPress={Actions.ssoTest}
           >
-            <Text style={{ color: 'white' }}>SSO Login</Text>
+            <Text style={{ color: 'white' }}>{this.state.ssoText}</Text>
           </TouchableOpacity>
         </View>
       );
