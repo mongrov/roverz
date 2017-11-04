@@ -9,6 +9,7 @@ import {
   Text,
   View,
   StatusBar,
+  AppState,
   TouchableOpacity,
 } from 'react-native';
 import { ListView } from 'realm/react-native';
@@ -80,10 +81,12 @@ class GroupList extends Component {
         });
       }
     }, 100);
+    AppState.addEventListener('change', this._handleAppStateChange);
   }
 
   componentWillUnmount() {
     this._mounted = false;
+    AppState.removeEventListener('change', this._handleAppStateChange);
   }
 
   getUser = (msg) => {
@@ -107,6 +110,15 @@ class GroupList extends Component {
       return 'Attachment';
     }
     return lastMsg.text;
+  }
+
+
+  _handleAppStateChange = (nextAppState) => {
+    if (nextAppState === 'background') {
+      this.state._network.chat.setUserPresence('away');
+    } else if (nextAppState === 'active') {
+      this.state._network.chat.setUserPresence('online');
+    }
   }
 
   renderRow = (data, sectionID) => {

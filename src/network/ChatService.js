@@ -208,6 +208,13 @@ class ChatService {
     });
   }
 
+  setUserPresence(presenceStatus) {
+    this.meteor.call('UserPresence:setDefaultStatus', presenceStatus, (err, res) => {
+      console.log(err);
+      console.log(res);
+    });
+  }
+
   // set room as read
   setRoomAsRead(groupId) {
     this.meteor.call('readMessages', groupId);
