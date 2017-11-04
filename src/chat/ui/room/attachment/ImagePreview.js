@@ -13,6 +13,7 @@ import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 import { AppColors } from '../../../../theme/';
+import Group from '../../../../models/group';
 
 const styles = StyleSheet.create({
   preview: {
@@ -107,6 +108,16 @@ export default class ImagePreview extends React.Component {
                     },
                   });
                 }, 0);
+                // Actions.chatDetail({
+                //   type: 'reset',
+                //   obj: this.props.group,
+                //   title: this.props.group.heading,
+                //   attach: {
+                //     cameraData: this.state.cameraData,
+                //     cameraMessage: this.state.messageText,
+                //   },
+                //   duration: 0,
+                // });
               }}
             >
               <Icon
@@ -143,9 +154,11 @@ export default class ImagePreview extends React.Component {
 ImagePreview.defaultProps = {
   imageUrl: '',
   cameraData: {},
+  group: null,
 };
 
 ImagePreview.propTypes = {
   imageUrl: React.PropTypes.string,
   cameraData: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  group: React.PropTypes.instanceOf(Group),
 };

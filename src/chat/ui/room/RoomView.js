@@ -182,6 +182,9 @@ class ChatRoomView extends React.Component {
     // https://github.com/facebook/react-native/issues/1831#issuecomment-231069668
     _super.prepareMessages();
     AppUtil.debug(new Date().toLocaleString(), '[Performance] RoomView');
+    if (this.props.attach.cameraData) {
+      this.sendCameraImage(this.props.attach.cameraData, this.props.attach.cameraMessage);
+    }
   }
 
   componentWillReceiveProps(nextProps) {

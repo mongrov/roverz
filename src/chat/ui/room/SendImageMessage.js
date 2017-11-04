@@ -68,6 +68,7 @@ export default class SendImageMessage extends React.Component {
           name="camera-alt"
           size={28}
           onPress={() => Actions.cameraActions({
+            group: this.props.group,
             groupId: this.state.groupId,
             progressCallback: this.props.progressCallback,
             duration: 0,

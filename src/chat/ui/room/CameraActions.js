@@ -15,6 +15,7 @@ import { Actions } from 'react-native-router-flux';
 
 // import Loading from '@components/general/Loading';
 import ImageUtil from './ImageUtil';
+import Group from '../../../models/group';
 
 const styles = StyleSheet.create({
   preview: {
@@ -179,7 +180,6 @@ export default class CameraActions extends React.Component {
   }
 
   startRecording() {
-    const _super = this;
     if (this.camera) {
       console.log('record');
       this.camera.capture({
@@ -190,10 +190,31 @@ export default class CameraActions extends React.Component {
           .then((data) => {
             console.log('Start rec');
             console.log(data);
-            this.setState({
-              cameraData: data,
+            // this.setState({
+            //   cameraData: data,
+            // });
+            // _super.sendCameraVideo();
+            Actions.pop({
+              popNum: 1,
             });
-            _super.sendCameraVideo();
+            setTimeout(() => {
+              Actions.refresh({
+                attach: {
+                  cameraData: data,
+                  cameraMessage: '',
+                },
+              });
+            }, 0);
+            // Actions.chatDetail({
+            //   type: 'reset',
+            //   obj: this.props.group,
+            //   title: this.props.group.heading,
+            //   attach: {
+            //     cameraData: data,
+            //     cameraMessage: 'Video',
+            //   },
+            //   duration: 0,
+            // });
           })
           .catch(err => console.error(err));
       this.setState({
@@ -216,6 +237,7 @@ export default class CameraActions extends React.Component {
       this.camera.capture()
         .then((data) => {
           Actions.captureImagePreview({
+            group: this.props.group,
             cameraData: data,
             imageUrl: data.path,
             progressCallback: this.props.progressCallback,
@@ -357,6 +379,7 @@ CameraActions.defaultProps = {
   onSend: () => {},
   containerStyle: {},
   textStyle: {},
+  group: null,
   groupId: null,
   progressCallback: () => {},
 };
@@ -365,6 +388,7 @@ CameraActions.propTypes = {
   onSend: React.PropTypes.func,
   containerStyle: View.propTypes.style,
   textStyle: Text.propTypes.style,
+  group: PropTypes.instanceOf(Group),
   groupId: PropTypes.string,
   progressCallback: PropTypes.func,
 };
