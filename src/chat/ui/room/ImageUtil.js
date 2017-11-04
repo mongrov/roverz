@@ -1,5 +1,6 @@
 
 import Meteor from 'react-native-meteor';
+import Network from '../../../network';
 
 
 class ImageUtil {
@@ -30,6 +31,11 @@ class ImageUtil {
 
   uploadImage(data, rid, isImage, desc, callBack) {
     let ezfilesize = 10050000;
+    const _net = new Network();
+    const maxfileSize = _net.getServerSetting('FileUpload_MaxFileSize');
+    if (maxfileSize && maxfileSize.value) {
+      ezfilesize = maxfileSize.value;
+    }
     const _super = this;
     if (data.size) {
       ezfilesize = data.size;
