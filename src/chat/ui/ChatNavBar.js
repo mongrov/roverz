@@ -211,7 +211,7 @@ class ChatNavBar extends React.Component {
     const jitsiEnabled = jitsiConf && jitsiConf.value;
     if (jitsiEnabled === true) {
       const jitsiPrefix = this._net.getServerSetting('Jitsi_URL_Room_Prefix').value;
-      let uniqueID = (this._net.getServerSetting('uniqueID').value);
+      let uniqueID = (this._net.getServerSetting('uniqueID') ? this._net.getServerSetting('uniqueID').value : '12345');
       const roomID = this.state.obj._id;
       uniqueID += roomID;
       const jitsiID = jitsiPrefix + md5(uniqueID);
