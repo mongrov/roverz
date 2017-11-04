@@ -41,6 +41,8 @@ import GroupList from './src/chat/ui/group/GroupView';
 import RoomView from './src/chat/ui/room/RoomView';
 import { NavbarMenuButton } from './src/containers/ui/NavbarMenuButton/NavbarMenuButtonContainer';
 
+import ImagePreview from './src/chat/ui/room/attachment/ImagePreview';
+
 export {
     // general components
     Placeholder,
@@ -64,6 +66,7 @@ export {
     GroupList,
     NavbarMenuButton,
     RoomView,
+    ImagePreview,
 
     // auth
     ProfileEditView,

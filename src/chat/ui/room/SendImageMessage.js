@@ -70,6 +70,7 @@ export default class SendImageMessage extends React.Component {
           onPress={() => Actions.cameraActions({
             groupId: this.state.groupId,
             progressCallback: this.props.progressCallback,
+            duration: 0,
           })}
           color="#b2b2b2"
           width={30}

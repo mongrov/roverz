@@ -38,6 +38,7 @@ import SendImageMessage from './SendImageMessage';
 import ChatAvatar from './ChatAvatar';
 import CustomView from './CustomView';
 import Bubble from './Bubble';
+import ImageUtil from './ImageUtil';
 
 const NO_OF_MSGS = 30;
 
@@ -104,6 +105,7 @@ class ChatRoomView extends React.Component {
     this._network = new Network();
     this._db = this._network.db;
     this._group = props.obj;
+    this.attach = props.attach;
     this.state = {
       messages: [],
       typingText: null,
@@ -114,6 +116,7 @@ class ChatRoomView extends React.Component {
       isLoadingEarlier: false,
       msgCopied: false,
       loaded: true,
+      attach: this.attach,
     };
     this.onSend = this.onSend.bind(this);
     this.renderCustomActions = this.renderCustomActions.bind(this);
@@ -181,6 +184,16 @@ class ChatRoomView extends React.Component {
     AppUtil.debug(new Date().toLocaleString(), '[Performance] RoomView');
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.state.attach !== nextProps.attach) {
+      console.log('this.state.attach', nextProps.attach);
+      this.setState({
+        attach: nextProps.attach,
+      });
+      this.sendCameraImage(nextProps.attach.cameraData, nextProps.attach.cameraMessage);
+    }
+  }
+
   componentWillUnmount() {
     this._network.meteor.stopMonitoringChanges(this._userTyping);
     this._group.messages.removeListener(this._changeListener);
@@ -227,6 +240,15 @@ class ChatRoomView extends React.Component {
     // callback is usually used for when subscription is ready
     // Meteor.subscribe('stream-notify-room', `${this._group._id}/updateMessage`, false, this._roomChanges);
     Meteor.subscribe('stream-notify-room', `${this._group._id}/typing`, false);
+  }
+
+  sendCameraImage(cameraData, cameraMessage) {
+    const _super = this;
+    new ImageUtil().uploadImage(cameraData, this._group._id, true, cameraMessage,
+    (fuFileName, fuPercent, fuMsg) => {
+      const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
+      _super._progressCallback(fuFileName, fuMsg, percentage, 1, 0);
+    });
   }
 
   _progressCallback(id, msg, percent, totalFiles, fileCount) {
@@ -415,9 +437,9 @@ class ChatRoomView extends React.Component {
         }
       }
 
-      if (uploadProgress.length === 0) {
-        this.setState({ inProgress: false });
-      }
+      // if (uploadProgress.length === 0) {
+      //   this.setState({ inProgress: false });
+      // }
       return (
         <View style={[styles.footerContainer]}>
           { uploadProgress }
@@ -667,9 +689,14 @@ class ChatRoomView extends React.Component {
     );
   }
 }
+ChatRoomView.defaultProps = {
+  obj: {},
+  attach: {},
+};
 
 ChatRoomView.propTypes = {
   obj: PropTypes.instanceOf(Group).isRequired,
+  attach: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 /* Export Component ==================================================================== */

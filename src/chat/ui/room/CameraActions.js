@@ -4,19 +4,14 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Modal,
-  StatusBar,
-  KeyboardAvoidingView,
-  TextInput,
   Platform,
-  ActivityIndicator,
+
   Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements';
 import Camera from 'react-native-camera';
 import { Actions } from 'react-native-router-flux';
-import { AppColors } from '../../../theme/';
 
 // import Loading from '@components/general/Loading';
 import ImageUtil from './ImageUtil';
@@ -108,12 +103,11 @@ export default class CameraActions extends React.Component {
       cameraData: {},
       cameraMessage: '',
       uploadPercent: 0,
-      isUploading: false,
     };
-  }
-
-  setPreviewModalVisible(visible = false) {
-    this.setState({ modalPreviewVisible: visible });
+    this.switchType = this.switchType.bind(this);
+    this.switchFlash = this.switchFlash.bind(this);
+    this.startRecording = this.startRecording.bind(this);
+    this.stopRecording = this.stopRecording.bind(this);
   }
 
   /* eslint-disable global-require */
@@ -146,7 +140,7 @@ export default class CameraActions extends React.Component {
   }
   /* eslint-enable global-require */
 
-  switchType = () => {
+  switchType() {
     let newType;
     const { back, front } = Camera.constants.Type;
 
@@ -164,7 +158,7 @@ export default class CameraActions extends React.Component {
     });
   }
 
-  switchFlash = () => {
+  switchFlash() {
     let newFlashMode;
     const { auto, on, off } = Camera.constants.FlashMode;
 
@@ -184,7 +178,7 @@ export default class CameraActions extends React.Component {
     });
   }
 
-  startRecording = () => {
+  startRecording() {
     const _super = this;
     if (this.camera) {
       console.log('record');
@@ -198,8 +192,6 @@ export default class CameraActions extends React.Component {
             console.log(data);
             this.setState({
               cameraData: data,
-              // isUploading: true,
-              // modalPreviewVisible: true,
             });
             _super.sendCameraVideo();
           })
@@ -210,7 +202,7 @@ export default class CameraActions extends React.Component {
     }
   }
 
-  stopRecording = () => {
+  stopRecording() {
     if (this.camera) {
       this.camera.stopCapture();
       this.setState({
@@ -223,10 +215,11 @@ export default class CameraActions extends React.Component {
     if (this.camera) {
       this.camera.capture()
         .then((data) => {
-          this.setState({
+          Actions.captureImagePreview({
             cameraData: data,
-            previewImageUri: data.path,
-            modalPreviewVisible: true,
+            imageUrl: data.path,
+            progressCallback: this.props.progressCallback,
+            duration: 0,
           });
         }).catch(err => console.error(err));
     }
@@ -256,106 +249,6 @@ export default class CameraActions extends React.Component {
     Actions.pop();
   }
 
-  renderPreview() {
-    return (
-      <Modal
-        animationType={'none'}
-        transparent={false}
-        visible={this.state.modalPreviewVisible}
-        onRequestClose={() => {
-          this.setPreviewModalVisible(false);
-        }}
-      >
-        <StatusBar hidden={(Platform.OS === 'ios') !== false} />
-        <Image
-          style={styles.preview}
-          source={{ uri: this.state.previewImageUri }}
-        />
-        <KeyboardAvoidingView
-          behavior={(Platform.OS === 'ios') ? 'padding' : 'height'}
-          style={[styles.overlay, {
-            bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.4)',
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }]}
-        >
-          <View
-            style={styles.messageContainer}
-          >
-            <TextInput
-              placeholder={'Image caption..'}
-              style={[styles.textInput]}
-              onChangeText={(text) => { this.setState({ cameraMessage: text }); }}
-              value={this.state.cameraMessage}
-              underlineColorAndroid={'transparent'}
-            />
-            <TouchableOpacity
-              style={[styles.sendButton]}
-              onPress={() => {
-                this.setPreviewModalVisible(false);
-                // this.setState({ isUploading: true });
-                this.sendCameraImage();
-              }}
-            >
-              <Icon
-                name="send"
-                size={34}
-                color={AppColors.brand().third}
-              />
-            </TouchableOpacity>
-          </View>
-        </KeyboardAvoidingView>
-
-        <TouchableOpacity
-          style={[styles.captureButton, {
-            position: 'absolute',
-            top: 20,
-            left: 20,
-          }]}
-          onPress={() => {
-            this.setPreviewModalVisible(false);
-            this.setState({ cameraData: {} });
-          }}
-        >
-          <Icon
-            name="arrow-back"
-            size={20}
-            color="#000"
-            width={20}
-          />
-        </TouchableOpacity>
-      </Modal>
-    );
-  }
-
-  renderProgress() {
-    return (
-      <Modal
-        animationType={'none'}
-        transparent={false}
-        visible={this.state.isUploading}
-      >
-        <View
-          style={[styles.preview, {
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }]}
-        >
-          <ActivityIndicator
-            animating
-            size={'large'}
-            color={'grey'}
-          />
-          <Text>Uploading file {this.state.uploadPercent}%</Text>
-        </View>
-      </Modal>
-    );
-  }
-
   /* eslint-disable global-require */
   render() {
     return (
@@ -364,8 +257,6 @@ export default class CameraActions extends React.Component {
           flex: 1,
         }}
       >
-        {this.renderPreview()}
-        {this.renderProgress()}
         <Camera
           ref={(cam) => {
             this.camera = cam;

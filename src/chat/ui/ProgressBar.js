@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  ProgressBarAndroid,
   ProgressViewIOS,
   Platform,
+  Text,
 } from 'react-native';
 
 export default class ProgressBar extends React.Component {
@@ -30,13 +30,7 @@ export default class ProgressBar extends React.Component {
         />
       );
     }
-    return (
-      <ProgressBarAndroid
-        progress={this.state.progress}
-        color={'#43D35D'}
-        styleAttr={'Small'}
-      />
-    );
+    return (<Text>Loading</Text>);
   }
 }
 
