@@ -200,6 +200,7 @@ export default class CameraActions extends React.Component {
                 attach: {
                   cameraData: data,
                   cameraMessage: '',
+                  video: true,
                 },
               });
             }, 0);

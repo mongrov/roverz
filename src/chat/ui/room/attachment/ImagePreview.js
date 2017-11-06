@@ -105,6 +105,7 @@ export default class ImagePreview extends React.Component {
                     attach: {
                       cameraData: this.state.cameraData,
                       cameraMessage: this.state.messageText,
+                      video: false,
                     },
                   });
                 }, 0);

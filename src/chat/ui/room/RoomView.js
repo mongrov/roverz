@@ -193,7 +193,7 @@ class ChatRoomView extends React.Component {
       this.setState({
         attach: nextProps.attach,
       });
-      this.sendCameraImage(nextProps.attach.cameraData, nextProps.attach.cameraMessage);
+      this.sendCameraImage(nextProps.attach.cameraData, nextProps.attach.cameraMessage, nextProps.attach.video);
     }
   }
 
@@ -245,9 +245,9 @@ class ChatRoomView extends React.Component {
     Meteor.subscribe('stream-notify-room', `${this._group._id}/typing`, false);
   }
 
-  sendCameraImage(cameraData, cameraMessage) {
+  sendCameraImage(cameraData, cameraMessage, video) {
     const _super = this;
-    new ImageUtil().uploadImage(cameraData, this._group._id, true, cameraMessage,
+    new ImageUtil().uploadImage(cameraData, this._group._id, video, cameraMessage,
     (fuFileName, fuPercent, fuMsg) => {
       const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
       _super._progressCallback(fuFileName, fuMsg, percentage, 1, 0);
