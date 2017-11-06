@@ -97,7 +97,7 @@ class Network {
     this.chat.fetchChannels();
     // lets subscribe to all changes in all channels
     this.chat.subscribeToAllGroups();
-    this.chat.setOnline();
+//    this.chat.setOnline();
   }
 }
 

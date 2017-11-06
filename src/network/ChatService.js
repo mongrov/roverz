@@ -189,10 +189,6 @@ class ChatService {
     });
   }
 
-  get publicSettings() {
-    return ChatService._publicSettings;
-  }
-
   // use like setPhotoLike('kXLJrEEMKa9WSziPn');
   setPhotoLike(messageId) {
     this.meteor.call('setReaction', ':thumbsup:', messageId, (err, res) => {

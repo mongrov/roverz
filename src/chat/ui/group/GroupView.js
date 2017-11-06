@@ -9,7 +9,7 @@ import {
   Text,
   View,
   StatusBar,
-  AppState,
+//  AppState,
   TouchableOpacity,
 } from 'react-native';
 import { ListView } from 'realm/react-native';
@@ -81,12 +81,12 @@ class GroupList extends Component {
         });
       }
     }, 100);
-    AppState.addEventListener('change', this._handleAppStateChange);
+//    AppState.addEventListener('change', this._handleAppStateChange);
   }
 
   componentWillUnmount() {
     this._mounted = false;
-    AppState.removeEventListener('change', this._handleAppStateChange);
+//    AppState.removeEventListener('change', this._handleAppStateChange);
   }
 
   getUser = (msg) => {
@@ -113,13 +113,13 @@ class GroupList extends Component {
   }
 
 
-  _handleAppStateChange = (nextAppState) => {
-    if (nextAppState === 'background') {
-      this.state._network.chat.setUserPresence('away');
-    } else if (nextAppState === 'active') {
-      this.state._network.chat.setUserPresence('online');
-    }
-  }
+  // _handleAppStateChange = (nextAppState) => {
+  //   if (nextAppState === 'background') {
+  //     this.state._network.chat.setUserPresence('away');
+  //   } else if (nextAppState === 'active') {
+  //     this.state._network.chat.setUserPresence('online');
+  //   }
+  // }
 
   renderRow = (data, sectionID) => {
     const lastMsg = data.lastMessage;

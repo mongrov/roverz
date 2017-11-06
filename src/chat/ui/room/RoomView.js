@@ -225,6 +225,19 @@ class ChatRoomView extends React.Component {
     this._network.chat.fetchOldMessages(this._group, NO_OF_MSGS);
   }
 
+
+  isMarkDownEnabled() {
+    const markdownConf = this._network.getServerSetting('Markdown_Parser');
+    if (markdownConf && !(markdownConf.value === 'disabled')) {
+      return true;
+    }
+    return false;
+  }
+
+  handleUrlPress(url) {
+    AppUtil.debug(url, '[Debug] RoomView msg updates');
+  }
+
   prepareMessages() {
     this._callOutstanding = true;
     // refresh control
@@ -641,7 +654,7 @@ class ChatRoomView extends React.Component {
           renderSend={this.renderSend}
           renderComposer={this.renderComposer}
           renderCustomView={this.renderCustomView}
-          renderMessageText={this.renderMessageText}
+          renderMessageText={this.isMarkDownEnabled() ? this.renderMessageText : null}
           renderAvatar={this.renderAvatar}
           renderAvatarOnTop={true}
           // renderInputToolbar={this.renderInputToolbar}
@@ -653,6 +666,9 @@ class ChatRoomView extends React.Component {
           user={{
             _id: AppConfig.userId,
           }}
+          parsePatterns={linkStyle => [
+            { type: 'url', style: linkStyle, onPress: this.handleUrlPress },
+          ]}
           style={{ backgroundColor: 'red', zIndex: 100 }}
         />
       );
