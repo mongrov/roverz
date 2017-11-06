@@ -65,6 +65,19 @@ export default class Group {
     return null;
   }
 
+  findRootMessage(msgId) {
+    let replMsg = null;
+    if (msgId && this.messages.length > 0) {
+      let tempArray = this.messages.filtered(`_id = "${msgId}"`);
+      replMsg = (tempArray && tempArray.length > 0) ? tempArray['0'] : null;
+      while (replMsg && replMsg.isReply) {
+        tempArray = this.messages.filtered(`_id = "${replMsg.replyMessageId}"`);
+        replMsg = (tempArray && tempArray.length > 0) ? tempArray['0'] : null;
+      }
+    }
+    return replMsg;
+  }
+
   // TO-DO use indexed search instead of loop
   findAttachmentById(attachmentId) {
     if (attachmentId && this.attachments.length > 0) {
