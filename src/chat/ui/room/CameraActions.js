@@ -194,9 +194,7 @@ export default class CameraActions extends React.Component {
             //   cameraData: data,
             // });
             // _super.sendCameraVideo();
-            Actions.pop({
-              popNum: 1,
-            });
+            Actions.pop();
             setTimeout(() => {
               Actions.refresh({
                 attach: {
