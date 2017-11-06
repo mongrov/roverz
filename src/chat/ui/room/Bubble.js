@@ -276,10 +276,13 @@ export default class Bubble extends React.Component {
     if (this.props.currentMessage.text) {
       const { containerStyle, wrapperStyle, ...messageTextProps } = this.props;
       if (this.props.renderMessageText) {
-        console.log('renderMessageText', messageTextProps);
         return this.props.renderMessageText(messageTextProps);
       }
-      return <MessageText {...messageTextProps} />;
+      return (
+        <MessageText
+          {...messageTextProps}
+        />
+      );
     }
     return null;
   }
@@ -336,10 +339,13 @@ export default class Bubble extends React.Component {
   renderMessageImage() {
     if (this.props.currentMessage.image) {
       return (
-        <MessageImage
-          {...this.props}
-          pressLong={this.pressLong}
-        />
+        <View>
+          {this.renderLikes()}
+          <MessageImage
+            {...this.props}
+            pressLong={this.pressLong}
+          />
+        </View>
       );
     }
     return null;
@@ -381,13 +387,44 @@ export default class Bubble extends React.Component {
     return null;
   }
 
+  renderLikes() {
+    if (this.state.likes > 0) {
+      return (
+        <View style={{
+          backgroundColor: 'rgba(0,0,0,0.3)',
+          flexDirection: 'row',
+          position: 'absolute',
+          top: 5,
+          right: 5,
+          padding: 3,
+          borderRadius: 3,
+          zIndex: 999,
+        }}
+        >
+          <Icon
+            name={'heart-outline'}
+            type={'material-community'}
+            size={16}
+            color={'#FFF'}
+          />
+          <Text
+            style={{
+              fontFamily: 'OpenSans-Regular',
+              fontSize: 12,
+              color: '#fff',
+            }}
+          >{this.state.likes > 0 ? this.state.likes : 'no'}</Text>
+        </View>
+      );
+    }
+  }
+
   renderActions() {
-    if (this.state.showActions || this.state.likes > 0) {
+    if (this.state.showActions) {
       return (
         <View
           style={{
             marginHorizontal: 5,
-            marginBottom: 5,
           }}
         >
           <View
@@ -395,6 +432,7 @@ export default class Bubble extends React.Component {
               alignItems: 'flex-start',
               padding: 3,
               flexDirection: 'row',
+              marginVertical: 5,
             }}
           >
             <TouchableOpacity
@@ -477,8 +515,19 @@ export default class Bubble extends React.Component {
             <View>
               {this.renderCustomView()}
               {this.renderReply()}
-              {this.renderMessageImage()}
-              {this.renderMessageText()}
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'flex-start',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <View>
+                  {this.renderMessageImage()}
+                  {this.renderMessageText()}
+                </View>
+                {this.renderLikes()}
+              </View>
               <View style={[styles.bottom, this.props.bottomContainerStyle[this.props.position]]}>
                 {this.renderActions()}
                 <View>

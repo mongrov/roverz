@@ -181,9 +181,12 @@ export default class MemberDetailView extends Component {
           <Text
             style={[AppStyles.memberDetailsSM]}
           >{ this.state.memberDetail.email }</Text>
-          <Text
-            style={[AppStyles.memberDetailsSM]}
-          >{ `Time Zone: GMT ${this.state.memberDetail.utcOffset}` }</Text>
+          {
+            this.state.memberDetail.utcOffset !== null &&
+            <Text
+              style={[AppStyles.memberDetailsSM]}
+            >{ `Time Zone: GMT ${this.state.memberDetail.utcOffset}` }</Text>
+          }
           <View
             style={{
               borderTopColor: 'rgba(0,0,0,0.1)',

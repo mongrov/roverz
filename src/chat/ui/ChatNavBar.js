@@ -226,6 +226,7 @@ class ChatNavBar extends React.Component {
               jitsiURL: jitsiID,
               displayName: name,
               avatarUri: avatar,
+              duration: 0,
             });
           }}
         >

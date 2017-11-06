@@ -119,13 +119,7 @@ class Menu extends Component {
           id: 0,
           title: 'Profile',
           icon: 'account-outline',
-          onPress: () => {
-            this.props.closeSideMenu();
-            const currUser = this.getCurrentUser();
-            if (currUser) {
-              Actions.memberDetail({ memberId: currUser._id });
-            }
-          },
+          onPress: this.showProfile,
         },
         /* {
           id: 1,
@@ -227,6 +221,14 @@ class Menu extends Component {
     }
   }
 
+  showProfile = () => {
+    this.props.closeSideMenu();
+    const currUser = this.getCurrentUser();
+    if (currUser) {
+      Actions.memberDetail({ memberId: currUser._id });
+    }
+  }
+
   render = () => {
     const { menu } = this.state;
     // this.getCurrentUser();
@@ -282,12 +284,13 @@ class Menu extends Component {
               alignItems: 'center',
             }}
             >
-              <View
+              <TouchableOpacity
                 style={{
                   position: 'relative',
                   width: 100,
                   height: 100,
                 }}
+                onPress={this.showProfile}
               >
                 <CachedImage
                   source={{ uri: this.state.currentUser.avatar }}
@@ -302,7 +305,7 @@ class Menu extends Component {
                     backgroundColor: AppColors.brand().secondary,
                   }]}
                 />
-              </View>
+              </TouchableOpacity>
               <Text
                 style={{
                   color: '#FFF',

@@ -6,22 +6,22 @@ import { List, ListItem } from 'react-native-elements';
 import { ListView } from 'realm/react-native';
 
 import { Actions } from 'react-native-router-flux';
+import UserAvatar from 'react-native-user-avatar';
 
 import {
   ScrollView,
   StatusBar,
   Text,
-  Image,
   View,
   Dimensions,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { Loading } from 'roverz-chat';
+import { Loading, AppUtil } from 'roverz-chat';
 
 // import { Actions } from 'react-native-router-flux';
 import Network from '../../../network';
 import Group from '../../../models/group';
-import { AppStyles, AppSizes, AppColors } from '../../../theme/';
+import { AppStyles, AppSizes } from '../../../theme/';
 import { ListItemAvatar } from '../';
 import ModuleConfig from '../../../constants/config';
 
@@ -121,10 +121,22 @@ export default class MemberListView extends Component {
     );
   }
 
-  render() {
+  renderMemberList() {
     if (!this.state.loaded) {
       return (<Loading />);
     }
+    return (
+      <List style={{ }}>
+        <ListView
+          renderRow={this.renderRow}
+          dataSource={this.state.dataSource}
+          enableEmptySections={true}
+        />
+      </List>
+    );
+  }
+
+  render() {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={false}
@@ -134,13 +146,16 @@ export default class MemberListView extends Component {
         onLayout={this._onLayout}
       >
         <StatusBar barStyle="light-content" />
-        <Image
-          source={require('../../../images/group_icon.png')} // eslint-disable-line global-require
+        <UserAvatar
+          name={AppUtil.avatarInitials(this.state.roomName)}
+          size={150}
           style={{
             width: this.state.layout.width,
-            height: 150,
-            backgroundColor: AppColors.brand().fourth,
-            resizeMode: 'contain',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            zIndex: 0,
+            borderRadius: 0,
           }}
         />
         <View
@@ -151,6 +166,7 @@ export default class MemberListView extends Component {
             borderBottomColor: 'rgba(0,0,0,0.3)',
             borderBottomWidth: 1,
             paddingBottom: 15,
+            paddingTop: 150,
           }}
         >
           <Text
@@ -160,13 +176,7 @@ export default class MemberListView extends Component {
             style={[AppStyles.memberDetailsMD, { textAlign: 'center' }]}
           >{this.state.totalMembers} members ({this.state.onlineMembers} online)</Text>
         </View>
-        <List style={{ }}>
-          <ListView
-            renderRow={this.renderRow}
-            dataSource={this.state.dataSource}
-            enableEmptySections={true}
-          />
-        </List>
+        {this.renderMemberList()}
       </ScrollView>
     );
   }

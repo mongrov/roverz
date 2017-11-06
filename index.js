@@ -42,6 +42,7 @@ import RoomView from './src/chat/ui/room/RoomView';
 import { NavbarMenuButton } from './src/containers/ui/NavbarMenuButton/NavbarMenuButtonContainer';
 
 import ImagePreview from './src/chat/ui/room/attachment/ImagePreview';
+import PictureGallery from './src/chat/ui/room/attachment/PictureGallery';
 
 export {
     // general components
@@ -67,6 +68,7 @@ export {
     NavbarMenuButton,
     RoomView,
     ImagePreview,
+    PictureGallery,
 
     // auth
     ProfileEditView,
