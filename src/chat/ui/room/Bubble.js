@@ -131,12 +131,14 @@ export default class Bubble extends React.Component {
     const likes = this.props.currentMessage.likes;
     const isReply = this.props.currentMessage.isReply;
     const original = JSON.parse(this.props.currentMessage.original);
+    const canDelete = this._network.chat.canMessageBeDeleted(original);
     this.state = {
       showActions: false,
       likes,
       isReply,
       original,
       parentMessage: null,
+      canDelete,
     };
     this.handleMsgCopy = this.handleMsgCopy.bind(this);
   }
@@ -230,6 +232,7 @@ export default class Bubble extends React.Component {
           msgId: this.state.parentMessage._id,
           msgLikes: this.state.parentMessage.likes,
           msgTitle: this.state.parentMessage.text,
+          canDelete: this.state.canDelete,
         });
       } else {
         Actions.imagePreview({
@@ -238,6 +241,7 @@ export default class Bubble extends React.Component {
           msgId: this.props.currentMessage._id,
           msgLikes: this.props.currentMessage.likes,
           msgTitle: this.props.currentMessage.text,
+          canDelete: this.state.canDelete,
         });
       }
     } else {
@@ -249,6 +253,7 @@ export default class Bubble extends React.Component {
           actualMessage: this.state.parentMessage.text,
           msgLikes: this.state.parentMessage.likes,
           msgTitle: this.state.parentMessage.text,
+          canDelete: this.state.canDelete,
         });
       } else {
         Actions.replyMessage({
@@ -257,6 +262,7 @@ export default class Bubble extends React.Component {
           actualMessage: this.props.currentMessage.text,
           msgLikes: this.props.currentMessage.likes,
           msgTitle: this.props.currentMessage.text,
+          canDelete: this.state.canDelete,
         });
       }
       /* eslint-enable no-lonely-if */
@@ -303,7 +309,7 @@ export default class Bubble extends React.Component {
   }
 
   renderDelete() {
-    if (this._network.chat.canMessageBeDeleted(this.state.original)) {
+    if (this.state.canDelete) {
       return (<TouchableOpacity
         style={[styles.actionBtn]}
         onPress={this._deleteMessage}

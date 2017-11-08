@@ -78,7 +78,7 @@ const styl = {
       ...textStyle,
     },
     link: {
-      color: 'black',
+      color: AppColors.chat().linkLeft,
       textDecorationLine: 'underline',
     },
   }),
@@ -92,7 +92,7 @@ const styl = {
       ...textStyle,
     },
     link: {
-      color: 'white',
+      color: AppColors.chat().linkRight,
       textDecorationLine: 'underline',
     },
   }),
@@ -672,9 +672,9 @@ class ChatRoomView extends React.Component {
           user={{
             _id: AppConfig.userId,
           }}
-          parsePatterns={linkStyle => [
-            { type: 'url', style: linkStyle, onPress: this.handleUrlPress },
-            { type: 'phone', style: linkStyle, onPress: this.onPressPhoneNumber },
+          parsePatterns={() => [
+            { type: 'url', style: styl.left.link, onPress: this.handleUrlPress },
+            { type: 'phone', style: styl.left.link, onPress: this.onPressPhoneNumber },
           ]}
           style={{ backgroundColor: 'red', zIndex: 100 }}
         />

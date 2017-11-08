@@ -112,6 +112,7 @@ export default class ReplyMessageView extends React.Component {
     this.avatarUri = obj.avatar;
     const msgLikes = this.props.msgLikes;
     const msgId = this.props.msgId;
+    const canDelete = this.props.canDelete;
     this.state = {
       messages: [],
       typingText: null,
@@ -130,6 +131,7 @@ export default class ReplyMessageView extends React.Component {
       showAvatar: true,
       roomType: this.roomType,
       modalVisible: false,
+      canDelete,
     };
     this.loadingComplete = this.loadingComplete.bind(this);
     this.renderActions = this.renderActions.bind(this);
@@ -388,6 +390,30 @@ export default class ReplyMessageView extends React.Component {
     );
   }
 
+  renderDelete() {
+    if (this.state.canDelete) {
+      return (
+        <NavButton
+          style={{
+            paddingHorizontal: 5,
+            marginRight: 15,
+            justifyContent: 'center',
+            alignItems: 'flex-start',
+            // backgroundColor: 'red',
+          }}
+          onPress={this._deleteMessage}
+        >
+          <Icon
+            name="delete"
+            size={24}
+            color={'#FFF'}
+          />
+        </NavButton>
+      );
+    }
+    return null;
+  }
+
   renderNav() {
     return (
       <View style={[AppStyles.navbar, AppStyles.navbarHeight, {
@@ -422,22 +448,7 @@ export default class ReplyMessageView extends React.Component {
             Reply
           </Text>
         </View>
-        <NavButton
-          style={{
-            paddingHorizontal: 5,
-            marginRight: 15,
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-            // backgroundColor: 'red',
-          }}
-          onPress={this._deleteMessage}
-        >
-          <Icon
-            name="delete"
-            size={24}
-            color={'#FFF'}
-          />
-        </NavButton>
+        {this.renderDelete()}
       </View>
     );
   }
@@ -683,6 +694,7 @@ ReplyMessageView.defaultProps = {
   msgLikes: 0,
   msgTitle: '',
   obj: {},
+  canDelete: false,
 };
 
 ReplyMessageView.propTypes = {
@@ -693,4 +705,5 @@ ReplyMessageView.propTypes = {
   msgTitle: PropTypes.string,
   msgLikes: PropTypes.number,
   obj: React.PropTypes.object,    // eslint-disable-line react/forbid-prop-types
+  canDelete: React.PropTypes.bool,
 };
