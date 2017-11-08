@@ -216,9 +216,8 @@ class ChatRoomView extends React.Component {
       const unEmoMsg = emoji.unemojify(messages[0].text.trim());
       Meteor.call('sendMessage', {
         rid: this._group._id, msg: unEmoMsg,
-      }, (err, res) => {
-        // console.log('Any errors:'); // console.log(err);
-        // console.log('Result:'); // console.log(res);
+      }, (/* err, res */) => {
+        // Handle Error
       });
     }
   }

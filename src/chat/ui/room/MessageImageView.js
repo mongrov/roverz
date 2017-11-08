@@ -160,9 +160,7 @@ export default class MessageImageView extends React.Component {
     this._changeListener = (messages, changes) => {
       // @todo: This check can be removed after upgrading to react-native 0.45
       if (_super._changeListener == null) return;
-      
       // @todo: there seems to be a bug in realm that doesn't remove the listener
-      
       if (changes.modifications && changes.modifications.length > 0) {
         const msg = this._group.findMessageById(this.state.msgId);
         if (msg) {
@@ -210,7 +208,7 @@ export default class MessageImageView extends React.Component {
     this._changeListener = null;
   }
 
-  onChangeVisibleRow(visibleRows, changedRows) {
+  onChangeVisibleRow(/* visibleRows, changedRows */) {
   }
 
   onSend(messages = []) {
@@ -344,7 +342,7 @@ export default class MessageImageView extends React.Component {
     });
   }
 
-  _onActionButton(media, index) {
+  _onActionButton(media/* , index */) {
     if (Platform.OS === 'ios') {
       ActionSheetIOS.showShareActionSheetWithOptions({
         url: media.photo,

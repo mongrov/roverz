@@ -191,21 +191,21 @@ class ChatService {
 
   // use like setPhotoLike('kXLJrEEMKa9WSziPn');
   setPhotoLike(messageId) {
-    this.meteor.call('setReaction', ':thumbsup:', messageId, (err, res) => {
+    this.meteor.call('setReaction', ':thumbsup:', messageId, (/* err, res */) => {
       // console.log(err);
       // console.log(res);
     });
   }
 
   setOnline() {
-    this.meteor.call('setPresence', 'online', (err, res) => {
+    this.meteor.call('setPresence', 'online', (/* err, res */) => {
       // console.log(err);
       // console.log(res);
     });
   }
 
   setUserPresence(presenceStatus) {
-    this.meteor.call('UserPresence:setDefaultStatus', presenceStatus, (err, res) => {
+    this.meteor.call('UserPresence:setDefaultStatus', presenceStatus, (/* err, res */) => {
       // console.log(err);
       // console.log(res);
     });
@@ -229,7 +229,7 @@ class ChatService {
     const testMsg = `${replyForMsg} ${argMsgText}`;
     this.meteor.call('sendMessage', {
       rid: argGroup._id, msg: testMsg,
-    }, (err, res) => {
+    }, (/* err, res */) => {
       // console.log(err);
       // console.log(res);
     });
@@ -257,7 +257,7 @@ class ChatService {
 
   // use like createDirectMessage('ananth');
   deleteMessage(msgID) {
-    this.meteor.traceCall('deleteMessage', { _id: msgID }, (err, res) => {
+    this.meteor.traceCall('deleteMessage', { _id: msgID }, (/* err, res */) => {
       // console.log('delete', err);
       // console.log('delete', res);
     });
@@ -275,7 +275,7 @@ class ChatService {
     if (!isPrivate) {
       methodName = 'createChannel';
     }
-    this.meteor.call(methodName, channelName, userList, isReadonly, (err, res) => {
+    this.meteor.call(methodName, channelName, userList, isReadonly, (/* err, res */) => {
       // console.log(err);
       // console.log(res);
     });
@@ -305,7 +305,7 @@ class ChatService {
 
   getUserPresence(state) {
     const methodType = `UserPresence:${state}`;
-    this.meteor.call(methodType, (err) => {
+    this.meteor.call(methodType, (/* err */) => {
       // console.log(err);
     });
     // this.meteor.call(methodType, (err, res) => {
@@ -423,7 +423,7 @@ class ChatService {
     this.meteor.subscribe('roomFiles', groupId, Constants.ATTACHMENTS_TO_FETCH);
   }
 
-  unsubscribeAttachments(groupId) {
+  unsubscribeAttachments(/* groupId */) {
     // console.log('**** TODO: need to add unsubscribe ****', groupId);
     // this.meteor.unsubscribe('roomFiles', groupId);
   }
@@ -469,7 +469,7 @@ class ChatService {
         }
       });
 //      this.fetchAllMessagesFromAllGroups();
-    }).catch((err) => {
+    }).catch((/* err */) => {
       // console.log('Catch: ', err);
     });
     this.getUserPresence('online');
@@ -497,7 +497,7 @@ class ChatService {
         if (msgs.length < n) {
           _super.db.groups.updateNoMoreMessages(group);
         }
-      }).catch((err) => {
+      }).catch((/* err */) => {
         // console.log('Catch: ', err);
       });
     }
@@ -515,7 +515,7 @@ class ChatService {
       if (msgs.length < n) {
         _super.db.groups.updateNoMoreMessages(group);
       }
-    }).catch((err) => {
+    }).catch((/* err */) => {
       // console.log('Catch: ', err);
     });
     this.subscribeToGroup(group);
@@ -642,7 +642,7 @@ class ChatService {
         AppUtil.debug(res);
         this.db.remotefiles.addAll(this._cache);
         callBack(res);
-      }).catch((err) => {
+      }).catch((/* err */) => {
         // console.log('Catch: ', err);
         // need to see if any error we bail out or just leave the failed one
       });

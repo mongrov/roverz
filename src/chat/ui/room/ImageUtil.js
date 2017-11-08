@@ -111,7 +111,7 @@ class ImageUtil {
             type: fileType, size: filesize, name: newfilename, description: desc, _id: ezid, url: ezURI,
           };
 
-          Meteor.call('sendFileMessage', folder, 's3', fileObj, (sferr, sfres) => {
+          Meteor.call('sendFileMessage', folder, 's3', fileObj, (/* sferr, sfres */) => {
           });
           callBack(newfilename, 1, 'SENT');
         } else {

@@ -36,7 +36,7 @@ class UploadedPhotos extends Component {
     const _super = this;
     this._network.chat.subscribeAttachments(this._group._id);
     this._callOutstanding = false;
-    this._changeListener = (attachments, changes) => {
+    this._changeListener = (/* attachments, changes */) => {
       // @todo: This check can be removed after upgrading to react-native 0.45
       if (_super._changeListener == null || _super._callOutstanding === true) return;
       const result = _super._group.sortedAttachments;
@@ -77,10 +77,10 @@ class UploadedPhotos extends Component {
     Actions.pop({ refresh: { obj: this.state.roomObj } });
   }
 
-  _onSelectionChanged(media, index, selected) {
+  _onSelectionChanged(/* media, index, selected */) {
   }
 
-  _onActionButton(media, index) {
+  _onActionButton(media/* , index */) {
     if (Platform.OS === 'ios') {
       ActionSheetIOS.showShareActionSheetWithOptions({
         url: media.photo,

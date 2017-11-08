@@ -3,7 +3,6 @@ import {
   View,
   StatusBar,
 } from 'react-native';
-import Meteor from 'react-native-meteor';
 import WebView from 'roverz-chat';
 
 import Network from '../network';

@@ -87,7 +87,7 @@ export default class SearchRoomView extends Component {
     }
   }
 
-  renderRow = (rowData, sectionID) => {
+  renderRow(rowData, sectionID) {
     return (
       <ListItem
         roundAvatar

@@ -53,7 +53,7 @@ export default class MemberDetailView extends Component {
 
   componentDidMount() {
     const userDetailList = this.state._network.chat.getUserAsList(this.props.memberId);
-    userDetailList.addListener((list, changes) => {
+    userDetailList.addListener((list/* , changes */) => {
       let statColor = '';
       switch (list[0].status) {
         case 'online':

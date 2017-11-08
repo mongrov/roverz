@@ -161,6 +161,14 @@ export default class Bubble extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentMessage) {
+      this.setState({
+        likes: nextProps.currentMessage.likes,
+      });
+    }
+  }
+
   onLongPress() {
     if (this.props.onLongPress) {
       this.props.onLongPress(this.context, this.props.currentMessage);
@@ -233,6 +241,7 @@ export default class Bubble extends React.Component {
         });
       }
     } else {
+      /* eslint-disable no-lonely-if */
       if (this.state.parentMessage !== null) {
         Actions.replyMessage({
           obj: this.props.obj,
@@ -250,6 +259,7 @@ export default class Bubble extends React.Component {
           msgTitle: this.props.currentMessage.text,
         });
       }
+      /* eslint-enable no-lonely-if */
     }
   }
 

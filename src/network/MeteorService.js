@@ -13,7 +13,7 @@ class MeteorService {
   }
 
   logout() {
-    Meteor.logout((res) => {
+    Meteor.logout((/* res */) => {
       // console.log(res);
     });
   }
