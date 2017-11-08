@@ -14,7 +14,6 @@ export default class SSOTest extends React.Component {
     super(props);
     this.n = new Network();
     this.serverUrl = this.n.getServer();
-    console.log('this.serverUrl', this.serverUrl);
     this.state = {
       isLoading: true,
     };
@@ -24,23 +23,6 @@ export default class SSOTest extends React.Component {
 
   }
 
-  /* onNavigationStateChange(event) {
-    const n = new Network();
-    let credential = '1838484848';
-    // console.log('onNavigationStateChange', webViewState);
-    console.log(event);
-    if (event.startsWith('https://instance.brandName/_saml/authorize/brand/')) {
-      console.log('******Credential is ****');
-      credential = event.replace('https://instance.brandName/_saml/authorize/brand/', '');
-      console.log(credential);
-    }
-    if (event.startsWith('https://instance.brandName/_saml/validate/brand')) {
-      n.chat.loginWithSaml(credential);
-      console.log('Logged in check ****');
-      console.log(Meteor.user());
-      console.log(Meteor.userId());
-    }
-  } */
 
   /* eslint-disable global-require */
   render() {
@@ -54,19 +36,11 @@ export default class SSOTest extends React.Component {
         <WebView
           url={`https://${this.serverUrl}.${ModuleConfig.brandName}`}
           onNavigationStateChange={(event) => {
-            console.log('event');
-            console.log(event);
             if (event.startsWith(`https://${this.serverUrl}.${ModuleConfig.brandName}/_saml/authorize/yap/`)) {
-              console.log('******Credential is ****');
               credential = event.replace(`https://${this.serverUrl}.${ModuleConfig.brandName}/_saml/authorize/yap/`, '');
-              console.log(credential);
             }
             if (event.startsWith(`https://${this.serverUrl}.${ModuleConfig.brandName}/_saml/validate/yap`)) {
               this.n.chat.loginWithSaml(credential);
-              console.log('Logged in check ****');
-              console.log(Meteor.user());
-              console.log(Meteor.userId());
-              // Actions.app({ type: 'reset' });
             }
           }}
         />

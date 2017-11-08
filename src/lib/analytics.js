@@ -18,8 +18,8 @@ const track = store => next => (action) => {
           // Send to Google Analytics
           ModuleConfig.gaTracker.trackScreenView(screenName);
         } catch (err) {
-          console.log(store);
-          console.log(err);
+          // console.log(store);
+          // console.log(err);
         }
       }
       break;

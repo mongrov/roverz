@@ -24,7 +24,6 @@ export default class ChatAvatar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('memberDetail', 'componentWillReceiveProps', nextProps);
     this.setState({
       avatarUri: nextProps.avatar,
       avatarName: nextProps.name,

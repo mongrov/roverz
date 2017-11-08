@@ -47,17 +47,9 @@ export default class MessageImage extends React.Component {
   }
 
   render() {
-    console.log('this.props.currentMessage', this.props.currentMessage);
     return (
       <View style={[styles.container, this.props.containerStyle]}>
         <TouchableOpacity
-          /* onPress={() => Actions.imagePreview({
-            imageUri: this.props.currentMessage.image,
-            obj: this.props.obj,
-            msgId: this.props.currentMessage._id,
-            msgLikes: this.props.currentMessage.likes,
-            msgTitle: this.props.currentMessage.text,
-          })} */
           onPress={() => {
             Actions.photoPreview({
               imgUrl: this.props.currentMessage.image,

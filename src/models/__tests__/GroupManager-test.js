@@ -40,13 +40,13 @@ it('list getters', () => {
   x = db.groups.findByName('GeNeraL');
   expect(x).not.toBeNull();
   x = db.groups.search('ge');
-  console.log(x);
+  // console.log(x);
   x = db.groups.search('gro');
-  console.log(x);
+  // console.log(x);
   x = db.groups.search('genr');
-  console.log(x);
+  // console.log(x);
   x = db.groups.search('zz');
-  console.log(x);
+  // console.log(x);
 
   // @todo: check sorted
   x = db.groups.sortedList; // - TBD

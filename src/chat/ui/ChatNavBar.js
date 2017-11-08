@@ -38,7 +38,6 @@ class ChatNavBar extends React.Component {
   }
 
   componentDidMount() {
-    console.log('this.state.obj', this.state.obj);
   }
 
   setAvType() {

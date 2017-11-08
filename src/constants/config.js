@@ -110,7 +110,7 @@ export default {
       resetInstanceUrl = instanceUrl;
       this.setBrand(brandIp);
     }
-    console.log('Resetting instance to:', instanceIp, resetInstanceUrl);
+    // console.log('Resetting instance to:', instanceIp, resetInstanceUrl);
     this.space = instanceIp;
     this.instance = resetInstanceUrl;
     this.urls.resetPassword = `https://${this.instance}`;

@@ -8,13 +8,13 @@ class MeteorService {
 
   init() {
     // setup meteor
-    console.log('-------------meteor service init---------');
+    // console.log('-------------meteor service init---------');
     Meteor.connect(AppConfig.urls.WS_URL);
   }
 
   logout() {
     Meteor.logout((res) => {
-      console.log(res);
+      // console.log(res);
     });
   }
 
@@ -33,7 +33,7 @@ class MeteorService {
     }
     const items = Meteor.getData().db.observe(() => Meteor.getData().db[collection].find({}, {}));
     items.subscribe(cb);
-    // console.log("-------------- subscribed ["+collection+"] -----------------------");
+    // // console.log("-------------- subscribed ["+collection+"] -----------------------");
     return items;
   }
   stopMonitoringChanges(context) {

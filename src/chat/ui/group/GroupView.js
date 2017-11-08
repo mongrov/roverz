@@ -60,9 +60,6 @@ class GroupList extends Component {
     });
     this._insideStateUpdate = false;
     this.state._db.groups.list.addListener(() => {
-      // this.state._db.groups.list.addListener((groups, changes) => {
-      //   console.log('***** list changed **** ');
-      // console.log(changes);
       if (!this._mounted || this._insideStateUpdate || !this.state._network.meteor.getCurrentUser()) return;
       this._insideStateUpdate = true;
       this.setState({
@@ -127,7 +124,6 @@ class GroupList extends Component {
       <ListItem
         key={`list-row-${sectionID}`}
         onPress={() => {
-          console.log('list-row-', data);
           Actions.chatDetail({ obj: data, title: data.heading, duration: 0 });
         }}
         title={data.heading}

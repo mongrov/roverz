@@ -160,9 +160,9 @@ export default class MessageImageView extends React.Component {
     this._changeListener = (messages, changes) => {
       // @todo: This check can be removed after upgrading to react-native 0.45
       if (_super._changeListener == null) return;
-      console.log(`***** [chat-${_super._group.name}] got updated  **** `);
+      
       // @todo: there seems to be a bug in realm that doesn't remove the listener
-      console.log(changes.modifications, changes.modifications.length);
+      
       if (changes.modifications && changes.modifications.length > 0) {
         const msg = this._group.findMessageById(this.state.msgId);
         if (msg) {
@@ -211,9 +211,6 @@ export default class MessageImageView extends React.Component {
   }
 
   onChangeVisibleRow(visibleRows, changedRows) {
-    console.log('**** onchange visible row****');
-    console.log(visibleRows);
-    console.log(changedRows);
   }
 
   onSend(messages = []) {
@@ -227,7 +224,6 @@ export default class MessageImageView extends React.Component {
   }
 
   onLoadEarlier() {
-    console.log('**** load earlier pressed ****');
   }
 
   setAvType() {
@@ -263,7 +259,6 @@ export default class MessageImageView extends React.Component {
         modal: false,
       };
       _super.setState({ uploadingFile });
-      console.log(_super.state.uploadingFile);
     } else {
       uploadingFile[fileCount] = {
         id,
@@ -280,7 +275,6 @@ export default class MessageImageView extends React.Component {
   }
 
   _onPressLike = () => {
-    console.log('**** like pressed **** ');
     this._network.chat.setPhotoLike(this.state.msgId);
   }
 
@@ -316,7 +310,6 @@ export default class MessageImageView extends React.Component {
 
   loadingComplete() {
     this.setState({ hasLoaded: true });
-    console.log('img load complt');
   }
 
   _renderAvatar() {
@@ -360,7 +353,7 @@ export default class MessageImageView extends React.Component {
       () => {},
       () => {});
     } else {
-      console.log(`handle sharing on android for ${media.photo}, index: ${index}`);
+      // console.log(`handle sharing on android for ${media.photo}, index: ${index}`);
     }
   }
 
@@ -591,9 +584,7 @@ export default class MessageImageView extends React.Component {
   }
 
   render() {
-    console.log('this.state.obj1', this.state.obj);
     let filteredMessages = this.state.messages;
-    // mess = mess.slice(0, 1);
     filteredMessages = filteredMessages.filter((obj) => {
       const objOriginal = JSON.parse(obj.original);
       if (objOriginal.msg.includes(this.state.msgId)) {

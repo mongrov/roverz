@@ -47,5 +47,5 @@ it('switchDb test', () => {
   expect(db.users.list).toHaveLength(3);
   db.switchDb('inst', 'test');
   expect(db.users.list).toHaveLength(2);
-  console.log('----**********************----');
+  // console.log('----**********************----');
 });

@@ -125,7 +125,7 @@ export default class PhotoLibrary extends React.Component {
           const _progressCallback = this.props.progressCallback;
           new ImageUtil().uploadImage(data, this.state.groupId, true, this.state.imageMessage,
           (fuFileName, fuPercent, fuMsg) => {
-            console.log(fuFileName, ':', fuPercent, ':', fuMsg);
+            // console.log(fuFileName, ':', fuPercent, ':', fuMsg);
             const fileNameCount = fuFileName;
             const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
             if (_progressCallback) {
@@ -144,7 +144,7 @@ export default class PhotoLibrary extends React.Component {
     const _progressCallback = this.props.progressCallback;
     new ImageUtil().uploadImage(this.state.imageData, this.state.groupId, true, this.state.imageMessage,
     (fuFileName, fuPercent, fuMsg) => {
-      console.log(fuFileName, ':', fuPercent, ':', fuMsg);
+      // console.log(fuFileName, ':', fuPercent, ':', fuMsg);
       const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
       if (_progressCallback) {
         _progressCallback(fuFileName, fuMsg, percentage, 1, 0);

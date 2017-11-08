@@ -101,7 +101,7 @@ const styles = {
     marginRight: 10,
   },
   actionBtn: {
-    padding: 7,
+    padding: 12,
     borderRadius: 3,
     borderColor: '#fff',
     flexDirection: 'row',
@@ -215,21 +215,41 @@ export default class Bubble extends React.Component {
 
   _handleComments = () => {
     if (this.state.original.file) {
-      Actions.imagePreview({
-        imageUri: this.props.currentMessage.image,
-        obj: this.props.obj,
-        msgId: this.props.currentMessage._id,
-        msgLikes: this.props.currentMessage.likes,
-        msgTitle: this.props.currentMessage.text,
-      });
+      if (this.state.parentMessage !== null) {
+        Actions.imagePreview({
+          imageUri: this.state.parentMessage.image,
+          obj: this.props.obj,
+          msgId: this.state.parentMessage._id,
+          msgLikes: this.state.parentMessage.likes,
+          msgTitle: this.state.parentMessage.text,
+        });
+      } else {
+        Actions.imagePreview({
+          imageUri: this.props.currentMessage.image,
+          obj: this.props.obj,
+          msgId: this.props.currentMessage._id,
+          msgLikes: this.props.currentMessage.likes,
+          msgTitle: this.props.currentMessage.text,
+        });
+      }
     } else {
-      Actions.replyMessage({
-        obj: this.props.obj,
-        msgId: this.props.currentMessage._id,
-        actualMessage: this.props.currentMessage.text,
-        msgLikes: this.props.currentMessage.likes,
-        msgTitle: this.props.currentMessage.text,
-      });
+      if (this.state.parentMessage !== null) {
+        Actions.replyMessage({
+          obj: this.props.obj,
+          msgId: this.state.parentMessage._id,
+          actualMessage: this.state.parentMessage.text,
+          msgLikes: this.state.parentMessage.likes,
+          msgTitle: this.state.parentMessage.text,
+        });
+      } else {
+        Actions.replyMessage({
+          obj: this.props.obj,
+          msgId: this.props.currentMessage._id,
+          actualMessage: this.props.currentMessage.text,
+          msgLikes: this.props.currentMessage.likes,
+          msgTitle: this.props.currentMessage.text,
+        });
+      }
     }
   }
 
@@ -445,18 +465,6 @@ export default class Bubble extends React.Component {
                 size={22}
                 color={'#FFF'}
               />
-              {
-                (this.state.likes > 0 &&
-                  <Text
-                    style={{
-                      fontFamily: 'OpenSans-Regular',
-                      fontSize: 12,
-                      color: '#fff',
-                      marginLeft: 5,
-                    }}
-                  >{this.state.likes > 0 ? this.state.likes : 'no'}</Text>
-                )
-              }
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.actionBtn]}

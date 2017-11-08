@@ -40,19 +40,13 @@ class ImageUtil {
     if (data.size) {
       ezfilesize = data.size;
     }
-      // RNFS.stat(data.path).then((stats) => {
-        // console.log("**** file stats ****");
-        // console.log(stats);
-        // ezfilesize = stats.size;
     _super._metUploadRequest(data, ezfilesize, rid, isImage, desc, callBack);
-      // });
   }
 
   _metUploadRequest(data, filesize, roomid, isImage, desc, callBack) {
     var acfilename = data.path.replace(/^.*[\\\/]/, ''); // eslint-disable-line no-useless-escape
     const fileTemp = acfilename.split('?');// this is the key we got from meteor
     acfilename = fileTemp[0];
-    console.log('Image Upload _metUploadRequest=', acfilename, '::', roomid);
     const _super = this;
         // upload request
     let ezType = 'video/mp4';
@@ -61,7 +55,6 @@ class ImageUtil {
 
     Meteor.call('slingshot/uploadRequest', 'rocketchat-uploads', { name: newFileName, size: filesize, type: ezType },
     { rid: roomid }, (err, res) => {
-      console.log('_metUploadRequest errors:'); console.log(err);
       _super._parseMetUploadResponse(data, newFileName, filesize, res, ezType, desc, callBack);
     });
   }
@@ -119,13 +112,9 @@ class ImageUtil {
           };
 
           Meteor.call('sendFileMessage', folder, 's3', fileObj, (sferr, sfres) => {
-            console.log(sferr);
-            console.log(sfres);
           });
           callBack(newfilename, 1, 'SENT');
         } else {
-          console.log('~~~~~~~~~~~~~~FAILED~~~~~~~~~~~~~~~~~~');
-          console.log(xhr);
           callBack(newfilename, 1, 'FAILED');
         }
       }

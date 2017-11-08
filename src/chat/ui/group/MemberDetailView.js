@@ -53,25 +53,7 @@ export default class MemberDetailView extends Component {
 
   componentDidMount() {
     const userDetailList = this.state._network.chat.getUserAsList(this.props.memberId);
-    // this._group.messages.addListener(this._changeListener);
-    // something.addListener(this._changeListener);
-    /*
-    { '0':
-      { _id: '5qtTHRgx5uhzFkYuB',
-      name: 'mano',
-      username: 'mano',
-      status: 'away',
-      active: 'true',
-      statusConnection: 'away',
-      utcOffset: '5.5 ',
-      emails: 'email,',
-      lastLogin: Fri Aug 18 2017 10:07:31 GMT+0530 (IST),
-      createdAt: Mon Jul 10 2017 14:56:58 GMT+0530 (IST),
-      type: 'user',
-      roles: 'user,' } }
-    */
     userDetailList.addListener((list, changes) => {
-      console.log('memberDetail', list, changes);
       let statColor = '';
       switch (list[0].status) {
         case 'online':
@@ -98,17 +80,12 @@ export default class MemberDetailView extends Component {
         },
       });
     });
-    console.log('MemberDetailView', this.state._network.chat.pullFullUserData(this.props.memberUsername));
-    console.log('FindUserByID', this.state._network.chat.getUserAsList(this.props.memberId));
   }
 
   componentWillUnmount() {
   }
 
   _changeListener() {
-    console.log('listener changed');
-    // console.log(this.state.memberDetailList);
-    console.log('FindUserByID', this.network.chat.getUserAsList(this.props.memberId));
   }
 
   _onLayout = (event) => {
@@ -122,7 +99,6 @@ export default class MemberDetailView extends Component {
 
   /* eslint-disable global-require */
   render() {
-    console.log('memberDetail1', this.state.memberDetail);
     return (
       <ScrollView
         automaticallyAdjustContentInsets={false}

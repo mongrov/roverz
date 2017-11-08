@@ -116,7 +116,7 @@ class PushService {
         };
       }
 
-      console.log('==============> push =================', data);
+      // console.log('==============> push =================', data);
       Meteor.call('raix:push-update', data, (err, res) => {
         AppUtil.debug('Push backend', JSON.stringify(res));
       });
@@ -165,7 +165,7 @@ class PushService {
         // should the number of milliseconds between each interval
       actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
     });
-    // console.log('Set ******* notifications *******');
+    // // console.log('Set ******* notifications *******');
     // PushNotification.localNotificationSchedule({
     //   message: 'My Notification Message', // (required)
     //   date: new Date(Date.now() + (60 * 1000)), // in 60 secs

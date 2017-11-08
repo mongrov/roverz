@@ -142,9 +142,9 @@ class ChatRoomView extends React.Component {
     this._changeListener = (messages, changes) => {
       // @todo: This check can be removed after upgrading to react-native 0.45
       if (_super._changeListener == null || _super._callOutstanding === true || !_super._didMount) return;
-      console.log(`***** [chat-${_super._group.name}] got updated  **** `);
+      // console.log(`***** [chat-${_super._group.name}] got updated  **** `);
       // @todo: there seems to be a bug in realm that doesn't remove the listener
-      console.log(changes);
+      // console.log(changes);
 
       // first mark the channel as read
       // @todo: There is a scenario, when this msg and subscription message is out of order
@@ -189,7 +189,7 @@ class ChatRoomView extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.state.attach !== nextProps.attach) {
-      console.log('this.state.attach', nextProps.attach);
+      // console.log('this.state.attach', nextProps.attach);
       this.setState({
         attach: nextProps.attach,
       });
@@ -214,14 +214,14 @@ class ChatRoomView extends React.Component {
       Meteor.call('sendMessage', {
         rid: this._group._id, msg: unEmoMsg,
       }, (err, res) => {
-        console.log('Any errors:'); console.log(err);
-        console.log('Result:'); console.log(res);
+        // console.log('Any errors:'); // console.log(err);
+        // console.log('Result:'); // console.log(res);
       });
     }
   }
 
   onLoadEarlier() {
-    console.log('**** load earlier pressed ****');
+    // console.log('**** load earlier pressed ****');
     this._network.chat.fetchOldMessages(this._group, NO_OF_MSGS);
   }
 
@@ -280,7 +280,7 @@ class ChatRoomView extends React.Component {
         modal: false,
       };
       _super.setState({ uploadingFile });
-      console.log(_super.state.uploadingFile);
+      // console.log(_super.state.uploadingFile);
     } else {
       uploadingFile[fileCount] = {
         id,

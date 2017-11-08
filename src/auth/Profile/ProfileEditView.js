@@ -28,9 +28,6 @@ class ProfileEditView extends Component {
   }
 
   componentDidMount() {
-    // console.log(this.net.chat.getCurrentUser());
-    // console.log('kkkk', this.net.chat.pullFullUserData('kumar'));
-    // console.log('kkkk', this.net.chat.getUserAsList('6Qk76sozAy6oNSopT'));
   }
 
   render() {

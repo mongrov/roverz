@@ -63,7 +63,6 @@ export default class SearchRoomView extends Component {
       const dataUsers = data.users;
       const dataRooms = data.rooms;
       _su.memberListData = dataUsers.concat(dataRooms);
-      console.log('_searchRoomsCallback', _su.memberListData, msg);
       _su.setState({
         dataSource: _su.state.dataSource.cloneWithRows(_su.memberListData),
         loaded: true,
@@ -89,8 +88,6 @@ export default class SearchRoomView extends Component {
   }
 
   renderRow = (rowData, sectionID) => {
-    console.log('rowData');
-    console.log(rowData);
     return (
       <ListItem
         roundAvatar

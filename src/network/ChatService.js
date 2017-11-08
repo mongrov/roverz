@@ -37,7 +37,7 @@ class ChatService {
   initSubscriptions() {
     var _super = this;
     const uid = Meteor.userId();
-    console.log(`[Meteor] UserId is : ${uid}`);
+    // console.log(`[Meteor] UserId is : ${uid}`);
 
     // save the user to db
     this.db.setUserId(uid);
@@ -71,11 +71,11 @@ class ChatService {
     // @todo: The return value to be used for unsubscribe
     this._monStreamNotifyUser = this.meteor.monitorChanges('stream-notify-user', (results) => {
       if (results && results.length > 0) {
-        // console.log('User changes:', results);
+        // // console.log('User changes:', results);
         // take some action here
         // update subscriptions-changed
         if (results[0].eventName.endsWith('subscriptions-changed') || results[0].eventName.endsWith('rooms-changed')) {
-          console.log('User Subscription updated:', results[0].args[0], results[0].args[1]);
+          // console.log('User Subscription updated:', results[0].args[0], results[0].args[1]);
           const msgs = [];
           msgs.push(results[0].args[1]);
           const subscriptions = _super._subscription2group(msgs);
@@ -102,7 +102,7 @@ class ChatService {
         //      media: { audio: true } } ],
         // _version: 3 } ]
         if (results[0].eventName.endsWith('/webrtc')) {
-          console.log('WebRTC updates', results);
+          // console.log('WebRTC updates', results);
           if (results[0].args[0] === 'call') {
             // new incoming call, lets for now show ios call
             // showCallScreen(results[0].args[1]);
@@ -129,7 +129,7 @@ class ChatService {
   getPublicSettings(callBack) {
     this.meteor.call('public-settings/get', (err, res) => {
       if (err) {
-        console.log(err);
+        // console.log(err);
         callBack(null);
       } else {
         const settingsList = {};
@@ -192,22 +192,22 @@ class ChatService {
   // use like setPhotoLike('kXLJrEEMKa9WSziPn');
   setPhotoLike(messageId) {
     this.meteor.call('setReaction', ':thumbsup:', messageId, (err, res) => {
-      console.log(err);
-      console.log(res);
+      // console.log(err);
+      // console.log(res);
     });
   }
 
   setOnline() {
     this.meteor.call('setPresence', 'online', (err, res) => {
-      console.log(err);
-      console.log(res);
+      // console.log(err);
+      // console.log(res);
     });
   }
 
   setUserPresence(presenceStatus) {
     this.meteor.call('UserPresence:setDefaultStatus', presenceStatus, (err, res) => {
-      console.log(err);
-      console.log(res);
+      // console.log(err);
+      // console.log(res);
     });
   }
 
@@ -230,8 +230,8 @@ class ChatService {
     this.meteor.call('sendMessage', {
       rid: argGroup._id, msg: testMsg,
     }, (err, res) => {
-      console.log(err);
-      console.log(res);
+      // console.log(err);
+      // console.log(res);
     });
   }
 
@@ -250,7 +250,7 @@ class ChatService {
   // use like createDirectMessage('ananth');
   createDirectMessage(userName, callBack) {
     this.meteor.call('createDirectMessage', userName, (err, res) => {
-      console.log(err);
+      // console.log(err);
       callBack(res, 'SUCCESS');
     });
   }
@@ -258,14 +258,14 @@ class ChatService {
   // use like createDirectMessage('ananth');
   deleteMessage(msgID) {
     this.meteor.traceCall('deleteMessage', { _id: msgID }, (err, res) => {
-      console.log('delete', err);
-      console.log('delete', res);
+      // console.log('delete', err);
+      // console.log('delete', res);
     });
   }
 
   joinRoom(roomId, callBack) {
     this.meteor.call('joinRoom', roomId, null, (err, res) => {
-      console.log(err);
+      // console.log(err);
       callBack(res, 'SUCCESS');
     });
   }
@@ -276,8 +276,8 @@ class ChatService {
       methodName = 'createChannel';
     }
     this.meteor.call(methodName, channelName, userList, isReadonly, (err, res) => {
-      console.log(err);
-      console.log(res);
+      // console.log(err);
+      // console.log(res);
     });
   }
 
@@ -286,16 +286,16 @@ class ChatService {
     setTimeout(() => {
       const loginParams = { saml: true, credentialToken: credential };
       _super.meteor.call('login', loginParams, (err, res) => {
-        console.log('****** login with saml ****');
-        console.log(err);
-        console.log(res);
+        // console.log('****** login with saml ****');
+        // console.log(err);
+        // console.log(res);
         if (!err) {
           // lets call login / resume and see if we get the user id
           Meteor._loginWithToken(res.token);
           AppConfig.setUserId(res.id);
           setTimeout(() => {
-            console.log(Meteor.user());
-            console.log(Meteor.userId());
+            // console.log(Meteor.user());
+            // console.log(Meteor.userId());
             Actions.app({ type: 'reset' });
           }, 100);
         }
@@ -306,10 +306,10 @@ class ChatService {
   getUserPresence(state) {
     const methodType = `UserPresence:${state}`;
     this.meteor.call(methodType, (err) => {
-      console.log(err);
+      // console.log(err);
     });
     // this.meteor.call(methodType, (err, res) => {
-    //   console.log(err);
+    //   // console.log(err);
     // });
   }
 
@@ -424,23 +424,23 @@ class ChatService {
   }
 
   unsubscribeAttachments(groupId) {
-    console.log('**** TODO: need to add unsubscribe ****', groupId);
+    // console.log('**** TODO: need to add unsubscribe ****', groupId);
     // this.meteor.unsubscribe('roomFiles', groupId);
   }
 
   fetchChannels() {
     const _super = this;
     const yap = this.db.app.state;
-    console.log(yap);
+    // console.log(yap);
     const lastSync = yap ? yap.lastSync.getTime() : 0;
-    console.log(`Last Sync:${lastSync}`);
-    console.log('--- [Network] --- ====================================');
+    // console.log(`Last Sync:${lastSync}`);
+    // console.log('--- [Network] --- ====================================');
     this.db.app.setLastSync();
     const noOfMsgs = 5;
     const req1 = this.meteor.traceCall('rooms/get', { $date: lastSync });
     const req2 = this.meteor.call('subscriptions/get', { $date: lastSync });
     Promise.all([req1, req2]).then((results) => {
-      // console.log('Then: ', results);
+      // // console.log('Then: ', results);
       // results[0] -  rooms, [1] - subscriptions
       // @todo: move this to util - shallowMerge?
       const groups = _super._room2group(results[0]);
@@ -451,18 +451,18 @@ class ChatService {
           groups[k] = Object.assign(groups[k], subscriptions[k]);
         }
       });
-      // console.log('Merged:', groups);
+      // // console.log('Merged:', groups);
       _super.db.groups.addAll(groups);
       Object.keys(subsResult).forEach((k) => {
         if (lastSync === 0) {
           const tempGroup = _super.db.groups.findById(subsResult[k].rid);
-          console.log(subsResult[k].rid, tempGroup);
+          // console.log(subsResult[k].rid, tempGroup);
           if (tempGroup) {
             _super.fetchMessages(tempGroup, noOfMsgs);
           }
         } else if (new Date(lastSync).getTime() < subsResult[k]._updatedAt.getTime()) {
           const tempGroup = _super.db.groups.findById(subsResult[k].rid);
-          console.log(subsResult[k]._updatedAt.$date, subsResult[k].rid, tempGroup);
+          // console.log(subsResult[k]._updatedAt.$date, subsResult[k].rid, tempGroup);
           if (tempGroup) { // if no msgs try to fetch last msg
             _super.fetchMessages(tempGroup, noOfMsgs);
           }
@@ -470,7 +470,7 @@ class ChatService {
       });
 //      this.fetchAllMessagesFromAllGroups();
     }).catch((err) => {
-      console.log('Catch: ', err);
+      // console.log('Catch: ', err);
     });
     this.getUserPresence('online');
   }
@@ -490,7 +490,7 @@ class ChatService {
     if (msgList.length > 0) {
       const req1 = this.meteor.call('loadHistory', group._id, msgList[msgList.length - 1].createdAt, n, null);
       Promise.all([req1]).then((results) => {
-        // console.log('Then: ', results);
+        // // console.log('Then: ', results);
         // results[0] is from 'loadHistory'
         const msgs = results[0].messages;
         _super.yaps2db(group, msgs);
@@ -498,7 +498,7 @@ class ChatService {
           _super.db.groups.updateNoMoreMessages(group);
         }
       }).catch((err) => {
-        console.log('Catch: ', err);
+        // console.log('Catch: ', err);
       });
     }
   }
@@ -508,7 +508,7 @@ class ChatService {
     const _super = this;
     const req1 = this.meteor.call('loadHistory', group._id, null, n, null);
     Promise.all([req1]).then((results) => {
-      // console.log('Then: ', results);
+      // // console.log('Then: ', results);
       // results[0] is from 'loadHistory'
       const msgs = results[0].messages;
       _super.yaps2db(group, msgs);
@@ -516,7 +516,7 @@ class ChatService {
         _super.db.groups.updateNoMoreMessages(group);
       }
     }).catch((err) => {
-      console.log('Catch: ', err);
+      // console.log('Catch: ', err);
     });
     this.subscribeToGroup(group);
   }
@@ -563,8 +563,8 @@ class ChatService {
       this.meteor.subscribe('stream-notify-room', `${group._id}/deleteMessage`, false);
       this._groupSubsriptionMap[group._id] = 'ADDED'; // use set or array instead of map
     }
-    //   console.log("***** room-change:", err);
-    //   console.log("***** room-change:", res);
+    //   // console.log("***** room-change:", err);
+    //   // console.log("***** room-change:", res);
     // });
   }
 
@@ -624,11 +624,11 @@ class ChatService {
       }
       res.push(tmp);
     }
-    // console.log(res);
+    // // console.log(res);
     if (imageReqs.length > 0) {
       // fetch all image urls
       Promise.all(imageReqs).then((results) => {
-        // console.log('Then: ', results);
+        // // console.log('Then: ', results);
         // results is an array of [{url:result}, {url:result} ...]
         for (let i = 0; i < results.length; i += 1) {
           const tmp = res[lookups[i]];
@@ -643,7 +643,7 @@ class ChatService {
         this.db.remotefiles.addAll(this._cache);
         callBack(res);
       }).catch((err) => {
-        console.log('Catch: ', err);
+        // console.log('Catch: ', err);
         // need to see if any error we bail out or just leave the failed one
       });
     } else {

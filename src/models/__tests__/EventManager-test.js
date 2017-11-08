@@ -30,7 +30,7 @@
 //   expect(db.events.findById('1')).toMatchObject({ eventName: 'event 1' });
 //   expect(db.events.findById('10')).toBeNull();
 //   const x = db.events.findById('1');
-//   console.log(x);
+//   // console.log(x);
 //   db.events.addAll(null);
 // });
 

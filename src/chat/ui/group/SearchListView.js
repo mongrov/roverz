@@ -49,7 +49,6 @@ export default class SearchListView extends Component {
 
   componentDidMount() {
     this.getMessages();
-    // console.log('this.state.roomObj', this.state.roomObj);
   }
 
   componentWillUnmount() {
@@ -65,7 +64,6 @@ export default class SearchListView extends Component {
     const _su = this;
     if (msg === 'SUCCESS') {
       _su.searchListData = data;
-      console.log('_searchCallback', _su.searchListData, msg);
       _su.setState({
         dataSource: _su.state.dataSource.cloneWithRows(_su.searchListData),
         loaded: true,
@@ -100,7 +98,7 @@ export default class SearchListView extends Component {
         <FormInputSimple
           // value={'OK'}
           onChangeText={(text) => {
-            console.log(text);
+            // console.log(text);
             this.setState({ searchText: text, loaded: false });
             this.getMessages();
           }}
@@ -136,25 +134,3 @@ SearchListView.propTypes = {
   group: PropTypes.instanceOf(Group),
 };
 
-/*
-
-<ScrollView
-  automaticallyAdjustContentInsets={false}
->
-  {
-    (!this.state.loaded
-    &&
-    <Loading />
-    )
-    ||
-    <List>
-      <ListView
-        renderRow={this.renderRow}
-        dataSource={this.state.dataSource}
-        enableEmptySections={true}
-      />
-    </List>
-  }
-</ScrollView>
-
-*/

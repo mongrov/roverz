@@ -132,8 +132,6 @@ export default class SelectServer extends React.Component {
   }
 
   settingsCallback = (data) => {
-    // console.log('***** settings came back*****');
-    // console.log(data);
     if (this._mounted) {
       if (!data) {
         // error, no settings could be fetched

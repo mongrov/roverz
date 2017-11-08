@@ -39,14 +39,9 @@ class UploadedPhotos extends Component {
     this._changeListener = (attachments, changes) => {
       // @todo: This check can be removed after upgrading to react-native 0.45
       if (_super._changeListener == null || _super._callOutstanding === true) return;
-      console.log(`***** [attachments-${_super._group.name}] got updated  **** `);
-      // @todo: there seems to be a bug in realm that doesn't remove the listener
-      console.log(changes);
       const result = _super._group.sortedAttachments;
-      // console.log(result);
       if (result && result.length > 0) {
         const imageList = [];
-        // console.log(result);
         const fileList = [];
         for (let i = 0; i < result.length; i += 1) {
           fileList.push(result[i]._id);
@@ -57,12 +52,9 @@ class UploadedPhotos extends Component {
         }
         _super._callOutstanding = true;
         _super._network.chat.fixS3Urls(fileList, (s3files) => {
-          // console.log(s3files);
           for (let i = 0; i < imageList.length; i += 1) {
             imageList[i].photo = s3files[i].url;
           }
-          // console.log('========== updated file list ============== ');
-          // console.log(imageList);
           _super.setState({
             image_list: imageList,
             loading: false,
@@ -86,7 +78,6 @@ class UploadedPhotos extends Component {
   }
 
   _onSelectionChanged(media, index, selected) {
-    console.log(`${media.photo} selection status: ${selected}`);
   }
 
   _onActionButton(media, index) {
@@ -98,7 +89,7 @@ class UploadedPhotos extends Component {
       () => {},
       () => {});
     } else {
-      console.log(`handle sharing on android for ${media.photo}, index: ${index}`);
+      // console.log(`handle sharing on android for ${media.photo}, index: ${index}`);
     }
   }
 

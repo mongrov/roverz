@@ -181,19 +181,12 @@ export default class CameraActions extends React.Component {
 
   startRecording() {
     if (this.camera) {
-      console.log('record');
       this.camera.capture({
         audio: true,
         mode: Camera.constants.CaptureMode.video,
         target: Camera.constants.CaptureTarget.disk,
       })
           .then((data) => {
-            console.log('Start rec');
-            console.log(data);
-            // this.setState({
-            //   cameraData: data,
-            // });
-            // _super.sendCameraVideo();
             Actions.pop();
             setTimeout(() => {
               Actions.refresh({
@@ -204,16 +197,6 @@ export default class CameraActions extends React.Component {
                 },
               });
             }, 0);
-            // Actions.chatDetail({
-            //   type: 'reset',
-            //   obj: this.props.group,
-            //   title: this.props.group.heading,
-            //   attach: {
-            //     cameraData: data,
-            //     cameraMessage: 'Video',
-            //   },
-            //   duration: 0,
-            // });
           })
           .catch(err => console.error(err));
       this.setState({
@@ -333,7 +316,7 @@ export default class CameraActions extends React.Component {
               </TouchableOpacity>)
               ||
               <TouchableOpacity
-                style={styles.captureButton}
+                style={[styles.captureButton, { backgroundColor: 'red' }]}
                 onPress={this.stopRecording}
                 activeOpacity={0.3}
               >
