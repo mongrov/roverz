@@ -1,4 +1,5 @@
 /* global jest fetch */
+import * as mockCamera from './__mocks__/Camera';
 
 jest.mock('Linking', () =>
   ({
@@ -44,4 +45,6 @@ jest.mock('react-native-img-cache', () => {
     }
   }
 });
+
+jest.mock('react-native-camera', () => mockCamera);
 
