@@ -302,6 +302,23 @@ export default class Bubble extends React.Component {
     this.props.msgCopy();
   }
 
+  renderDelete() {
+    if (this._network.chat.canMessageBeDeleted(this.state.original)) {
+      return (<TouchableOpacity
+        style={[styles.actionBtn]}
+        onPress={this._deleteMessage}
+      >
+        <Icon
+          name={'delete'}
+          type={'material-community'}
+          size={22}
+          color={'#FFF'}
+        />
+      </TouchableOpacity>);
+    }
+    return null;
+  }
+
   renderMessageText() {
     if (this.props.currentMessage.text) {
       const { containerStyle, wrapperStyle, ...messageTextProps } = this.props;
@@ -498,17 +515,7 @@ export default class Bubble extends React.Component {
                 color={'#FFF'}
               />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.actionBtn]}
-              onPress={this._deleteMessage}
-            >
-              <Icon
-                name={'delete'}
-                type={'material-community'}
-                size={22}
-                color={'#FFF'}
-              />
-            </TouchableOpacity>
+            {this.renderDelete()}
           </View>
         </View>
       );

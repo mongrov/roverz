@@ -144,6 +144,14 @@ class ChatService {
     });
   }
 
+  canMessageBeDeleted(message) {
+    var deletePermission = false;
+    if (message && message.u && message.u._id) {
+      deletePermission = (message.u._id === this.getCurrentUser()._id);
+    }
+    return deletePermission;
+  }
+
   /* Need to see if these are required, remove it from db? */
   get loginSettings() {
     return this.db.loginSettings ? this.db.loginSettings : this._loginSettings;
