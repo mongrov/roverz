@@ -9,6 +9,7 @@ import {
   StatusBar,
   Platform,
   TouchableOpacity,
+  Linking,
   ActivityIndicator,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
@@ -145,7 +146,9 @@ class ChatRoomView extends React.Component {
       // console.log(`***** [chat-${_super._group.name}] got updated  **** `);
       // @todo: there seems to be a bug in realm that doesn't remove the listener
       // console.log(changes);
-
+      if (changes.modifications && changes.modifications.length > 0) {
+        AppUtil.debug(changes, '[Debug] RoomView changes');
+      }
       // first mark the channel as read
       // @todo: There is a scenario, when this msg and subscription message is out of order
       // still the unread is present
@@ -225,6 +228,14 @@ class ChatRoomView extends React.Component {
     this._network.chat.fetchOldMessages(this._group, NO_OF_MSGS);
   }
 
+  onPressPhoneNumber(phone) {
+    AppUtil.debug(phone, '[Debug] RoomView msg updates');
+  }
+
+  handleUrlPress(url) {
+    Linking.openURL(url).catch(err => console.error('An error occurred', err));
+    AppUtil.debug(url, '[Debug] RoomView msg updates');
+  }
 
   isMarkDownEnabled() {
     const markdownConf = this._network.getServerSetting('Markdown_Parser');
@@ -232,10 +243,6 @@ class ChatRoomView extends React.Component {
       return true;
     }
     return false;
-  }
-
-  handleUrlPress(url) {
-    AppUtil.debug(url, '[Debug] RoomView msg updates');
   }
 
   prepareMessages() {
@@ -668,6 +675,7 @@ class ChatRoomView extends React.Component {
           }}
           parsePatterns={linkStyle => [
             { type: 'url', style: linkStyle, onPress: this.handleUrlPress },
+            { type: 'phone', style: linkStyle, onPress: this.onPressPhoneNumber },
           ]}
           style={{ backgroundColor: 'red', zIndex: 100 }}
         />
