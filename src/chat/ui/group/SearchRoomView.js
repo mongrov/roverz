@@ -87,25 +87,22 @@ export default class SearchRoomView extends Component {
     }
   }
 
-  renderRow(rowData, sectionID) {
-    return (
-      <ListItem
-        roundAvatar
-        key={sectionID}
-        title={rowData.name}
-        titleStyle={AppStyles.memberListTitle}
-        subtitle={rowData.username ? `@${rowData.username}` : ''}
-        subtitleStyle={AppStyles.memberListSubTitle}
-        onPress={() => this.createRoom(rowData.username, rowData._id)}
-        leftIcon={
-          <ListItemAvatar
-            source={`${ModuleConfig.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`}
-            name={rowData.name}
-            size={32}
-          />}
-      />
-    );
-  }
+  renderRow = (rowData, sectionID) =>
+    (<ListItem
+      roundAvatar
+      key={sectionID}
+      title={rowData.name}
+      titleStyle={AppStyles.memberListTitle}
+      subtitle={rowData.username ? `@${rowData.username}` : ''}
+      subtitleStyle={AppStyles.memberListSubTitle}
+      onPress={() => this.createRoom(rowData.username, rowData._id)}
+      leftIcon={
+        <ListItemAvatar
+          source={`${ModuleConfig.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`}
+          name={rowData.name}
+          size={32}
+        />}
+    />)
 
   render() {
     if (!this.state.loaded) {

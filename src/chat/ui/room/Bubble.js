@@ -249,7 +249,6 @@ export default class Bubble extends React.Component {
         canDelete: this.state.canDelete,
       });
     } else if (!this.state.original.file && this.state.parentMessage !== null) {
-      console.log('this.state.parentMessage', this.state.parentMessage);
       if (this.state.parentMessage.image) {
         Actions.imagePreview({
           imageUri: this.state.parentMessage.image,
