@@ -45,7 +45,7 @@ class GroupList extends Component {
       _db: db,
       dataSource: dataSource.cloneWithRows(dataSource),
       loaded: false,
-      items: n.chat.getFilteredChannels(db.groups.sortedList),
+      items: db.groups.sortedList,
       connected: false,
     };
   }
@@ -63,7 +63,7 @@ class GroupList extends Component {
       if (!this._mounted || this._insideStateUpdate || !this.state._network.meteor.getCurrentUser()) return;
       this._insideStateUpdate = true;
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(this.state._network.chat.getFilteredChannels(this.state.items)),
+        dataSource: this.state.dataSource.cloneWithRows(this.state.items),
         loaded: true,
         connected: this.state._network.meteor.getCurrentUser(),
       });
@@ -74,8 +74,7 @@ class GroupList extends Component {
       if (this._mounted && this.state.items && this.state.items.length > 0 && !this.state.loaded) {
         this.setState({
           loaded: true,
-          dataSource: this.state.dataSource.cloneWithRows(
-            this.state._network.chat.getFilteredChannels(this.state.items)),
+          dataSource: this.state.dataSource.cloneWithRows(this.state.items),
         });
       }
     }, 100);

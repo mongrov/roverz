@@ -224,8 +224,33 @@ export default class Bubble extends React.Component {
   }
 
   _handleComments = () => {
-    if (this.state.original.file) {
-      if (this.state.parentMessage !== null) {
+    /*
+    text !this.state.original.file, this.state.parentMessage=null
+    img this.state.original.file, this.state.parentMessage=null
+    text - text reply !this.state.original.file, this.state.parentMessage!=null
+    img -text reply this.state.original.file, this.state.parentMessage!=null
+    */
+    if (!this.state.original.file && this.state.parentMessage === null) {
+      Actions.replyMessage({
+        obj: this.props.obj,
+        msgId: this.props.currentMessage._id,
+        actualMessage: this.props.currentMessage.text,
+        msgLikes: this.props.currentMessage.likes,
+        msgTitle: this.props.currentMessage.text,
+        canDelete: this.state.canDelete,
+      });
+    } else if (this.state.original.file && this.state.parentMessage === null) {
+      Actions.imagePreview({
+        imageUri: this.props.currentMessage.image,
+        obj: this.props.obj,
+        msgId: this.props.currentMessage._id,
+        msgLikes: this.props.currentMessage.likes,
+        msgTitle: this.props.currentMessage.text,
+        canDelete: this.state.canDelete,
+      });
+    } else if (!this.state.original.file && this.state.parentMessage !== null) {
+      console.log('this.state.parentMessage', this.state.parentMessage);
+      if (this.state.parentMessage.image) {
         Actions.imagePreview({
           imageUri: this.state.parentMessage.image,
           obj: this.props.obj,
@@ -235,18 +260,6 @@ export default class Bubble extends React.Component {
           canDelete: this.state.canDelete,
         });
       } else {
-        Actions.imagePreview({
-          imageUri: this.props.currentMessage.image,
-          obj: this.props.obj,
-          msgId: this.props.currentMessage._id,
-          msgLikes: this.props.currentMessage.likes,
-          msgTitle: this.props.currentMessage.text,
-          canDelete: this.state.canDelete,
-        });
-      }
-    } else {
-      /* eslint-disable no-lonely-if */
-      if (this.state.parentMessage !== null) {
         Actions.replyMessage({
           obj: this.props.obj,
           msgId: this.state.parentMessage._id,
@@ -255,17 +268,16 @@ export default class Bubble extends React.Component {
           msgTitle: this.state.parentMessage.text,
           canDelete: this.state.canDelete,
         });
-      } else {
-        Actions.replyMessage({
-          obj: this.props.obj,
-          msgId: this.props.currentMessage._id,
-          actualMessage: this.props.currentMessage.text,
-          msgLikes: this.props.currentMessage.likes,
-          msgTitle: this.props.currentMessage.text,
-          canDelete: this.state.canDelete,
-        });
       }
-      /* eslint-enable no-lonely-if */
+    } else if (this.state.original.file && this.state.parentMessage !== null) {
+      Actions.imagePreview({
+        imageUri: this.state.parentMessage.image,
+        obj: this.props.obj,
+        msgId: this.state.parentMessage._id,
+        msgLikes: this.state.parentMessage.likes,
+        msgTitle: this.state.parentMessage.text,
+        canDelete: this.state.canDelete,
+      });
     }
   }
 
