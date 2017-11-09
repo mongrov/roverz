@@ -447,7 +447,7 @@ class ChatService {
       const filteredList = {};
       Object.keys(channelList).forEach((k) => {
         var obj = channelList[k];
-        if (obj.name && !(obj.name === AppConfig.supportRoomId)) {
+        if (obj.name && AppConfig.filterRooms.indexOf(obj.name) < 1) {
           filteredList[k] = obj;
         }
       });

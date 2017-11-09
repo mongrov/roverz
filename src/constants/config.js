@@ -23,7 +23,7 @@ export default {
   navLogo: null,
   bootstrapUrl: null,
   ga: null,
-  supportRoom: null,
+  filterRoomList: [],
 
   aboutDetails: {
     version: '2.0.1',
@@ -41,8 +41,8 @@ export default {
     return this.ga;
   },
 
-  get supportRoomId() {
-    return this.supportRoom;
+  get filterRooms() {
+    return this.filterRoomList;
   },
 
   // URLs
@@ -89,8 +89,8 @@ export default {
     this.aboutDetails = about;
   },
 
-  setSupportRoomName(room) {
-    this.supportRoom = room;
+  setFilterRooms(filterList) {
+    this.filterRoomList = filterList;
   },
 
 
