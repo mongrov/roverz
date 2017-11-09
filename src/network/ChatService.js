@@ -19,6 +19,7 @@ class ChatService {
     this._monStreamNotifyRoom = null;
     this._cache = db.remotefiles ? db.remotefiles.cacheList : {};
     this._loginSettings = [];
+    this.deleteAllowed = false;
     // set the userId (to last loaded from db)
     AppConfig.setUserId(db.userId);
   }
@@ -137,6 +138,9 @@ class ChatService {
           for (let i = 0; i < res.length; i += 1) {
             const resdata = res[i];
             settingsList[resdata._id] = resdata;
+            if (resdata._id === 'Message_AllowDeleting' && resdata.value) {
+              this.deleteAllowed = resdata.value;
+            }
           }
         }
         callBack(settingsList);
@@ -145,11 +149,13 @@ class ChatService {
   }
 
   canMessageBeDeleted(message) {
-    var deletePermission = false;
+//    var deletePermission = false;
+    var deleteOwn = false;
     if (message && message.u && message.u._id) {
-      deletePermission = (message.u._id === this.getCurrentUser()._id);
+      deleteOwn = (message.u._id === this.getCurrentUser()._id);
     }
-    return deletePermission;
+//    deletePermission = this.deleteAllowed && deleteOwn;
+    return deleteOwn;
   }
 
   /* Need to see if these are required, remove it from db? */
@@ -434,6 +440,20 @@ class ChatService {
   unsubscribeAttachments(/* groupId */) {
     // console.log('**** TODO: need to add unsubscribe ****', groupId);
     // this.meteor.unsubscribe('roomFiles', groupId);
+  }
+
+  getFilteredChannels(channelList) {
+    if (channelList) {
+      const filteredList = {};
+      Object.keys(channelList).forEach((k) => {
+        var obj = channelList[k];
+        if (obj.name && !(obj.name === AppConfig.supportRoomId)) {
+          filteredList[k] = obj;
+        }
+      });
+      return filteredList;
+    }
+    return null;
   }
 
   fetchChannels() {

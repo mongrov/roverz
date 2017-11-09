@@ -23,6 +23,7 @@ export default {
   navLogo: null,
   bootstrapUrl: null,
   ga: null,
+  supportRoom: null,
 
   aboutDetails: {
     version: '2.0.1',
@@ -38,6 +39,10 @@ export default {
 
   get gaTracker() {
     return this.ga;
+  },
+
+  get supportRoomId() {
+    return this.supportRoom;
   },
 
   // URLs
@@ -83,6 +88,11 @@ export default {
   setAboutDetails(about) {
     this.aboutDetails = about;
   },
+
+  setSupportRoomName(room) {
+    this.supportRoom = room;
+  },
+
 
   reset(space) {
     this.space = space;
