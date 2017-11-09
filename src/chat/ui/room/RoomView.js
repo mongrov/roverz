@@ -341,10 +341,12 @@ class ChatRoomView extends React.Component {
           left: {
             // color: '#4C6070',
             fontFamily: 'OpenSans-Regular',
+            lineHeight: 24,
           },
           right: {
             color: AppColors.chat().textRight,
             fontFamily: 'OpenSans-Regular',
+            lineHeight: 24,
           },
         }}
         replyStyle={{
