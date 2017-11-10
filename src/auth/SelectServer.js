@@ -186,7 +186,14 @@ export default class SelectServer extends React.Component {
       const regexp = /^[a-zA-Z0-9-.]+$/;
       if (regexp.test(inputServerVal)) {
         ModuleConfig.resetInstance(inputServerVal);
-        this.setState({ isLoading: true });
+        this.setState({
+          isLoading: true,
+          resultMsg: {
+            status: '',
+            success: '',
+            error: '',
+          },
+        });
         this.connectToServer(ModuleConfig.instance);
         // Method to verify Server URL
         // this._net.setServer(inputServerVal, this.settingsCallback);
@@ -231,7 +238,7 @@ export default class SelectServer extends React.Component {
         }
         {this.state.isLoading === false &&
           <KeyboardAvoidingView
-            behavior={(Platform.OS === 'ios') ? 'padding' : 'height'}
+            behavior={'padding'}
             style={styles.messageContainer}
           >
             <View style={[AppStyles.row]}>
