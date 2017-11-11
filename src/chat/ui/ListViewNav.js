@@ -3,7 +3,9 @@ import {
   Text,
   View,
   Image,
+  TouchableOpacity,
 } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { AppStyles, AppColors } from '../../theme/';
 import ModuleConfig from '../../constants/config';
 import { NavbarMenuButton } from '../../containers/ui/NavbarMenuButton/NavbarMenuButtonContainer';
@@ -54,12 +56,21 @@ class ListViewNav extends React.Component {
         backgroundColor: AppColors.brand().secondary,
       }]}
       >
-        <View style={{ padding: 7, marginLeft: 3 }}>
-          <NavbarMenuButton />
-        </View>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginRight: 45 }}>
+        <View style={{ width: 50 }} />
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           {this.renderNavBrand()}
         </View>
+        <TouchableOpacity
+          style={{ width: 50, alignItems: 'center', justifyContent: 'center',
+          }}
+        >
+          <Icon
+            name={'alert-circle-outline'}
+            type="material-community"
+            size={24}
+            color={'#FFF'}
+          />
+        </TouchableOpacity>
       </View>
     );
   }

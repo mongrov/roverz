@@ -64,23 +64,9 @@ class Drawer extends Component {
     const children = state.children;
 
     return (
-      <SideMenu
-        ref={(a) => { this.rootSidebarMenu = a; }}
-        openMenuOffset={AppSizes.screen.width * 0.75}
-        menu={
-          <Menu
-            closeSideMenu={this.props.closeSideMenu}
-            ref={(b) => { this.rootSidebarMenuMenu = b; }}
-          />
-        }
-        isOpen={this.props.sideMenuIsOpen}
-        onChange={this.onSideMenuChange}
-        disableGestures
-      >
-        <View style={{ backgroundColor: '#000', flex: 1 }}>
-          <DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate} />
-        </View>
-      </SideMenu>
+      <View style={{ backgroundColor: '#000', flex: 1 }}>
+        <DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate} />
+      </View>
     );
   }
 }

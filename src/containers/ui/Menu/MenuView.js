@@ -222,7 +222,7 @@ class Menu extends Component {
   }
 
   showProfile = () => {
-    this.props.closeSideMenu();
+    // this.props.closeSideMenu();
     const currUser = this.getCurrentUser();
     if (currUser) {
       Actions.memberDetail({ memberId: currUser._id });
