@@ -8,7 +8,6 @@ import {
 import { Icon } from 'react-native-elements';
 import { AppStyles, AppColors } from '../../theme/';
 import ModuleConfig from '../../constants/config';
-import { NavbarMenuButton } from '../../containers/ui/NavbarMenuButton/NavbarMenuButtonContainer';
 
 class ListViewNav extends React.Component {
   constructor(props) {

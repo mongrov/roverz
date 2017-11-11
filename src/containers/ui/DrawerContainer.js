@@ -7,16 +7,9 @@
 import React, { Component, PropTypes } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import SideMenu from 'react-native-side-menu';
 import { DefaultRenderer } from 'react-native-router-flux';
 // Actions
 import * as SideMenuActions from '../../redux/sidemenu/actions';
-
-// Consts and Libs
-import { AppSizes } from '../../theme/';
-
-// Containers
-import Menu from './Menu/MenuContainer';
 
 /* Redux ==================================================================== */
 
