@@ -3,16 +3,16 @@ import {
   View,
   StatusBar,
 } from 'react-native';
-import WebView from 'roverz-chat';
+import WebView from '../components/general/WebView';
 
 import Network from '../network';
-import ModuleConfig from '../constants/config';
 
 export default class SSOTest extends React.Component {
   constructor(props) {
     super(props);
     this.n = new Network();
     this.serverUrl = this.n.getServer();
+    this.ssoURL = this.n.chat.getLoginSetting('entryPoint');
     this.state = {
       isLoading: true,
     };
@@ -33,12 +33,13 @@ export default class SSOTest extends React.Component {
       >
         <StatusBar barStyle={'dark-content'} />
         <WebView
-          url={`https://${this.serverUrl}.${ModuleConfig.brandName}`}
+          url={`https://${this.serverUrl}`}
+//          url={`${this.ssoURL}`}
           onNavigationStateChange={(event) => {
-            if (event.startsWith(`https://${this.serverUrl}.${ModuleConfig.brandName}/_saml/authorize/yap/`)) {
-              credential = event.replace(`https://${this.serverUrl}.${ModuleConfig.brandName}/_saml/authorize/yap/`, '');
+            if (event.startsWith(`https://${this.serverUrl}/_saml/authorize/yap/`)) {
+              credential = event.replace(`https://${this.serverUrl}/_saml/authorize/yap/`, '');
             }
-            if (event.startsWith(`https://${this.serverUrl}.${ModuleConfig.brandName}/_saml/validate/yap`)) {
+            if (event.startsWith(`https://${this.serverUrl}/_saml/validate/yap`)) {
               this.n.chat.loginWithSaml(credential);
             }
           }}

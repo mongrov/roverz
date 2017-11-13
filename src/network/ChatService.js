@@ -1,3 +1,4 @@
+// import moment from 'moment';
 import Meteor from 'react-native-meteor';
 import { Actions } from 'react-native-router-flux';
 import { AppUtil } from 'roverz-chat';
@@ -20,6 +21,7 @@ class ChatService {
     this._cache = db.remotefiles ? db.remotefiles.cacheList : {};
     this._loginSettings = [];
     this.deleteAllowed = false;
+    this.blockDeleteInMinutes = 0;
     // set the userId (to last loaded from db)
     AppConfig.setUserId(db.userId);
   }
@@ -141,6 +143,9 @@ class ChatService {
             if (resdata._id === 'Message_AllowDeleting' && resdata.value) {
               this.deleteAllowed = resdata.value;
             }
+            if (resdata._id === 'Message_AllowDeleting_BlockDeleteInMinutes' && resdata.value) {
+              this.blockDeleteInMinutes = resdata.value;
+            }
           }
         }
         callBack(settingsList);
@@ -151,10 +156,17 @@ class ChatService {
   canMessageBeDeleted(message) {
 //    var deletePermission = false;
     var deleteOwn = false;
-    if (message && message.u && message.u._id) {
+    if (this.getCurrentUser() && message && message.u && message.u._id) {
       deleteOwn = (message.u._id === this.getCurrentUser()._id);
     }
 //    deletePermission = this.deleteAllowed && deleteOwn;
+    // if (this.blockDeleteInMinutes && this.blockDeleteInMinutes !== 0) {
+    //   const msgTs = moment(message.ts);
+    //   const currentTsDiff = moment().diff(msgTs, 'minutes');
+    //   if (currentTsDiff > this.blockDeleteInMinutes) {
+    //     return false;
+    //   }
+    // }
     return deleteOwn;
   }
 
