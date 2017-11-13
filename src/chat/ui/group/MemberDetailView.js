@@ -113,14 +113,14 @@ export default class MemberDetailView extends Component {
             style={{
               position: 'relative',
               // flex: 3,
-              height: 300,
+              height: this.props.avHeight ? this.props.avHeight : 300,
             }}
           >
             <CachedImage
               source={{ uri: this.state.memberDetail.avatar }}
               style={{
                 width: this.state.layout.width,
-                height: 300,
+                height: this.props.avHeight ? this.props.avHeight : 300,
                 position: 'absolute',
                 top: 0,
                 left: 0,
@@ -130,7 +130,7 @@ export default class MemberDetailView extends Component {
             />
             <UserAvatar
               name={AppUtil.avatarInitials(this.state.memberDetail.name)}
-              size={300}
+              size={this.props.avHeight ? this.props.avHeight : 300}
               style={{
                 width: this.state.layout.width,
                 position: 'absolute',
@@ -201,11 +201,13 @@ MemberDetailView.defaultProps = {
   group: null,
   memberId: '',
   memberUsername: '',
+  avHeight: null,
 };
 
 MemberDetailView.propTypes = {
   group: PropTypes.instanceOf(Group),
   memberId: PropTypes.string,
   memberUsername: PropTypes.string,
+  avHeight: PropTypes.number,
 };
 

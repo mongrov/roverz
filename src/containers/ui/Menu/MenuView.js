@@ -97,18 +97,6 @@ const styles = StyleSheet.create({
 
 /* Component ==================================================================== */
 class Menu extends Component {
-  static propTypes = {
-    logout: PropTypes.func.isRequired,
-    closeSideMenu: PropTypes.func.isRequired,
-    user: PropTypes.shape({
-      name: PropTypes.string,
-    }),
-  }
-
-  static defaultProps = {
-    user: null,
-  }
-
   constructor() {
     super();
     this.net = new Network();
@@ -353,3 +341,15 @@ class Menu extends Component {
 
 /* Export Component ==================================================================== */
 export default Menu;
+
+Menu.propTypes = {
+  // logout: PropTypes.func.isRequired,
+  // closeSideMenu: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+  }),
+};
+
+Menu.defaultProps = {
+  user: null,
+};
