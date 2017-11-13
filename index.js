@@ -37,6 +37,7 @@ import SupportGroup from './src/chat/ui/room/SupportGroup';
 import ReplyMessageView from './src/chat/ui/room/ReplyMessageView';
 import PhotoPreview from './src/chat/ui/room/PhotoPreview';
 import AboutView from './src/containers/ui/Menu/AboutView';
+import ProfileView from './src/containers/ui/Menu/ProfileView';
 import Menu from './src/containers/ui/Menu/MenuView';
 import GroupList from './src/chat/ui/group/GroupView';
 import RoomView from './src/chat/ui/room/RoomView';
@@ -65,6 +66,7 @@ export {
     ReplyMessageView,
     PhotoPreview,
     AboutView,
+    ProfileView,
     Menu,
     GroupList,
     NavbarMenuButton,
