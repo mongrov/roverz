@@ -131,7 +131,6 @@ class Menu extends Component {
                     this.net.db.setUserId(null);
                     AppConfig.setUserId(null);
                     this.net.chat.logout();
-                    this.props.closeSideMenu();
                     setTimeout(() => {
                       RNRestart.Restart();
                     }, 300);
@@ -319,7 +318,6 @@ class Menu extends Component {
           <TouchableOpacity
             style={[styles.menuBottom, { alignItems: 'center' }]}
             onPress={() => {
-              this.props.closeSideMenu();
               Actions.aboutView();
             }}
           >
