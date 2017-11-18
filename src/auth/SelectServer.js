@@ -11,12 +11,11 @@ import {
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
-import Meteor from 'react-native-meteor';
 import { Alerts, Spacer, Button, AppUtil } from 'roverz-chat';
 
 import Network from '../network';
 import { AppColors, AppStyles } from '../theme/';
-import ModuleConfig from '../constants/config';
+import Application from '../constants/config';
 
 const styles = StyleSheet.create({
   messageContainer: {
@@ -43,7 +42,8 @@ const styles = StyleSheet.create({
 export default class SelectServer extends React.Component {
   constructor(props) {
     super(props);
-    this._net = new Network();
+    this._service = new Network();
+    this._mounted = false;
     const switchServer = props.switchServer;
     this.state = {
       isLoading: true,
@@ -59,17 +59,17 @@ export default class SelectServer extends React.Component {
   }
 
   componentDidMount() {
-    Meteor.getData().on('onLogin', () => {
-      if (this._mounted && this._net.meteor.getCurrentUser()) {
-        this._net.switchToLoggedInUser();
+    this._service.onLogin(() => {
+      if (this._mounted && this._service.currentUser) {
+        this._service.switchToLoggedInUser();
         Actions.app({ type: 'reset' });
       }
     });
     // Get server name
     setTimeout(() => {
-      const serverUrl = this._net.getServer();
+      const serverUrl = this._service.getServer();
       if (serverUrl && !this.state.switchServer) {
-        ModuleConfig.resetInstance(serverUrl);
+        Application.resetInstance(serverUrl);
         this.connectToServer(serverUrl);
       } else {
         this.setState({ isLoading: false });
@@ -95,8 +95,8 @@ export default class SelectServer extends React.Component {
 
   connectToServer(serverUrl) {
     AppUtil.debug(new Date().toLocaleString(), '[Performance] SelectServer');
-    this._net.setServer(serverUrl, this.settingsCallback);
-    if (this._net.db.realm) {
+    this._service.setServer(serverUrl, this.settingsCallback);
+    if (this._service.db.realm) {
       // data base loaded, lets go straight to home
       Actions.app({ type: 'reset' });
       return;
@@ -114,8 +114,7 @@ export default class SelectServer extends React.Component {
       setTimeout(() => {
         if (this._mounted) {
           if (i === loadStrings.length - 1) {
-            const meteorStatus = Meteor.status();
-            if (!meteorStatus.connected) {
+            if (!this._service.isConnected) {
               // we should throw exception to user and ask to selectserver
               this.setState({ isLoading: false });
             }
@@ -133,10 +132,10 @@ export default class SelectServer extends React.Component {
     // inputServerVal = inputServerVal.trim();
     // Validation for alphanumeric, dash and dots
     if (inputServerVal) {
-//      inputServerVal = inputServerVal.replace(`.${ModuleConfig.brandName}`, '');
+//      inputServerVal = inputServerVal.replace(`.${Application.brandName}`, '');
       const regexp = /^[a-zA-Z0-9-.]+$/;
       if (regexp.test(inputServerVal)) {
-        ModuleConfig.resetInstance(inputServerVal);
+        Application.resetInstance(inputServerVal);
         this.setState({
           isLoading: true,
           resultMsg: {
@@ -145,10 +144,8 @@ export default class SelectServer extends React.Component {
             error: '',
           },
         });
-        this.connectToServer(ModuleConfig.instance);
+        this.connectToServer(Application.instance);
         // Method to verify Server URL
-        // this._net.setServer(inputServerVal, this.settingsCallback);
-        // Actions.login();
         // Actions.ssoTest();
       } else {
         this.setState({ resultMsg: { error: 'Enter a valid workspace name' } });
@@ -174,7 +171,7 @@ export default class SelectServer extends React.Component {
         {this.state.isLoading === true &&
         <View style={[AppStyles.windowSize, AppStyles.containerCentered]}>
           <Image
-            source={ModuleConfig.logo}
+            source={Application.logo}
             style={[AppStyles.loginLogoSplash, { opacity: 1, width: 150 }]}
           />
           <Text
@@ -199,7 +196,7 @@ export default class SelectServer extends React.Component {
               }}
               >
                 <Image
-                  source={ModuleConfig.logo}
+                  source={Application.logo}
                   style={[AppStyles.loginLogoSplash]}
                 />
                 <Alerts
@@ -214,7 +211,7 @@ export default class SelectServer extends React.Component {
             <View style={[AppStyles.row]}>
               <View style={[AppStyles.flex1, { height: 40 }]}>
                 <TextInput
-                  placeholder={`[workspace].${ModuleConfig.brandName}`}
+                  placeholder={`[workspace].${Application.brandName}`}
                   autoCapitalize={'none'}
                   style={[styles.textInput]}
                   onChangeText={(text) => { this.setState({ serverUrl: text }); }}

@@ -18,8 +18,17 @@ class MeteorService {
     });
   }
 
+  get status() {
+    return Meteor.status();
+  }
+
   getCurrentUser() {
     return Meteor.user();
+  }
+
+  // @todo: this method to be tested
+  monitorAction(name, cb) {
+    Meteor.getData().on(name, cb);
   }
 
   // monitor for collection changes and fire callback

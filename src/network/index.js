@@ -21,6 +21,7 @@ class Network {
       Network._publicSettings = null;
       Network._uiCallback = null;
       Network._serverName = null;
+      Network._meteor = new MeteorService();
     }
   }
 
@@ -33,7 +34,6 @@ class Network {
     Network._publicSettings = null;
     Network._uiCallback = uicallback;
     Network._chat = new ChatService();
-    Network._meteor = new MeteorService();
     // init meteor service
     Network._meteor.init();
     Network._chat.init(Network._meteor, Network._db);
@@ -86,6 +86,20 @@ class Network {
   }
   get db() {
     return Network._db;
+  }
+
+  get currentUser() {
+    return Network._meteor.getCurrentUser();
+  }
+
+  // returns if meteor is connected for now
+  get isConnected() {
+    const meteorStatus = Network._meteor.status;
+    return meteorStatus.connected;
+  }
+
+  onLogin(callback) {
+    Network._meteor.monitorAction('onLogin', callback);
   }
 
   get serverSettings() {
