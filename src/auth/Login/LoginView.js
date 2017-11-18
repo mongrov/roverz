@@ -251,7 +251,7 @@ class Login extends Component {
               borderRadius: 5,
               marginBottom: 15,
             }}
-            onPress={Actions.ssoTest}
+            onPress={Actions.samlLogin}
           >
             <Text style={{ color: 'white' }}>{this.state.ssoText}</Text>
           </TouchableOpacity>

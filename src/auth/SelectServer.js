@@ -146,8 +146,6 @@ export default class SelectServer extends React.Component {
           },
         });
         this.connectToServer(Application.instance);
-        // Method to verify Server URL
-        // Actions.ssoTest();
       } else {
         this.setState({ resultMsg: { error: t('err_enter_valid_workspace') } });
       }
