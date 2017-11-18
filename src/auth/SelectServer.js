@@ -19,48 +19,6 @@ import { AppColors, AppStyles } from '../theme/';
 import ModuleConfig from '../constants/config';
 
 const styles = StyleSheet.create({
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  overlay: {
-    position: 'absolute',
-    padding: 16,
-    right: 0,
-    left: 0,
-    alignItems: 'center',
-  },
-  topOverlay: {
-    top: 0,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  bottomOverlay: {
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  captureButton: {
-    padding: 15,
-    backgroundColor: 'white',
-    borderRadius: 40,
-  },
-  typeButton: {
-    padding: 5,
-  },
-  flashButton: {
-    padding: 5,
-  },
-  closeButton: {
-    padding: 5,
-    backgroundColor: 'white',
-    borderRadius: 40,
-  },
   messageContainer: {
     flex: 1,
     flexDirection: 'column',
@@ -76,13 +34,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontFamily: 'OpenSans-Regular',
-  },
-  sendButton: {
-    height: 40,
-    width: 40,
-  },
-  buttonsSpace: {
-    width: 30,
   },
 });
 
@@ -207,7 +158,6 @@ export default class SelectServer extends React.Component {
     }
   };
 
-  /* eslint-disable global-require */
   render() {
     return (
       <View
@@ -291,7 +241,6 @@ export default class SelectServer extends React.Component {
     );
   }
 }
-/* eslint-enable global-require */
 
 SelectServer.defaultProps = {
   switchServer: false,
