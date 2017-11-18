@@ -19,7 +19,7 @@ import ProfileEditView from './src/auth/Profile/ProfileEditView';
 import AuthWebView from './src/auth/WebView';
 import AuthLogin from './src/auth/Login/LoginContainer';
 import SelectServer from './src/auth/SelectServer';
-import SSOTest from './src/auth/SSOTest';
+import SamlLogin from './src/auth/SamlLogin';
 
 import Network from './src/network';
 
@@ -79,7 +79,7 @@ export {
     AuthWebView,
     AuthLogin,
     SelectServer,
-    SSOTest,
+    SamlLogin,
 
     // utils
     Analytics,
