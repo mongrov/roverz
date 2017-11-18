@@ -14,6 +14,7 @@ import { Actions } from 'react-native-router-flux';
 import { Alerts, Spacer, Button, AppUtil } from 'roverz-chat';
 
 import Network from '../network';
+import { t } from '../i18n';
 import { AppColors, AppStyles } from '../theme/';
 import Application from '../constants/config';
 
@@ -47,7 +48,7 @@ export default class SelectServer extends React.Component {
     const switchServer = props.switchServer;
     this.state = {
       isLoading: true,
-      loadText: 'Loading...',
+      loadText: t('loading'),
       switchServer,
       serverUrl: '',
       resultMsg: {
@@ -103,10 +104,10 @@ export default class SelectServer extends React.Component {
     }
     // if login happens before timeout, switch gears to logged in screen
     const loadStrings = [
-      'Initializing screens',
-      'Connecting to server...',
-      'Still reaching out to server...',
-      '...',
+      t('loading_text_init_screens'),
+      t('loading_text_conn_to_server'),
+      t('loading_text_still_reaching'),
+      t('dots'),
     ];
     // don't increase this timeout as this would impact the experience of folks
     // who are logging in for the first time
@@ -148,10 +149,10 @@ export default class SelectServer extends React.Component {
         // Method to verify Server URL
         // Actions.ssoTest();
       } else {
-        this.setState({ resultMsg: { error: 'Enter a valid workspace name' } });
-      }
+        this.setState({ resultMsg: { error: t('err_enter_valid_workspace') } });
+          }
     } else {
-      this.setState({ resultMsg: { error: 'Workspace name is empty' } });
+      this.setState({ resultMsg: { error: t('err_workspace_name_empty') } });
     }
   };
 
@@ -205,7 +206,7 @@ export default class SelectServer extends React.Component {
                 <Text style={
                 [AppStyles.ListItemTitle, { color: '#FFF', fontSize: 16 }]
                 }
-                >Please enter your workspace name</Text>
+                >{t('lbl_enter_your_workspace')}</Text>
               </View>
             </View>
             <View style={[AppStyles.row]}>
@@ -225,7 +226,7 @@ export default class SelectServer extends React.Component {
             <View style={[AppStyles.row]}>
               <View style={[AppStyles.flex1]}>
                 <Button
-                  title={'Confirm'}
+                  title={t('confirm')}
                   onPress={this.sendServerUrl}
                   backgroundColor="transparent"
                   style={{ marginBottom: 10 }}
