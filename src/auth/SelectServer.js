@@ -14,7 +14,7 @@ import { Actions } from 'react-native-router-flux';
 import { Alerts, Spacer, Button, AppUtil } from 'roverz-chat';
 
 import Network from '../network';
-import { t } from '../i18n';
+import t from '../i18n';
 import { AppColors, AppStyles } from '../theme/';
 import Application from '../constants/config';
 
@@ -150,7 +150,7 @@ export default class SelectServer extends React.Component {
         // Actions.ssoTest();
       } else {
         this.setState({ resultMsg: { error: t('err_enter_valid_workspace') } });
-          }
+      }
     } else {
       this.setState({ resultMsg: { error: t('err_workspace_name_empty') } });
     }
