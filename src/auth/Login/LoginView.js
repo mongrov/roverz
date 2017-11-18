@@ -12,29 +12,15 @@ import {
   Image,
 } from 'react-native';
 import FormValidation from 'tcomb-form-native';
-import Meteor from 'react-native-meteor';
 import { Actions } from 'react-native-router-flux';
 import { Alerts, Spacer, Text, Button, AppUtil } from 'roverz-chat';
 
 import Network from '../../network';
 import { AppStyles, AppColors } from '../../theme/';
-import AppConfig from '../../constants/config';
+import Application from '../../constants/config';
 
 /* Styles ==================================================================== */
-// const styles = StyleSheet.create({
-//   background: {
-//     backgroundColor: 'transparent',
-//     height: AppSizes.screen.height,
-//     width: AppSizes.screen.width,
-//   },
-//   logo: {
-//     width: AppSizes.screen.width * 0.85,
-//     resizeMode: 'contain',
-//   },
-//   whiteText: {
-//     color: '#FFF',
-//   },
-// });
+
 
 /* Component ==================================================================== */
 class Login extends Component {
@@ -63,7 +49,7 @@ class Login extends Component {
       },
     );
 
-    this._net = new Network();
+    this._service = new Network();
     const serverUrl = '';
 
     this.state = {
@@ -111,9 +97,9 @@ class Login extends Component {
     AppUtil.debug(new Date().toLocaleString(), '[Performance] LoginView');
     // @todo: This would clash with the regular skip/login buttons
     // to fix that
-    Meteor.getData().on('onLogin', () => {
-      if (this._net.meteor.getCurrentUser() && this._mounted) {
-        this._net.switchToLoggedInUser();
+    this._service.onLogin(() => {
+      if (this._service.currentUser() && this._mounted) {
+        this._service.switchToLoggedInUser();
         // looks like we have logged in as an user, skip this screen
         Actions.app({ type: 'reset' });
       }
@@ -122,19 +108,19 @@ class Login extends Component {
 
     // @todo- not sure if so many setStates would affect the
     // refresh - Kumar - pls check
-    const serverUrl = this._net.getServer();
+    const serverUrl = this._service.getServer();
     if (serverUrl) {
       this.setState({ serverUrl });
     }
-    const saml = this._net.chat.getLoginSetting('service');
+    const saml = this._service.chat.getLoginSetting('service');
     if (saml && saml === 'saml') {
-      const tempText = this._net.chat.getLoginSetting('buttonLabelText');
+      const tempText = this._service.chat.getLoginSetting('buttonLabelText');
       this.setState({ showSSO: true });
       if (tempText) {
         this.setState({ ssoText: tempText });
       }
     }
-    const loginFormConf = this._net.getServerSetting('Accounts_ShowFormLogin');
+    const loginFormConf = this._service.getServerSetting('Accounts_ShowFormLogin');
     this.setState({ showForm: loginFormConf && loginFormConf.value });
 
     // Get user data from AsyncStorage to populate fields
@@ -288,7 +274,6 @@ class Login extends Component {
         />
       );
     }
-    /* eslint-disable global-require */
     return (
       <KeyboardAvoidingView
       // style={styles.container}
@@ -303,7 +288,7 @@ class Login extends Component {
           justifyContent: 'center' }}
         >
           <Image
-            source={AppConfig.logo}
+            source={Application.logo}
             style={[AppStyles.loginLogo, { flex: 1, marginTop: 30 }]}
           />
           <TouchableOpacity
@@ -334,7 +319,6 @@ class Login extends Component {
         </View>
       </KeyboardAvoidingView>
     );
-    /* eslint-enable global-require */
   }
 
 }
