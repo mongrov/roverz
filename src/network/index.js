@@ -98,6 +98,11 @@ class Network {
     return meteorStatus.connected;
   }
 
+  get showLogin() {
+    const loginFormConf = this.getServerSetting('Accounts_ShowFormLogin');
+    return loginFormConf && loginFormConf.value;
+  }
+
   onLogin(callback) {
     Network._meteor.monitorAction('onLogin', callback);
   }

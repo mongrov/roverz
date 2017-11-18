@@ -120,8 +120,7 @@ class Login extends Component {
         this.setState({ ssoText: tempText });
       }
     }
-    const loginFormConf = this._service.getServerSetting('Accounts_ShowFormLogin');
-    this.setState({ showForm: loginFormConf && loginFormConf.value });
+    this.setState({ showForm: this._service.showLogin });
 
     // Get user data from AsyncStorage to populate fields
     const values = await AsyncStorage.getItem('api/credentials');
