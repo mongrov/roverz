@@ -1,11 +1,4 @@
-/**
- * ProfileView Contents
- *
- * React Native Starter App
- * https://github.com/mcnamee/react-native-starter-app
- */
 import React, { Component } from 'react';
-import Meteor from 'react-native-meteor';
 
 import {
   View,
@@ -18,10 +11,9 @@ import {
   Icon,
 } from 'react-native-elements';
 
-import { Actions } from 'react-native-router-flux';
 import RNRestart from 'react-native-restart';
 import { Text, Network, AppColors, MemberDetailView, NavBarBack } from 'roverz-chat';
-import AppConfig from '../../../constants/config';
+import Application from '../../constants/config';
 
 
 const styles = StyleSheet.create({
@@ -35,61 +27,16 @@ const styles = StyleSheet.create({
 class ProfileView extends Component {
   constructor() {
     super();
-    this.net = new Network();
-    const userData = { _id: '', email: '', username: '', avatar: '../../../images/empty_photo.png', name: '' };
+    this._service = new Network();
+    const currentUser = { _id: '', email: '', username: '', avatar: '../../../images/empty_photo.png', name: '' };
     this.state = {
-      menu: [
-        {
-          id: 0,
-          title: 'Profile',
-          icon: 'account-outline',
-          onPress: this.showProfile,
-        },
-        /* {
-          id: 1,
-          title: 'Preferences',
-          icon: 'settings',
-          onPress: () => { this.props.closeSideMenu(); Actions.comingSoon(); },
-        }, */
-        {
-          id: 2,
-          title: 'Logout',
-          icon: 'logout-variant',
-          onPress: () => {
-            Alert.alert(
-              'Logout',
-              'Do you want to logout?',
-              [
-                { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-                { text: 'Yes',
-                  onPress: () => {
-                    this.net.meteor.logout();
-                    this.net.db.setUserId(null);
-                    AppConfig.setUserId(null);
-                    this.net.chat.logout();
-                    setTimeout(() => {
-                      RNRestart.Restart();
-                    }, 300);
-                  },
-                },
-              ],
-              { cancelable: false },
-            );
-          },
-        },
-      ],
-      currentUser: {
-        _id: userData._id,
-        email: userData.emails,
-        username: userData.username,
-        avatar: userData.avatar,
-        name: userData.name,
-      },
+      currentUser,
     };
+    this._mounted = false;
   }
 
   componentDidMount() {
-    Meteor.getData().on('onLogin', () => {
+    this._service.onLogin(() => {
       // on login, lets sync
       this.updateCurrentUserInfo();
     });
@@ -106,7 +53,7 @@ class ProfileView extends Component {
   }
 
   getCurrentUser() {
-    return this.net.chat.getCurrentUser();
+    return this._service.chat.getCurrentUser();
   }
 
   updateCurrentUserInfo() {
@@ -124,19 +71,11 @@ class ProfileView extends Component {
     }
   }
 
-  showProfile() {
-    const currUser = this.getCurrentUser();
-    if (currUser) {
-      Actions.memberDetail({ memberId: currUser._id });
-    }
-  }
-
   render() {
-    /* eslint-disable global-require */
     return (
       <View style={[styles.container, { paddingBottom: 50 }]}>
         <NavBarBack />
-        <MemberDetailView memberId={AppConfig.userId} avHeight={200} />
+        <MemberDetailView memberId={Application.userId} avHeight={200} />
         <View
           style={{ backgroundColor: AppColors.brand().primary }}
         >
@@ -149,10 +88,10 @@ class ProfileView extends Component {
                   { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                   { text: 'Yes',
                     onPress: () => {
-                      this.net.meteor.logout();
-                      this.net.db.setUserId(null);
-                      AppConfig.setUserId(null);
-                      this.net.chat.logout();
+                      this._service.meteor.logout();
+                      this._service.db.setUserId(null);
+                      Application.setUserId(null);
+                      this._service.chat.logout();
                       setTimeout(() => {
                         RNRestart.Restart();
                       }, 300);
@@ -188,7 +127,6 @@ class ProfileView extends Component {
         </View>
       </View>
     );
-    /* eslint-enable global-require */
   }
 }
 
