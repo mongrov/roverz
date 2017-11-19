@@ -52,12 +52,8 @@ class ProfileView extends Component {
     this._mounted = false;
   }
 
-  getCurrentUser() {
-    return this._service.chat.getCurrentUser();
-  }
-
   updateCurrentUserInfo() {
-    const userData = this.getCurrentUser();
+    const userData = this._service.currentUser;
     if (userData && this._mounted) {
       this.setState({
         currentUser: {
