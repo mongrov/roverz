@@ -1,4 +1,4 @@
-// import AppConfig from '@app/config';
+import RNRestart from 'react-native-restart';
 import Database from '../models';
 
 import Constants from './constants';
@@ -105,6 +105,15 @@ class Network {
 
   onLogin(callback) {
     Network._meteor.monitorAction('onLogin', callback);
+  }
+
+  logout() {
+    this.db.setUserId(null);
+    AppConfig.setUserId(null);
+    this.chat.logout();
+    setTimeout(() => {
+      RNRestart.Restart();
+    }, 300);
   }
 
   get serverSettings() {

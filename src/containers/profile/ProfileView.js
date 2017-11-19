@@ -10,11 +10,11 @@ import {
 import {
   Icon,
 } from 'react-native-elements';
+import { Text, MemberDetailView, NavBarBack } from 'roverz-chat';
 
-import RNRestart from 'react-native-restart';
-import { Text, Network, AppColors, MemberDetailView, NavBarBack } from 'roverz-chat';
+import Network from '../../network';
+import { AppColors } from '../../theme/';
 import Application from '../../constants/config';
-
 
 const styles = StyleSheet.create({
   container: {
@@ -88,13 +88,7 @@ class ProfileView extends Component {
                   { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                   { text: 'Yes',
                     onPress: () => {
-                      this._service.meteor.logout();
-                      this._service.db.setUserId(null);
-                      Application.setUserId(null);
-                      this._service.chat.logout();
-                      setTimeout(() => {
-                        RNRestart.Restart();
-                      }, 300);
+                      this._service.logout();
                     },
                   },
                 ],
