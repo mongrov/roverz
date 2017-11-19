@@ -6,8 +6,8 @@ import {
   View,
 } from 'react-native';
 
-import { AppStyles, AppColors } from '../../../theme';
-import AppConfig from '../../../constants/config';
+import { AppStyles, AppColors } from '../../theme';
+import Application from '../../constants/config';
 
 const styles = StyleSheet.create({
   paraText: {
@@ -47,7 +47,7 @@ export default class AboutView extends React.Component {
           }}
         >
           <Image
-            source={AppConfig.logo} // eslint-disable-line global-require
+            source={Application.logo}
             style={{
               opacity: 1,
               width: 150,
@@ -65,23 +65,23 @@ export default class AboutView extends React.Component {
           <View style={{ alignItems: 'center' }}>
             <Text
               style={[styles.headText]}
-            >{`Version: ${AppConfig.aboutDetails.version}`}</Text>
+            >{`Version: ${Application.aboutDetails.version}`}</Text>
             <Text
               style={[styles.paraText]}
-            >{`Build: ${AppConfig.aboutDetails.build}`}</Text>
+            >{`Build: ${Application.aboutDetails.build}`}</Text>
           </View>
           <View style={{ alignItems: 'center' }}>
             <Text
               style={[styles.paraText]}
-            >{AppConfig.aboutDetails.website}</Text>
+            >{Application.aboutDetails.website}</Text>
             <Text
               style={[styles.paraText]}
-            >{AppConfig.aboutDetails.email}</Text>
+            >{Application.aboutDetails.email}</Text>
           </View>
           <View>
             <Text
               style={[styles.paraTextLight]}
-            >{AppConfig.aboutDetails.company}</Text>
+            >{Application.aboutDetails.company}</Text>
           </View>
         </View>
       </View>

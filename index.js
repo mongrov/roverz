@@ -36,7 +36,7 @@ import MessageImageView from './src/chat/ui/room/MessageImageView';
 import SupportGroup from './src/chat/ui/room/SupportGroup';
 import ReplyMessageView from './src/chat/ui/room/ReplyMessageView';
 import PhotoPreview from './src/chat/ui/room/PhotoPreview';
-import AboutView from './src/containers/ui/Menu/AboutView';
+import AboutView from './src/containers/about/AboutView';
 import ProfileView from './src/containers/ui/Menu/ProfileView';
 import Menu from './src/containers/ui/Menu/MenuView';
 import GroupList from './src/chat/ui/group/GroupView';
