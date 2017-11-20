@@ -1,13 +1,9 @@
 import React from 'react';
 import { View, Text, Dimensions } from 'react-native';
-// import Gallery from 'react-native-image-gallery';
-// import { CachedImage } from 'react-native-img-cache';
-// import { AppColors } from 'roverz-chat';
-// import AppConfig from '@app/config';
 import Image from 'react-native-transformable-image';
 import PropTypes from 'prop-types';
 
-export default class PictureGallery extends React.Component {
+export default class ImageGallery extends React.Component {
 
   constructor(props) {
     super(props);
@@ -107,12 +103,12 @@ export default class PictureGallery extends React.Component {
   }
 }
 
-PictureGallery.defaultProps = {
+ImageGallery.defaultProps = {
   imgUrl: '',
   imgTitle: '',
 };
 
-PictureGallery.propTypes = {
+ImageGallery.propTypes = {
   imgUrl: PropTypes.string,
   imgTitle: PropTypes.string,
 };
