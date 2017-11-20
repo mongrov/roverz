@@ -1,7 +1,6 @@
 /**
  * Groups Screen
  */
-
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import {
@@ -9,21 +8,19 @@ import {
   Text,
   View,
   StatusBar,
-//  AppState,
   TouchableOpacity,
 } from 'react-native';
 import { ListView } from 'realm/react-native';
 import moment from 'moment';
-import Meteor from 'react-native-meteor';
 import { Loading, List, ListItem } from 'roverz-chat';
 import { Badge, Icon } from 'react-native-elements';
 
 // Consts and Libs
-import { AppStyles, AppSizes, AppColors } from '../../../theme/';
-import Network from '../../../network';
+import { AppStyles, AppSizes, AppColors } from '../../theme/';
+import Network from '../../network';
 import {
   ListItemAvatar,
-} from '../';
+} from '../ui';
 
 /* Styles ==================================================================== */
 
@@ -34,39 +31,36 @@ class GroupList extends Component {
 
   constructor(props) {
     super(props);
-    const n = new Network();
-    const db = n.db;
+    this._service = new Network();    
     const dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
     });
     this._mounted = false;
     this.state = {
-      _network: n,
-      _db: db,
       dataSource: dataSource.cloneWithRows(dataSource),
       loaded: false,
-      items: db.groups.sortedList,
+      items: this._service.db.groups.sortedList,
       connected: false,
     };
   }
 
   componentDidMount() {
-    Meteor.getData().on('onLogin', () => {
+    this._service.onLogin(() => {
       // on login, lets sync
-      if (this._mounted && this.state._network.meteor.getCurrentUser()) {
-        this.state._network.switchToLoggedInUser();
+      if (this._mounted && this._service.currentUser) {
+        this._service.switchToLoggedInUser();
         this.setState({ connected: true });
       }
     });
     this._insideStateUpdate = false;
-    this.state._db.groups.list.addListener(() => {
-      if (!this._mounted || this._insideStateUpdate || !this.state._network.meteor.getCurrentUser()) return;
+    this._service.db.groups.list.addListener(() => {
+      if (!this._mounted || this._insideStateUpdate || !this._service.currentUser) return;
       this._insideStateUpdate = true;
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(
-          this.state._network.chat.getFilteredChannels(this.state.items)),
+          this._service.chat.getFilteredChannels(this.state.items)),
         loaded: true,
-        connected: this.state._network.meteor.getCurrentUser(),
+        connected: this._service.currentUser,
       });
       this._insideStateUpdate = false;
     });
@@ -75,7 +69,7 @@ class GroupList extends Component {
       if (this._mounted && this.state.items && this.state.items.length > 0 && !this.state.loaded) {
         this.setState({
           loaded: true,
-          dataSource: this.state.dataSource.cloneWithRows(this.state._network.chat.getFilteredChannels(
+          dataSource: this.state.dataSource.cloneWithRows(this._service.chat.getFilteredChannels(
             this.state.items)),
         });
       }
@@ -111,12 +105,11 @@ class GroupList extends Component {
     return lastMsg.text;
   }
 
-
   // _handleAppStateChange = (nextAppState) => {
   //   if (nextAppState === 'background') {
-  //     this.state._network.chat.setUserPresence('away');
+  //     this._service.chat.setUserPresence('away');
   //   } else if (nextAppState === 'active') {
-  //     this.state._network.chat.setUserPresence('online');
+  //     this._service.chat.setUserPresence('online');
   //   }
   // }
 
@@ -187,9 +180,6 @@ class GroupList extends Component {
     if (!this.state.loaded) {
       return (<Loading />);
     }
-    /* @todo: Kumar, please show 'connected state variable' some visual
-     * indication here
-     */
     return (
       <View style={{
         flex: 1,

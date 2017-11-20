@@ -39,7 +39,7 @@ import PhotoPreview from './src/chat/ui/room/PhotoPreview';
 import AboutView from './src/containers/about/AboutView';
 import ProfileView from './src/containers/profile/ProfileView';
 import Menu from './src/containers/ui/Menu/MenuView';
-import GroupList from './src/chat/ui/group/GroupView';
+import GroupList from './src/chat/groups/GroupView';
 import RoomView from './src/chat/ui/room/RoomView';
 import { NavbarMenuButton } from './src/containers/ui/NavbarMenuButton/NavbarMenuButtonContainer';
 
