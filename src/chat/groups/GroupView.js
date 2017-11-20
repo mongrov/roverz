@@ -31,7 +31,7 @@ class GroupList extends Component {
 
   constructor(props) {
     super(props);
-    this._service = new Network();    
+    this._service = new Network();
     const dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
     });
