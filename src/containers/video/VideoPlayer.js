@@ -1,8 +1,4 @@
-
-import React, {
-  Component,
-} from 'react';
-
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -88,7 +84,6 @@ const styles = StyleSheet.create({
     borderRadius: 40,
   },
 });
-
 
 class VideoPlayer extends Component {
 

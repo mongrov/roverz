@@ -31,7 +31,7 @@ import MemberListView from './src/chat/ui/group/MemberListView';
 import SearchRoomView from './src/chat/ui/group/SearchRoomView';
 import MemberDetailView from './src/chat/ui/group/MemberDetailView';
 import SearchListView from './src/chat/ui/group/SearchListView';
-import VideoPlayer from './src/chat/VideoPlayer';
+import VideoPlayer from './src/containers/video/VideoPlayer';
 import MessageImageView from './src/chat/ui/room/MessageImageView';
 import SupportGroup from './src/chat/ui/room/SupportGroup';
 import ReplyMessageView from './src/chat/ui/room/ReplyMessageView';
