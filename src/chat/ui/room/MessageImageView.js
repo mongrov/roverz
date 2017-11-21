@@ -629,7 +629,7 @@ export default class MessageImageView extends React.Component {
           >
             <TouchableOpacity
               onPress={() => {
-                Actions.photoPreview({
+                Actions.imageGallery({
                   imgUrl: this.state.previewImageUri,
                   imgTitle: this.state.msgTitle,
                 });

@@ -15,9 +15,9 @@ import UserAvatar from 'react-native-user-avatar';
 import { AppUtil } from 'roverz-chat';
 // import { Icon } from 'react-native-elements';
 
-import Network from '../../../network';
-import Group from '../../../models/group';
-import { AppStyles, AppSizes } from '../../../theme/';
+import Network from '../../network';
+import Group from '../../models/group';
+import { AppStyles, AppSizes } from '../../theme/';
 
 var { height, width } = Dimensions.get('window');
 

@@ -51,7 +51,7 @@ export default class MessageImage extends React.Component {
       <View style={[styles.container, this.props.containerStyle]}>
         <TouchableOpacity
           onPress={() => {
-            Actions.photoPreview({
+            Actions.imageGallery({
               imgUrl: this.props.currentMessage.image,
               imgTitle: this.props.currentMessage.text,
             });
