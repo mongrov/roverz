@@ -35,7 +35,6 @@ import VideoPlayer from './src/containers/video/VideoPlayer';
 import MessageImageView from './src/chat/ui/room/MessageImageView';
 import SupportGroup from './src/chat/ui/room/SupportGroup';
 import ReplyMessageView from './src/chat/ui/room/ReplyMessageView';
-import PhotoPreview from './src/chat/ui/room/PhotoPreview';
 import AboutView from './src/containers/about/AboutView';
 import ProfileView from './src/containers/profile/ProfileView';
 import Menu from './src/containers/ui/Menu/MenuView';
@@ -64,7 +63,6 @@ export {
     MessageImageView,
     SupportGroup,
     ReplyMessageView,
-    PhotoPreview,
     AboutView,
     ProfileView,
     Menu,
