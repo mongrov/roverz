@@ -35,6 +35,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'OpenSans-Regular',
   },
+  viewContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: AppColors.brand().secondary,
+    padding: 15,
+  },
+  logo: { opacity: 1, width: 150 },
+  loadText: {
+    fontSize: 14,
+    fontFamily: 'OpenSans-Regular',
+    color: 'rgba(255,255,255,0.7)',
+  },
+  centerAll: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  workspace: { color: '#FFF', fontSize: 16 },
 });
 
 // todo
@@ -157,28 +177,17 @@ export default class SelectServer extends React.Component {
   render() {
     return (
       <View
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: AppColors.brand().secondary,
-          padding: 15,
-        }}
+        style={[styles.viewContainer]}
       >
         <StatusBar barStyle="light-content" />
         {this.state.isLoading === true &&
         <View style={[AppStyles.windowSize, AppStyles.containerCentered]}>
           <Image
             source={Application.logo}
-            style={[AppStyles.loginLogoSplash, { opacity: 1, width: 150 }]}
+            style={[AppStyles.loginLogoSplash, styles.logo]}
           />
           <Text
-            style={{
-              fontSize: 14,
-              fontFamily: 'OpenSans-Regular',
-              color: 'rgba(255,255,255,0.7)',
-            }}
+            style={[styles.loadText]}
           >{this.state.loadText}</Text>
         </View>
         }
@@ -188,12 +197,7 @@ export default class SelectServer extends React.Component {
             style={styles.messageContainer}
           >
             <View style={[AppStyles.row]}>
-              <View style={{
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              >
+              <View style={[styles.centerAll]}>
                 <Image
                   source={Application.logo}
                   style={[AppStyles.loginLogoSplash]}
@@ -202,7 +206,7 @@ export default class SelectServer extends React.Component {
                   error={this.state.resultMsg.error}
                 />
                 <Text style={
-                [AppStyles.ListItemTitle, { color: '#FFF', fontSize: 16 }]
+                [AppStyles.ListItemTitle, styles.workspace]
                 }
                 >{t('lbl_enter_your_workspace')}</Text>
               </View>

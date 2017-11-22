@@ -8,4 +8,13 @@ export default {
   err_workspace_name_empty: 'Workspace name is empty',
   confirm: 'Confirm',
   lbl_enter_your_workspace: 'Please enter your workspace name',
+  lbl_sso: 'SSO Login',
+  lbl_login_btn: 'Login',
+  lbl_login_username: 'Username or Email',
+  err_login_valid_username: 'Please enter a valid username or email',
+  err_login_valid_password: 'Please enter a valid password',
+  info_logging_in: 'One moment...',
+  info_logged_in: 'Awesome, you\'re now logged in!',
+  err_login_failed: 'Login failed',
+  txt_Workspace: 'WORKSPACE',
 };
