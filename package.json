@@ -85,7 +85,7 @@
     "pre-commit": "^1.2.2",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.3",
-    "react-test-renderer": "^16.0.0-alpha.6",
+    "react-test-renderer": "16.0.0-alpha.6",
     "string-replace-loader": "^1.2.0",
     "webpack": "3.5.6",
     "webpack-dev-server": "2.7.1"
