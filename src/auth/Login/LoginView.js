@@ -1,7 +1,7 @@
 /**
  * Login Screen
  */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
   AsyncStorage,
   View,
@@ -10,17 +10,54 @@ import {
   StatusBar,
   ActivityIndicator,
   Image,
+  StyleSheet,
 } from 'react-native';
 import FormValidation from 'tcomb-form-native';
 import { Actions } from 'react-native-router-flux';
-import { Alerts, Spacer, Text, Button, AppUtil } from 'roverz-chat';
+import PropTypes from 'prop-types';
+import { AppUtil } from 'roverz-chat';
 
+import { Alerts, Spacer, Text, Button } from '../../components/ui/';
+import t from '../../i18n/';
 import Network from '../../network';
 import { AppStyles, AppColors } from '../../theme/';
 import Application from '../../constants/config';
 
 /* Styles ==================================================================== */
-
+const styles = StyleSheet.create({
+  ssoContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: AppColors.brand().third,
+    height: 40,
+    borderRadius: 5,
+    marginBottom: 15,
+  },
+  ssoParent: {
+    padding: 30,
+    paddingBottom: 50,
+  },
+  topContainer: {
+    flex: 1,
+    backgroundColor: AppColors.brand().secondary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoImg: { flex: 1, marginTop: 30 },
+  workspaceBtn: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+    marginBottom: 15,
+  },
+  workspaceTxt: {
+    fontSize: 15,
+    color: '#FFF',
+  },
+  formContainer: { backgroundColor: 'white' },
+});
 
 /* Component ==================================================================== */
 class Login extends Component {
@@ -62,27 +99,27 @@ class Login extends Component {
       loading: true,
       showForm: false,
       showSSO: false,
-      ssoText: 'SSO Login',
+      ssoText: t('lbl_sso'),
       form_fields: FormValidation.struct({
         Email_or_Username: validEmail,
         Password: validPassword,
       }),
       empty_form_values: {
-        Email: 'Username or Email',
+        Email: t('lbl_login_username'),
         Password: '',
       },
       form_values: {},
       options: {
         fields: {
           Email_or_Username: {
-            error: 'Please enter a valid username or email',
+            error: t('err_login_valid_username'),
             autoCapitalize: 'none',
             clearButtonMode: 'while-editing',
             keyboardType: 'email-address',
             autoCorrect: false,
           },
           Password: {
-            error: 'Please enter a valid password',
+            error: t('err_login_valid_password'),
             clearButtonMode: 'while-editing',
             secureTextEntry: true,
             autoCorrect: false,
@@ -152,7 +189,7 @@ class Login extends Component {
     // Form is valid
     if (credentials) {
       this.setState({ form_values: credentials }, () => {
-        this.setState({ resultMsg: { status: 'One moment...' } });
+        this.setState({ resultMsg: { status: t('info_logging_in') } });
 
         // Scroll to top, to show message
         if (this.scrollView) {
@@ -164,11 +201,11 @@ class Login extends Component {
         }, true).then(() => {
           if (this._mounted) {
             this.setState({
-              resultMsg: { success: 'Awesome, you\'re now logged in!' },
+              resultMsg: { success: t('info_logged_in') },
             });
           }
         }).catch(() => {
-          const error = 'Login failed'; // AppAPI.handleError(err);
+          const error = t('err_login_failed'); // AppAPI.handleError(err);
           this.setState({ resultMsg: { error } });
         });
       });
@@ -180,9 +217,7 @@ class Login extends Component {
     if (this.state.showForm) {
       return (
         <View
-          style={{
-            padding: 30,
-          }}
+          style={[styles.ssoParent]}
         >
           {/* @release: If enterprise does not have SSO comment below */}
           {this.renderSSO()}
@@ -202,27 +237,23 @@ class Login extends Component {
           <View style={[AppStyles.row]}>
             <View style={[AppStyles.flex1]}>
               <Button
-                title={'Login'}
+                title={t('lbl_login_btn')}
                 onPress={this.login}
                 backgroundColor="transparent"
                 style={[]}
               />
             </View>
           </View>
-          <Spacer size={20} />
         </View>
       );
     }
     if (this.state.showSSO) {
       return (
         <View
-          style={{
-            padding: 30,
-          }}
+          style={[styles.ssoParent]}
         >
           {/* @release: If enterprise does not have SSO comment below */}
           {this.renderSSO()}
-          <Spacer size={20} />
         </View>
       );
     }
@@ -241,16 +272,7 @@ class Login extends Component {
       return (
         <View style={[AppStyles.row]}>
           <TouchableOpacity
-            style={{
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: AppColors.brand().third,
-              height: 40,
-              borderRadius: 5,
-              marginBottom: 15,
-            }}
+            style={[styles.ssoContainer]}
             onPress={Actions.samlLogin}
           >
             <Text style={{ color: 'white' }}>{this.state.ssoText}</Text>
@@ -280,23 +302,13 @@ class Login extends Component {
         style={[AppStyles.windowSize]}
       >
         <StatusBar barStyle="light-content" />
-        <View style={{
-          flex: 1,
-          backgroundColor: AppColors.brand().secondary,
-          alignItems: 'center',
-          justifyContent: 'center' }}
-        >
+        <View style={[styles.topContainer]}>
           <Image
             source={Application.logo}
-            style={[AppStyles.loginLogo, { flex: 1, marginTop: 30 }]}
+            style={[AppStyles.loginLogo, styles.logoImg]}
           />
           <TouchableOpacity
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: 5,
-              marginBottom: 15,
-            }}
+            style={[styles.workspaceBtn]}
             onPress={() => { Actions.chooseInstance({ switchServer: true }); }}
           >
             <Text
@@ -304,16 +316,13 @@ class Login extends Component {
                 fontSize: 12,
                 color: '#FFF',
               }}
-            >WORKSPACE</Text>
+            >{t('txt_Workspace')}</Text>
             <Text
-              style={{
-                fontSize: 15,
-                color: '#FFF',
-              }}
+              style={[styles.workspaceTxt]}
             >{this.state.serverUrl}</Text>
           </TouchableOpacity>
         </View>
-        <View style={{ backgroundColor: 'white' }}>
+        <View style={[styles.formContainer]}>
           {this.renderForm()}
         </View>
       </KeyboardAvoidingView>
