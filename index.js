@@ -35,15 +35,12 @@ import VideoPlayer from './src/containers/video/VideoPlayer';
 import MessageImageView from './src/chat/ui/room/MessageImageView';
 import SupportGroup from './src/chat/ui/room/SupportGroup';
 import ReplyMessageView from './src/chat/ui/room/ReplyMessageView';
-import AboutView from './src/containers/about/AboutView';
-import ProfileView from './src/containers/profile/ProfileView';
 import Menu from './src/containers/ui/Menu/MenuView';
 import GroupList from './src/chat/groups/GroupView';
 import RoomView from './src/chat/ui/room/RoomView';
 import { NavbarMenuButton } from './src/containers/ui/NavbarMenuButton/NavbarMenuButtonContainer';
 
 import ImagePreview from './src/chat/ui/room/attachment/ImagePreview';
-import ImageGallery from './src/containers/image/ImageGallery';
 
 export {
     // general components
@@ -63,14 +60,11 @@ export {
     MessageImageView,
     SupportGroup,
     ReplyMessageView,
-    AboutView,
-    ProfileView,
     Menu,
     GroupList,
     NavbarMenuButton,
     RoomView,
     ImagePreview,
-    ImageGallery,
 
     // auth
     ProfileEditView,

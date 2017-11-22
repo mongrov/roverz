@@ -3,6 +3,7 @@
  */
 /* global __DEV__ */
 import { GoogleAnalyticsTracker } from 'react-native-google-analytics-bridge';
+import * as Containers from '../containers';
 
 export default {
   // App Details
@@ -24,6 +25,7 @@ export default {
   bootstrapUrl: null,
   ga: null,
   filterRoomList: [],
+  containers: [],  
 
   aboutDetails: {
     version: '2.0.1',
@@ -53,6 +55,17 @@ export default {
     WS_URL: null,
   },
 
+  addContainer(key, title, subTitle, component, analyticsDesc) {
+    const c = {
+      key,
+      title,
+      subTitle,
+      component,
+      analyticsDesc,
+    };
+    this.containers.push(c);
+  },
+
   init() {
     if (this.instance === null) {
       if (this.bootstrapUrl !== null) {
@@ -66,6 +79,12 @@ export default {
     }
     if (this.logo == null) {
       this.logo = require('../images/logo.png');  // eslint-disable-line global-require
+    }
+    if (this.containers.length===0) {
+      // lets init reusable containers
+      this.addContainer('aboutView', 'About', '', Containers.AboutView, 'About View');
+      this.addContainer('profileView', 'Profile', '', Containers.ProfileView, 'Profile View');
+      this.addContainer('imageGallery', 'Image Preview', '', Containers.ImageGallery, 'Image Preview');      
     }
   },
 
@@ -93,7 +112,6 @@ export default {
     this.filterRoomList = filterList;
   },
 
-
   reset(space) {
     this.space = space;
     this.instance = `${this.space}.${this.brand}`;
@@ -102,20 +120,20 @@ export default {
 
   resetInstance(instanceUrl) {
     const noOfDots = (instanceUrl.match(/\./g) || []).length;
-    let instanceIp = instanceUrl; // ib.elix.yap.im
+    let instanceIp = instanceUrl; // x.y.m.com
     let brandIp = this.brand;
     let resetInstanceUrl = '';
     if (noOfDots <= 1) {
       resetInstanceUrl = `${instanceIp}.${this.brand}`;
     } else {
-      const res = instanceUrl.split('.'); // [ib,elix,yap,im]
-      instanceIp = res[0]; // elix
+      const res = instanceUrl.split('.'); // [x,y,m,com]
+      instanceIp = res[0]; // x
       let i;
       let newInstanceIp = '';
       for (i = 1; i < res.length; i += 1) {
-        newInstanceIp = `${newInstanceIp}.${res[i]}`; // .yap.im
+        newInstanceIp = `${newInstanceIp}.${res[i]}`; // .m.com
       }
-      brandIp = `${res[res.length - 2]}.${res[res.length - 1]}`; // yap.im
+      brandIp = `${res[res.length - 2]}.${res[res.length - 1]}`; // m.com
       instanceIp = instanceUrl.replace(`.${brandIp}`, '');
       resetInstanceUrl = instanceUrl;
       this.setBrand(brandIp);
