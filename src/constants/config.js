@@ -25,7 +25,7 @@ export default {
   bootstrapUrl: null,
   ga: null,
   filterRoomList: [],
-  containers: [],  
+  containers: [],
 
   aboutDetails: {
     version: '2.0.1',
@@ -80,11 +80,11 @@ export default {
     if (this.logo == null) {
       this.logo = require('../images/logo.png');  // eslint-disable-line global-require
     }
-    if (this.containers.length===0) {
+    if (this.containers.length === 0) {
       // lets init reusable containers
       this.addContainer('aboutView', 'About', '', Containers.AboutView, 'About View');
       this.addContainer('profileView', 'Profile', '', Containers.ProfileView, 'Profile View');
-      this.addContainer('imageGallery', 'Image Preview', '', Containers.ImageGallery, 'Image Preview');      
+      this.addContainer('imageGallery', 'Image Preview', '', Containers.ImageGallery, 'Image Preview');
     }
   },
 
