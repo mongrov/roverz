@@ -1,6 +1,3 @@
-/**
- * PhotoBrowser Screen
- */
 import React, { Component } from 'react';
 
 import {
@@ -13,25 +10,21 @@ import PropTypes from 'prop-types';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
 import { AppUtil } from 'roverz-chat';
-// import { Icon } from 'react-native-elements';
 
 import Network from '../../network';
 import Group from '../../models/group';
 import { AppStyles, AppSizes } from '../../theme/';
 
-var { height, width } = Dimensions.get('window');
-
 export default class MemberDetailView extends Component {
 
   constructor(props) {
     super(props);
+    const { height, width } = Dimensions.get('window');
     const memberId = this.props.memberId;
-    // const memberUsername =  this.props.memberUsername;
-    const network = new Network();
-    // const memberDetailList = {};
+    this._service = new Network();
+    this._mounted = false;
     this.state = {
       memberId,
-      _network: network,
       memberDetail: {
         _id: '',
         email: '',
@@ -47,13 +40,13 @@ export default class MemberDetailView extends Component {
         height,
         width,
       },
-      // memberDetailList: {},
     };
   }
 
   componentDidMount() {
-    const userDetailList = this.state._network.chat.getUserAsList(this.props.memberId);
+    const userDetailList = this._service.chat.getUserAsList(this.props.memberId);
     userDetailList.addListener((list/* , changes */) => {
+      if (!this._mounted) return;
       let statColor = '';
       switch (list[0].status) {
         case 'online':
@@ -80,12 +73,11 @@ export default class MemberDetailView extends Component {
         },
       });
     });
+    this._mounted = true;
   }
 
   componentWillUnmount() {
-  }
-
-  _changeListener() {
+    this._mounted = false;
   }
 
   _onLayout = (event) => {
@@ -97,7 +89,6 @@ export default class MemberDetailView extends Component {
     });
   }
 
-  /* eslint-disable global-require */
   render() {
     return (
       <ScrollView
@@ -194,7 +185,6 @@ export default class MemberDetailView extends Component {
       </ScrollView>
     );
   }
-  /* eslint-enable global-require */
 }
 
 MemberDetailView.defaultProps = {

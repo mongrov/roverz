@@ -1,6 +1,3 @@
-/**
- * MemberList Screen
- */
 import React, { Component } from 'react';
 import { List, ListItem } from 'react-native-elements';
 import { ListView } from 'realm/react-native';
@@ -18,7 +15,6 @@ import {
 import PropTypes from 'prop-types';
 import { Loading, AppUtil } from 'roverz-chat';
 
-// import { Actions } from 'react-native-router-flux';
 import Network from '../../network';
 import Group from '../../models/group';
 import { AppStyles, AppSizes } from '../../theme/';
