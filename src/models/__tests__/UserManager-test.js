@@ -32,11 +32,13 @@ it('list getters', () => {
   db.users.updateStatus('10', 'test', 'test name');
   db.users.updateStatus('10', 'test', 'test name', 'online');
   db.users.updateStatus('20', 'test', '', 'online');
-  // console.log('----**********************----');
-  // console.log(db.users.getOnlineUsers);
-  // console.log(db.users.getStatus('2'));
-  // console.log(db.users.getStatus('10'));
-  // console.log('----**********************----');
+  console.log('----**********************----');
+  console.log(db.users.getOnlineUsers);
+  console.log(db.users.getStatus('2'));
+  console.log(db.users.getStatus('10'));
+  console.log(db.users.findByUserName('test'));
+  console.log(db.users.findByUserName('ezhil'));
+  console.log('----**********************----');
 });
 it('updateFullUserData', () => {
   var db = new Database();

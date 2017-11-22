@@ -30,10 +30,7 @@ export default class RemoteFileManager {
 
   findById(fid) {
     const res = this.list.filtered(`fileId = "${fid}"`);
-    let value = (res && res.length > 0) ? res['0'].value : null;
-    if (value) {
-      value = JSON.parse(value);
-    }
+    const value = (res && res.length > 0) ? res['0'].value : null;
     return value;
   }
 
@@ -56,13 +53,8 @@ export default class RemoteFileManager {
     const settingsList = this.list;
     if (!settingsList || Object.keys(settingsList).length <= 0) return;
     AppUtil.debug(null, `${Constants.MODULE}: deleteAll`);
-    Object.keys(settingsList).forEach((k) => {
-      this._realm.write(() => {
-        var obj = settingsList[k];
-        if (obj) {
-          this._realm.delete(obj);
-        }
-      });
+    this._realm.write(() => {
+      this._realm.deleteAll();
     });
   }
 

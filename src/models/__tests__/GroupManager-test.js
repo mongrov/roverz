@@ -113,10 +113,12 @@ it('add groups', () => {
   // delete invalid message id
   db.deleteMessage('4');
   let lastMessage = db.groups.lastMessage;
+  console.log('ezhil jana4', lastMessage);
   expect(lastMessage).not.toBeNull();
   // delete invalid message id
   db.deleteMessage('4', '21');
   lastMessage = db.groups.lastMessage;
+  console.log('ezhil jana21 ', lastMessage);
   expect(lastMessage).not.toBeNull();
   // delete valid message id
   db.deleteMessage('4', '14');
