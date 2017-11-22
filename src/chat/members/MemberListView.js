@@ -25,22 +25,20 @@ import { AppStyles, AppSizes } from '../../theme/';
 import { ListItemAvatar } from '../ui';
 import Application from '../../constants/config';
 
-const memberListData = [];
-
-var { height, width } = Dimensions.get('window');
-
 export default class MemberListView extends Component {
 
   constructor(props) {
     super(props);
+    const { height, width } = Dimensions.get('window');
     this._service = new Network();
     this._group = this.props.group;
     const dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
     });
     this._mounted = false;
+    this._memberListData = [];
     this.state = {
-      dataSource: dataSource.cloneWithRows(memberListData),
+      dataSource: dataSource.cloneWithRows(this._memberListData),
       loaded: false,
       totalMembers: 0,
       onlineMembers: 0,
@@ -79,10 +77,10 @@ export default class MemberListView extends Component {
   _membersCallback(data, msg) {
     const _su = this;
     if (msg === 'SUCCESS' && this._mounted) {
-      _su.memberListData = data.records;
+      _su._memberListData = data.records;
       _su.setState({
         totalMembers: data.total,
-        onlineMembers: _su.memberListData.length,
+        onlineMembers: _su._memberListData.length,
       });
       this._service.chat.getMembersList(this._group._id, this._offlineMembersCallback, data.records);
     }
@@ -91,9 +89,9 @@ export default class MemberListView extends Component {
   _offlineMembersCallback(data, msg) {
     const _su = this;
     if (msg === 'SUCCESS' && this._mounted) {
-      _su.memberListData = data.records;
+      _su._memberListData = data.records;
       _su.setState({
-        dataSource: _su.state.dataSource.cloneWithRows(_su.memberListData),
+        dataSource: _su.state.dataSource.cloneWithRows(_su._memberListData),
         loaded: true,
       });
     }
