@@ -23,7 +23,7 @@ import Network from '../../network';
 import Group from '../../models/group';
 import { AppStyles, AppSizes } from '../../theme/';
 import { ListItemAvatar } from '../ui';
-import ModuleConfig from '../../constants/config';
+import Application from '../../constants/config';
 
 const memberListData = [];
 
@@ -33,22 +33,18 @@ export default class MemberListView extends Component {
 
   constructor(props) {
     super(props);
-    const n = new Network();
+    this._service = new Network();
     this._group = this.props.group;
-    this.roomName = this.props.roomTitle ? this.props.roomTitle : this.props.roomName;
     const dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
     });
-
+    this._mounted = false;
     this.state = {
-      _network: n,
       dataSource: dataSource.cloneWithRows(memberListData),
       loaded: false,
       totalMembers: 0,
       onlineMembers: 0,
-      // items: db.groups.sortedList,
-      roomObj: this.props.group,
-      roomName: this.roomName,
+      roomName: this.props.roomTitle ? this.props.roomTitle : this.props.roomName,
       layout: {
         height,
         width,
@@ -60,14 +56,15 @@ export default class MemberListView extends Component {
 
   componentDidMount() {
     this.getMembers();
+    this._mounted = true;
   }
 
   componentWillUnmount() {
-
+    this._mounted = false;
   }
 
   getMembers() {
-    this.state._network.chat.getMembersList(this._group._id, this._membersCallback, null);
+    this._service.chat.getMembersList(this._group._id, this._membersCallback, null);
   }
 
   _onLayout = (event) => {
@@ -81,19 +78,19 @@ export default class MemberListView extends Component {
 
   _membersCallback(data, msg) {
     const _su = this;
-    if (msg === 'SUCCESS') {
+    if (msg === 'SUCCESS' && this._mounted) {
       _su.memberListData = data.records;
       _su.setState({
         totalMembers: data.total,
         onlineMembers: _su.memberListData.length,
       });
-      this.state._network.chat.getMembersList(this._group._id, this._offlineMembersCallback, data.records);
+      this._service.chat.getMembersList(this._group._id, this._offlineMembersCallback, data.records);
     }
   }
 
   _offlineMembersCallback(data, msg) {
     const _su = this;
-    if (msg === 'SUCCESS') {
+    if (msg === 'SUCCESS' && this._mounted) {
       _su.memberListData = data.records;
       _su.setState({
         dataSource: _su.state.dataSource.cloneWithRows(_su.memberListData),
@@ -113,7 +110,7 @@ export default class MemberListView extends Component {
         onPress={() => Actions.memberDetail({ memberId: rowData._id })}
         leftIcon={
           <ListItemAvatar
-            source={`${ModuleConfig.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`}
+            source={`${Application.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`}
             name={rowData.name}
             size={36}
           />}
