@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     height: 40,
     flex: 1,
     fontSize: 16,
-    fontFamily: 'OpenSans-Regular',
   },
   viewContainer: {
     flex: 1,
@@ -48,7 +47,6 @@ const styles = StyleSheet.create({
   logo: { opacity: 1, width: 150 },
   loadText: {
     fontSize: 14,
-    fontFamily: 'OpenSans-Regular',
     color: 'rgba(255,255,255,0.7)',
   },
   centerAll: {
@@ -189,7 +187,7 @@ export default class SelectServer extends React.Component {
             style={[AppStyles.loginLogoSplash, styles.logo]}
           />
           <Text
-            style={[styles.loadText]}
+            style={[styles.loadText, AppStyles.baseFont]}
           >{this.state.loadText}</Text>
         </View>
         }
@@ -218,7 +216,7 @@ export default class SelectServer extends React.Component {
                 <TextInput
                   placeholder={`[workspace].${Application.brandName}`}
                   autoCapitalize={'none'}
-                  style={[styles.textInput]}
+                  style={[styles.textInput, AppStyles.baseFont]}
                   onChangeText={(text) => { this.setState({ serverUrl: text }); }}
                   value={this.state.serverUrl}
                   underlineColorAndroid={'transparent'}

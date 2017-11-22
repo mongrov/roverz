@@ -66,6 +66,9 @@ export default {
   },
 
   // Text Styles
+  baseFont: {
+    fontFamily: Fonts.base.family,
+  },
   baseText: {
     fontFamily: Fonts.base.family,
     fontSize: Fonts.base.size,
