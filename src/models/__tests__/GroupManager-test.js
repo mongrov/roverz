@@ -4,10 +4,10 @@
 /* global it expect jest */
 import 'react-native';
 
-import Database from '@models';
+import Database from '../';
 
 function sampleGroups() {
-  var db = new Database('inst', 'test');
+  var db = new Database();
   var objs = {
     777: { _id: '777', name: 'direct 1', type: 'd' },
     4: { _id: '4', name: 'privae1' },
@@ -16,13 +16,14 @@ function sampleGroups() {
     444: { _id: '444', name: 'public group1', type: 'c' },
     1: { _id: '1', name: 'general', type: 'c' },
   };
+  db.switchDb('inst', 'test');
   db.groups.addAll(objs);
   return Object.keys(objs).length;
 }
 
-
 it('list getters', () => {
-  var db = new Database('inst', 'test');
+  var db = new Database();
+  db.switchDb('inst', 'test');
   // lets reset the db
   db.reset();
   const g = sampleGroups();
@@ -53,7 +54,8 @@ it('list getters', () => {
 });
 
 it('delete groups', () => {
-  var db = new Database('inst', 'test');
+  var db = new Database();
+  db.switchDb('inst', 'test');
   // lets reset the db
   db.reset();
   const g = sampleGroups();
@@ -76,7 +78,8 @@ it('delete groups', () => {
 
 
 it('add groups', () => {
-  var db = new Database('inst', 'test');
+  var db = new Database();
+  db.switchDb('inst', 'test');
   // lets reset the db
   db.reset();
   db.groups.addAll(null);
@@ -136,7 +139,8 @@ it('add groups', () => {
 
 // test all group object related methods
 it('group getters', () => {
-  var db = new Database('inst', 'test');
+  var db = new Database();
+  db.switchDb('inst', 'test');
   // lets reset the db
   db.reset();
   const g = sampleGroups();
@@ -153,7 +157,8 @@ it('group getters', () => {
 });
 
 it('group findMissingMessages', () => {
-  var db = new Database('inst', 'test');
+  var db = new Database();
+  db.switchDb('inst', 'test');
   // lets reset the db
   db.reset();
   const g = sampleGroups();

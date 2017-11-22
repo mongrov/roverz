@@ -1,12 +1,13 @@
 /* global it expect jest */
 import 'react-native';
 
-import Database from '@models';
+import Database from '../';
 
 /*   Remove empty values from a given associative array */
 
 it('last sync test', () => {
-  var db = new Database('inst', 'test');
+  var db = new Database();
+  db.switchDb('inst', 'test');
 // lets reset the db
   db.reset();
   expect(db.app.state).toBeNull(); // no state
@@ -16,7 +17,8 @@ it('last sync test', () => {
 
 // lets switch the db
 it('switchDb test', () => {
-  var db = new Database('p57', 'test');
+  var db = new Database();
+  db.switchDb('p57', 'test');
 
   // lets reset the db
   db.reset();

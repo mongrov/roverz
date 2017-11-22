@@ -4,10 +4,11 @@
 /* global it expect jest */
 import 'react-native';
 
-import Database from '@models';
+import Database from '../';
 
 it('list getters', () => {
-  var db = new Database('inst', 'test');
+  var db = new Database();
+  db.switchDb('inst', 'test');
   // lets reset the db
   db.reset();
   expect(db.users.list).toHaveLength(0);
@@ -38,7 +39,8 @@ it('list getters', () => {
   // console.log('----**********************----');
 });
 it('updateFullUserData', () => {
-  var db = new Database('inst', 'test');
+  var db = new Database();
+  db.switchDb('inst', 'test');
   // lets reset the db
   db.reset();
   expect(db.users.list).toHaveLength(0);
