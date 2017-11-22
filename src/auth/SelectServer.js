@@ -11,8 +11,10 @@ import {
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
-import { Alerts, Spacer, Button, AppUtil } from 'roverz-chat';
+import PropTypes from 'prop-types';
+import { AppUtil } from 'roverz-chat';
 
+import { Alerts, Spacer, Button } from '../components/ui/';
 import Network from '../network';
 import t from '../i18n';
 import { AppColors, AppStyles } from '../theme/';
@@ -247,5 +249,5 @@ SelectServer.defaultProps = {
 };
 
 SelectServer.propTypes = {
-  switchServer: React.PropTypes.bool,
+  switchServer: PropTypes.bool,
 };

@@ -1,7 +1,7 @@
 /**
  * Login Screen
  */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
   AsyncStorage,
   View,
@@ -14,8 +14,10 @@ import {
 } from 'react-native';
 import FormValidation from 'tcomb-form-native';
 import { Actions } from 'react-native-router-flux';
-import { Alerts, Spacer, Text, Button, AppUtil } from 'roverz-chat';
+import PropTypes from 'prop-types';
+import { AppUtil } from 'roverz-chat';
 
+import { Alerts, Spacer, Text, Button } from '../../components/ui/';
 import t from '../../i18n/';
 import Network from '../../network';
 import { AppStyles, AppColors } from '../../theme/';
