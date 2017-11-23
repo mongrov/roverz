@@ -28,4 +28,8 @@ export default {
   txt_members: 'members',
   txt_online: 'online',
   txt_time_zone: 'Time Zone: GMT',
+  txt_logout: 'Logout',
+  txt_want_to_logout: 'Do you want to logout?',
+  txt_yes: 'Yes',
+  txt_no: 'No',
 };

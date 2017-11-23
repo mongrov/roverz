@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {
   View,
   StyleSheet,
@@ -10,8 +9,11 @@ import {
 import {
   Icon,
 } from 'react-native-elements';
-import { Text, MemberDetailView, NavBarBack } from 'roverz-chat';
 
+import t from '../../i18n/';
+import { Text } from '../../components/ui/';
+import MemberDetailView from '../../chat/members/MemberDetailView';
+import NavBarBack from '../../chat/ui/NavBarBack';
 import Network from '../../network';
 import { AppColors } from '../../theme/';
 import Application from '../../constants/config';
@@ -20,6 +22,20 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     flex: 1,
+  },
+  logout: {
+    flexDirection: 'row',
+    paddingVertical: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: AppColors.brand().sixth,
+  },
+  logoutText: {
+    marginLeft: 10,
+    color: '#FFF',
+    fontSize: 16,
+    fontWeight: '400',
   },
 });
 
@@ -69,20 +85,20 @@ class ProfileView extends Component {
 
   render() {
     return (
-      <View style={[styles.container, { paddingBottom: 50 }]}>
+      <View style={[styles.container]}>
         <NavBarBack />
-        <MemberDetailView memberId={Application.userId} avHeight={200} />
+        <MemberDetailView memberId={Application.userId} avHeight={300} />
         <View
           style={{ backgroundColor: AppColors.brand().primary }}
         >
           <TouchableOpacity
             onPress={() => {
               Alert.alert(
-                'Logout',
-                'Do you want to logout?',
+                t('txt_logout'),
+                t('txt_want_to_logout'),
                 [
-                  { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-                  { text: 'Yes',
+                  { text: t('txt_no'), onPress: () => {}, style: 'cancel' },
+                  { text: t('txt_yes'),
                     onPress: () => {
                       this._service.logout();
                     },
@@ -91,14 +107,7 @@ class ProfileView extends Component {
                 { cancelable: false },
               );
             }}
-            style={{
-              flexDirection: 'row',
-              paddingVertical: 12,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderBottomWidth: 1,
-              borderBottomColor: AppColors.brand().sixth,
-            }}
+            style={[styles.logout]}
           >
             <Icon
               name={'logout-variant'}
@@ -106,13 +115,8 @@ class ProfileView extends Component {
               color={'rgba(255,255,255,0.4)'}
             />
             <Text
-              style={{
-                marginLeft: 10,
-                color: '#FFF',
-                fontSize: 16,
-                fontWeight: '400',
-              }}
-            >Logout</Text>
+              style={[styles.logoutText]}
+            >{t('txt_logout')}</Text>
           </TouchableOpacity>
         </View>
       </View>
