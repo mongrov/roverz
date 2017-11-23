@@ -11,21 +11,47 @@ import {
   Text,
   View,
   Dimensions,
+  StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { Loading, AppUtil } from 'roverz-chat';
 
+import t from '../../i18n/';
+import Loading from '../../components/general/Loading';
+import AppUtil from '../../lib/util';
 import Network from '../../network';
 import Group from '../../models/group';
 import { AppStyles, AppSizes } from '../../theme/';
 import { ListItemAvatar } from '../ui';
 import Application from '../../constants/config';
 
+const { height, width } = Dimensions.get('window');
+
+const styles = StyleSheet.create({
+  avatar: {
+    width,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 0,
+    borderRadius: 0,
+  },
+  detailView: {
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'column',
+    borderBottomColor: 'rgba(0,0,0,0.3)',
+    borderBottomWidth: 1,
+    paddingBottom: 15,
+    paddingTop: 150,
+  },
+  detailText01: { marginTop: 10, textAlign: 'center' },
+  detailText02: { textAlign: 'center' },
+});
+
 export default class MemberListView extends Component {
 
   constructor(props) {
     super(props);
-    const { height, width } = Dimensions.get('window');
     this._service = new Network();
     this._group = this.props.group;
     const dataSource = new ListView.DataSource({
@@ -72,7 +98,7 @@ export default class MemberListView extends Component {
 
   _membersCallback(data, msg) {
     const _su = this;
-    if (msg === 'SUCCESS' && this._mounted) {
+    if (msg === Application.response_success && this._mounted) {
       _su._memberListData = data.records;
       _su.setState({
         totalMembers: data.total,
@@ -84,7 +110,7 @@ export default class MemberListView extends Component {
 
   _offlineMembersCallback(data, msg) {
     const _su = this;
-    if (msg === 'SUCCESS' && this._mounted) {
+    if (msg === Application.response_success && this._mounted) {
       _su._memberListData = data.records;
       _su.setState({
         dataSource: _su.state.dataSource.cloneWithRows(_su._memberListData),
@@ -140,32 +166,17 @@ export default class MemberListView extends Component {
         <UserAvatar
           name={AppUtil.avatarInitials(this.state.roomName)}
           size={150}
-          style={{
-            width: this.state.layout.width,
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            zIndex: 0,
-            borderRadius: 0,
-          }}
+          style={[styles.avatar]}
         />
         <View
-          style={{
-            alignItems: 'center',
-            flex: 1,
-            flexDirection: 'column',
-            borderBottomColor: 'rgba(0,0,0,0.3)',
-            borderBottomWidth: 1,
-            paddingBottom: 15,
-            paddingTop: 150,
-          }}
+          style={[styles.detailView]}
         >
           <Text
-            style={[AppStyles.memberDetailsLG, { marginTop: 10, textAlign: 'center' }]}
+            style={[AppStyles.memberDetailsLG, styles.detailText01]}
           >{this.state.roomName}</Text>
           <Text
-            style={[AppStyles.memberDetailsMD, { textAlign: 'center' }]}
-          >{this.state.totalMembers} members ({this.state.onlineMembers} online)</Text>
+            style={[AppStyles.memberDetailsMD, styles.detailText02]}
+          >{`${this.state.totalMembers} ${t('txt_members')} (${this.state.onlineMembers}) ${t('txt_online')}`}</Text>
         </View>
         {this.renderMemberList()}
       </ScrollView>

@@ -30,11 +30,18 @@ const brand = {
     replyBubbleR: 'rgba(255,255,255,0.1)',
     replyTextR: 'rgba(255,255,255,0.6)',
   },
+  statusColors: {
+    online: '#35ac19',
+    away: '#fcb316',
+    busy: '#d30230',
+    default: 'rgba(0,0,0,0.3)',
+  },
   avatarColors: ['#339194',
     '#93a42a', '#cac640', '#fb6b41', '#a70267', '#0065a4', '#76787a',
     '#76787a', '#65a400', '#2fadd2', '#2a53c3', '#613177'],
   brand() { return this.brandColors; },
   chat() { return this.chatColors; },
+  status() { return this.statusColors; },
   avatar() { return this.avatarColors; },
   setBrandColors(obj) {
     this.brandColors = obj;

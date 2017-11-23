@@ -34,6 +34,8 @@ export default {
     company: 'Powered by Mongrov, Inc.',
   },
 
+  response_success: 'SUCCESS',
+
   get brandName() {
     return this.brand;
   },

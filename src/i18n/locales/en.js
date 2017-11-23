@@ -25,4 +25,7 @@ export default {
   txt_connecting: 'Connecting...',
   txt_50_plus: '50+',
   txt_no_messages: 'No Messages',
+  txt_members: 'members',
+  txt_online: 'online',
+  txt_time_zone: 'Time Zone: GMT',
 };

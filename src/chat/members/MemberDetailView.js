@@ -5,15 +5,58 @@ import {
   ScrollView,
   Text,
   Dimensions,
+  StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
-import { AppUtil } from 'roverz-chat';
 
+import t from '../../i18n/';
+import AppUtil from '../../lib/util';
 import Network from '../../network';
 import Group from '../../models/group';
-import { AppStyles, AppSizes } from '../../theme/';
+import { AppStyles, AppSizes, AppColors } from '../../theme/';
+
+const styles = StyleSheet.create({
+  container: { position: 'relative' },
+  image: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 999,
+    backgroundColor: 'rgba(0,0,0,0.05)',
+  },
+  avatar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 0,
+    borderRadius: 0,
+  },
+  detailsContainer: {
+    alignItems: 'center',
+    paddingBottom: 20,
+  },
+  dataContainer: {
+    borderTopColor: 'rgba(0,0,0,0.1)',
+    borderTopWidth: 1,
+    width: 150,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    paddingTop: 20,
+  },
+  statusCircle: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    marginRight: 5,
+  },
+  statusText: {
+    color: 'rgba(0,0,0,0.5)',
+  },
+});
 
 export default class MemberDetailView extends Component {
 
@@ -23,6 +66,7 @@ export default class MemberDetailView extends Component {
     const memberId = this.props.memberId;
     this._service = new Network();
     this._mounted = false;
+    this.userDetailList = this._service.chat.getUserAsList(this.props.memberId);
     this.state = {
       memberId,
       memberDetail: {
@@ -44,19 +88,18 @@ export default class MemberDetailView extends Component {
   }
 
   componentDidMount() {
-    const userDetailList = this._service.chat.getUserAsList(this.props.memberId);
-    userDetailList.addListener((list/* , changes */) => {
+    this._changeListener = (list/* , changes */) => {
       if (!this._mounted) return;
       let statColor = '';
       switch (list[0].status) {
         case 'online':
-          statColor = '#35ac19'; break;
+          statColor = AppColors.status().online; break;
         case 'away':
-          statColor = '#fcb316'; break;
+          statColor = AppColors.status().away; break;
         case 'busy':
-          statColor = '#d30230'; break;
+          statColor = AppColors.status().busy; break;
         default:
-          statColor = 'rgba(0,0,0,0.3)';
+          statColor = AppColors.status().default;
       }
       this.setState({
         memberDetail: {
@@ -72,12 +115,15 @@ export default class MemberDetailView extends Component {
           avatarSuccess: true,
         },
       });
-    });
+    };
+    this.userDetailList.addListener(this._changeListener);
     this._mounted = true;
   }
 
   componentWillUnmount() {
     this._mounted = false;
+    this.userDetailList.removeListener(this._changeListener);
+    this._changeListener = null;
   }
 
   _onLayout = (event) => {
@@ -101,43 +147,28 @@ export default class MemberDetailView extends Component {
         {
           this.state.memberDetail.name !== '' &&
           <View
-            style={{
-              position: 'relative',
-              // flex: 3,
+            style={[styles.container, {
               height: this.props.avHeight ? this.props.avHeight : 300,
-            }}
+            }]}
           >
             <CachedImage
               source={{ uri: this.state.memberDetail.avatar }}
-              style={{
+              style={[styles.image, {
                 width: this.state.layout.width,
                 height: this.props.avHeight ? this.props.avHeight : 300,
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                zIndex: 999,
-                backgroundColor: 'rgba(0,0,0,0.05)',
-              }}
+              }]}
             />
             <UserAvatar
               name={AppUtil.avatarInitials(this.state.memberDetail.name)}
               size={this.props.avHeight ? this.props.avHeight : 300}
-              style={{
+              style={[styles.avatar, {
                 width: this.state.layout.width,
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                zIndex: 0,
-                borderRadius: 0,
-              }}
+              }]}
             />
           </View>
         }
         <View
-          style={{
-            alignItems: 'center',
-            paddingBottom: 20,
-          }}
+          style={[styles.detailsContainer]}
         >
           <Text
             style={[AppStyles.memberDetailsLG, { marginTop: 10 }]}
@@ -152,33 +183,18 @@ export default class MemberDetailView extends Component {
             this.state.memberDetail.utcOffset !== null &&
             <Text
               style={[AppStyles.memberDetailsSM]}
-            >{ `Time Zone: GMT ${this.state.memberDetail.utcOffset}` }</Text>
+            >{ `${t('txt_time_zone')} ${this.state.memberDetail.utcOffset}` }</Text>
           }
           <View
-            style={{
-              borderTopColor: 'rgba(0,0,0,0.1)',
-              borderTopWidth: 1,
-              width: 150,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginTop: 20,
-              paddingTop: 20,
-            }}
+            style={[styles.dataContainer]}
           >
             <View
-              style={{
-                width: 14,
-                height: 14,
-                borderRadius: 7,
+              style={[styles.statusCircle, {
                 backgroundColor: this.state.memberDetail.statColor,
-                marginRight: 5,
-              }}
+              }]}
             />
             <Text
-              style={{
-                color: 'rgba(0,0,0,0.5)',
-              }}
+              style={[styles.statusText]}
             >{this.state.memberDetail.status}</Text>
           </View>
         </View>
