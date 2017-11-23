@@ -3,7 +3,6 @@
  */
 /* global __DEV__ */
 import { GoogleAnalyticsTracker } from 'react-native-google-analytics-bridge';
-import * as Containers from '../containers';
 
 export default {
   // App Details
@@ -55,13 +54,15 @@ export default {
     WS_URL: null,
   },
 
-  addContainer(key, title, subTitle, component, analyticsDesc) {
+  addContainer(key, title, subTitle, component, nav, tab, navBar) {
     const c = {
       key,
       title,
       subTitle,
       component,
-      analyticsDesc,
+      nav,
+      tab,
+      navBar,
     };
     this.containers.push(c);
   },
@@ -79,12 +80,6 @@ export default {
     }
     if (this.logo == null) {
       this.logo = require('../images/logo.png');  // eslint-disable-line global-require
-    }
-    if (this.containers.length === 0) {
-      // lets init reusable containers
-      this.addContainer('aboutView', 'About', '', Containers.AboutView, 'About View');
-      this.addContainer('profileView', 'Profile', '', Containers.ProfileView, 'Profile View');
-      this.addContainer('imageGallery', 'Image Preview', '', Containers.ImageGallery, 'Image Preview');
     }
   },
 

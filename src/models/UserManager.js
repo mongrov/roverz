@@ -17,7 +17,6 @@ export default class UserManager {
     return this.list.filtered(`status="${Constants.U_ONLINE}"`);
   }
 
-
   // find user by id
   findById(uid) {
     const res = this.list.filtered(`_id = "${uid}"`);

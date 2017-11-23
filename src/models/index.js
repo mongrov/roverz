@@ -6,7 +6,7 @@ import {
 import emoji from 'node-emoji';
 import { AppUtil } from 'roverz-chat';
 
-import AppConfig from '../constants/config';
+import Application from '../constants/config';
 
 import SchemaV1 from './schema';
 import Constants from './constants';
@@ -141,7 +141,7 @@ class Database {
   // get server and username/password - if present
   getServer() {
     if (Database._servers.length <= 0) {
-      return AppConfig.bootstrapUrl === null ? undefined : AppConfig.bootstrapUrl;
+      return Application.bootstrapUrl === null ? undefined : Application.bootstrapUrl;
     }
     return Database._servers[0];
   }
@@ -149,7 +149,7 @@ class Database {
   // save server name
   setServer = async (serverName) => {
     const server = serverName.trim().toLowerCase();
-    AppConfig.resetInstance(server);
+    Application.resetInstance(server);
     Database._servers = [server];
     try {
       await AsyncStorage.setItem(Constants.Servers, JSON.stringify(Database._servers));

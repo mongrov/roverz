@@ -1,7 +1,7 @@
 /*
  * User
  */
-import AppConfig from '../constants/config';
+import Application from '../constants/config';
 import Constants from './constants';
 
 const UserSchema = {
@@ -24,7 +24,7 @@ const UserSchema = {
 };
 export default class User {
   get avatar() {
-    return `${AppConfig.urls.SERVER_URL}/avatar/${this.username}?_dc=undefined`;
+    return `${Application.urls.SERVER_URL}/avatar/${this.username}?_dc=undefined`;
   }
 }
 User.schema = UserSchema;

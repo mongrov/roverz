@@ -10,13 +10,12 @@ import AppUtil from './src/lib/util';
 import AppAPI from './src/lib/api';
 
 import ModuleConfig from './src/constants/config';
+import * as Containers from './src/containers';
 
 import rootReducer from './src/redux/index';
 import * as SideMenuActions from './src/redux/sidemenu/actions';
 import * as UserActions from './src/redux/user/actions';
 
-import ProfileEditView from './src/auth/Profile/ProfileEditView';
-import AuthWebView from './src/auth/WebView';
 import AuthLogin from './src/auth/Login/LoginContainer';
 import SelectServer from './src/auth/SelectServer';
 import SamlLogin from './src/auth/SamlLogin';
@@ -67,8 +66,6 @@ export {
     ImagePreview,
 
     // auth
-    ProfileEditView,
-    AuthWebView,
     AuthLogin,
     SelectServer,
     SamlLogin,
