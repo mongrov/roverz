@@ -26,7 +26,6 @@ import Network from './src/network';
 import DrawerContainer from './src/containers/ui/DrawerContainer';
 import CameraActions from './src/chat/ui/room/CameraActions';
 import PhotoLibrary from './src/chat/ui/room/PhotoLibrary';
-import UploadedPhotos from './src/chat/UploadedPhotos';
 import MemberListView from './src/chat/members/MemberListView';
 import MemberDetailView from './src/chat/members/MemberDetailView';
 import SearchRoomView from './src/chat/ui/group/SearchRoomView';
@@ -51,7 +50,6 @@ export {
     DrawerContainer,
     CameraActions,
     PhotoLibrary,
-    UploadedPhotos,
     MemberListView,
     SearchRoomView,
     MemberDetailView,
