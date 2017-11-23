@@ -23,7 +23,6 @@ import SamlLogin from './src/auth/SamlLogin';
 
 import Network from './src/network';
 
-import DrawerContainer from './src/containers/ui/DrawerContainer';
 import CameraActions from './src/chat/ui/room/CameraActions';
 import PhotoLibrary from './src/chat/ui/room/PhotoLibrary';
 import MemberListView from './src/chat/members/MemberListView';
@@ -44,7 +43,6 @@ export {
     Loading,
     WebView,
 
-    DrawerContainer,
     CameraActions,
     PhotoLibrary,
     MemberListView,
