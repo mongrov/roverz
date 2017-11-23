@@ -1,7 +1,51 @@
 import React from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import Image from 'react-native-transformable-image';
 import PropTypes from 'prop-types';
+import t from '../../i18n/';
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#696969' },
+  captionContainer: {
+    bottom: 0,
+    height: 65,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    width: '100%',
+    position: 'absolute',
+    justifyContent: 'center',
+  },
+  captionText: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 15,
+    fontStyle: 'italic',
+  },
+  header: {
+    top: 0,
+    height: 65,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    width: '100%',
+    position: 'absolute',
+    justifyContent: 'center',
+  },
+  galleryCount: {
+    top: 0,
+    height: 65,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    width: '100%',
+    position: 'absolute',
+    justifyContent: 'center',
+  },
+  galleryText: {
+    textAlign: 'right',
+    color: 'white',
+    fontSize: 15,
+    fontStyle: 'italic',
+    paddingRight: '10%',
+  },
+  error: { flex: 1, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center' },
+  errorText: { color: 'white', fontSize: 15, fontStyle: 'italic' },
+});
 
 export default class ImageGallery extends React.Component {
 
@@ -27,16 +71,8 @@ export default class ImageGallery extends React.Component {
   get caption() {
     const { images, index } = this.state;
     return (
-      <View style={{
-        bottom: 0,
-        height: 65,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        width: '100%',
-        position: 'absolute',
-        justifyContent: 'center',
-      }}
-      >
-        <Text style={{ textAlign: 'center', color: 'white', fontSize: 15, fontStyle: 'italic' }}>
+      <View style={[styles.captionContainer]}>
+        <Text style={[styles.captionText]}>
           {(images[index] && images[index].caption) || ''}
         </Text>
       </View>
@@ -45,31 +81,15 @@ export default class ImageGallery extends React.Component {
 
   get header() {
     return (
-      <View style={{
-        top: 0,
-        height: 65,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        width: '100%',
-        position: 'absolute',
-        justifyContent: 'center',
-      }}
-      />
+      <View style={[styles.header]} />
     );
   }
 
   get galleryCount() {
     const { index, images } = this.state;
     return (
-      <View style={{
-        top: 0,
-        height: 65,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        width: '100%',
-        position: 'absolute',
-        justifyContent: 'center',
-      }}
-      >
-        <Text style={{ textAlign: 'right', color: 'white', fontSize: 15, fontStyle: 'italic', paddingRight: '10%' }}>
+      <View style={[styles.galleryCount]} >
+        <Text style={[styles.galleryText]}>
           {index + 1} / {images.length}</Text>
       </View>
     );
@@ -77,9 +97,9 @@ export default class ImageGallery extends React.Component {
 
   renderError() {
     return (
-      <View style={{ flex: 1, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: 'white', fontSize: 15, fontStyle: 'italic' }}>This image cannot be displayed...</Text>
-        <Text style={{ color: 'white', fontSize: 15, fontStyle: 'italic' }}>... please check supported images :)</Text>
+      <View style={[styles.error]}>
+        <Text style={[styles.errorText]}>{t('err_img_loading_err_1')}</Text>
+        <Text style={[styles.errorText]}>{t('err_img_loading_err_2')}</Text>
       </View>
     );
   }
@@ -90,7 +110,7 @@ export default class ImageGallery extends React.Component {
   render() {
     const screen = Dimensions.get('window');
     return (
-      <View style={{ flex: 1, backgroundColor: '#696969' }} >
+      <View style={[styles.container]} >
         <Image
           style={{ width: screen.width, height: screen.height }}
           source={{ uri: this.props.imgUrl }}

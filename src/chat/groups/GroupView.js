@@ -9,11 +9,13 @@ import {
   View,
   StatusBar,
   TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
 import { ListView } from 'realm/react-native';
 import moment from 'moment';
-import { Loading, List, ListItem } from 'roverz-chat';
 import { Badge, Icon } from 'react-native-elements';
+import { List, ListItem } from '../../components/ui';
+import Loading from '../../components/general/Loading';
 
 // Consts and Libs
 import { AppStyles, AppSizes, AppColors } from '../../theme/';
@@ -21,9 +23,77 @@ import Network from '../../network';
 import {
   ListItemAvatar,
 } from '../ui';
+import t from '../../i18n/';
 
 /* Styles ==================================================================== */
-
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    position: 'relative',
+  },
+  lItemTitle: { paddingRight: 40 },
+  lItemSubTitle: { paddingTop: 0, marginLeft: 0, flex: 1, flexDirection: 'column' },
+  row: { flexDirection: 'row' },
+  subTitleText01: { textAlign: 'left', color: '#4B5155', fontSize: 14, flex: 1 },
+  subTitleText02: { textAlign: 'right', color: '#7B8287', fontSize: 12 },
+  subTitleMessage: { textAlign: 'left', color: '#7B8287', fontSize: 12, marginRight: 40 },
+  badgeText: {
+    color: 'white',
+    width: 24,
+    height: 24,
+    paddingTop: 5,
+    textAlign: 'center',
+    backgroundColor: 'transparent',
+    fontSize: 11,
+  },
+  badgeContainer: {
+    position: 'absolute',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: 0,
+    top: 0,
+    backgroundColor: '#37C7A1',
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+  },
+  plusButton: {
+    width: 45,
+    height: 45,
+    borderRadius: 23,
+    backgroundColor: AppColors.brand().third,
+    position: 'absolute',
+    bottom: 90,
+    right: 30,
+    zIndex: 200,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowRadius: 2,
+    shadowOpacity: 0.3,
+    alignItems: 'center',
+  },
+  toastContainer: {
+    flex: 1,
+    position: 'absolute',
+    top: AppSizes.navbarHeight + 10,
+    width: AppSizes.screen.width,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 100,
+  },
+  toastView: {
+    backgroundColor: AppColors.brand().third,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+  },
+  toastText: { color: '#fff', fontSize: 12 },
+  list: { paddingBottom: 110 },
+});
 
 /* Component ==================================================================== */
 class GroupList extends Component {
@@ -96,11 +166,11 @@ class GroupList extends Component {
       return '';
     }
     if (lastMsg.image) {
-      return 'Image';
+      return t('txt_image');
     }
 
     if (lastMsg.remoteFile) {
-      return 'Attachment';
+      return t('txt_attachment');
     }
     return lastMsg.text;
   }
@@ -122,23 +192,23 @@ class GroupList extends Component {
           Actions.chatDetail({ obj: data, title: data.heading, duration: 0 });
         }}
         title={data.heading}
-        titleStyle={{ paddingRight: 40 }}
+        titleStyle={[styles.lItemTitle]}
         subtitle={
-          <View style={{ paddingTop: 0, marginLeft: 0, flex: 1, flexDirection: 'column' }}>
+          <View style={[styles.lItemSubTitle]}>
             <View
-              style={{ flexDirection: 'row' }}
+              style={[styles.row]}
             >
               <Text
-                style={{ textAlign: 'left', color: '#4B5155', fontSize: 14, flex: 1 }}
+                style={styles.subTitleText01}
                 numberOfLines={1}
-              >{lastMsg ? this.getUser(lastMsg) : 'No Messages'}:</Text>
+              >{lastMsg ? this.getUser(lastMsg) : t('txt_no_messages')}:</Text>
               <Text
-                style={{ textAlign: 'right', color: '#7B8287', fontSize: 12 }}
+                style={[styles.subTitleText02]}
               >{lastMsg ? moment(lastMsg && lastMsg.createdAt).fromNow() : '----'}</Text>
             </View>
             <View style={{ width: 20 }} />
             <Text
-              style={{ textAlign: 'left', color: '#7B8287', fontSize: 12, marginRight: 40 }}
+              style={[styles.subTitleMessage]}
               numberOfLines={1}
             >{this.getLastMsgText(lastMsg)}</Text>
           </View>
@@ -146,27 +216,9 @@ class GroupList extends Component {
         badge={data.unread > 0 ? {
           element:
           <Badge
-            value={data.unread < 50 ? data.unread : '50+'}
-            textStyle={{
-              color: 'white',
-              width: 24,
-              height: 24,
-              paddingTop: 5,
-              textAlign: 'center',
-              backgroundColor: 'transparent',
-              fontSize: 11,
-            }}
-            containerStyle={{
-              position: 'absolute',
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              right: 0,
-              top: 0,
-              backgroundColor: '#37C7A1',
-              width: 24,
-              height: 24,
-              borderRadius: 12 }}
+            value={data.unread < 50 ? data.unread : t('txt_50_plus')}
+            textStyle={[styles.badgeText]}
+            containerStyle={[styles.badgeContainer]}
           />,
         } : null}
         hideChevron={true}
@@ -181,30 +233,9 @@ class GroupList extends Component {
       return (<Loading />);
     }
     return (
-      <View style={{
-        flex: 1,
-        position: 'relative',
-      }}
-      >
+      <View style={[styles.mainContainer]} >
         <TouchableOpacity
-          style={{
-            width: 45,
-            height: 45,
-            borderRadius: 23,
-            backgroundColor: AppColors.brand().third,
-            position: 'absolute',
-            bottom: 90,
-            right: 30,
-            zIndex: 200,
-            shadowColor: '#000000',
-            shadowOffset: {
-              width: 1,
-              height: 1,
-            },
-            shadowRadius: 2,
-            shadowOpacity: 0.3,
-            alignItems: 'center',
-          }}
+          style={[styles.plusButton]}
           onPress={Actions.searchRoom}
         >
           <Icon
@@ -217,25 +248,12 @@ class GroupList extends Component {
         {
           !this.state.connected &&
           <View
-            style={{
-              flex: 1,
-              position: 'absolute',
-              top: AppSizes.navbarHeight + 10,
-              width: AppSizes.screen.width,
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 100,
-            }}
+            style={[styles.toastContainer]}
           >
             <View
-              style={{
-                backgroundColor: AppColors.brand().third,
-                paddingVertical: 5,
-                paddingHorizontal: 15,
-                borderRadius: 5,
-              }}
+              style={[styles.toastView]}
             >
-              <Text style={{ color: '#fff', fontFamily: 'OpenSans-Regular', fontSize: 12 }}>Connecting...</Text>
+              <Text style={[styles.toastText, AppStyles.baseFont]}>{t('txt_connecting')}</Text>
             </View>
           </View>
         }
@@ -247,7 +265,7 @@ class GroupList extends Component {
           }]}
         >
           <StatusBar barStyle="light-content" hidden={false} />
-          <List style={{ paddingBottom: 110 }}>
+          <List style={[styles.list]}>
             <ListView
               renderRow={this.renderRow}
               dataSource={this.state.dataSource}

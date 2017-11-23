@@ -13,6 +13,7 @@ import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 import { AppColors } from '../../theme/';
+import t from '../../i18n/';
 
 const styles = StyleSheet.create({
   preview: {
@@ -46,6 +47,19 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
   },
+  keyboardView: {
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  captureButton: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+  },
 });
 
 export default class ImagePreview extends React.Component {
@@ -74,20 +88,13 @@ export default class ImagePreview extends React.Component {
         />
         <KeyboardAvoidingView
           behavior={(Platform.OS === 'ios') ? 'padding' : 'height'}
-          style={[styles.overlay, {
-            bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.4)',
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }]}
+          style={[styles.overlay, styles.keyboardView]}
         >
           <View
             style={styles.messageContainer}
           >
             <TextInput
-              placeholder={'Image caption..'}
+              placeholder={t('txt_img_preview')}
               style={[styles.textInput]}
               onChangeText={(text) => { this.setState({ messageText: text }); }}
               value={this.state.messageText}
@@ -130,11 +137,7 @@ export default class ImagePreview extends React.Component {
         </KeyboardAvoidingView>
 
         <TouchableOpacity
-          style={[styles.captureButton, {
-            position: 'absolute',
-            top: 20,
-            left: 20,
-          }]}
+          style={[styles.captureButton]}
           onPress={() => {
             Actions.pop();
           }}

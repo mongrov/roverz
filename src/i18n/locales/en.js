@@ -17,4 +17,12 @@ export default {
   info_logged_in: 'Awesome, you\'re now logged in!',
   err_login_failed: 'Login failed',
   txt_Workspace: 'WORKSPACE',
+  err_img_loading_err_1: 'This image cannot be displayed...',
+  err_img_loading_err_2: '... please check supported images :)',
+  txt_img_preview: 'Image caption..',
+  txt_image: 'Image',
+  txt_attachment: 'Attachment',
+  txt_connecting: 'Connecting...',
+  txt_50_plus: '50+',
+  txt_no_messages: 'No Messages',
 };

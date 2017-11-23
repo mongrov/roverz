@@ -12,7 +12,7 @@ import {
 
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
-import { AppUtil } from 'roverz-chat';
+import AppUtil from '../lib/util';
 
 import { Alerts, Spacer, Button } from '../components/ui/';
 import Network from '../network';
