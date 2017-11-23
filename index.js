@@ -11,6 +11,7 @@ import AppAPI from './src/lib/api';
 
 import ModuleConfig from './src/constants/config';
 import * as Containers from './src/containers';
+import * as ChatComponents from './src/chat';
 
 import rootReducer from './src/redux/index';
 import * as SideMenuActions from './src/redux/sidemenu/actions';
