@@ -5,6 +5,7 @@
 import ProfileView from './profile/ProfileView';
 import ImageGallery from './image/ImageGallery';
 import AboutView from './about/AboutView';
+import ImagePreview from './image/ImagePreview';
 import Application from '../constants/config';
 
 import NavBackAbs from '../chat/ui/NavBackAbs';
@@ -16,6 +17,7 @@ if (!Application.containers.find(item => item.key === 'aboutView')) {
   Application.addContainer('aboutView', 'About', '', AboutView, false, true, NavBarBack);
   Application.addContainer('profileView', 'Profile', '', ProfileView, false, true, null);
   Application.addContainer('imageGallery', 'Image Preview', '', ImageGallery, false, false, NavBackAbs);
+  Application.addContainer('captureImagePreview', 'Image Preview', '', ImagePreview, true, true, NavBackAbs);
 }
 
-export { AboutView, ImageGallery, ProfileView };
+export { AboutView, ImageGallery, ProfileView, ImagePreview };

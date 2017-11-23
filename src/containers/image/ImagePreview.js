@@ -12,8 +12,7 @@ import {
 import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
-import { AppColors } from '../../../../theme/';
-import Group from '../../../../models/group';
+import { AppColors } from '../../theme/';
 
 const styles = StyleSheet.create({
   preview: {
@@ -155,11 +154,9 @@ export default class ImagePreview extends React.Component {
 ImagePreview.defaultProps = {
   imageUrl: '',
   cameraData: {},
-  group: null,
 };
 
 ImagePreview.propTypes = {
   imageUrl: React.PropTypes.string,
   cameraData: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  group: React.PropTypes.instanceOf(Group),
 };
