@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: AppColors.brand().secondary,
     padding: 15,
   },
   logo: { opacity: 1, width: 150 },
@@ -177,7 +176,7 @@ export default class SelectServer extends React.Component {
   render() {
     return (
       <View
-        style={[styles.viewContainer]}
+        style={[styles.viewContainer, { backgroundColor: AppColors.brand().secondary }]}
       >
         <StatusBar barStyle="light-content" />
         {this.state.isLoading === true &&

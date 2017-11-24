@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     borderRadius: 23,
-    backgroundColor: AppColors.brand().third,
     position: 'absolute',
     bottom: 90,
     right: 30,
@@ -86,7 +85,6 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   toastView: {
-    backgroundColor: AppColors.brand().third,
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 5,
@@ -235,7 +233,7 @@ class GroupList extends Component {
     return (
       <View style={[styles.mainContainer]} >
         <TouchableOpacity
-          style={[styles.plusButton]}
+          style={[styles.plusButton, { backgroundColor: AppColors.brand().third }]}
           onPress={Actions.searchRoom}
         >
           <Icon
@@ -251,7 +249,7 @@ class GroupList extends Component {
             style={[styles.toastContainer]}
           >
             <View
-              style={[styles.toastView]}
+              style={[styles.toastView, { backgroundColor: AppColors.brand().third }]}
             >
               <Text style={[styles.toastText, AppStyles.baseFont]}>{t('txt_connecting')}</Text>
             </View>

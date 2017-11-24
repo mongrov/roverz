@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: AppColors.brand().third,
     height: 40,
     borderRadius: 5,
     marginBottom: 15,
@@ -41,7 +40,6 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     flex: 1,
-    backgroundColor: AppColors.brand().secondary,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -272,7 +270,7 @@ class Login extends Component {
       return (
         <View style={[AppStyles.row]}>
           <TouchableOpacity
-            style={[styles.ssoContainer]}
+            style={[styles.ssoContainer, { backgroundColor: AppColors.brand().third }]}
             onPress={Actions.samlLogin}
           >
             <Text style={{ color: 'white' }}>{this.state.ssoText}</Text>
@@ -302,7 +300,7 @@ class Login extends Component {
         style={[AppStyles.windowSize]}
       >
         <StatusBar barStyle="light-content" />
-        <View style={[styles.topContainer]}>
+        <View style={[styles.topContainer, { backgroundColor: AppColors.brand().secondary }]}>
           <Image
             source={Application.logo}
             style={[AppStyles.loginLogo, styles.logoImg]}
