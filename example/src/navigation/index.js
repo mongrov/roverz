@@ -10,7 +10,6 @@ import { Actions, Scene, ActionConst } from 'react-native-router-flux';
 import {
   ChatNavBar,
   NavBarBack,
-  NavBackAbs,
   RoomView,
   CameraActions,
   SearchRoomView,
@@ -19,7 +18,6 @@ import {
   ReplyMessageView,
   Placeholder,
   PhotoLibrary,
-  DrawerContainer,
 } from 'roverz-chat';
 
 // Consts and Libs
@@ -45,7 +43,7 @@ export default Actions.create(
     >
       <StatusBar barStyle="light-content" />
       {/* Drawer Side Menu */}
-      <Scene key={'home'} component={DrawerContainer} initial={'tabBar'}>
+      <Scene key={'home'} initial={'tabBar'}>
         {/* Tabbar */}
         {TabsScenes}
       </Scene>

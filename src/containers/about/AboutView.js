@@ -65,6 +65,9 @@ export default class AboutView extends React.Component {
           <View style={{ alignItems: 'center' }}>
             <Text
               style={[styles.headText]}
+            >{Application.instance}</Text>
+            <Text
+              style={[styles.headText]}
             >{`Version: ${Application.aboutDetails.version}`}</Text>
             <Text
               style={[styles.paraText]}
