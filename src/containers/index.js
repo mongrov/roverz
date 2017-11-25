@@ -16,8 +16,8 @@ import NavBarBack from '../chat/ui/NavBarBack';
 if (!Application.containers.find(item => item.key === 'aboutView')) {
   // lets init reusable containers
   // key, title, subTitle, component, nav, tab, navBar
-  Application.addContainer('aboutView', 'About', '', AboutView, false, true, NavBarBack);
-  Application.addContainer('profileView', 'Profile', '', ProfileView, false, true, null);
+  Application.addContainer('aboutView', 'About', '', AboutView, true, true, NavBarBack);
+  Application.addContainer('profileView', 'Profile', '', ProfileView, true, true, null);
   Application.addContainer('imageGallery', 'Image Preview', '', ImageGallery, false, false, NavBackAbs);
   Application.addContainer('captureImagePreview', 'Image Preview', '', ImagePreview, true, true, NavBackAbs);
   Application.addContainer('videoPreviewSend', 'Video Preview Send', '', VideoPlayer, true, true, NavBackAbs);
