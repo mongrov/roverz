@@ -33,6 +33,7 @@ import { AppStyles, AppColors } from '../../../theme/';
 import ModuleConfig from '../../../constants/config';
 import { Send } from '../';
 import ChatAvatar from './ChatAvatar';
+import t from '../../../i18n';
 
 const textStyle = {
   // fontSize: 30,
@@ -283,11 +284,11 @@ export default class ReplyMessageView extends React.Component {
 
   _deleteMessage = () => {
     Alert.alert(
-      'Delete',
-      'Do you want to delete the image?',
+      t('info_del'),
+      t('info_del_message'),
       [
-        { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        { text: 'Yes',
+        { text: t('txt_no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: t('txt_yes'),
           onPress: () => {
             this._network.chat.deleteMessage(this.state.msgId);
             Actions.pop();
@@ -563,7 +564,7 @@ export default class ReplyMessageView extends React.Component {
     return (
       <Composer
         {...props}
-        placeholder={'Type your message..'}
+        placeholder={t('ph_type_message')}
         textInputProps={{
           onFocus: () => { },
           onBlur: () => { },

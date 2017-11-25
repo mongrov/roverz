@@ -6,6 +6,8 @@ import {
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
 import { AppUtil } from 'roverz-chat';
+import t from '../../../i18n';
+
 
 export default class ChatAvatar extends React.Component {
   constructor(props) {
@@ -64,7 +66,7 @@ export default class ChatAvatar extends React.Component {
         style={{ width: this.state.size, height: this.state.size, justifyContent: 'center', alignItems: 'center' }}
       >
         <UserAvatar
-          name={this.state.displayTitle ? AppUtil.avatarInitials(this.state.displayTitle) : 'A'}
+          name={this.state.displayTitle ? AppUtil.avatarInitials(this.state.displayTitle) : t('info_no_avatar')}
           size={this.state.size}
           style={{
             borderRadius: this.state.borderRad ? this.state.borderRad : this.state.size / 2,

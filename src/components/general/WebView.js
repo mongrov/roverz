@@ -20,6 +20,8 @@ import { AppColors, AppStyles } from '../../theme/';
 // Components
 import Loading from './Loading';
 import Error from './Error';
+import t from '../../i18n';
+
 
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({
@@ -69,7 +71,7 @@ class AppWebView extends Component {
     const { webViewURL, loading } = this.state;
 
     if (loading) return <Loading />;
-    if (!webViewURL) return <Error type={'URL not defined.'} />;
+    if (!webViewURL) return <Error type={t('err_invalid_url')} />;
 
     return (
       <WebView

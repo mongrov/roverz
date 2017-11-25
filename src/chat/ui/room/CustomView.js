@@ -10,6 +10,8 @@ import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements';
 import { AppColors } from '../../../theme/';
+import t from '../../../i18n';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -42,7 +44,7 @@ export default class CustomView extends React.Component {
               size={48}
               color={AppColors.brand().third}
             />
-            <Text>Play Video</Text>
+            <Text>{t('txt_Videoplay')}</Text>
           </TouchableOpacity>
         </View>
       );

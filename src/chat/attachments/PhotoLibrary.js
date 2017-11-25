@@ -22,6 +22,8 @@ import NavBar, {
 import { AppColors } from '../../theme/';
 
 import ImageUtil from './ImageUtil';
+import t from '../../i18n';
+
 
 const styles = StyleSheet.create({
   preview: {
@@ -177,14 +179,14 @@ export default class PhotoLibrary extends React.Component {
             color: '#000',
           }}
           >
-            {'Cancel'}
+            {t('lbl_nav_cancel')}
           </NavButtonText>
         </NavButton>
         <NavTitle style={{
           color: '#000',
         }}
         >
-          {'Camera Roll'}
+          {t('lbl_nav_camera_roll')}
         </NavTitle>
         <NavButton onPress={() => {
           this.sendImageMessages();
@@ -194,7 +196,7 @@ export default class PhotoLibrary extends React.Component {
             color: '#000',
           }}
           >
-            {'Send'}
+            {t('lbl_nav_send')}
           </NavButtonText>
         </NavButton>
       </NavBar>
@@ -230,7 +232,7 @@ export default class PhotoLibrary extends React.Component {
             style={styles.messageContainer}
           >
             <TextInput
-              placeholder={'Image caption..'}
+              placeholder={t('ph_image_caption')}
               style={[styles.textInput]}
               onChangeText={(text) => { this.setState({ imageMessage: text }); }}
               value={this.state.imageMessage}

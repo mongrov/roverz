@@ -24,6 +24,8 @@ import { CachedImage } from 'react-native-img-cache';
 import RNRestart from 'react-native-restart';
 import { Text, Network, AppSizes, AppColors } from 'roverz-chat';
 import AppConfig from '../../../constants/config';
+import t from '../../../i18n';
+
 
 /* Styles ==================================================================== */
 const MENU_BG_COLOR = '#345291';
@@ -105,7 +107,7 @@ class Menu extends Component {
       menu: [
         {
           id: 0,
-          title: 'Profile',
+          title: t('lbl_profile'),
           icon: 'account-outline',
           onPress: this.showProfile,
         },
@@ -117,15 +119,15 @@ class Menu extends Component {
         }, */
         {
           id: 2,
-          title: 'Logout',
+          title: t('lbl_logout'),
           icon: 'logout-variant',
           onPress: () => {
             Alert.alert(
-              'Logout',
-              'Do you want to logout?',
+              t('txt_logout'),
+              t('txt_want_to_logout'),
               [
-                { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-                { text: 'Yes',
+                { text: t('txt_no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                { text: t('txt_yes'),
                   onPress: () => {
                     this.net.meteor.logout();
                     this.net.db.setUserId(null);

@@ -12,6 +12,8 @@ import { ListItem } from 'react-native-elements';
 
 // Consts and Libs
 import { AppColors, AppStyles } from '../../theme/';
+import t from '../../i18n';
+
 
 /* Component ==================================================================== */
 class CustomListItem extends Component {
@@ -44,7 +46,7 @@ class CustomListItem extends Component {
   listItemProps = () => {
     // Defaults
     const props = {
-      title: 'Coming Soon...',
+      title:  t('lbl_coming_soon'),
       chevronColor: AppColors.textSecondary,
       underlayColor: AppColors.border,
       ...this.props,

@@ -21,6 +21,8 @@ import Network from '../../../network';
 import Group from '../../../models/group';
 import { AppStyles, AppSizes, AppColors } from '../../../theme/';
 import ModuleConfig from '../../../constants/config';
+import t from '../../../i18n';
+
 import {
   ListItemAvatar,
 } from '../';
@@ -129,7 +131,7 @@ export default class SearchRoomView extends Component {
             }}
             autoCorrect={false}
             autoFocus={true}
-            placeholder={'Type member/group name...'}
+            placeholder={t('ph_search_roomname')}
             onChangeText={(text) => { this.setState({ text }); this.searchRooms(this.state.text); }}
             value={this.state.text}
             underlineColorAndroid={'transparent'}
