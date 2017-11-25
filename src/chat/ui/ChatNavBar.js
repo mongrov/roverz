@@ -11,10 +11,10 @@ import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
 import { AppUtil } from 'roverz-chat';
-import md5 from 'md5';
 import { AppStyles, AppColors } from '../../theme/';
 import Group from '../../models/group';
 import Network from '../../network';
+import Application from '../../constants/config';
 
 
 class ChatNavBar extends React.Component {
@@ -206,38 +206,26 @@ class ChatNavBar extends React.Component {
   }
 
   renderVideoConfIcon() {
-    const jitsiConf = this._net.getServerSetting('Jitsi_Enabled');
-    const jitsiEnabled = jitsiConf && jitsiConf.value;
-    if (jitsiEnabled === true) {
-      const jitsiPrefix = this._net.getServerSetting('Jitsi_URL_Room_Prefix').value;
-      let uniqueID = (this._net.getServerSetting('uniqueID') ? this._net.getServerSetting('uniqueID').value : '12345');
-      const roomID = this.state.obj._id;
-      uniqueID += roomID;
-      const jitsiID = jitsiPrefix + md5(uniqueID);
-      const name = this.state.displayName;
-      const avatar = this.state.avatarUri;
-      return (
-        <NavButton
-          style={{ width: 40, height: 50, justifyContent: 'center', alignItems: 'center' }}
-          onPress={() => {
-            this._net.chat.startVideoCall(roomID);
-            Actions.videoConference({
-              jitsiURL: jitsiID,
-              displayName: name,
-              avatarUri: avatar,
-              duration: 0,
-            });
-          }}
-        >
-          <Icon
-            name="videocam"
-            size={32}
-            color={'#FFF'}
-          />
-        </NavButton>
-      );
-    }
-    return null;
+    const gname = this.state.obj.name;
+    const user = this._net.chat.getCurrentUser();
+    return (
+      <NavButton
+        style={{ width: 40, height: 50, justifyContent: 'center', alignItems: 'center' }}
+        onPress={() => {
+          Actions.videoConference({
+            instance: Application.instance,
+            groupName: gname,
+            userID: user ? user._id : 'unknown',
+          });
+        }}
+      >
+        <Icon
+          name="videocam"
+          size={32}
+          color={'#FFF'}
+        />
+      </NavButton>
+    );
   }
 
   render() {

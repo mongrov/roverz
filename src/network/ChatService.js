@@ -85,9 +85,6 @@ class ChatService {
           if (results[0].args[0] === 'removed') {
             // TODO no need to create group object and send for delete instead use ID
             _super.db.groups.deleteGroups(subscriptions);
-          } else if (results[0].args[0] === 'updated' && results[0].args[1].jitsiTimeout) {
-            const jitsiGrp = _super.db.groups.findById(results[0].args[1]._id);
-            _super.db.groups.updateJitsiTimeout(jitsiGrp, results[0].args[1].jitsiTimeout);
           } else {
             _super.db.groups.addAll(subscriptions);
             for (let i = 0; i < subscriptions.length; i += 1) {
@@ -258,10 +255,6 @@ class ChatService {
     });
   }
 
-  startVideoCall(groupId) {
-    this.meteor.call('jitsi:updateTimeout', groupId, null);
-  }
-
   // use like createDirectMessage('ananth');
   createDirectMessage(userName, callBack) {
     this.meteor.call('createDirectMessage', userName, (err, res) => {
@@ -363,10 +356,6 @@ class ChatService {
 
   findUserByUserName(userName) {
     return this.db.users.findByUserName(userName);
-  }
-
-  isJitsiRunning(group) {
-    return this.db.groups.isJitsiRunning(group);
   }
 
   searchRoom(roomId, searchText, resultSize, callBack) {
@@ -741,10 +730,10 @@ class ChatService {
     const editedYaps = {};
     for (let i = 0; i < msgs.length; i += 1) {
       const inM = msgs[i];
-      let msgText = inM.msg;
-      if (msgs[i].actionLinks && msgs[i].actionLinks[0].method_id === 'joinJitsiCall') {
-        msgText = 'Started a Video Call!';
-      }
+      const msgText = inM.msg;
+      // if (msgs[i].actionLinks && msgs[i].actionLinks[0].method_id === 'joinJitsiCall') {
+      //   msgText = 'Started a Video Call!';
+      // }
 
       const m = this.yap2message(inM._id, inM.rid, msgText, inM.ts, inM.u._id, inM.u.username, inM.u.name);
       m.original = inM;

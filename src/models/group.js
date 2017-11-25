@@ -18,8 +18,6 @@ const GroupSchema = {
     messages: { type: 'list', objectType: Constants.Message },
     moreMessages: { type: 'bool', default: true },
     attachments: { type: 'list', objectType: Constants.Attachment },
-    jitsiTimeout: { type: 'date', optional: true },
-    jitsiRunning: { type: 'bool', default: false },
   },
 };
 

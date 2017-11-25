@@ -97,32 +97,4 @@ export default class GroupManager {
     }
   }
 
-  isJitsiRunning(group) {
-    if (group) {
-      const groupToChange = group;
-      const currentTime = new Date().getTime();
-      const jitsiTime = new Date((groupToChange.jitsiTimeout) || currentTime).getTime();
-      this._realm.write(() => {
-        groupToChange.jitsiRunning = jitsiTime > currentTime;
-      });
-      return jitsiTime > currentTime;
-    }
-    return false;
-  }
-
-  updateJitsiTimeout(group, jitsiTimeOut) {
-    if (group) {
-      const groupToChange = group;
-      const currentTime = new Date().getTime();
-      let jitsiTime = currentTime;
-      if (jitsiTimeOut) {
-        jitsiTime = new Date(jitsiTimeOut || currentTime).getTime();
-      }
-      this._realm.write(() => {
-        groupToChange.jitsiRunning = jitsiTime > currentTime;
-        groupToChange.jitsiTimeout = jitsiTimeOut;
-      });
-    }
-  }
-
 }
