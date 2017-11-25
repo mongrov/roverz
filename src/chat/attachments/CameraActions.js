@@ -15,7 +15,7 @@ import { Actions } from 'react-native-router-flux';
 
 // import Loading from '@components/general/Loading';
 import ImageUtil from './ImageUtil';
-import Group from '../../../models/group';
+import Group from '../../models/group';
 
 const styles = StyleSheet.create({
   preview: {

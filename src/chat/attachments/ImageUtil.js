@@ -1,6 +1,6 @@
 
 import Meteor from 'react-native-meteor';
-import Network from '../../../network';
+import Network from '../../network';
 
 
 class ImageUtil {

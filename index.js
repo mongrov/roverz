@@ -23,8 +23,6 @@ import SamlLogin from './src/auth/SamlLogin';
 
 import Network from './src/network';
 
-import CameraActions from './src/chat/ui/room/CameraActions';
-import PhotoLibrary from './src/chat/ui/room/PhotoLibrary';
 import MemberListView from './src/chat/members/MemberListView';
 import MemberDetailView from './src/chat/members/MemberDetailView';
 import SearchRoomView from './src/chat/ui/group/SearchRoomView';
@@ -43,8 +41,6 @@ export {
     Loading,
     WebView,
 
-    CameraActions,
-    PhotoLibrary,
     MemberListView,
     SearchRoomView,
     MemberDetailView,
@@ -79,7 +75,7 @@ export {
     UserActions,
 };
 
-// export all UI components
+// export all UI components 
 export * from './src/components/ui/';
 export * from './src/chat/ui/';
 

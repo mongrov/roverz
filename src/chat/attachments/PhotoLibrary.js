@@ -19,7 +19,7 @@ import NavBar, {
   NavButtonText,
   NavTitle,
 } from 'react-native-nav';
-import { AppColors } from '../../../theme/';
+import { AppColors } from '../../theme/';
 
 import ImageUtil from './ImageUtil';
 

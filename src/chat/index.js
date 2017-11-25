@@ -4,11 +4,14 @@
 
 import MemberListView from './members/MemberListView';
 import MemberDetailView from './members/MemberDetailView';
+import CameraActions from './attachments/CameraActions';
+import PhotoLibrary from './attachments/PhotoLibrary';
+
 import UploadedPhotos from './attic/UploadedPhotos';
 
 import Application from '../constants/config';
 
-// import NavBackAbs from '../chat/ui/NavBackAbs';
+import NavBackAbs from '../chat/ui/NavBackAbs';
 import NavBarBack from './ui/NavBarBack';
 
 if (!Application.containers.find(item => item.key === 'memberDetail')) {
@@ -16,8 +19,10 @@ if (!Application.containers.find(item => item.key === 'memberDetail')) {
   // key, title, subTitle, component, nav, tab, navBar
   Application.addContainer('memberDetail', 'Member Info', '', MemberDetailView, false, true, NavBarBack);
   Application.addContainer('roomInfo', 'Group Info', '', MemberListView, false, true, NavBarBack);
+  Application.addContainer('cameraActions', 'Camera', '', CameraActions, false, false, NavBackAbs);
+  Application.addContainer('photoLibrary', 'Photo Library', '', PhotoLibrary, false, false, null);
   // attic, to be removed later
   Application.addContainer('photoBrowser', 'Attachments', '', UploadedPhotos, false, true, NavBarBack);
 }
 
-export { MemberDetailView, MemberListView };
+export { MemberDetailView, MemberListView, UploadedPhotos, CameraActions, PhotoLibrary };

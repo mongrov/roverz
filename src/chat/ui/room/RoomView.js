@@ -39,7 +39,7 @@ import SendImageMessage from './SendImageMessage';
 import ChatAvatar from './ChatAvatar';
 import CustomView from './CustomView';
 import Bubble from './Bubble';
-import ImageUtil from './ImageUtil';
+import ImageUtil from '../../attachments/ImageUtil';
 
 const NO_OF_MSGS = 30;
 
