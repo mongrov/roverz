@@ -40,6 +40,7 @@ import ChatAvatar from './ChatAvatar';
 import CustomView from './CustomView';
 import Bubble from './Bubble';
 import ImageUtil from '../../attachments/ImageUtil';
+import t from '../../../i18n';
 
 const NO_OF_MSGS = 30;
 
@@ -381,7 +382,7 @@ class ChatRoomView extends React.Component {
       <Composer
         {...props}
         multiline={(Platform.OS === 'ios')}
-        placeholder={'Type your message..'}
+        placeholder={t('ph_type_message')}
         textInputProps={{
           onChange: () => { this.state.showActions = false; },
           onEndEditing: () => { this.state.showActions = true; },
@@ -625,7 +626,7 @@ class ChatRoomView extends React.Component {
               borderRadius: 5,
             }}
           >
-            <Text style={{ color: '#fff', fontFamily: 'OpenSans-Regular', fontSize: 12 }}>Copied to clipboard</Text>
+            <Text style={{ color: '#fff', fontFamily: 'OpenSans-Regular', fontSize: 12 }}>{t('txt_copy_clipboard')}</Text>
           </View>
         </View>
       );

@@ -23,7 +23,7 @@ import Network from '../../network';
 import {
   ListItemAvatar,
 } from '../ui';
-import t from '../../i18n/';
+import t from '../../i18n';
 
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({
@@ -202,7 +202,7 @@ class GroupList extends Component {
               >{lastMsg ? this.getUser(lastMsg) : t('txt_no_messages')}:</Text>
               <Text
                 style={[styles.subTitleText02]}
-              >{lastMsg ? moment(lastMsg && lastMsg.createdAt).fromNow() : '----'}</Text>
+              >{lastMsg ? moment(lastMsg && lastMsg.createdAt).fromNow() : t('hyphen')}</Text>
             </View>
             <View style={{ width: 20 }} />
             <Text

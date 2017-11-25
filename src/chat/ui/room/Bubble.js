@@ -28,6 +28,8 @@ import MessageImage from './MessageImage';
 import Network from '../../../network';
 import { AppColors } from '../../../theme/';
 import { isSameUser, isSameDay, warnDeprecated } from './utils';
+import t from '../../../i18n';
+
 
 const chatColors = {
   replyBubbleR: AppColors.chat().replyBubbleR,
@@ -209,11 +211,11 @@ export default class Bubble extends React.Component {
 
   _deleteMessage = () => {
     Alert.alert(
-      'Delete',
-      'Do you want to delete the message?',
+      t('info_delete'),
+      t('info_del_message'),
       [
-        { text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        { text: 'Yes',
+        { text: t('txt_no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: t('txt_yes'),
           onPress: () => {
             this._network.chat.deleteMessage(this.state.original._id);
           },
@@ -477,7 +479,7 @@ export default class Bubble extends React.Component {
               fontSize: 12,
               color: '#fff',
             }}
-          >{this.state.likes > 0 ? this.state.likes : 'no'}</Text>
+          >{this.state.likes > 0 ? this.state.likes : t('txt_like')}</Text>
         </View>
       );
     }

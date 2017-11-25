@@ -8,7 +8,7 @@ import { RoomView } from 'roverz-chat';
 
 import { AppStyles, AppSizes } from '../../../theme/';
 import Network from '../../../network';
-
+import t from '../../../i18n';
 
 export default class SupportGroup extends React.Component {
   constructor(props) {
@@ -48,7 +48,7 @@ export default class SupportGroup extends React.Component {
                 fontFamily: 'OpenSans-Regular',
                 fontWeight: '500',
               }}
-            >Coming Soon</Text>
+            >{t('txt_CS')}</Text>
           </View>
         }
       </View>

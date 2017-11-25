@@ -12,6 +12,8 @@ import { Button } from 'react-native-elements';
 
 // Consts and Libs
 import { AppColors, AppFonts, AppSizes } from '../../theme/';
+import t from '../../i18n';
+
 
 /* Component ==================================================================== */
 class CustomButton extends Component {
@@ -38,7 +40,7 @@ class CustomButton extends Component {
   buttonProps = () => {
     // Defaults
     const props = {
-      title: 'Coming Soon...',
+      title: t('lbl_coming_soon'),
       color: '#fff',
       fontWeight: 'bold',
       onPress: this.props.onPress,

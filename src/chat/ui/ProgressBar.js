@@ -4,6 +4,8 @@ import {
   Platform,
   Text,
 } from 'react-native';
+import t from '../../i18n';
+
 
 export default class ProgressBar extends React.Component {
   constructor(props) {
@@ -30,7 +32,7 @@ export default class ProgressBar extends React.Component {
         />
       );
     }
-    return (<Text>Loading</Text>);
+    return (<Text>{t('txt_loading')}</Text>);
   }
 }
 

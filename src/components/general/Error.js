@@ -10,6 +10,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import t from '../../i18n';
+
 
 // Consts and Libs
 import { AppStyles } from '../../theme/';
@@ -32,7 +34,7 @@ const Error = ({ text, tryAgain }) => (
       <Button
         small
         outlined
-        title={'Try again'}
+        title={t('lbl_tryagain')}
         onPress={tryAgain}
       />
     }
@@ -40,7 +42,7 @@ const Error = ({ text, tryAgain }) => (
 );
 
 Error.propTypes = { text: PropTypes.string, tryAgain: PropTypes.func };
-Error.defaultProps = { text: 'Woops, Something went wrong.', tryAgain: null };
+Error.defaultProps = { text: t('err_something_wrong'), tryAgain: null };
 Error.componentName = 'Error';
 
 /* Export Component ==================================================================== */
