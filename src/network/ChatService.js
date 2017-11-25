@@ -172,29 +172,18 @@ class ChatService {
 
   /* Need to see if these are required, remove it from db? */
   get loginSettings() {
-    return this.db.loginSettings ? this.db.loginSettings : this._loginSettings;
+    return this._loginSettings;
   }
 
   clearLoginSettings() {
-    if (this.db.loginSettings) {
-      this.db.loginSettings.deleteAll();
-    } else {
-      this._loginSettings = [];
-    }
+    this._loginSettings = [];
   }
 
   addLoginSettings(loginDetails) {
-    if (this.db.loginSettings) {
-      this.db.loginSettings.addAll(loginDetails);
-    } else {
-      this._loginSettings = this._loginSettings.concat(loginDetails);
-    }
+    this._loginSettings = this._loginSettings.concat(loginDetails);
   }
 
   getLoginSetting(key) {
-    if (this.db.loginSettings) {
-      return this.db.loginSettings.findByKey(key);
-    }
     for (let i = 0; i < this._loginSettings.length; i += 1) {
       if (Object.prototype.hasOwnProperty.call(this._loginSettings[i], key)) {
         // @todo: sending just 'saml' is stupidity, need to send the whole array

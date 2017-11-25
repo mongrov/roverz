@@ -9,8 +9,6 @@ export default {
   Message: 'Message',
   User: 'User',
   Attachment: 'Attachment',
-  Event: 'Event',
-  LoginSettings: 'loginsettings',
   RemoteFile: 'RemoteFile',
   // server
   Servers: 'app:servers',

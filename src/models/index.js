@@ -13,8 +13,6 @@ import Constants from './constants';
 import AppManager from './AppManager';
 import GroupManager from './GroupManager';
 import UserManager from './UserManager';
-import EventManager from './EventManager';
-import LoginSettingsManager from './LoginSettingsManager';
 import RemoteFileManager from './RemoteFileManager';
 
 /*
@@ -48,14 +46,6 @@ class Database {
     return Database._um;
   }
 
-  // refer to UserManager for methods that can be accessed
-  get events() {
-    return Database._em;
-  }
-
-  get loginSettings() {
-    return Database._ls;
-  }
 
   get remotefiles() {
     return Database._rf;
@@ -70,8 +60,6 @@ class Database {
     Database._app = new AppManager(realm);
     Database._gm = new GroupManager(realm);
     Database._um = new UserManager(realm);
-    Database._em = new EventManager(realm);
-    Database._ls = new LoginSettingsManager(realm);
     Database._rf = new RemoteFileManager(realm);
   }
 
