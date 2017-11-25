@@ -19,7 +19,6 @@ export default class LoginSettingsManager {
   findByKey(key) {
     const res = this.list.filtered(`key = "${key}"`);
     let value = (res && res.length > 0) ? res['0'].value : null;
-    console.log('ezhil ', key, value);
     if (value) {
       value = JSON.parse(value);
     }
@@ -49,7 +48,7 @@ export default class LoginSettingsManager {
     if (!settingsList || Object.keys(settingsList).length <= 0) return;
     AppUtil.debug(null, `${Constants.MODULE}: deleteAll`);
     this._realm.write(() => {
-      this._realm.deleteAll();
+      this._realm.delete(settingsList);
     });
   }
 }

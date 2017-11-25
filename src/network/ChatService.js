@@ -470,9 +470,9 @@ class ChatService {
 
   fetchChannels() {
     const _super = this;
-    const yap = this.db.app.state;
+    const appState = this.db.app.state;
     // console.log(yap);
-    const lastSync = yap ? yap.lastSync.getTime() : 0;
+    const lastSync = appState ? appState.lastSync.getTime() : 0;
     // console.log(`Last Sync:${lastSync}`);
     // console.log('--- [Network] --- ====================================');
     this.db.app.setLastSync();
