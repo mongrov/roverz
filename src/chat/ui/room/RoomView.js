@@ -626,7 +626,14 @@ class ChatRoomView extends React.Component {
               borderRadius: 5,
             }}
           >
-            <Text style={{ color: '#fff', fontFamily: 'OpenSans-Regular', fontSize: 12 }}>{t('txt_copy_clipboard')}</Text>
+            <Text
+              style={{
+                color: '#fff',
+                fontFamily: 'OpenSans-Regular',
+                fontSize: 12,
+              }}
+            >
+              {t('txt_copy_clipboard')}</Text>
           </View>
         </View>
       );

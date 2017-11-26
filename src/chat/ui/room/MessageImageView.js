@@ -282,7 +282,7 @@ export default class MessageImageView extends React.Component {
   _deleteMessage = () => {
     Alert.alert(
       t('info_del'),
-      t('info_del_message')
+      t('info_del_message'),
       [
         { text: t('txt_no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
         { text: t('txt_yes'),

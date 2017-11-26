@@ -46,7 +46,7 @@ class CustomListItem extends Component {
   listItemProps = () => {
     // Defaults
     const props = {
-      title:  t('lbl_coming_soon'),
+      title: t('lbl_coming_soon'),
       chevronColor: AppColors.textSecondary,
       underlayColor: AppColors.border,
       ...this.props,
