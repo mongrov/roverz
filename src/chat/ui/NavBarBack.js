@@ -39,6 +39,7 @@ export default class NavBarBack extends React.Component {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: AppColors.brand().secondary,
+        zIndex: 999,
       }]}
       >
         <NavButton

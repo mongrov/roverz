@@ -74,6 +74,16 @@ export default class ImagePreview extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps', nextProps);
+    if (this.state.cameraData !== nextProps.cameraData) {
+      this.setState({
+        cameraData: nextProps.cameraData,
+        previewImageUri: nextProps.imageUrl,
+      });
+    }
+  }
+
   render() {
     return (
       <View

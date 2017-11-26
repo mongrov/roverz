@@ -104,6 +104,7 @@ export default class CameraActions extends React.Component {
       cameraData: {},
       cameraMessage: '',
       uploadPercent: 0,
+      closeBtn: false,
     };
     this.switchType = this.switchType.bind(this);
     this.switchFlash = this.switchFlash.bind(this);
@@ -187,16 +188,18 @@ export default class CameraActions extends React.Component {
         target: Camera.constants.CaptureTarget.disk,
       })
           .then((data) => {
-            Actions.pop();
-            setTimeout(() => {
-              Actions.refresh({
-                attach: {
-                  cameraData: data,
-                  cameraMessage: '',
-                  video: false,
-                },
-              });
-            }, 0);
+            if (!this.state.closeBtn) {
+              Actions.pop();
+              setTimeout(() => {
+                Actions.refresh({
+                  attach: {
+                    cameraData: data,
+                    cameraMessage: '',
+                    video: false,
+                  },
+                });
+              }, 0);
+            }
           })
           .catch(err => console.error(err));
       this.setState({
@@ -342,7 +345,13 @@ export default class CameraActions extends React.Component {
             top: 20,
             left: 20,
           }]}
-          onPress={Actions.pop}
+          onPress={() => {
+            this.camera.stopCapture();
+            this.setState({
+              closeBtn: true,
+            });
+            Actions.pop();
+          }}
         >
           <Icon
             name="close"

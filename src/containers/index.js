@@ -18,7 +18,7 @@ if (!Application.containers.find(item => item.key === 'aboutView')) {
   // key, title, subTitle, component, nav, tab, navBar
   Application.addContainer('aboutView', 'About', '', AboutView, true, true, NavBarBack);
   Application.addContainer('profileView', 'Profile', '', ProfileView, true, true, null);
-  Application.addContainer('imageGallery', 'Image Preview', '', ImageGallery, false, false, NavBackAbs);
+  Application.addContainer('imageGallery', 'Image Preview', '', ImageGallery, true, false, NavBackAbs);
   Application.addContainer('captureImagePreview', 'Image Preview', '', ImagePreview, true, true, NavBackAbs);
   Application.addContainer('videoPreviewSend', 'Video Preview Send', '', VideoPlayer, true, true, NavBackAbs);
 }
