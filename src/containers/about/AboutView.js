@@ -76,7 +76,7 @@ export default class AboutView extends React.Component {
             >{`Build: ${Application.aboutDetails.build}`}</Text>
             <Button
               title={'Help'}
-              onPress={Actions.comingSoon}
+              onPress={Actions.helpView}
               backgroundColor="transparent"
               small
               buttonStyle={{ paddingHorizontal: 20, marginTop: 20 }}

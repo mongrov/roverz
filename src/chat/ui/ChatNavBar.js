@@ -4,6 +4,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
 import md5 from 'react-native-md5';
 import PropTypes from 'prop-types';
@@ -17,6 +18,19 @@ import Group from '../../models/group';
 import Network from '../../network';
 import Application from '../../constants/config';
 
+const styles = StyleSheet.create({
+  navContainer: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+    flex: 1,
+    paddingLeft: 0,
+    flexDirection: 'row',
+    paddingRight: 10,
+    alignItems: 'center',
+  },
+});
 
 class ChatNavBar extends React.Component {
   constructor(props) {
@@ -231,18 +245,11 @@ class ChatNavBar extends React.Component {
 
   render() {
     return (
-      <View style={[AppStyles.navbar, AppStyles.navbarHeight, {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        left: 0,
-        flex: 1,
-        paddingLeft: 0,
-        flexDirection: 'row',
-        paddingRight: 10,
-        alignItems: 'center',
-        backgroundColor: AppColors.brand().secondary,
-      }]}
+      <View
+        style={[AppStyles.navbar, AppStyles.navbarHeight, styles.navContainer, {
+          backgroundColor: AppColors.brand().secondary,
+        },
+        ]}
       >
         <NavButton
           style={{ width: 35, paddingRight: 15, justifyContent: 'center', alignItems: 'flex-start' }}
