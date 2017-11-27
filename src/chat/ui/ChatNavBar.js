@@ -30,6 +30,83 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     alignItems: 'center',
   },
+  navButton: {
+    width: 35,
+    paddingRight: 15,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  roomInformation: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  titleContainer: {
+    flex: 1,
+    zIndex: 200,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  avIcon: {
+    flexDirection: 'row',
+  },
+  nameText: {
+    textAlign: 'left',
+    flex: 1,
+    fontSize: 14,
+  },
+  titleText: {
+    color: 'rgba(255,255,255,0.5)',
+    fontSize: 12,
+    marginBottom: 5,
+    paddingLeft: 2,
+    textAlign: 'left',
+  },
+  avatarView: {
+    width: 36,
+    height: 36,
+    paddingHorizontal: 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatarImage: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    position: 'absolute',
+    zIndex: 20,
+    left: 0,
+    top: 0,
+  },
+  userAvatar: {
+    position: 'absolute',
+    zIndex: 10,
+    left: -18,
+    top: -18,
+  },
+  noAvatarView: {
+    width: 36,
+    height: 36,
+    paddingHorizontal: 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noUserAvatar: {
+    position: 'absolute',
+    zIndex: 20,
+    left: -18,
+    top: -18,
+  },
+  iconWidth: {
+    width: 20,
+  },
+  iconViews: {
+    width: 40,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 class ChatNavBar extends React.Component {
@@ -68,59 +145,29 @@ class ChatNavBar extends React.Component {
     if (this.state.showAvatar) {
       return (
         <View
-          style={{
-            width: 36,
-            height: 36,
-            paddingHorizontal: 7,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
+          style={[styles.avatarView]}
         >
           <CachedImage
-            style={{
-              width: 36,
-              height: 36,
-              borderRadius: 18,
-              position: 'absolute',
-              zIndex: 20,
-              left: 0,
-              top: 0,
-            }}
+            style={[styles.avatarImage]}
             source={{ uri: this.avatarUri }}
             onError={() => { this._hideAvatarView(); }}
           />
           <UserAvatar
             name={AppUtil.avatarInitials(this.state.displayTitle ? this.state.displayTitle : this.state.displayName)}
             size={36}
-            style={{
-              position: 'absolute',
-              zIndex: 10,
-              left: -18,
-              top: -18,
-            }}
+            style={[styles.userAvatar]}
           />
         </View>
       );
     }
     return (
       <View
-        style={{
-          width: 36,
-          height: 36,
-          paddingHorizontal: 7,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        style={[styles.noAvatarView]}
       >
         <UserAvatar
           name={AppUtil.avatarInitials(this.state.displayTitle ? this.state.displayTitle : this.state.displayName)}
           size={36}
-          style={{
-            position: 'absolute',
-            zIndex: 20,
-            left: -18,
-            top: -18,
-          }}
+          style={[styles.noUserAvatar]}
         />
       </View>
     );
@@ -155,7 +202,7 @@ class ChatNavBar extends React.Component {
         name={icon}
         type="material-community"
         size={16}
-        style={{ width: 20 }}
+        style={[styles.iconWidth]}
         color={this.iconColor()}
       />
     );
@@ -193,7 +240,7 @@ class ChatNavBar extends React.Component {
   renderSearchIcon() {
     return (
       <NavButton
-        style={{ width: 40, height: 50, justifyContent: 'center', alignItems: 'center' }}
+        style={[styles.iconViews]}
         onPress={() => Actions.messageSearch({ group: this.state.obj })}
       >
         <Icon
@@ -208,7 +255,7 @@ class ChatNavBar extends React.Component {
   renderUploads() {
     return (
       <NavButton
-        style={{ width: 40, height: 50, justifyContent: 'center', alignItems: 'center' }}
+        style={[styles.iconViews]}
         onPress={() => Actions.photoBrowser({ group: this.state.obj })}
       >
         <Icon
@@ -225,7 +272,7 @@ class ChatNavBar extends React.Component {
     const user = this._net.chat.getCurrentUser();
     return (
       <NavButton
-        style={{ width: 40, height: 50, justifyContent: 'center', alignItems: 'center' }}
+        style={[styles.iconViews]}
         onPress={() => {
           Actions.videoConference({
             instance: Application.instance,
@@ -252,7 +299,7 @@ class ChatNavBar extends React.Component {
         ]}
       >
         <NavButton
-          style={{ width: 35, paddingRight: 15, justifyContent: 'center', alignItems: 'flex-start' }}
+          style={[styles.navButton]}
           // onPress={() => { Actions.groups({ type: 'replace', duration: 0 }); }}
           onPress={() => { Actions.pop(); }}
         >
@@ -263,25 +310,16 @@ class ChatNavBar extends React.Component {
           />
         </NavButton>
         <TouchableOpacity
-          style={{
-            flex: 1,
-            justifyContent: 'flex-start',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
+          style={[styles.roomInformation]}
           onPress={this.goToRoomInfo}
         >
           {this._renderAvatar()}
-          <View style={{ flex: 1, zIndex: 200, flexDirection: 'column', justifyContent: 'center' }}>
-            <View style={{ flexDirection: 'row' }}>
+          <View style={[styles.titleContainer]}>
+            <View style={styles.avIcon}>
               {this.renderAvIcon()}
               <Text
                 numberOfLines={1}
-                style={[AppStyles.navbarTitle, {
-                  textAlign: 'left',
-                  flex: 1,
-                  fontSize: 14,
-                }]}
+                style={[AppStyles.navbarTitle, styles.nameText]}
               >
                 {this.state.displayName}
               </Text>
@@ -289,8 +327,7 @@ class ChatNavBar extends React.Component {
             {(!!this.state.displayTitle &&
               <Text
                 numberOfLines={1}
-                style={[AppStyles.navbarTitle,
-                { color: 'rgba(255,255,255,0.5)', fontSize: 12, marginBottom: 5, paddingLeft: 2, textAlign: 'left' }]}
+                style={[AppStyles.navbarTitle, styles.titleText]}
               >{this.state.displayTitle}</Text>
             )}
           </View>
