@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
+import md5 from 'react-native-md5';
 import PropTypes from 'prop-types';
 import { NavButton } from 'react-native-nav';
 import { Actions } from 'react-native-router-flux';
@@ -215,7 +216,7 @@ class ChatNavBar extends React.Component {
           Actions.videoConference({
             instance: Application.instance,
             groupName: gname,
-            userID: user ? user._id : 'unknown',
+            userID: user ? md5.hex_md5(user._id) : '0',
           });
         }}
       >
