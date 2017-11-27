@@ -5,8 +5,10 @@ import {
   Image,
   View,
 } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import { AppStyles, AppColors } from '../../theme';
+import { Button } from '../../components/ui/';
 import Application from '../../constants/config';
 
 const styles = StyleSheet.create({
@@ -72,6 +74,15 @@ export default class AboutView extends React.Component {
             <Text
               style={[styles.paraText]}
             >{`Build: ${Application.aboutDetails.build}`}</Text>
+            <Button
+              title={'Help'}
+              onPress={Actions.comingSoon}
+              backgroundColor="transparent"
+              small
+              buttonStyle={{ paddingHorizontal: 20, marginTop: 20 }}
+              fontWeight={'600'}
+              style={[]}
+            />
           </View>
           <View style={{ alignItems: 'center' }}>
             <Text
