@@ -33,6 +33,7 @@ import ReplyMessageView from './src/chat/ui/room/ReplyMessageView';
 import Menu from './src/containers/ui/Menu/MenuView';
 import GroupList from './src/chat/groups/GroupView';
 import RoomView from './src/chat/ui/room/RoomView';
+import VideoPlayer from './src/containers/video/VideoPlayer';
 import { NavbarMenuButton } from './src/containers/ui/NavbarMenuButton/NavbarMenuButtonContainer';
 
 export {
@@ -52,6 +53,7 @@ export {
     GroupList,
     NavbarMenuButton,
     RoomView,
+    VideoPlayer,
 
     // auth
     AuthLogin,

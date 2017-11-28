@@ -1,237 +1,229 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
+  // StatusBar,
   View,
-  StatusBar,
+  TouchableOpacity,
+  // StyleSheet,
+  // Dimensions,
 } from 'react-native';
-import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
+import { Icon } from 'react-native-elements';
+import Video from 'react-native-video-player';
 import PropTypes from 'prop-types';
-import Video from 'react-native-video';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
-  fullScreen: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-  },
-  controls: {
-    backgroundColor: 'transparent',
-    borderRadius: 5,
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-  },
-  progress: {
-    flex: 1,
-    flexDirection: 'row',
-    borderRadius: 3,
-    overflow: 'hidden',
-  },
-  innerProgressCompleted: {
-    height: 6,
-    backgroundColor: '#cccccc',
-  },
-  innerProgressRemaining: {
-    height: 6,
-    backgroundColor: '#2C2C2C',
-  },
-  generalControls: {
-    flex: 1,
-    flexDirection: 'row',
-    borderRadius: 4,
-    overflow: 'hidden',
-    paddingBottom: 10,
-  },
-  rateControl: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  volumeControl: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  resizeModeControl: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  controlOption: {
-    alignSelf: 'center',
-    fontSize: 11,
-    color: 'white',
-    paddingLeft: 2,
-    paddingRight: 2,
-    lineHeight: 12,
-  },
-  backButton: {
-    padding: 15,
-    backgroundColor: 'white',
-    borderRadius: 40,
-  },
-});
+// const VIMEO_ID = '189526682'; // 179859217
 
-class VideoPlayer extends Component {
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: 'black',
+//   },
+//   fullScreen: {
+//     position: 'absolute',
+//     top: 0,
+//     left: 0,
+//     bottom: 0,
+//     right: 0,
+//   },
+//   controls: {
+//     backgroundColor: 'transparent',
+//     borderRadius: 5,
+//     position: 'absolute',
+//     bottom: 44,
+//     left: 4,
+//     right: 4,
+//   },
+//   progress: {
+//     flex: 1,
+//     flexDirection: 'row',
+//     borderRadius: 3,
+//     overflow: 'hidden',
+//   },
+//   innerProgressCompleted: {
+//     height: 20,
+//     backgroundColor: '#cccccc',
+//   },
+//   innerProgressRemaining: {
+//     height: 20,
+//     backgroundColor: '#2C2C2C',
+//   },
+//   generalControls: {
+//     flex: 1,
+//     flexDirection: 'row',
+//     overflow: 'hidden',
+//     paddingBottom: 10,
+//   },
+//   skinControl: {
+//     flex: 1,
+//     flexDirection: 'row',
+//     justifyContent: 'center',
+//   },
+//   rateControl: {
+//     flex: 1,
+//     flexDirection: 'row',
+//     justifyContent: 'center',
+//   },
+//   volumeControl: {
+//     flex: 1,
+//     flexDirection: 'row',
+//     justifyContent: 'center',
+//   },
+//   resizeModeControl: {
+//     flex: 1,
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   ignoreSilentSwitchControl: {
+//     flex: 1,
+//     flexDirection: 'row',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   controlOption: {
+//     alignSelf: 'center',
+//     fontSize: 11,
+//     color: 'white',
+//     paddingLeft: 2,
+//     paddingRight: 2,
+//     lineHeight: 12,
+//   },
+//   nativeVideoControls: {
+//     top: 300,
+//     height: 300,
+//   },
+// });
 
-  state = {
-    rate: 1,
-    volume: 1,
-    muted: false,
-    resizeMode: 'contain',
-    duration: 0.0,
-    currentTime: 0.0,
-    paused: false,
-  };
+export default class VideoPlayer extends Component {
+  constructor() {
+    super();
 
-  onLoad = (data) => {
+    this.state = {
+      video: { width: undefined, height: undefined, duration: undefined },
+      thumbnailUrl: undefined,
+      videoUrl: undefined,
+
+      rate: 1,
+      volume: 1,
+      muted: false,
+      resizeMode: 'contain',
+      duration: 0.0,
+      currentTime: 0.0,
+      controls: false,
+      paused: true,
+      skin: 'embed',
+      ignoreSilentSwitch: null,
+      isBuffering: false,
+    };
+
+    this.onLoad = this.onLoad.bind(this);
+    this.onProgress = this.onProgress.bind(this);
+    this.onBuffer = this.onBuffer.bind(this);
+  }
+
+  componentWillMount() {
+    // global.fetch(`https://player.vimeo.com/video/${VIMEO_ID}/config`)
+    //   .then(res => res.json())
+    //   .then(res => this.setState({
+    //     thumbnailUrl: res.video.thumbs['640'],
+    //     videoUrl: this.props.videoUrl, // res.request.files.hls.cdns[res.request.files.hls.default_cdn].url,
+    //     video: res.video,
+    //   }));
+    this.setState({
+      // thumbnailUrl: res.video.thumbs['640'],
+      videoUrl: this.props.videoUrl,
+      // video: res.video,
+    });
+  }
+
+  onLoad(data) {
+    alert('On load fired!');
     this.setState({ duration: data.duration });
-  };
+  }
 
-  onProgress = (data) => {
+  onProgress(data) {
     this.setState({ currentTime: data.currentTime });
-  };
-
-  onEnd = () => {
-    this.setState({ paused: true });
-    this.video.seek(0);
-  };
-
-  onAudioBecomingNoisy = () => {
-    this.setState({ paused: true });
-  };
-
-  onAudioFocusChanged = (event: { hasAudioFocus: boolean }) => {
-    this.setState({ paused: !event.hasAudioFocus });
-  };
-
-  getCurrentTimePercentage() {
-    if (this.state.currentTime > 0) {
-      return parseFloat(this.state.currentTime) / parseFloat(this.state.duration);
-    }
-    return 0;
   }
 
-  video: Video;
-
-  renderRateControl(rate) {
-    const isSelected = (this.state.rate === rate);
-
-    return (
-      <TouchableOpacity onPress={() => { this.setState({ rate }); }}>
-        <Text style={[styles.controlOption, { fontWeight: isSelected ? 'bold' : 'normal' }]}>
-          {rate}x
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-
-  renderResizeModeControl(resizeMode) {
-    const isSelected = (this.state.resizeMode === resizeMode);
-
-    return (
-      <TouchableOpacity onPress={() => { this.setState({ resizeMode }); }}>
-        <Text style={[styles.controlOption, { fontWeight: isSelected ? 'bold' : 'normal' }]}>
-          {resizeMode}
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-
-  renderVolumeControl(volume) {
-    const isSelected = (this.state.volume === volume);
-
-    return (
-      <TouchableOpacity onPress={() => { this.setState({ volume }); }}>
-        <Text style={[styles.controlOption, { fontWeight: isSelected ? 'bold' : 'normal' }]}>
-          {volume * 100}%
-        </Text>
-      </TouchableOpacity>
-    );
+  onBuffer(isBuffering) {
+    this.setState({ isBuffering });
   }
 
   render() {
-    const flexCompleted = this.getCurrentTimePercentage() * 100;
-    const flexRemaining = (1 - this.getCurrentTimePercentage()) * 100;
-
+    // const { height, width } = Dimensions.get('window');
     return (
-      <View style={styles.container}>
-        <StatusBar hidden={true} />
+      <View
+        style={{
+          backgroundColor: '#000',
+          flex: 1,
+          justifyContent: 'center',
+        }}
+      >
         <TouchableOpacity
-          style={styles.fullScreen}
-          onPress={() => this.setState({ paused: !this.state.paused })}
-        >
-          <Video
-            ref={(ref: Video) => { this.video = ref; }}
-            /* For ExoPlayer */
-            // source={{ uri: 'https://bucket.s3-us-west-2.amazonaws.com/instance.prodName/66QwsaxXDDecKzwy3/mEayRvm5F53LZea24/W2ZS523ztxrrpbruD', type: 'mp4' }}
-            source={{ uri: this.props.videoUrl, type: 'mp4' }}
-            style={styles.fullScreen}
-            rate={this.state.rate}
-            paused={this.state.paused}
-            volume={this.state.volume}
-            muted={this.state.muted}
-            resizeMode={this.state.resizeMode}
-            onLoad={this.onLoad}
-            onProgress={this.onProgress}
-            onEnd={this.onEnd}
-            onAudioBecomingNoisy={this.onAudioBecomingNoisy}
-            onAudioFocusChanged={this.onAudioFocusChanged}
-            repeat={false}
-          />
-        </TouchableOpacity>
-
-        <View style={styles.controls}>
-          <View style={styles.trackingControls}>
-            <View style={styles.progress}>
-              <View style={[styles.innerProgressCompleted, { flex: flexCompleted }]} />
-              <View style={[styles.innerProgressRemaining, { flex: flexRemaining }]} />
-            </View>
-          </View>
-        </View>
-
-        <TouchableOpacity
-          style={[styles.backButton, {
+          style={[{
             position: 'absolute',
             top: 20,
             left: 20,
+            padding: 5,
+            backgroundColor: 'white',
+            borderRadius: 40,
+            zIndex: 999,
           }]}
-          onPress={() => {
-            Actions.pop();
-          }}
+          onPress={Actions.pop}
         >
           <Icon
-            name="close"
-            size={20}
-            color="#000"
-            width={20}
+            name="arrow-back"
+            size={30}
+            color={'#000'}
+            width={30}
           />
         </TouchableOpacity>
+        {/* <View
+          style={{
+            width: 50,
+            height: 50,
+            backgroundColor: 'red',
+            zIndex: 999,
+            position: 'absolute',
+            top: (height / 2) - 25,
+            left: (width / 2) - 25,
+          }}
+        /> */}
+        <Video
+          endWithThumbnail
+          thumbnail={{ uri: this.state.thumbnailUrl }}
+          source={{ uri: this.state.videoUrl }}
+          videoWidth={this.state.video.width}
+          videoHeight={this.state.video.height}
+          duration={this.state.video.duration/* I'm using a hls stream here, react-native-video
+            can't figure out the length, so I pass it here from the vimeo config */}
+
+          // style={styles.fullScreen}
+          rate={this.state.rate}
+          paused={this.state.paused}
+          volume={this.state.volume}
+          muted={this.state.muted}
+          ignoreSilentSwitch={this.state.ignoreSilentSwitch}
+          resizeMode={this.state.resizeMode}
+          onLoad={this.onLoad}
+          onBuffer={this.onBuffer}
+          onProgress={this.onProgress}
+          // onEnd={() => { AlertIOS.alert('Done!') }}
+          repeat={true}
+        />
       </View>
     );
   }
 }
 
 VideoPlayer.defaultProps = {
-  videoUrl: null,
+  videoUrl: '',
+  // cameraData: {},
 };
 
 VideoPlayer.propTypes = {
   videoUrl: PropTypes.string,
+  // cameraData: React.PropTypes.object,
 };
-
-/* Export Component ==================================================================== */
-export default VideoPlayer;
