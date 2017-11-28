@@ -114,7 +114,10 @@ class ListViewNav extends React.Component {
         <View style={[styles.widthView]} />
         <TouchableOpacity
           onPress={() => {
-            Actions.aboutView();
+            Actions.aboutView({
+              logo: ModuleConfig.logo,
+              aboutDetails: ModuleConfig.aboutDetails,
+            });
           }}
           style={[styles.about]}
         >

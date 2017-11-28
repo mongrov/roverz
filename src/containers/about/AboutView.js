@@ -6,10 +6,10 @@ import {
   View,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import PropTypes from 'prop-types';
 
 import { AppStyles, AppColors } from '../../theme';
 import { Button } from '../../components/ui/';
-import Application from '../../constants/config';
 
 const styles = StyleSheet.create({
   paraText: {
@@ -30,6 +30,16 @@ const styles = StyleSheet.create({
 });
 
 export default class AboutView extends React.Component {
+  constructor(props) {
+    super(props);
+    const logo = this.props.logo;
+    const aboutDetails = this.props.aboutDetails;
+    this.state = {
+      logo,
+      aboutDetails,
+    };
+  }
+
   render() {
     return (
       <View
@@ -49,7 +59,7 @@ export default class AboutView extends React.Component {
           }}
         >
           <Image
-            source={Application.logo}
+            source={this.state.logo}
             style={{
               opacity: 1,
               width: 150,
@@ -67,13 +77,13 @@ export default class AboutView extends React.Component {
           <View style={{ alignItems: 'center' }}>
             <Text
               style={[styles.headText]}
-            >{Application.instance}</Text>
+            >{this.state.instance}</Text>
             <Text
               style={[styles.headText]}
-            >{`Version: ${Application.aboutDetails.version}`}</Text>
+            >{`Version: ${this.state.aboutDetails.version}`}</Text>
             <Text
               style={[styles.paraText]}
-            >{`Build: ${Application.aboutDetails.build}`}</Text>
+            >{`Build: ${this.state.aboutDetails.build}`}</Text>
             <Button
               title={'Help'}
               onPress={Actions.helpView}
@@ -87,15 +97,15 @@ export default class AboutView extends React.Component {
           <View style={{ alignItems: 'center' }}>
             <Text
               style={[styles.paraText]}
-            >{Application.aboutDetails.website}</Text>
+            >{this.state.aboutDetails.website}</Text>
             <Text
               style={[styles.paraText]}
-            >{Application.aboutDetails.email}</Text>
+            >{this.state.aboutDetails.email}</Text>
           </View>
           <View>
             <Text
               style={[styles.paraTextLight]}
-            >{Application.aboutDetails.company}</Text>
+            >{this.state.aboutDetails.company}</Text>
           </View>
         </View>
       </View>
@@ -104,7 +114,11 @@ export default class AboutView extends React.Component {
 }
 
 AboutView.defaultProps = {
+  logo: null,
+  aboutDetails: {},
 };
 
 AboutView.propTypes = {
+  logo: PropTypes.number,
+  aboutDetails: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
