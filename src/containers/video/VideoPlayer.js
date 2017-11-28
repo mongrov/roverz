@@ -11,7 +11,8 @@ import { Icon } from 'react-native-elements';
 import Video from 'react-native-video-player';
 import PropTypes from 'prop-types';
 
-// const VIMEO_ID = '189526682'; // 179859217
+const VIMEO_ID = '179859217'; // 179859217
+const thumbnailImg = require('../../images/video-thumb.jpg');
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -124,18 +125,18 @@ export default class VideoPlayer extends Component {
   }
 
   componentWillMount() {
-    // global.fetch(`https://player.vimeo.com/video/${VIMEO_ID}/config`)
-    //   .then(res => res.json())
-    //   .then(res => this.setState({
-    //     thumbnailUrl: res.video.thumbs['640'],
-    //     videoUrl: this.props.videoUrl, // res.request.files.hls.cdns[res.request.files.hls.default_cdn].url,
-    //     video: res.video,
-    //   }));
-    this.setState({
-      // thumbnailUrl: res.video.thumbs['640'],
-      videoUrl: this.props.videoUrl,
-      // video: res.video,
-    });
+    global.fetch(`https://player.vimeo.com/video/${VIMEO_ID}/config`)
+      .then(res => res.json())
+      .then(res => this.setState({
+        thumbnailUrl: res.video.thumbs['640'],
+        videoUrl: res.request.files.hls.cdns[res.request.files.hls.default_cdn].url,
+        video: res.video,
+      }));
+    // this.setState({
+    //   // thumbnailUrl: res.video.thumbs['640'],
+    //   videoUrl: this.props.videoUrl,
+    //   // video: res.video,
+    // });
   }
 
   onLoad(data) {
@@ -193,8 +194,8 @@ export default class VideoPlayer extends Component {
         /> */}
         <Video
           endWithThumbnail
-          thumbnail={{ uri: this.state.thumbnailUrl }}
-          source={{ uri: this.state.videoUrl }}
+          thumbnail={thumbnailImg}
+          video={{ uri: this.state.videoUrl }}
           videoWidth={this.state.video.width}
           videoHeight={this.state.video.height}
           duration={this.state.video.duration/* I'm using a hls stream here, react-native-video

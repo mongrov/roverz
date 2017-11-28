@@ -3,48 +3,57 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  Text,
 } from 'react-native';
+import { CachedImage } from 'react-native-img-cache';
 
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements';
-import { AppColors } from '../../../theme/';
-import t from '../../../i18n';
-
 
 const styles = StyleSheet.create({
   container: {
   },
+  image: {
+    width: 285,
+    height: 150,
+    borderRadius: 13,
+    margin: 3,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageActive: {
+    resizeMode: 'contain',
+  },
   mapView: {
     width: 250,
     height: 150,
-    borderRadius: 10,
+    borderRadius: 13,
     margin: 3,
     backgroundColor: 'white',
   },
 });
 
+const videoThumbnail = require('../../../images/video-thumb.jpg');
+
 export default class CustomView extends React.Component {
   render() {
     if (this.props.currentMessage.video) {
       return (
-        <View style={[styles.mapView]}>
+        <View style={[styles.container]}>
           <TouchableOpacity
-            style={{
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
             onPress={() => Actions.videoPreview({ videoUrl: this.props.currentMessage.video })}
           >
-            <Icon
-              name="video-library"
-              size={48}
-              color={AppColors.brand().third}
-            />
-            <Text>{t('txt_Videoplay')}</Text>
+            <CachedImage
+              style={[styles.image]}
+              source={videoThumbnail}
+            >
+              <Icon
+                name="play-circle-filled"
+                size={48}
+                color={'#000'}
+              />
+            </CachedImage>
           </TouchableOpacity>
         </View>
       );
