@@ -4,12 +4,38 @@ import {
   View,
   Image,
   TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { Network } from 'roverz-chat';
 import { AppStyles, AppColors } from '../../theme/';
 import ModuleConfig from '../../constants/config';
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+    flex: 1,
+    paddingLeft: 0,
+    flexDirection: 'row',
+  },
+  widthView: {
+    width: 50,
+  },
+  about: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profile: {
+    width: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 class ListViewNav extends React.Component {
   constructor(props) {
@@ -81,29 +107,21 @@ class ListViewNav extends React.Component {
 
   render() {
     return (
-      <View style={[AppStyles.navbar, AppStyles.navbarHeight, {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        left: 0,
-        flex: 1,
-        paddingLeft: 0,
-        flexDirection: 'row',
+      <View style={[AppStyles.navbar, AppStyles.navbarHeight, styles.container, {
         backgroundColor: AppColors.brand().secondary,
       }]}
       >
-        <View style={{ width: 50 }} />
+        <View style={[styles.widthView]} />
         <TouchableOpacity
           onPress={() => {
             Actions.aboutView();
           }}
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          style={[styles.about]}
         >
           {this.renderNavBrand()}
         </TouchableOpacity>
         <TouchableOpacity
-          style={{ width: 50, alignItems: 'center', justifyContent: 'center',
-          }}
+          style={[styles.profile]}
           onPress={Actions.profileView}
         >
           <Icon

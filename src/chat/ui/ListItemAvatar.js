@@ -1,10 +1,40 @@
 import React from 'react';
 import {
   View,
+  StyleSheet,
 } from 'react-native';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
 import { AppUtil } from 'roverz-chat';
+
+const styles = StyleSheet.create({
+  container: {
+    marginRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatar: {
+    position: 'relative',
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatarImage: {
+    zIndex: 200,
+    position: 'absolute',
+    left: 0,
+    top: 0,
+  },
+  userAvatar: {
+    zIndex: 190,
+    position: 'absolute',
+  },
+  noAvatarView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
 
 class ListItemAvatar extends React.Component {
   constructor(props) {
@@ -50,49 +80,38 @@ class ListItemAvatar extends React.Component {
     if (this.state.showAvatar) {
       return (
         <View
-          style={{
-            position: 'relative',
+          style={[styles.avatar, {
             width: this.state.imageHeight,
             height: this.state.imageHeight,
-            backgroundColor: '#f0f0f0',
-            borderRadius: this.state.imageHeight / 2,
-            justifyContent: 'center',
-            alignItems: 'center' }}
+            borderRadius: this.state.imageHeight / 2 }]}
         >
           <CachedImage
-            style={{
-              zIndex: 200,
-              position: 'absolute',
-              left: 0,
-              top: 0,
+            style={[styles.avatarImage, {
               width: this.state.imageHeight,
               height: this.state.imageHeight,
-              borderRadius: this.state.imageHeight / 2 }}
+              borderRadius: this.state.imageHeight / 2 }]}
             source={{ uri: this.state.avatarUri }}
             onError={() => { this._hideAvatarView(); }}
           />
           <UserAvatar
             name={AppUtil.avatarInitials(this.state.avatarName)}
             size={this.state.imageHeight}
-            style={{
-              zIndex: 190,
-              position: 'absolute',
+            style={[styles.userAvatar, {
               left: -this.state.imageHeight / 2,
               top: -this.state.imageHeight / 2,
               width: this.state.imageHeight,
               height: this.state.imageHeight,
-              borderRadius: this.state.imageHeight / 2 }}
+              borderRadius: this.state.imageHeight / 2 }]}
           />
         </View>
       );
     }
     return (
       <View
-        style={{
+        style={[styles.noAvatarView, {
           width: this.state.imageHeight,
           height: this.state.imageHeight,
-          justifyContent: 'center',
-          alignItems: 'center' }}
+        }]}
       >
         <UserAvatar
           name={AppUtil.avatarInitials(this.state.avatarName)}
@@ -104,13 +123,10 @@ class ListItemAvatar extends React.Component {
 
   render() {
     return (
-      <View style={{
-        marginRight: 10,
+      <View style={[styles.container, {
         width: this.state.imageHeight,
         height: this.state.imageHeight,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+      }]}
       >
         {this._renderAvatar()}
       </View>
