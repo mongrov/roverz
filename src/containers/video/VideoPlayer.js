@@ -139,7 +139,7 @@ export default class VideoPlayer extends Component {
   }
 
   onLoad(data) {
-    alert('On load fired!');
+    // console.log('On load fired!');
     this.setState({ duration: data.duration });
   }
 
