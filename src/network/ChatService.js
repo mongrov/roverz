@@ -247,6 +247,15 @@ class ChatService {
     });
   }
 
+  sendMessage(roomID, msgtoSend) {
+    this.meteor.call('sendMessage', {
+      rid: roomID, msg: msgtoSend,
+    }, (/* err, res */) => {
+      // console.log(err);
+      // console.log(res);
+    });
+  }
+
     // use like searchUserOrRoom('e');
   searchUserOrRoom(searchKey, callBack) {
     var searchConf = { users: true, rooms: true };

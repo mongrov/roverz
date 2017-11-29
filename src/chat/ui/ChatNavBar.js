@@ -269,11 +269,15 @@ class ChatNavBar extends React.Component {
 
   renderVideoConfIcon() {
     const gname = this.state.obj.name;
+    const gid = this.state.obj._id;
     const user = this._net.chat.getCurrentUser();
+    const _super = this;
     return (
       <NavButton
         style={[styles.iconViews]}
         onPress={() => {
+          const tempMsg = '@all Started Video conference';
+          _super._net.chat.sendMessage(gid, tempMsg);
           Actions.videoConference({
             instance: Application.instance,
             groupName: gname,
