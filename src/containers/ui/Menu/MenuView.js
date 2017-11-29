@@ -25,7 +25,7 @@ import RNRestart from 'react-native-restart';
 import { AppSizes, AppColors } from '../../../theme/';
 import Network from '../../../network';
 import Text from '../../../components/ui/Text';
-import AppConfig from '../../../constants/config';
+import Application from '../../../constants/config';
 import t from '../../../i18n';
 
 
@@ -133,7 +133,7 @@ class Menu extends Component {
                   onPress: () => {
                     this.net.meteor.logout();
                     this.net.db.setUserId(null);
-                    AppConfig.setUserId(null);
+                    Application.setUserId(null);
                     this.net.chat.logout();
                     setTimeout(() => {
                       RNRestart.Restart();
@@ -326,7 +326,7 @@ class Menu extends Component {
             }}
           >
             <Image
-              source={AppConfig.logo}
+              source={Application.logo}
               style={{
                 width: 150,
                 height: 100,

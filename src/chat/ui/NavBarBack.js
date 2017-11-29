@@ -19,7 +19,7 @@ export default class NavBarBack extends React.Component {
 
   componentWillMount() {
     /* this.setState({
-      title: AppConfig.base.instance,
+      title: Application.base.instance,
     }); */
   }
 

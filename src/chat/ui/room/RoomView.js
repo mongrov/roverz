@@ -33,7 +33,7 @@ import Network from '../../../network';
 import Group from '../../../models/group';
 import { Send, ProgressBar } from '../../../chat/ui/';
 import { AppStyles, AppSizes, AppColors } from '../../../theme/';
-import AppConfig from '../../../constants/config';
+import Application from '../../../constants/config';
 
 import SendImageMessage from './SendImageMessage';
 import ChatAvatar from './ChatAvatar';
@@ -680,7 +680,7 @@ class ChatRoomView extends React.Component {
           isLoadingEarlier={this.state.isLoadingEarlier}
           renderLoading={this.renderLoading}
           user={{
-            _id: AppConfig.userId,
+            _id: Application.userId,
           }}
           parsePatterns={() => [
             { type: 'url', style: styl.left.link, onPress: this.handleUrlPress },

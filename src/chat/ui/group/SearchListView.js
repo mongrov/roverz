@@ -82,7 +82,7 @@ export default class SearchListView extends Component {
         subtitle={`@${rowData.username}`}
         subtitleStyle={AppStyles.memberListSubTitle}
         /* avatar={{
-          uri: `${AppConfig.base.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`,
+          uri: `${Application.base.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`,
         }} */
         // onPress={() => Actions.memberDetail({ memberId: rowData._id })}
       />

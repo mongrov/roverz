@@ -1,7 +1,7 @@
 import Meteor from 'react-native-meteor';
 import AppUtil from '../lib/util';
 
-import AppConfig from '../constants/config';
+import Application from '../constants/config';
 import Constants from './constants';
 
 class MeteorService {
@@ -9,7 +9,7 @@ class MeteorService {
   init() {
     // setup meteor
     // console.log('-------------meteor service init---------');
-    Meteor.connect(AppConfig.urls.WS_URL);
+    Meteor.connect(Application.urls.WS_URL);
   }
 
   logout() {

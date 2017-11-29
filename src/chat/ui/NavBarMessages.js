@@ -19,7 +19,7 @@ export default class NavBarMessages extends React.Component {
 
   componentWillMount() {
     /* this.setState({
-      title: AppConfig.base.instance,
+      title: Application.base.instance,
     }); */
   }
 
