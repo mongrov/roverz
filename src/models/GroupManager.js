@@ -1,7 +1,7 @@
 /*
  * Group Manager class
  */
-import { AppUtil } from '../lib/util';
+import AppUtil from '../lib/util';
 
 import Constants from './constants';
 
