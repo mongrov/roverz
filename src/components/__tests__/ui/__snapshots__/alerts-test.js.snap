@@ -44,15 +44,15 @@ exports[`Alerts (Error) renders correctly 1`] = `
           Array [
             Object {
               "color": "#222222",
-              "fontFamily": "HelveticaNeue",
-              "fontSize": 14,
-              "fontWeight": "300",
-              "lineHeight": 18,
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 18,
+              "fontWeight": "500",
+              "lineHeight": 23,
             },
             Array [
               Object {
                 "color": "#16693c",
-                "fontWeight": "500",
+                "fontWeight": "300",
                 "textAlign": "center",
               },
               Object {
@@ -123,15 +123,15 @@ exports[`Alerts (Status) renders correctly 1`] = `
           Array [
             Object {
               "color": "#222222",
-              "fontFamily": "HelveticaNeue",
-              "fontSize": 14,
-              "fontWeight": "300",
-              "lineHeight": 18,
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 18,
+              "fontWeight": "500",
+              "lineHeight": 23,
             },
             Array [
               Object {
                 "color": "#16693c",
-                "fontWeight": "500",
+                "fontWeight": "300",
                 "textAlign": "center",
               },
               Object {
@@ -198,15 +198,15 @@ exports[`Alerts (Sucess) renders correctly 1`] = `
           Array [
             Object {
               "color": "#222222",
-              "fontFamily": "HelveticaNeue",
-              "fontSize": 14,
-              "fontWeight": "300",
-              "lineHeight": 18,
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 18,
+              "fontWeight": "500",
+              "lineHeight": 23,
             },
             Array [
               Object {
                 "color": "#16693c",
-                "fontWeight": "500",
+                "fontWeight": "300",
                 "textAlign": "center",
               },
             ],

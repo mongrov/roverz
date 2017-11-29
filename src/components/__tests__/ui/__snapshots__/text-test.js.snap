@@ -15,12 +15,12 @@ exports[`Text H1 renders correctly 1`] = `
   style={
     Array [
       Object {
-        "color": "#0E4EF8",
-        "fontFamily": "HelveticaNeue",
-        "fontSize": 24.5,
+        "color": "#373856",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 31.5,
         "fontWeight": "800",
         "left": 0,
-        "lineHeight": 30,
+        "lineHeight": 39,
         "margin": 0,
         "marginBottom": 4,
         "right": 0,
@@ -47,18 +47,18 @@ exports[`Text H1 with Link renders correctly 1`] = `
   style={
     Array [
       Object {
-        "color": "#0E4EF8",
-        "fontFamily": "HelveticaNeue",
-        "fontSize": 24.5,
+        "color": "#373856",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 31.5,
         "fontWeight": "800",
         "left": 0,
-        "lineHeight": 30,
+        "lineHeight": 39,
         "margin": 0,
         "marginBottom": 4,
         "right": 0,
       },
       Object {
-        "color": "#0E4EF8",
+        "color": "#373856",
         "textDecorationLine": "underline",
       },
     ]
@@ -83,12 +83,12 @@ exports[`Text H2 renders correctly 1`] = `
   style={
     Array [
       Object {
-        "color": "#0E4EF8",
-        "fontFamily": "HelveticaNeue",
-        "fontSize": 21,
+        "color": "#373856",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 27,
         "fontWeight": "800",
         "left": 0,
-        "lineHeight": 26,
+        "lineHeight": 34,
         "margin": 0,
         "marginBottom": 4,
         "right": 0,
@@ -115,12 +115,12 @@ exports[`Text H3 renders correctly 1`] = `
   style={
     Array [
       Object {
-        "color": "#0E4EF8",
-        "fontFamily": "HelveticaNeue",
-        "fontSize": 17.5,
+        "color": "#373856",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 22.5,
         "fontWeight": "500",
         "left": 0,
-        "lineHeight": 23,
+        "lineHeight": 29,
         "margin": 0,
         "marginBottom": 4,
         "right": 0,
@@ -147,12 +147,12 @@ exports[`Text H4 renders correctly 1`] = `
   style={
     Array [
       Object {
-        "color": "#0E4EF8",
-        "fontFamily": "HelveticaNeue",
-        "fontSize": 15.400000000000002,
+        "color": "#373856",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 19.8,
         "fontWeight": "800",
         "left": 0,
-        "lineHeight": 23,
+        "lineHeight": 24,
         "margin": 0,
         "marginBottom": 4,
         "right": 0,
@@ -179,12 +179,12 @@ exports[`Text H5 renders correctly 1`] = `
   style={
     Array [
       Object {
-        "color": "#0E4EF8",
-        "fontFamily": "HelveticaNeue",
-        "fontSize": 14,
+        "color": "#373856",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 18,
         "fontWeight": "800",
         "left": 0,
-        "lineHeight": 18,
+        "lineHeight": 23,
         "margin": 0,
         "marginBottom": 4,
         "marginTop": 4,
@@ -213,10 +213,10 @@ exports[`Text P renders correctly 1`] = `
     Array [
       Object {
         "color": "#222222",
-        "fontFamily": "HelveticaNeue",
-        "fontSize": 14,
-        "fontWeight": "300",
-        "lineHeight": 18,
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 18,
+        "fontWeight": "500",
+        "lineHeight": 23,
         "marginBottom": 8,
       },
     ]
@@ -242,10 +242,10 @@ exports[`Text renders correctly 1`] = `
     Array [
       Object {
         "color": "#222222",
-        "fontFamily": "HelveticaNeue",
-        "fontSize": 14,
-        "fontWeight": "300",
-        "lineHeight": 18,
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 18,
+        "fontWeight": "500",
+        "lineHeight": 23,
       },
     ]
   }

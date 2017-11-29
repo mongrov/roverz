@@ -20,6 +20,8 @@ exports[`ListItem renders correctly 1`] = `
           "backgroundColor": "#FFFFFF",
           "borderBottomColor": "#D0D1D5",
           "borderTopColor": "#D0D1D5",
+          "paddingBottom": 12,
+          "paddingTop": 12,
         },
         Array [],
       ],
@@ -101,7 +103,15 @@ exports[`ListItem renders correctly 1`] = `
                 Object {
                   "borderRadius": 17,
                 },
-                undefined,
+                Array [
+                  Object {
+                    "borderRadius": 25,
+                    "height": 50,
+                    "marginTop": 5,
+                    "width": 50,
+                  },
+                  Array [],
+                ],
               ]
             }
           />
@@ -147,10 +157,11 @@ exports[`ListItem renders correctly 1`] = `
                 Array [
                   Object {
                     "color": "#222222",
-                    "fontFamily": "HelveticaNeue",
-                    "fontSize": 14,
-                    "fontWeight": "300",
-                    "lineHeight": 18,
+                    "fontFamily": "OpenSans-Regular",
+                    "fontSize": 18,
+                    "fontWeight": "400",
+                    "height": 25,
+                    "marginBottom": 2,
                   },
                   Array [],
                 ],

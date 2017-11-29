@@ -22,6 +22,9 @@ exports[`Button renders correctly 1`] = `
         "marginLeft": 0,
         "marginRight": 0,
       },
+      Object {
+        "borderRadius": 2,
+      },
     ]
   }
 >
@@ -67,7 +70,7 @@ exports[`Button renders correctly 1`] = `
           undefined,
           undefined,
           Object {
-            "backgroundColor": "#0E4EF8",
+            "backgroundColor": "#373856",
           },
           Object {
             "borderRadius": 2,
@@ -114,20 +117,20 @@ exports[`Button renders correctly 1`] = `
                 "fontSize": 17.5,
               },
               Object {
-                "fontSize": 14,
+                "fontSize": 18,
               },
               undefined,
               Object {
                 "fontWeight": "bold",
               },
               Object {
-                "fontFamily": "HelveticaNeue",
+                "fontFamily": "OpenSans-Regular",
               },
             ],
           ]
         }
       >
-        Coming Soon...
+        Coming soon...
       </Text>
     </View>
   </View>
@@ -155,6 +158,9 @@ exports[`Button with Icon renders correctly 1`] = `
       Object {
         "marginLeft": 0,
         "marginRight": 0,
+      },
+      Object {
+        "borderRadius": 2,
       },
     ]
   }
@@ -201,7 +207,7 @@ exports[`Button with Icon renders correctly 1`] = `
           undefined,
           undefined,
           Object {
-            "backgroundColor": "#0E4EF8",
+            "backgroundColor": "#373856",
           },
           Object {
             "borderRadius": 2,
@@ -274,20 +280,20 @@ exports[`Button with Icon renders correctly 1`] = `
                 "fontSize": 17.5,
               },
               Object {
-                "fontSize": 14,
+                "fontSize": 18,
               },
               undefined,
               Object {
                 "fontWeight": "bold",
               },
               Object {
-                "fontFamily": "HelveticaNeue",
+                "fontFamily": "OpenSans-Regular",
               },
             ],
           ]
         }
       >
-        Coming Soon...
+        Coming soon...
       </Text>
     </View>
   </View>
@@ -315,6 +321,9 @@ exports[`Button with Text renders correctly 1`] = `
       Object {
         "marginLeft": 0,
         "marginRight": 0,
+      },
+      Object {
+        "borderRadius": 2,
       },
     ]
   }
@@ -361,7 +370,7 @@ exports[`Button with Text renders correctly 1`] = `
           undefined,
           undefined,
           Object {
-            "backgroundColor": "#0E4EF8",
+            "backgroundColor": "#373856",
           },
           Object {
             "borderRadius": 2,
@@ -408,14 +417,14 @@ exports[`Button with Text renders correctly 1`] = `
                 "fontSize": 17.5,
               },
               Object {
-                "fontSize": 14,
+                "fontSize": 18,
               },
               undefined,
               Object {
                 "fontWeight": "bold",
               },
               Object {
-                "fontFamily": "HelveticaNeue",
+                "fontFamily": "OpenSans-Regular",
               },
             ],
           ]
@@ -450,6 +459,9 @@ exports[`Button with onPress renders correctly 1`] = `
         "marginLeft": 0,
         "marginRight": 0,
       },
+      Object {
+        "borderRadius": 2,
+      },
     ]
   }
 >
@@ -495,7 +507,7 @@ exports[`Button with onPress renders correctly 1`] = `
           undefined,
           undefined,
           Object {
-            "backgroundColor": "#0E4EF8",
+            "backgroundColor": "#373856",
           },
           Object {
             "borderRadius": 2,
@@ -542,20 +554,20 @@ exports[`Button with onPress renders correctly 1`] = `
                 "fontSize": 17.5,
               },
               Object {
-                "fontSize": 14,
+                "fontSize": 18,
               },
               undefined,
               Object {
                 "fontWeight": "bold",
               },
               Object {
-                "fontFamily": "HelveticaNeue",
+                "fontFamily": "OpenSans-Regular",
               },
             ],
           ]
         }
       >
-        Coming Soon...
+        Coming soon...
       </Text>
     </View>
   </View>
@@ -583,6 +595,9 @@ exports[`Large Button renders correctly 1`] = `
       Object {
         "marginLeft": 0,
         "marginRight": 0,
+      },
+      Object {
+        "borderRadius": 2,
       },
     ]
   }
@@ -629,7 +644,7 @@ exports[`Large Button renders correctly 1`] = `
           undefined,
           undefined,
           Object {
-            "backgroundColor": "#0E4EF8",
+            "backgroundColor": "#373856",
           },
           Object {
             "borderRadius": 2,
@@ -683,13 +698,13 @@ exports[`Large Button renders correctly 1`] = `
                 "fontWeight": "bold",
               },
               Object {
-                "fontFamily": "HelveticaNeue",
+                "fontFamily": "OpenSans-Regular",
               },
             ],
           ]
         }
       >
-        Coming Soon...
+        Coming soon...
       </Text>
     </View>
   </View>
@@ -717,6 +732,9 @@ exports[`Large Button with Icon renders correctly 1`] = `
       Object {
         "marginLeft": 0,
         "marginRight": 0,
+      },
+      Object {
+        "borderRadius": 2,
       },
     ]
   }
@@ -763,7 +781,7 @@ exports[`Large Button with Icon renders correctly 1`] = `
           undefined,
           undefined,
           Object {
-            "backgroundColor": "#0E4EF8",
+            "backgroundColor": "#373856",
           },
           Object {
             "borderRadius": 2,
@@ -843,13 +861,13 @@ exports[`Large Button with Icon renders correctly 1`] = `
                 "fontWeight": "bold",
               },
               Object {
-                "fontFamily": "HelveticaNeue",
+                "fontFamily": "OpenSans-Regular",
               },
             ],
           ]
         }
       >
-        Coming Soon...
+        Coming soon...
       </Text>
     </View>
   </View>
@@ -869,6 +887,9 @@ exports[`Outlined Button renders correctly 1`] = `
       Object {
         "marginLeft": 0,
         "marginRight": 0,
+      },
+      Object {
+        "borderRadius": 2,
       },
     ]
   }
@@ -927,7 +948,7 @@ exports[`Outlined Button renders correctly 1`] = `
           undefined,
           undefined,
           Object {
-            "borderColor": "#0E4EF8",
+            "borderColor": "#373856",
             "borderWidth": 1,
             "padding": 12,
           },
@@ -958,26 +979,26 @@ exports[`Outlined Button renders correctly 1`] = `
                 "fontSize": 20,
               },
               Object {
-                "color": "#0E4EF8",
+                "color": "#373856",
               },
               Object {
                 "fontSize": 17.5,
               },
               Object {
-                "fontSize": 14,
+                "fontSize": 18,
               },
               undefined,
               Object {
                 "fontWeight": "bold",
               },
               Object {
-                "fontFamily": "HelveticaNeue",
+                "fontFamily": "OpenSans-Regular",
               },
             ],
           ]
         }
       >
-        Coming Soon...
+        Coming soon...
       </Text>
     </View>
   </View>
@@ -997,6 +1018,9 @@ exports[`Outlined Button with Icon renders correctly 1`] = `
       Object {
         "marginLeft": 0,
         "marginRight": 0,
+      },
+      Object {
+        "borderRadius": 2,
       },
     ]
   }
@@ -1055,7 +1079,7 @@ exports[`Outlined Button with Icon renders correctly 1`] = `
           undefined,
           undefined,
           Object {
-            "borderColor": "#0E4EF8",
+            "borderColor": "#373856",
             "borderWidth": 1,
             "padding": 12,
           },
@@ -1071,7 +1095,7 @@ exports[`Outlined Button with Icon renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#0E4EF8",
+              "color": "#373856",
               "fontSize": 14,
             },
             Array [
@@ -1112,26 +1136,26 @@ exports[`Outlined Button with Icon renders correctly 1`] = `
                 "fontSize": 20,
               },
               Object {
-                "color": "#0E4EF8",
+                "color": "#373856",
               },
               Object {
                 "fontSize": 17.5,
               },
               Object {
-                "fontSize": 14,
+                "fontSize": 18,
               },
               undefined,
               Object {
                 "fontWeight": "bold",
               },
               Object {
-                "fontFamily": "HelveticaNeue",
+                "fontFamily": "OpenSans-Regular",
               },
             ],
           ]
         }
       >
-        Coming Soon...
+        Coming soon...
       </Text>
     </View>
   </View>
@@ -1159,6 +1183,9 @@ exports[`Small Button renders correctly 1`] = `
       Object {
         "marginLeft": 0,
         "marginRight": 0,
+      },
+      Object {
+        "borderRadius": 2,
       },
     ]
   }
@@ -1205,7 +1232,7 @@ exports[`Small Button renders correctly 1`] = `
           undefined,
           undefined,
           Object {
-            "backgroundColor": "#0E4EF8",
+            "backgroundColor": "#373856",
           },
           Object {
             "borderRadius": 2,
@@ -1259,13 +1286,13 @@ exports[`Small Button renders correctly 1`] = `
                 "fontWeight": "bold",
               },
               Object {
-                "fontFamily": "HelveticaNeue",
+                "fontFamily": "OpenSans-Regular",
               },
             ],
           ]
         }
       >
-        Coming Soon...
+        Coming soon...
       </Text>
     </View>
   </View>
@@ -1293,6 +1320,9 @@ exports[`Small Button with Icon renders correctly 1`] = `
       Object {
         "marginLeft": 0,
         "marginRight": 0,
+      },
+      Object {
+        "borderRadius": 2,
       },
     ]
   }
@@ -1339,7 +1369,7 @@ exports[`Small Button with Icon renders correctly 1`] = `
           undefined,
           undefined,
           Object {
-            "backgroundColor": "#0E4EF8",
+            "backgroundColor": "#373856",
           },
           Object {
             "borderRadius": 2,
@@ -1419,13 +1449,13 @@ exports[`Small Button with Icon renders correctly 1`] = `
                 "fontWeight": "bold",
               },
               Object {
-                "fontFamily": "HelveticaNeue",
+                "fontFamily": "OpenSans-Regular",
               },
             ],
           ]
         }
       >
-        Coming Soon...
+        Coming soon...
       </Text>
     </View>
   </View>

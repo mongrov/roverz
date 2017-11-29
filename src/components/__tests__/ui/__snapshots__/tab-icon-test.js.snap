@@ -2,47 +2,63 @@
 
 exports[`TabIcon renders correctly 1`] = `
 <View
-  onPress={undefined}
   style={
-    Array [
-      false,
-      false,
-      false,
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "transparent",
-        "justifyContent": "center",
-      },
-      undefined,
-    ]
+    Object {
+      "alignItems": "center",
+      "height": 60,
+      "padding": 5,
+    }
   }
-  underlayColor="white"
 >
-  <Text
-    accessible={true}
-    allowFontScaling={false}
-    ellipsizeMode="tail"
+  <View
+    onPress={undefined}
     style={
-      Array [
-        Object {
-          "color": "#0E4EF8",
-          "fontSize": 26,
-        },
+      Object {
+        "paddingTop": 5,
+      }
+    }
+    underlayColor="white"
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
         Array [
           Object {
-            "backgroundColor": "transparent",
+            "color": "#787BC6",
+            "fontSize": 26,
           },
-          undefined,
-        ],
-        Object {
-          "fontFamily": "Material Icons",
-          "fontStyle": "normal",
-          "fontWeight": "normal",
-        },
-      ]
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+            },
+            undefined,
+          ],
+          Object {
+            "fontFamily": "Material Design Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#A3A3A3",
+        "fontSize": 10,
+        "marginBottom": 5,
+      }
     }
   >
-    
+    
   </Text>
 </View>
 `;

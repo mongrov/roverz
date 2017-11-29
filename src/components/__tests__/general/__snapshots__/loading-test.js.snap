@@ -86,10 +86,10 @@ exports[`Loading w/ text renders correctly 1`] = `
       Array [
         Object {
           "color": "#222222",
-          "fontFamily": "HelveticaNeue",
-          "fontSize": 14,
-          "fontWeight": "300",
-          "lineHeight": 18,
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "lineHeight": 23,
         },
       ]
     }

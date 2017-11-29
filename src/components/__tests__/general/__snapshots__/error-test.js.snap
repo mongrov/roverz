@@ -63,10 +63,10 @@ exports[`Error renders correctly 1`] = `
       Array [
         Object {
           "color": "#222222",
-          "fontFamily": "HelveticaNeue",
-          "fontSize": 14,
-          "fontWeight": "300",
-          "lineHeight": 18,
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "lineHeight": 23,
         },
         Object {
           "textAlign": "center",
@@ -152,10 +152,10 @@ exports[`Error w/ Try Again Button renders correctly 1`] = `
       Array [
         Object {
           "color": "#222222",
-          "fontFamily": "HelveticaNeue",
-          "fontSize": 14,
-          "fontWeight": "300",
-          "lineHeight": 18,
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "lineHeight": 23,
         },
         Object {
           "textAlign": "center",
@@ -187,6 +187,9 @@ exports[`Error w/ Try Again Button renders correctly 1`] = `
         Object {
           "marginLeft": 0,
           "marginRight": 0,
+        },
+        Object {
+          "borderRadius": 2,
         },
       ]
     }
@@ -245,7 +248,7 @@ exports[`Error w/ Try Again Button renders correctly 1`] = `
             undefined,
             undefined,
             Object {
-              "borderColor": "#0E4EF8",
+              "borderColor": "#373856",
               "borderWidth": 1,
               "padding": 8,
             },
@@ -276,7 +279,7 @@ exports[`Error w/ Try Again Button renders correctly 1`] = `
                   "fontSize": 20,
                 },
                 Object {
-                  "color": "#0E4EF8",
+                  "color": "#373856",
                 },
                 Object {
                   "fontSize": 17.5,
@@ -289,7 +292,7 @@ exports[`Error w/ Try Again Button renders correctly 1`] = `
                   "fontWeight": "bold",
                 },
                 Object {
-                  "fontFamily": "HelveticaNeue",
+                  "fontFamily": "OpenSans-Regular",
                 },
               ],
             ]

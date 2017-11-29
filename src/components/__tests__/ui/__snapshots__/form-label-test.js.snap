@@ -38,7 +38,7 @@ exports[`FormLabel renders correctly 1`] = `
           Array [
             Object {
               "color": "#222222",
-              "fontFamily": "HelveticaNeue",
+              "fontFamily": "OpenSans-Regular",
               "marginLeft": 0,
               "marginRight": 0,
             },

@@ -3,41 +3,38 @@
 exports[`FormInput renders correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
-        "borderBottomColor": "#bdc6cf",
-        "borderBottomWidth": 1,
-        "marginLeft": 20,
-        "marginRight": 20,
-      },
-      Array [
+    Object {
+      "backgroundColor": "rgba(255,255,255,0.05)",
+      "borderBottomColor": "#D0D1D5",
+      "borderBottomWidth": 1,
+      "marginLeft": 20,
+      "marginRight": 20,
+      "marginTop": 10,
+      "transform": Array [
         Object {
-          "backgroundColor": "rgba(255,255,255,0.05)",
-          "borderBottomColor": "#D0D1D5",
-          "borderBottomWidth": 1,
-          "marginLeft": 0,
-          "marginRight": 0,
-          "marginTop": 10,
+          "translateX": 0,
         },
-        Array [],
       ],
-    ]
+    }
   }
 >
   <TextInput
+    selectionColor="#86939e"
     style={
       Array [
         Object {
           "color": "#86939e",
-          "fontSize": 17.5,
           "minHeight": 36,
           "width": 750,
+        },
+        Object {
+          "fontSize": 17.5,
         },
         Array [
           Object {
             "color": "#222222",
-            "fontFamily": "HelveticaNeue",
-            "paddingHorizontal": 0,
+            "fontFamily": "OpenSans-Regular",
+            "paddingHorizontal": 10,
             "paddingVertical": 3,
           },
           Array [],
