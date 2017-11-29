@@ -1,7 +1,7 @@
 // import moment from 'moment';
 import Meteor from 'react-native-meteor';
 import { Actions } from 'react-native-router-flux';
-import { AppUtil } from 'roverz-chat';
+import AppUtil from '../lib/util';
 
 import AppConfig from '../constants/config';
 // import { showCallScreen } from '@webrtc/ui';

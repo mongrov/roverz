@@ -4,7 +4,7 @@ import {
   AsyncStorage,
 } from 'react-native';
 import emoji from 'node-emoji';
-import { AppUtil } from 'roverz-chat';
+import AppUtil from '../lib/util';
 
 import Application from '../constants/config';
 

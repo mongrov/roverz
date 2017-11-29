@@ -1,7 +1,7 @@
 /*
  * App Manager class
  */
-import { AppUtil } from 'roverz-chat';
+import AppUtil from '../lib/util';
 
 // import App from './App';
 import Constants from './constants';

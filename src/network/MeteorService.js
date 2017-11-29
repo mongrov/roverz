@@ -1,5 +1,5 @@
 import Meteor from 'react-native-meteor';
-import { AppUtil } from 'roverz-chat';
+import AppUtil from '../lib/util';
 
 import AppConfig from '../constants/config';
 import Constants from './constants';

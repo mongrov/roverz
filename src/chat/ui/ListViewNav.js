@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
-import { Network } from 'roverz-chat';
+import Network from '../../network';
 import { AppStyles, AppColors } from '../../theme/';
 import ModuleConfig from '../../constants/config';
 

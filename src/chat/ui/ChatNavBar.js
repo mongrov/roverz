@@ -12,7 +12,7 @@ import { NavButton } from 'react-native-nav';
 import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
-import { AppUtil } from 'roverz-chat';
+import AppUtil from '../../lib/util';
 import { AppStyles, AppColors } from '../../theme/';
 import Group from '../../models/group';
 import Network from '../../network';

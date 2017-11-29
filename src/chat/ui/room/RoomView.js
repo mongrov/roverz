@@ -26,7 +26,7 @@ import {
 // import Markdown from 'react-native-simple-markdown'
 import { MarkdownView } from 'react-native-markdown-view';
 import { Actions } from 'react-native-router-flux';
-import { AppUtil } from 'roverz-chat';
+import AppUtil from '../../../lib/util';
 
 // Components
 import Network from '../../../network';

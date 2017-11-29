@@ -19,7 +19,8 @@ import PropTypes from 'prop-types';
  } from 'react-native-gifted-chat'; */
 
 // import { Actions } from 'react-native-router-flux';
-import { Loading, FormInputSimple, FormLabelSimple } from 'roverz-chat';
+import { FormInputSimple, FormLabelSimple } from '../../../components/ui/';
+import Loading from '../../../components/general/Loading';
 import Network from '../../../network';
 import Group from '../../../models/group';
 import { AppStyles, AppSizes } from '../../../theme/';

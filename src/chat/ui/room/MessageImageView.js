@@ -26,7 +26,7 @@ import { MarkdownView } from 'react-native-markdown-view';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
 import emoji from 'node-emoji';
-import { AppUtil } from 'roverz-chat';
+import AppUtil from '../../../lib/util';
 
 import Network from '../../../network';
 // import Group from '../../../models/group';

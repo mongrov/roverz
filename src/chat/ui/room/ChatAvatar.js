@@ -5,7 +5,7 @@ import {
 // import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
-import { AppUtil } from 'roverz-chat';
+import AppUtil from '../../../lib/util';
 import t from '../../../i18n';
 
 

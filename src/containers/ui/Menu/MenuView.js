@@ -22,7 +22,9 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import RNRestart from 'react-native-restart';
-import { Text, Network, AppSizes, AppColors } from 'roverz-chat';
+import { AppSizes, AppColors } from '../../../theme/';
+import Network from '../../../network';
+import Text from '../../../components/ui/Text';
 import AppConfig from '../../../constants/config';
 import t from '../../../i18n';
 

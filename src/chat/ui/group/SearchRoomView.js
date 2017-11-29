@@ -15,7 +15,7 @@ import {
   View,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { Loading } from 'roverz-chat';
+import { Loading } from '../../../components/general/Loading';
 
 import Network from '../../../network';
 import Group from '../../../models/group';

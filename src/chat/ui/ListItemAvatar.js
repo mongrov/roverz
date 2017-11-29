@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
-import { AppUtil } from 'roverz-chat';
+import AppUtil from '../../lib/util';
 
 const styles = StyleSheet.create({
   container: {

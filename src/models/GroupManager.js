@@ -1,7 +1,7 @@
 /*
  * Group Manager class
  */
-import { AppUtil } from 'roverz-chat';
+import { AppUtil } from '../lib/util';
 
 import Constants from './constants';
 

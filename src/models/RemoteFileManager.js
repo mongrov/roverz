@@ -1,7 +1,7 @@
 /*
  * app related data structures
  */
-import { AppUtil } from 'roverz-chat';
+import { AppUtil } from '../lib/util';
 
 import Constants from './constants';
 
