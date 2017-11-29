@@ -116,6 +116,7 @@ class ListViewNav extends React.Component {
           onPress={() => {
             Actions.aboutView({
               logo: ModuleConfig.logo,
+              instance: ModuleConfig.instance,
               aboutDetails: ModuleConfig.aboutDetails,
             });
           }}

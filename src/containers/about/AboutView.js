@@ -33,11 +33,21 @@ export default class AboutView extends React.Component {
   constructor(props) {
     super(props);
     const logo = this.props.logo;
+    const instance = this.props.instance;
     const aboutDetails = this.props.aboutDetails;
     this.state = {
       logo,
+      instance,
       aboutDetails,
     };
+  }
+
+  componentWillMount() {
+    this.setState({
+      logo: this.props.logo,
+      instance: this.props.instance,
+      aboutDetails: this.props.aboutDetails,
+    });
   }
 
   render() {
@@ -115,10 +125,12 @@ export default class AboutView extends React.Component {
 
 AboutView.defaultProps = {
   logo: null,
+  instance: '',
   aboutDetails: {},
 };
 
 AboutView.propTypes = {
   logo: PropTypes.number,
+  instance: PropTypes.string,
   aboutDetails: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
