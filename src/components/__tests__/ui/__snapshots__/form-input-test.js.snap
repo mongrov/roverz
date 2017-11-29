@@ -48,3 +48,46 @@ exports[`FormInput renders correctly 1`] = `
   />
 </View>
 `;
+
+exports[`FormInputSimple renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "borderBottomColor": "#bdc6cf",
+      "borderBottomWidth": 1,
+      "marginLeft": 20,
+      "marginRight": 20,
+      "transform": Array [
+        Object {
+          "translateX": 0,
+        },
+      ],
+    }
+  }
+>
+  <TextInput
+    selectionColor="#86939e"
+    style={
+      Array [
+        Object {
+          "color": "#86939e",
+          "minHeight": 36,
+          "width": 750,
+        },
+        Object {
+          "fontSize": 17.5,
+        },
+        Array [
+          Object {
+            "color": "#777777",
+            "fontFamily": "OpenSans-Regular",
+            "paddingVertical": 3,
+          },
+          Array [],
+        ],
+      ]
+    }
+    value="John Smith"
+  />
+</View>
+`;
