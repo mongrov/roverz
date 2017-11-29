@@ -5,7 +5,9 @@ import {
 } from 'react-native';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
+import PropTypes from 'prop-types';
 import AppUtil from '../../lib/util';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -142,10 +144,10 @@ ListItemAvatar.defaultProps = {
 };
 
 ListItemAvatar.propTypes = {
-  source: React.PropTypes.string,
-  name: React.PropTypes.string,
-  avType: React.PropTypes.string,
-  size: React.PropTypes.number,
+  source: PropTypes.string,
+  name: PropTypes.string,
+  avType: PropTypes.string,
+  size: PropTypes.number,
 };
 
 /* Export Component ==================================================================== */

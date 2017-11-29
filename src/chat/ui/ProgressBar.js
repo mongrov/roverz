@@ -4,6 +4,8 @@ import {
   Platform,
   Text,
 } from 'react-native';
+import PropTypes from 'prop-types';
+
 import t from '../../i18n';
 
 
@@ -41,5 +43,5 @@ ProgressBar.defaultProps = {
 };
 
 ProgressBar.propTypes = {
-  progress: React.PropTypes.number,
+  progress: PropTypes.number,
 };

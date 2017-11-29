@@ -35,6 +35,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  navImage: {
+    opacity: 1,
+    width: 130,
+    height: 30,
+  },
+  titleText: {
+    paddingHorizontal: 43,
+  },
 });
 
 class ListViewNav extends React.Component {
@@ -95,13 +103,13 @@ class ListViewNav extends React.Component {
       return (
         <Image
           source={ModuleConfig.navLogo}
-          style={{ opacity: 1, width: 130, height: 30 }}
+          style={styles.navImage}
           resizeMode={'contain'}
         />
       );
     }
     return (
-      <Text style={[AppStyles.navbarTitle, { paddingHorizontal: 43 }]}>{this.state.title}</Text>
+      <Text style={[AppStyles.navbarTitle, styles.titleText]}>{this.state.title}</Text>
     );
   }
 

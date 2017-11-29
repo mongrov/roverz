@@ -11,11 +11,14 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
-
+import PropTypes from 'prop-types';
 import { AppColors } from '../../theme/';
 import t from '../../i18n/';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   preview: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -87,9 +90,7 @@ export default class ImagePreview extends React.Component {
   render() {
     return (
       <View
-        style={{
-          flex: 1,
-        }}
+        style={styles.container}
       >
         <StatusBar hidden={(Platform.OS === 'ios') !== false} />
         <Image
@@ -170,6 +171,6 @@ ImagePreview.defaultProps = {
 };
 
 ImagePreview.propTypes = {
-  imageUrl: React.PropTypes.string,
-  cameraData: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  imageUrl: PropTypes.string,
+  cameraData: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };

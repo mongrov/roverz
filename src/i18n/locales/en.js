@@ -48,6 +48,7 @@ export default {
   txt_CS: 'Coming Soon',
   txt_loading: 'Loading',
   txt_copy_clipboard: 'Copied to clipboard',
+  lbl_send: 'Send',
   // components
   lbl_tryagain: 'Try again',
   err_something_wrong: 'Woops, Something went wrong.',

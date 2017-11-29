@@ -43,8 +43,17 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     paddingRight: '10%',
   },
-  error: { flex: 1, backgroundColor: 'black', alignItems: 'center', justifyContent: 'center' },
-  errorText: { color: 'white', fontSize: 15, fontStyle: 'italic' },
+  error: {
+    flex: 1,
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  errorText: {
+    color: 'white',
+    fontSize: 15,
+    fontStyle: 'italic',
+  },
 });
 
 export default class ImageGallery extends React.Component {

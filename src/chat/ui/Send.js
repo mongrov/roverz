@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { AppColors } from '../../theme';
+import t from '../../i18n';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -60,7 +62,7 @@ export default class Send extends React.Component {
 Send.defaultProps = {
   text: '',
   onSend: () => {},
-  label: 'Send',
+  label: t('lbl_send'),
   containerStyle: {},
   textStyle: {},
 };
