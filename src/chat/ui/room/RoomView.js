@@ -31,7 +31,9 @@ import AppUtil from '../../../lib/util';
 // Components
 import Network from '../../../network';
 import Group from '../../../models/group';
-import { Send, ProgressBar } from '../../../chat/ui/';
+import { Send } from '../../../chat/ui/';
+import { ProgressBar } from '../../../components/ui/';
+
 import { AppStyles, AppSizes, AppColors } from '../../../theme/';
 import Application from '../../../constants/config';
 

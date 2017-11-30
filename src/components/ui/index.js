@@ -17,6 +17,8 @@ import FormInput from './FormInput';
 import FormLabel from './FormLabel';
 import FormInputSimple from './FormInputSimple';
 import FormLabelSimple from './FormLabelSimple';
+import ProgressBar from './ProgressBar';
+
 
 export {
     Alerts,
@@ -31,4 +33,5 @@ export {
     FormLabel,
     FormInputSimple,
     FormLabelSimple,
+    ProgressBar,
 };
