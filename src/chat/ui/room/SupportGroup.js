@@ -4,7 +4,7 @@ import {
   Text,
 } from 'react-native';
 // import { Actions } from 'react-native-router-flux';
-import { RoomView } from './RoomView';
+import RoomView from './RoomView';
 
 import { AppStyles, AppSizes } from '../../../theme/';
 import Network from '../../../network';
