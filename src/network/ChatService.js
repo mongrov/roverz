@@ -624,7 +624,7 @@ class ChatService {
 
   // fix s3Url
   // pass array of fileIds []
-  fixS3Urls(fileIds, callBack) {
+  fixS3Urls(fileIds, callBack, loadNotFromCache) {
     const imageReqs = [];
     var res = [];
     const lookups = {};
@@ -632,7 +632,7 @@ class ChatService {
     for (let i = 0; i < fileIds.length; i += 1) {
       const tmpId = fileIds[i];
       const tmp = { fileId: tmpId, url: '' };
-      if (!Object.prototype.hasOwnProperty.call(this._cache, tmpId)) {
+      if (loadNotFromCache || !Object.prototype.hasOwnProperty.call(this._cache, tmpId)) {
         const imgReq = new Promise((resolve, reject) => {
           Meteor.call('getS3FileUrl', tmpId, (err, resp) => {
             // @todo: we need to handle deleted message, so for now we are not rejecting promising
@@ -655,12 +655,13 @@ class ChatService {
     if (imageReqs.length > 0) {
       // fetch all image urls
       Promise.all(imageReqs).then((results) => {
-        // // console.log('Then: ', results);
         // results is an array of [{url:result}, {url:result} ...]
         for (let i = 0; i < results.length; i += 1) {
           const tmp = res[lookups[i]];
           tmp.url = results[i];
-          this._cache[tmp.fileId] = tmp.url;
+          if (!loadNotFromCache) {
+            this._cache[tmp.fileId] = tmp.url;
+          }
           res[lookups[i]] = tmp;
           // AppUtil.debug(lookups[i]);
           // AppUtil.debug(tmp);
@@ -684,7 +685,9 @@ class ChatService {
   fixYapImageUrls(messages, callBack) {
     // process attachments if any
     const imageReqs = [];
+    const videoReqs = [];
     const lookups = {};
+    const vlookups = {};
     const urlMessages = messages;
     for (let i = 0; i < urlMessages.length; i += 1) {
       const m = urlMessages[i];
@@ -693,35 +696,57 @@ class ChatService {
       if (orig.attachments && orig.attachments[0].video_url) {
         tmp.video = orig.attachments[0].video_url;
         // dirty fix
-        tmp.image = tmp.video;
+//        tmp.image = tmp.video;
         tmp.remoteFile = orig.file._id;
       }
       tmp.user.avatar = `${Application.urls.SERVER_URL}/avatar/${tmp.user.username}?_dc=undefined`;
       urlMessages[i] = tmp;
       if (tmp.remoteFile) {
-        imageReqs.push(tmp.remoteFile);  // just save the fileid
-        lookups[imageReqs.length - 1] = i;
+        if (!tmp.video) {
+          imageReqs.push(tmp.remoteFile);  // just save the fileid
+          lookups[imageReqs.length - 1] = i;
+        } else {
+          videoReqs.push(tmp.remoteFile);  // just save the fileid
+          vlookups[videoReqs.length - 1] = i;
+        }
       }
     }
-    if (imageReqs.length > 0) {
+    if (videoReqs.length > 0) {
+      this.fixS3Urls(videoReqs, (results) => {
+        // AppUtil.debug(results, 'fixYapImageUrls - result');
+        for (let i = 0; i < results.length; i += 1) {
+          const tmp = urlMessages[vlookups[i]];
+          tmp.image = null;
+          tmp.remoteFile = null;
+          tmp.video = results[i].url;
+          urlMessages[vlookups[i]] = tmp;
+          if (imageReqs.length > 0) {
+            // fetch all image urls
+            this.fixS3Urls(imageReqs, (imgresults) => {
+              // AppUtil.debug(results, 'fixYapImageUrls - result');
+              for (let j = 0; j < imgresults.length; j += 1) {
+                const imgtmp = urlMessages[lookups[j]];
+                imgtmp.image = imgresults[j].url;
+                urlMessages[lookups[j]] = imgtmp;
+                callBack(urlMessages);
+              }
+            }, false);
+          } else {
+            callBack(urlMessages);
+          }
+        }
+      }, true);
+    } else if (imageReqs.length > 0) {
       // fetch all image urls
       this.fixS3Urls(imageReqs, (results) => {
         // AppUtil.debug(results, 'fixYapImageUrls - result');
         for (let i = 0; i < results.length; i += 1) {
           const tmp = urlMessages[lookups[i]];
-          if (tmp.video) {
-            tmp.image = null;
-            tmp.remoteFile = null;
-            tmp.video = results[i].url;
-          } else {
-            tmp.image = results[i].url;
-          }
-          // AppUtil.debug(lookups[i]);
-          // AppUtil.debug(tmp);
+          tmp.image = results[i].url;
           urlMessages[lookups[i]] = tmp;
+          callBack(urlMessages);
         }
-        callBack(urlMessages);
-      });
+      }, false);
     } else {
       callBack(urlMessages);
     }
