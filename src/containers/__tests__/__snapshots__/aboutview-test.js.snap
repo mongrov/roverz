@@ -1,0 +1,297 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AboutView renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#50527F",
+      "flex": 1,
+      "flexDirection": "column",
+      "justifyContent": "center",
+      "padding": 15,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "justifyContent": "flex-end",
+      }
+    }
+  >
+    <Image
+      source={null}
+      style={
+        Object {
+          "opacity": 1,
+          "resizeMode": "contain",
+          "width": 150,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "height": 1334,
+          "width": 750,
+        },
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "column",
+          "justifyContent": "space-between",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "rgba(255,255,255,1)",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 16,
+            },
+          ]
+        }
+      >
+        
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "rgba(255,255,255,1)",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 16,
+            },
+          ]
+        }
+      >
+        Version: undefined
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "rgba(255,255,255,0.7)",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 14,
+            },
+          ]
+        }
+      >
+        Build: undefined
+      </Text>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "marginLeft": 15,
+              "marginRight": 15,
+            },
+            Object {
+              "shadowColor": "rgba(0,0,0, .4)",
+              "shadowOffset": Object {
+                "height": 1,
+                "width": 1,
+              },
+              "shadowOpacity": 1,
+              "shadowRadius": 1,
+            },
+            Object {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+            Object {
+              "borderRadius": 2,
+            },
+          ]
+        }
+      >
+        <View
+          accessibilityComponentType={undefined}
+          accessibilityLabel={undefined}
+          accessibilityTraits={undefined}
+          accessible={true}
+          hasTVPreferredFocus={undefined}
+          hitSlop={undefined}
+          isTVSelectable={true}
+          onLayout={undefined}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Array [],
+            ]
+          }
+          testID={undefined}
+          tvParallaxProperties={undefined}
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#9E9E9E",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "padding": 19,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {
+                  "backgroundColor": "#373856",
+                },
+                Object {
+                  "borderRadius": 2,
+                },
+                Object {
+                  "padding": 12,
+                },
+                undefined,
+                undefined,
+                undefined,
+                Object {
+                  "marginTop": 20,
+                  "padding": 8,
+                  "paddingHorizontal": 20,
+                },
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 20,
+                    },
+                    Object {
+                      "color": "#fff",
+                    },
+                    Object {
+                      "fontSize": 17.5,
+                    },
+                    Object {
+                      "fontSize": 12,
+                    },
+                    undefined,
+                    Object {
+                      "fontWeight": "600",
+                    },
+                    Object {
+                      "fontFamily": "OpenSans-Regular",
+                    },
+                  ],
+                ]
+              }
+            >
+              Help
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "rgba(255,255,255,0.7)",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 14,
+            },
+          ]
+        }
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "rgba(255,255,255,0.7)",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 14,
+            },
+          ]
+        }
+      />
+    </View>
+    <View>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "rgba(255,255,255,0.5)",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 14,
+            },
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
