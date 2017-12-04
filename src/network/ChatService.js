@@ -363,6 +363,10 @@ class ChatService {
     return this.db.users.findByIdAsList(userId);
   }
 
+  getUserByID(userId) {
+    return this.db.users.findById(userId);
+  }
+
   findUserByUserName(userName) {
     return this.db.users.findByUserName(userName);
   }

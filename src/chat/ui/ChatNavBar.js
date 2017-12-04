@@ -286,6 +286,7 @@ class ChatNavBar extends React.Component {
             Actions.videoConference({
               instance: Application.instance,
               groupName: gname,
+              groupID: gid,
               userID: vcuserID,
             });
           }}
