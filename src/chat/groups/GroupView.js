@@ -10,7 +10,9 @@ import {
   StatusBar,
   TouchableOpacity,
   StyleSheet,
+  AppState,
 } from 'react-native';
+
 import { ListView } from 'realm/react-native';
 import moment from 'moment';
 import { Badge, Icon } from 'react-native-elements';
@@ -142,12 +144,12 @@ class GroupList extends Component {
         });
       }
     }, 100);
-//    AppState.addEventListener('change', this._handleAppStateChange);
+    AppState.addEventListener('change', this._handleAppStateChange);
   }
 
   componentWillUnmount() {
     this._mounted = false;
-//    AppState.removeEventListener('change', this._handleAppStateChange);
+    AppState.removeEventListener('change', this._handleAppStateChange);
   }
 
   getUser = (msg) => {
@@ -173,13 +175,13 @@ class GroupList extends Component {
     return lastMsg.text;
   }
 
-  // _handleAppStateChange = (nextAppState) => {
-  //   if (nextAppState === 'background') {
-  //     this._service.chat.setUserPresence('away');
-  //   } else if (nextAppState === 'active') {
-  //     this._service.chat.setUserPresence('online');
-  //   }
-  // }
+  _handleAppStateChange = (nextAppState) => {
+    if (nextAppState === 'background') {
+      this._service.chat.setUserPresence('away');
+    } else if (nextAppState === 'active') {
+      this._service.chat.setUserPresence('online');
+    }
+  }
 
   renderRow = (data, sectionID) => {
     const lastMsg = data.lastMessage;
