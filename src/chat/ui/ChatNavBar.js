@@ -268,30 +268,37 @@ class ChatNavBar extends React.Component {
   }
 
   renderVideoConfIcon() {
-    const gname = this.state.obj.name;
-    const gid = this.state.obj._id;
-    const user = this._net.chat.getCurrentUser();
-    const _super = this;
-    return (
-      <NavButton
-        style={[styles.iconViews]}
-        onPress={() => {
-          const tempMsg = '@all Started Video conference';
-          _super._net.chat.sendMessage(gid, tempMsg);
-          Actions.videoConference({
-            instance: Application.instance,
-            groupName: gname,
-            userID: user ? md5.hex_md5(user._id) : '0',
-          });
-        }}
-      >
-        <Icon
-          name="videocam"
-          size={32}
-          color={'#FFF'}
-        />
-      </NavButton>
-    );
+    const mgvcConf = this._net.getServerSetting('MGVC_Enabled');
+    const mgvcEnabled = mgvcConf && mgvcConf.value;
+    if (mgvcEnabled === true) {
+      const gname = this.state.obj.name;
+      const gid = this.state.obj._id;
+      const user = this._net.chat.getCurrentUser();
+      const _super = this;
+      return (
+        <NavButton
+          style={[styles.iconViews]}
+          onPress={() => {
+            const vcuserID = user ? md5.hex_md5(user._id) : '0';
+            _super._net.chat.startVideoCall(gid);
+            // const tempMsg = '@all Started Video conference';
+            // _super._net.chat.sendMessage(gid, tempMsg);
+            Actions.videoConference({
+              instance: Application.instance,
+              groupName: gname,
+              userID: vcuserID,
+            });
+          }}
+        >
+          <Icon
+            name="videocam"
+            size={32}
+            color={'#FFF'}
+          />
+        </NavButton>
+      );
+    }
+    return null;
   }
 
   render() {

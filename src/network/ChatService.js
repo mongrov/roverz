@@ -367,6 +367,10 @@ class ChatService {
     return this.db.users.findByUserName(userName);
   }
 
+  startVideoCall(rid) {
+    this.meteor.call('mgvc:updateTimeout', rid, null);
+  }
+
   searchRoom(roomId, searchText, resultSize, callBack) {
     this.meteor.call('messageSearch', searchText, roomId, resultSize, (err, res) => {
       if (res && res.messages) {
@@ -764,10 +768,10 @@ class ChatService {
     const editedYaps = {};
     for (let i = 0; i < msgs.length; i += 1) {
       const inM = msgs[i];
-      const msgText = inM.msg;
-      // if (msgs[i].actionLinks && msgs[i].actionLinks[0].method_id === 'joinJitsiCall') {
-      //   msgText = 'Started a Video Call!';
-      // }
+      let msgText = inM.msg;
+      if (msgs[i].actionLinks && msgs[i].actionLinks[0].method_id === 'joinMGVCCall') {
+        msgText = 'Started a Video Call!';
+      }
 
       const m = this.yap2message(inM._id, inM.rid, msgText, inM.ts, inM.u._id, inM.u.username, inM.u.name);
       m.original = inM;
