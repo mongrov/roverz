@@ -119,7 +119,8 @@ export default class MemberListView extends Component {
     }
   }
 
-  renderRow(rowData, sectionID) {
+  renderRow = (rowData, sectionID) => {
+    const avatar = this._service.chat.getUserByID(rowData._id).avatar;
     return (
       <ListItem
         key={sectionID}
@@ -130,7 +131,7 @@ export default class MemberListView extends Component {
         onPress={() => Actions.memberDetail({ memberId: rowData._id })}
         leftIcon={
           <ListItemAvatar
-            source={`${Application.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`}
+            source={avatar}
             name={rowData.name}
             size={36}
           />}

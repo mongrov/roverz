@@ -49,7 +49,10 @@ class ListItemAvatar extends React.Component {
       avatarName: name,
       avatarType: avType,
       imageHeight: this.props.size ? this.props.size : 60,
+      sqrAvatar: this.props.sqrAvatar,
       showAvatar: true,
+      width: this.props.width ? this.props.width : null,
+      height: this.props.height ? this.props.height : null,
     };
   }
 
@@ -62,16 +65,6 @@ class ListItemAvatar extends React.Component {
       });
     }
   }
-
-  setAvType() {
-    if (this.state.avatarType === 'private') {
-      return 'lock';
-    } else if (this.state.avatarType === 'direct') {
-      return 'perm-identity';
-    }
-    return 'supervisor-account';
-  }
-
   _hideAvatarView() {
     this.setState({
       showAvatar: false,
@@ -83,15 +76,15 @@ class ListItemAvatar extends React.Component {
       return (
         <View
           style={[styles.avatar, {
-            width: this.state.imageHeight,
-            height: this.state.imageHeight,
-            borderRadius: this.state.imageHeight / 2 }]}
+            width: this.state.width ? this.state.width : this.state.imageHeight,
+            height: this.state.height ? this.state.height : this.state.imageHeight,
+            borderRadius: this.state.sqrAvatar ? 0 : this.state.imageHeight / 2 }]}
         >
           <CachedImage
             style={[styles.avatarImage, {
-              width: this.state.imageHeight,
-              height: this.state.imageHeight,
-              borderRadius: this.state.imageHeight / 2 }]}
+              width: this.state.width ? this.state.width : this.state.imageHeight,
+              height: this.state.height ? this.state.height : this.state.imageHeight,
+              borderRadius: this.state.sqrAvatar ? 0 : this.state.imageHeight / 2 }]}
             source={{ uri: this.state.avatarUri }}
             onError={() => { this._hideAvatarView(); }}
           />
@@ -99,11 +92,11 @@ class ListItemAvatar extends React.Component {
             name={AppUtil.avatarInitials(this.state.avatarName)}
             size={this.state.imageHeight}
             style={[styles.userAvatar, {
-              left: -this.state.imageHeight / 2,
-              top: -this.state.imageHeight / 2,
-              width: this.state.imageHeight,
-              height: this.state.imageHeight,
-              borderRadius: this.state.imageHeight / 2 }]}
+              left: this.state.width ? -this.state.width / 2 : -this.state.imageHeight / 2,
+              top: this.state.height ? -this.state.height / 2 : -this.state.imageHeight / 2,
+              width: this.state.width ? this.state.width : this.state.imageHeight,
+              height: this.state.height ? this.state.height : this.state.imageHeight,
+              borderRadius: this.state.sqrAvatar ? 0 : this.state.imageHeight / 2 }]}
           />
         </View>
       );
@@ -111,13 +104,18 @@ class ListItemAvatar extends React.Component {
     return (
       <View
         style={[styles.noAvatarView, {
-          width: this.state.imageHeight,
-          height: this.state.imageHeight,
+          width: this.state.width ? this.state.width : this.state.imageHeight,
+          height: this.state.height ? this.state.height : this.state.imageHeight,
         }]}
       >
         <UserAvatar
           name={AppUtil.avatarInitials(this.state.avatarName)}
           size={this.state.imageHeight}
+          style={{
+            borderRadius: this.state.sqrAvatar ? 0 : this.state.imageHeight / 2,
+            width: this.state.width ? this.state.width : this.state.imageHeight,
+            height: this.state.height ? this.state.height : this.state.imageHeight,
+          }}
         />
       </View>
     );
@@ -126,8 +124,8 @@ class ListItemAvatar extends React.Component {
   render() {
     return (
       <View style={[styles.container, {
-        width: this.state.imageHeight,
-        height: this.state.imageHeight,
+        width: this.state.width ? this.state.width : this.state.imageHeight,
+        height: this.state.height ? this.state.height : this.state.imageHeight,
       }]}
       >
         {this._renderAvatar()}
@@ -141,6 +139,9 @@ ListItemAvatar.defaultProps = {
   name: null,
   avType: null,
   size: null,
+  sqrAvatar: false,
+  width: null,
+  height: null,
 };
 
 ListItemAvatar.propTypes = {
@@ -148,6 +149,9 @@ ListItemAvatar.propTypes = {
   name: PropTypes.string,
   avType: PropTypes.string,
   size: PropTypes.number,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  sqrAvatar: PropTypes.bool,
 };
 
 /* Export Component ==================================================================== */
