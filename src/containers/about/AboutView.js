@@ -94,14 +94,14 @@ export default class AboutView extends React.Component {
             <Text
               style={[styles.paraText]}
             >{`Build: ${this.state.aboutDetails.build}`}</Text>
+            <View style={{ marginTop: 20 }} />
             <Button
               title={'Help'}
               onPress={Actions.helpView}
               backgroundColor="transparent"
               small
-              buttonStyle={{ paddingHorizontal: 20, marginTop: 20 }}
+              buttonStyle={{ paddingHorizontal: 20 }}
               fontWeight={'600'}
-              style={[]}
             />
           </View>
           <View style={{ alignItems: 'center' }}>

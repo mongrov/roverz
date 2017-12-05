@@ -8,6 +8,7 @@ import {
   Platform,
   StatusBar,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
@@ -230,9 +231,27 @@ export default class SelectServer extends React.Component {
                   title={t('confirm')}
                   onPress={this.sendServerUrl}
                   backgroundColor="transparent"
-                  style={{ marginBottom: 10 }}
                 />
               </View>
+            </View>
+            <View style={[AppStyles.row]}>
+              <TouchableOpacity
+                style={{
+                  borderWidth: 1,
+                  paddingHorizontal: 15,
+                  paddingVertical: 2,
+                  marginTop: 20,
+                  borderColor: '#fff',
+                  borderRadius: 3,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={Actions.pop}
+              >
+                <Text
+                  style={[AppStyles.ListItemTitle, styles.workspace]}
+                >Back</Text>
+              </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
         }
