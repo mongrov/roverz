@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProgressBar renders correctly 1`] = `
+<RCTProgressView
+  progress={0.5}
+  progressTintColor="#43D35D"
+  style={
+    Array [
+      Object {
+        "height": 2,
+      },
+      undefined,
+    ]
+  }
+  trackTintColor="#DCDCDC"
+/>
+`;
