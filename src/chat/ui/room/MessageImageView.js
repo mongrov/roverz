@@ -417,6 +417,7 @@ export default class MessageImageView extends React.Component {
         paddingLeft: 0,
         flexDirection: 'row',
         alignItems: 'center',
+        backgroundColor: AppColors.brand().secondary,
       }]}
       >
         <NavButton

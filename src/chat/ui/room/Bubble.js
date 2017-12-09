@@ -570,7 +570,6 @@ export default class Bubble extends React.Component {
                   {this.renderMessageImage()}
                   {this.renderMessageText()}
                 </View>
-                {this.renderLikes()}
               </View>
               <View style={[styles.bottom, this.props.bottomContainerStyle[this.props.position]]}>
                 {this.renderActions()}

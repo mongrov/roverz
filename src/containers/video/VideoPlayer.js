@@ -168,8 +168,8 @@ export default class VideoPlayer extends Component {
             top: 20,
             left: 20,
             padding: 5,
-            backgroundColor: 'white',
-            borderRadius: 40,
+            backgroundColor: 'rgba(143, 143, 143, 0.65)',
+            borderRadius: 20,
             zIndex: 999,
           }]}
           onPress={Actions.pop}
@@ -177,23 +177,15 @@ export default class VideoPlayer extends Component {
           <Icon
             name="arrow-back"
             size={30}
-            color={'#000'}
+            color={'rgba(255,255,255,0.75)'}
             width={30}
           />
         </TouchableOpacity>
-        {/* <View
-          style={{
-            width: 50,
-            height: 50,
-            backgroundColor: 'red',
-            zIndex: 999,
-            position: 'absolute',
-            top: (height / 2) - 25,
-            left: (width / 2) - 25,
-          }}
-        /> */}
         <Video
-          endWithThumbnail
+          // endWithThumbnail
+          autoplay
+          disableFullscreen
+          disableControlsAutoHide
           thumbnail={thumbnailImg}
           video={{ uri: this.state.videoUrl }}
           videoWidth={this.state.video.width}
@@ -211,7 +203,8 @@ export default class VideoPlayer extends Component {
           onLoad={this.onLoad}
           onBuffer={this.onBuffer}
           onProgress={this.onProgress}
-          // onEnd={() => { AlertIOS.alert('Done!') }}
+          onHideControls={this.onHideControls}
+          onShowControls={this.onShowControls}
           repeat={true}
         />
       </View>
