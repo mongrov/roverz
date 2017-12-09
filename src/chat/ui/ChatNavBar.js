@@ -252,21 +252,6 @@ class ChatNavBar extends React.Component {
     );
   }
 
-  renderUploads() {
-    return (
-      <NavButton
-        style={[styles.iconViews]}
-        onPress={() => Actions.photoBrowser({ group: this.state.obj })}
-      >
-        <Icon
-          name="insert-photo"
-          size={24}
-          color={'#FFF'}
-        />
-      </NavButton>
-    );
-  }
-
   renderVideoConfIcon() {
     const mgvcConf = this._net.getServerSetting('MGVC_Enabled');
     const mgvcEnabled = mgvcConf && mgvcConf.value;

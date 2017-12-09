@@ -4,7 +4,6 @@
 import App from './App';
 import User from './user';
 import Message from './message';
-import Attachment from './attachment';
 import Group from './group';
 import RemoteFile from './RemoteFile';
 
@@ -13,7 +12,7 @@ import RemoteFile from './RemoteFile';
 //   with regards to this schema here
 
 module.exports = {
-  schema: [App, User, Group, Message, Attachment, RemoteFile],
+  schema: [App, User, Group, Message, RemoteFile],
   schemaVersion: 1,
   migration: () => { },
 };

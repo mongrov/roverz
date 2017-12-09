@@ -17,7 +17,6 @@ const GroupSchema = {
     lastMessageAt: { type: 'date', optional: true },
     messages: { type: 'list', objectType: Constants.Message },
     moreMessages: { type: 'bool', default: true },
-    attachments: { type: 'list', objectType: Constants.Attachment },
   },
 };
 
@@ -46,9 +45,6 @@ export default class Group {
     }
     return null;
   }
-  get sortedAttachments() {
-    return this.attachments.sorted(Constants.CREATED_AT, true);
-  }
 
   // TO-DO use indexed search instead of loop
   findMessageById(msgId) {
@@ -74,19 +70,6 @@ export default class Group {
       }
     }
     return replMsg;
-  }
-
-  // TO-DO use indexed search instead of loop
-  findAttachmentById(attachmentId) {
-    if (attachmentId && this.attachments.length > 0) {
-      for (let i = 0; i < this.attachments.length; i += 1) {
-        const a = this.attachments[i];
-        if (a._id === attachmentId) {
-          return a;
-        }
-      }
-    }
-    return null;
   }
 
   // --- find utilities ---

@@ -107,19 +107,9 @@ it('add groups', () => {
       editedAt: date,
       user: { _id: '2', username: 'who', name: 'wh' } },
   };
+
+
   db.updateMessages(db.groups.findById('4'), updatedMessage);
-  db.groups.findById('4').commentsList();
-  const replyMessage = {
-    13: { _id: '22',
-      rid: '4',
-      text: '[ ] (sf/df/sd?msg=14) test reply',
-      createdAt: date,
-      editedAt: date,
-      isReply: true,
-      user: { _id: '2', username: 'who', name: 'wh' } },
-  };
-  db.addMessages(db.groups.findById('4'), replyMessage);
-  db.groups.findById('4').commentsList('14');
   // delete invalid message id
   db.deleteMessage('4');
   let lastMessage = db.groups.lastMessage;
@@ -133,23 +123,6 @@ it('add groups', () => {
   // delete valid message id
   db.deleteMessage('4', '14');
   lastMessage = db.groups.lastMessage;
-
-  const attachments = [
-    { _id: '104',
-      rid: '4',
-      url: 'https://attachment.url',
-      name: 'attName',
-      description: 'Desc',
-      type: 'Image',
-      uploadedAt: date },
-  ];
-
-  db.addOrUpdateAttachment(attachments);
-  db.groups.findById('4').sortedAttachments.not.toBeNull();
-  expect(db.groups.findById('4').findAttachmentById('104')).not.toBeNull();
-  expect(db.groups.findById('4').findAttachmentById('124')).toBeNull();
-  db.groups.updateNoMoreMessages(db.groups.findById('4'));
-  db.groups.updateNoMoreMessages(null);
 });
 
 // test all group object related methods

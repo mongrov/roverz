@@ -5,7 +5,6 @@ import AppUtil from '../lib/util';
 
 import Application from '../constants/config';
 // import { showCallScreen } from '@webrtc/ui';
-import Constants from './constants';
 
 class ChatService {
 
@@ -15,7 +14,6 @@ class ChatService {
     this._groupSubsriptionMap = {};
     this._monStreamNotifyUser = null;
     this._monUsers = null;
-    this._monRoomFiles = null;
     this._monStreamRoomMessages = null;
     this._monStreamNotifyRoom = null;
     this._cache = db.remotefiles ? db.remotefiles.cacheList : {};
@@ -117,13 +115,14 @@ class ChatService {
         }
       }
     });
-    this._monRoomFiles = this.meteor.monitorChanges('room_files', (results) => {
-      if (results && results.length > 0) {
-        for (let i = 0; i < results.length; i += 1) {
-          this.db.addOrUpdateAttachment(results);
-        }
-      }
-    });
+    // this._monRoomFiles = this.meteor.monitorChanges('room_files', (results) => {
+    //   if (results && results.length > 0) {
+    //     for (let i = 0; i < results.length; i += 1) {
+    //       console.log('Ezhil  CS1 ', results);
+    //       this.db.addOrUpdateAttachment(results);
+    //     }
+    //   }
+    // });
   }
 
   getPublicSettings(callBack) {
@@ -416,7 +415,6 @@ class ChatService {
     this.meteor.stopMonitoringChanges(this._monUsers);
     this.meteor.stopMonitoringChanges(this._monStreamRoomMessages);
     this.meteor.stopMonitoringChanges(this._monStreamNotifyRoom);
-    this.meteor.stopMonitoringChanges(this._monRoomFiles);
     this.meteor.logout();
   }
 
@@ -437,16 +435,6 @@ class ChatService {
   // TODO unsubscribe after we get data in monitor changes users
   pullFullUserData(userName) {
     this.meteor.subscribe('fullUserData', userName, 1);
-  }
-
-  // TODO unsubscribe after we get data in monitor changes
-  subscribeAttachments(groupId) {
-    this.meteor.subscribe('roomFiles', groupId, Constants.ATTACHMENTS_TO_FETCH);
-  }
-
-  unsubscribeAttachments(/* groupId */) {
-    // console.log('**** TODO: need to add unsubscribe ****', groupId);
-    // this.meteor.unsubscribe('roomFiles', groupId);
   }
 
   getFilteredChannels(channelList) {

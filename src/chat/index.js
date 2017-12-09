@@ -7,8 +7,6 @@ import MemberDetailView from './members/MemberDetailView';
 import CameraActions from './attachments/CameraActions';
 import PhotoLibrary from './attachments/PhotoLibrary';
 
-import UploadedPhotos from './attic/UploadedPhotos';
-
 import Application from '../constants/config';
 
 import NavBackAbs from '../chat/ui/NavBackAbs';
@@ -22,7 +20,6 @@ if (!Application.containers.find(item => item.key === 'memberDetail')) {
   Application.addContainer('cameraActions', 'Camera', '', CameraActions, false, false, NavBackAbs);
   Application.addContainer('photoLibrary', 'Photo Library', '', PhotoLibrary, false, false, null);
   // attic, to be removed later
-  Application.addContainer('photoBrowser', 'Attachments', '', UploadedPhotos, false, true, NavBarBack);
 }
 
-export { MemberDetailView, MemberListView, UploadedPhotos, CameraActions, PhotoLibrary };
+export { MemberDetailView, MemberListView, CameraActions, PhotoLibrary };

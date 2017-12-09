@@ -8,7 +8,6 @@ export default {
   Group: 'Group',
   Message: 'Message',
   User: 'User',
-  Attachment: 'Attachment',
   RemoteFile: 'RemoteFile',
   // server
   Servers: 'app:servers',

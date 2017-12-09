@@ -206,19 +206,6 @@ class Database {
         AppUtil.debug(obj, null);
         obj.original = JSON.stringify(obj.original);
         group.messages.push(obj);
-        // update attachment
-        if (obj.remoteFile) {
-          let attachmentObj = group.findAttachmentById(obj._id);
-          if (!attachmentObj) {
-            // verified the attachment received, message remotefile is the ID for attachment
-            attachmentObj = {
-              _id: obj.remoteFile,
-              fileURL: obj.remoteFile,
-              fileDesc: obj.text,
-              createdAt: obj.createdAt };
-            group.attachments.push(attachmentObj);
-          }
-        }
       });
       const lastMessage = group.lastMessage;
       if (lastMessage) {
@@ -259,45 +246,6 @@ class Database {
           this.realm.delete(messageToBeDeleted);
         });
       }
-      const attachmentToBeDeleted = group.findAttachmentById(msgId);
-      if (attachmentToBeDeleted) {
-        this.realm.write(() => {
-          this.realm.delete(attachmentToBeDeleted);
-        });
-      }
-    }
-  }
-
-  // call from chatservice room-files
-  addOrUpdateAttachment(roomResults) {
-    if (roomResults && roomResults.length > 0) {
-      this.realm.write(() => {
-        for (let i = 0; i < roomResults.length; i += 1) {
-          const id = roomResults[i]._id;
-          const rid = roomResults[i].rid;
-          const group = this.groups.findById(rid);
-          if (group) { // as of now I dont create group and add attachment in it
-            const attachmentToBeUpdated = group.findAttachmentById(id);
-            if (!attachmentToBeUpdated) {
-              const attachmentObj = {
-                _id: id,
-                fileURL: roomResults[i].url,
-                fileName: roomResults[i].name,
-                fileDesc: roomResults[i].description,
-                fileType: roomResults[i].type,
-                createdAt: roomResults[i].uploadedAt,
-              };
-              group.attachments.push(attachmentObj);
-            } else {
-              attachmentToBeUpdated.fileURL = roomResults[i].url;
-              attachmentToBeUpdated.fileName = roomResults[i].name;
-              attachmentToBeUpdated.fileDesc = roomResults[i].description;
-              attachmentToBeUpdated.fileType = roomResults[i].type;
-              attachmentToBeUpdated.createdAt = roomResults[i].uploadedAt;
-            }
-          }
-        }
-      });
     }
   }
 
