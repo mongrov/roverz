@@ -93,6 +93,8 @@ it('add groups', () => {
     },
   };
   db.groups.addAll(objs);
+  console.log('Root Message ', db.groups.findById('4').findRootMessage(null));
+  console.log('Root Message ', db.groups.findById('4').findRootMessage('1'));
   const date = new Date();
   const messages = {
     13: { _id: '14', rid: '4', text: 'wh?', createdAt: date, user: { _id: '2', username: 'who', name: 'wh' } },
@@ -105,11 +107,39 @@ it('add groups', () => {
       text: 'ez',
       createdAt: date,
       editedAt: date,
+      likes: 2,
       user: { _id: '2', username: 'who', name: 'wh' } },
   };
-
-
   db.updateMessages(db.groups.findById('4'), updatedMessage);
+
+  db.groups.findById('4').commentsList();
+
+  const replyMessage = {
+    13: { _id: '22',
+      rid: '4',
+      text: '[ ] (sf/df/sd?msg=14) test reply',
+      createdAt: date,
+      editedAt: date,
+      isReply: true,
+      replyMessageId: '14',
+      user: { _id: '2', username: 'who', name: 'wh' } },
+  };
+  db.addMessages(db.groups.findById('4'), replyMessage);
+  db.groups.findById('4').commentsList('14');
+  console.log('Root Message ', db.groups.findById('4').findRootMessage('22'));
+  console.log('Root Message ', db.groups.findById('4').findRootMessage('0'));
+  const replyMessage1 = {
+    13: { _id: '23',
+      rid: '4',
+      text: '[ ] (sf/df/sd?msg=14) test reply',
+      createdAt: date,
+      editedAt: date,
+      isReply: true,
+      user: { _id: '2', username: 'who', name: 'wh' } },
+  };
+  db.addMessages(db.groups.findById('4'), replyMessage1);
+  console.log('Root Message ', db.groups.findById('4').findRootMessage('23'));
+
   // delete invalid message id
   db.deleteMessage('4');
   let lastMessage = db.groups.lastMessage;
@@ -123,6 +153,19 @@ it('add groups', () => {
   // delete valid message id
   db.deleteMessage('4', '14');
   lastMessage = db.groups.lastMessage;
+
+  db.groups.updateNoMoreMessages(db.groups.findById('4'));
+  db.groups.updateNoMoreMessages(null);
+  db.groups.findById('4').heading.not.toBeNull();
+  const gobjs = {
+    5: { _id: '5',
+      name: 'direct 1',
+      type: 'd',
+      title: 'title',
+    },
+  };
+  db.groups.addAll(gobjs);
+  db.groups.findById('5').heading.not.toBeNull();
 });
 
 // test all group object related methods
