@@ -18,8 +18,12 @@ it('last sync test', () => {
 // lets switch the db
 it('switchDb test', () => {
   var db = new Database();
+  db.getServer();
   db.switchDb('p57', 'test');
-
+  db.setServer('mongrov');
+  db.setUserId();
+  db.getServer();
+  db.setUserId('adsf134r');
   // lets reset the db
   db.reset();
   expect(db.users.list).toHaveLength(0);

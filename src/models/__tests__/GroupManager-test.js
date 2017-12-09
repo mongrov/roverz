@@ -98,6 +98,12 @@ it('add groups', () => {
   const date = new Date();
   const messages = {
     13: { _id: '14', rid: '4', text: 'wh?', createdAt: date, user: { _id: '2', username: 'who', name: 'wh' } },
+    15: { _id: '115',
+      rid: '4',
+      text: 'wasdfh?',
+      likes: 2,
+      createdAt: date,
+      user: { _id: '2', username: 'who', name: 'wh' } },
   };
   db.addMessages(db.groups.findById('4'), messages);
   db.groups.addAll(objs);
@@ -107,7 +113,6 @@ it('add groups', () => {
       text: 'ez',
       createdAt: date,
       editedAt: date,
-      likes: 2,
       user: { _id: '2', username: 'who', name: 'wh' } },
   };
   db.updateMessages(db.groups.findById('4'), updatedMessage);
@@ -156,7 +161,7 @@ it('add groups', () => {
 
   db.groups.updateNoMoreMessages(db.groups.findById('4'));
   db.groups.updateNoMoreMessages(null);
-  db.groups.findById('4').heading.not.toBeNull();
+  console.log('heading', db.groups.findById('4').heading);
   const gobjs = {
     5: { _id: '5',
       name: 'direct 1',
@@ -165,7 +170,7 @@ it('add groups', () => {
     },
   };
   db.groups.addAll(gobjs);
-  db.groups.findById('5').heading.not.toBeNull();
+  console.log('heading', db.groups.findById('5').heading);
 });
 
 // test all group object related methods
