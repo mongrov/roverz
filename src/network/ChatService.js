@@ -711,25 +711,26 @@ class ChatService {
       this.fixS3Urls(videoReqs, (results) => {
         // AppUtil.debug(results, 'fixYapImageUrls - result');
         for (let i = 0; i < results.length; i += 1) {
+          console.log('Ezhil Chat Service VR ', results[i].url);
           const tmp = urlMessages[vlookups[i]];
           tmp.image = null;
           tmp.remoteFile = null;
           tmp.video = results[i].url;
           urlMessages[vlookups[i]] = tmp;
-          if (imageReqs.length > 0) {
-            // fetch all image urls
-            this.fixS3Urls(imageReqs, (imgresults) => {
-              // AppUtil.debug(results, 'fixYapImageUrls - result');
-              for (let j = 0; j < imgresults.length; j += 1) {
-                const imgtmp = urlMessages[lookups[j]];
-                imgtmp.image = imgresults[j].url;
-                urlMessages[lookups[j]] = imgtmp;
-                callBack(urlMessages);
-              }
-            }, false);
-          } else {
+        }
+        if (imageReqs.length > 0) {
+          // fetch all image urls
+          this.fixS3Urls(imageReqs, (imgresults) => {
+            // AppUtil.debug(results, 'fixYapImageUrls - result');
+            for (let i = 0; i < imgresults.length; i += 1) {
+              const tmp = urlMessages[lookups[i]];
+              tmp.image = imgresults[i].url;
+              urlMessages[lookups[i]] = tmp;
+            }
             callBack(urlMessages);
-          }
+          }, false);
+        } else {
+          callBack(urlMessages);
         }
       }, true);
     } else if (imageReqs.length > 0) {
@@ -740,8 +741,8 @@ class ChatService {
           const tmp = urlMessages[lookups[i]];
           tmp.image = results[i].url;
           urlMessages[lookups[i]] = tmp;
-          callBack(urlMessages);
         }
+        callBack(urlMessages);
       }, false);
     } else {
       callBack(urlMessages);
