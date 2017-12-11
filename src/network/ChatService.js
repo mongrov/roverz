@@ -459,32 +459,34 @@ class ChatService {
     // console.log(`Last Sync:${lastSync}`);
     // console.log('--- [Network] --- ====================================');
     this.db.app.setLastSync();
-    const noOfMsgs = 5;
-    const req1 = this.meteor.traceCall('rooms/get', { $date: lastSync });
-    const req2 = this.meteor.call('subscriptions/get', { $date: lastSync });
+    const noOfMsgs = 10;
+    const temp = lastSync > 0 ? Math.floor(lastSync / 1000) : 0;
+    const req1 = this.meteor.traceCall('rooms/get', { $date: temp });
+    const req2 = this.meteor.call('subscriptions/get', { $date: temp });
     Promise.all([req1, req2]).then((results) => {
       // // console.log('Then: ', results);
       // results[0] -  rooms, [1] - subscriptions
       // @todo: move this to util - shallowMerge?
-      const groups = _super._room2group(results[0]);
-      const subscriptions = _super._subscription2group(results[1]);
-      const subsResult = results[1];
-      Object.keys(groups).forEach((k) => {
-        if (k in subscriptions) {
-          groups[k] = Object.assign(groups[k], subscriptions[k]);
-        }
-      });
+//      const subscriptions = _super._subscription2group(results[1]);
+//      const subsResult = results[1];
+      // Object.keys(groups).forEach((k) => {
+      //   if (k in subscriptions) {
+      //     groups[k] = Object.assign(groups[k], subscriptions[k]);
+      //   }
+      // });
       // // console.log('Merged:', groups);
+      const rooms = results[0];
+      const groups = _super._room2group(results[0]);
       _super.db.groups.addAll(groups);
-      Object.keys(subsResult).forEach((k) => {
+      Object.keys(rooms).forEach((k) => {
         if (lastSync === 0) {
-          const tempGroup = _super.db.groups.findById(subsResult[k].rid);
+          const tempGroup = _super.db.groups.findById(rooms[k]._id);
           // console.log(subsResult[k].rid, tempGroup);
           if (tempGroup) {
             _super.fetchMessages(tempGroup, noOfMsgs);
           }
-        } else if (new Date(lastSync).getTime() < subsResult[k]._updatedAt.getTime()) {
-          const tempGroup = _super.db.groups.findById(subsResult[k].rid);
+        } else if (new Date(lastSync).getTime() < rooms[k]._updatedAt.getTime()) {
+          const tempGroup = _super.db.groups.findById(rooms[k]._id);
           // console.log(subsResult[k]._updatedAt.$date, subsResult[k].rid, tempGroup);
           if (tempGroup) { // if no msgs try to fetch last msg
             _super.fetchMessages(tempGroup, noOfMsgs);
@@ -711,7 +713,6 @@ class ChatService {
       this.fixS3Urls(videoReqs, (results) => {
         // AppUtil.debug(results, 'fixYapImageUrls - result');
         for (let i = 0; i < results.length; i += 1) {
-          console.log('Ezhil Chat Service VR ', results[i].url);
           const tmp = urlMessages[vlookups[i]];
           tmp.image = null;
           tmp.remoteFile = null;
