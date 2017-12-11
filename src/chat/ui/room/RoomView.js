@@ -507,9 +507,39 @@ class ChatRoomView extends React.Component {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
+                onPress={() => Actions.photoLibrary({
+                  groupId: this._group._id,
+                  progressCallback: this._progressCallback,
+                  duration: 0,
+                })}
               >
                 <Icon
-                  name={'format-align-left'}
+                  name={'attach-file'}
+                  size={22}
+                  color={'rgba(0,0,0,0.4)'}
+                />
+              </TouchableOpacity>
+            )
+          }
+          {
+            this.state.showActions && (
+              <TouchableOpacity
+                style={{
+                  width: 40,
+                  height: 30,
+                  marginTop: 7,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => Actions.cameraActions({
+                  group: this._group,
+                  groupId: this._group._id,
+                  progressCallback: this._progressCallback,
+                  duration: 0,
+                })}
+              >
+                <Icon
+                  name={'camera-alt'}
                   size={22}
                   color={'rgba(0,0,0,0.4)'}
                 />
@@ -533,29 +563,6 @@ class ChatRoomView extends React.Component {
               fontFamily: 'OpenSans-Regular',
             }}
           />
-          {
-            this.state.showActions && (
-              <TouchableOpacity
-                style={{
-                  width: 40,
-                  height: 30,
-                  marginTop: 7,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                onPress={() => Actions.cameraActions({
-                  group: this._group._id,
-                  progressCallback: this._progressCallback,
-                })}
-              >
-                <Icon
-                  name={'camera-alt'}
-                  size={22}
-                  color={'rgba(0,0,0,0.4)'}
-                />
-              </TouchableOpacity>
-            )
-          }
           <Send
             {...props}
           />
@@ -675,7 +682,7 @@ class ChatRoomView extends React.Component {
           renderMessageText={this.isMarkDownEnabled() ? this.renderMessageText : null}
           renderAvatar={this.renderAvatar}
           renderAvatarOnTop={true}
-          // renderInputToolbar={this.renderInputToolbar}
+          renderInputToolbar={this.renderInputToolbar}
           // renderAccessory={this.renderK}
           loadEarlier={this.state.loadEarlier}
           onLoadEarlier={this.onLoadEarlier}
