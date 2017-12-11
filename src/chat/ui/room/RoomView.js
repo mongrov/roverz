@@ -7,7 +7,6 @@ import {
   Text,
   View,
   StatusBar,
-  Platform,
   TouchableOpacity,
   Linking,
   ActivityIndicator,
@@ -121,6 +120,7 @@ class ChatRoomView extends React.Component {
       msgCopied: false,
       loaded: true,
       attach: this.attach,
+      composerText: '',
     };
     this.onSend = this.onSend.bind(this);
     this.renderCustomActions = this.renderCustomActions.bind(this);
@@ -383,18 +383,20 @@ class ChatRoomView extends React.Component {
     return (
       <Composer
         {...props}
-        multiline={(Platform.OS === 'ios')}
+        // multiline={(Platform.OS === 'ios')}
+        multiline
         placeholder={t('ph_type_message')}
         textInputProps={{
-          onChange: () => { this.state.showActions = false; },
-          onEndEditing: () => { this.state.showActions = true; },
+          // onChangeText: () => { this.state.showActions = false; },
+          // onEndEditing: () => { this.state.showActions = true; },
         }}
+        numberOfLines={4}
         textInputStyle={{
           backgroundColor: '#F5F5F5',
           borderRadius: 3,
-          paddingHorizontal: 5,
-          lineHeight: 20,
-          marginRight: 5,
+          // paddingHorizontal: 5,
+          // lineHeight: 20,
+          // marginRight: 5,
           fontFamily: 'OpenSans-Regular',
         }}
       />
@@ -492,7 +494,8 @@ class ChatRoomView extends React.Component {
       >
         <View style={{
           flexDirection: 'row',
-          backgroundColor: 'rgba(0,0,0,0.1)',
+          alignItems: 'flex-end',
+          backgroundColor: 'rgba(0,0,0,0.05)',
           borderTopColor: 'rgba(0,0,0,0.15)',
           borderTopWidth: 1,
         }}
@@ -503,7 +506,7 @@ class ChatRoomView extends React.Component {
                 style={{
                   width: 40,
                   height: 30,
-                  marginTop: 7,
+                  marginBottom: 7,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
@@ -515,7 +518,7 @@ class ChatRoomView extends React.Component {
               >
                 <Icon
                   name={'attach-file'}
-                  size={22}
+                  size={28}
                   color={'rgba(0,0,0,0.4)'}
                 />
               </TouchableOpacity>
@@ -527,7 +530,7 @@ class ChatRoomView extends React.Component {
                 style={{
                   width: 40,
                   height: 30,
-                  marginTop: 7,
+                  marginBottom: 7,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
@@ -540,7 +543,7 @@ class ChatRoomView extends React.Component {
               >
                 <Icon
                   name={'camera-alt'}
-                  size={22}
+                  size={28}
                   color={'rgba(0,0,0,0.4)'}
                 />
               </TouchableOpacity>
@@ -548,18 +551,32 @@ class ChatRoomView extends React.Component {
           }
           <Composer
             {...props}
-            multiline={(Platform.OS === 'ios')}
-            placeholder={'Type your message..'}
+            // multiline={(Platform.OS === 'ios')}
+            multiline
+            placeholder={t('ph_type_message')}
             textInputProps={{
-              onChange: () => { this.state.showActions = false; },
-              onEndEditing: () => { this.state.showActions = true; },
+              disableFullscreenUI: true,
             }}
+            // onChange={(composerText) => {
+            //   this.setState({
+            //     composerText,
+            //   });
+            //   console.log(this.state.composerText.length);
+            //   if (!this.state.composerText) {
+            //     this.setState({ showActions: true });
+            //   } else {
+            //     this.setState({ showActions: false });
+            //   }
+            // }}
+            // text={this.state.composerText}
+            numberOfLines={5}
             textInputStyle={{
               backgroundColor: '#F5F5F5',
               borderRadius: 3,
-              paddingHorizontal: 5,
+              // alignItems: 'flex-start',
+              // paddingHorizontal: 5,
               lineHeight: 20,
-              marginRight: 5,
+              // marginRight: 5,
               fontFamily: 'OpenSans-Regular',
             }}
           />
@@ -673,7 +690,7 @@ class ChatRoomView extends React.Component {
         <GiftedChat
           messages={this.state.messages}
           onSend={this.onSend}
-          renderActions={this.renderCustomActions}
+          // renderActions={this.renderCustomActions}
           renderFooter={this.renderFooter}
           renderBubble={this.renderBubble}
           renderSend={this.renderSend}

@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import t from '../../i18n/';
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#696969' },
+  container: { flex: 1, backgroundColor: '#000' },
   captionContainer: {
     bottom: 0,
     height: 65,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(0,0,0,0.05)',
     width: '100%',
     position: 'absolute',
     justifyContent: 'center',
@@ -104,6 +104,15 @@ export default class ImageGallery extends React.Component {
     );
   }
 
+  _onLayout = (event) => {
+    this.setState({
+      layout: {
+        height: event.nativeEvent.layout.height,
+        width: event.nativeEvent.layout.width,
+      },
+    });
+  }
+
   renderError() {
     return (
       <View style={[styles.error]}>
@@ -119,7 +128,7 @@ export default class ImageGallery extends React.Component {
   render() {
     const screen = Dimensions.get('window');
     return (
-      <View style={[styles.container]} >
+      <View style={[styles.container]} onLayout={this._onLayout}>
         <Image
           style={{ width: screen.width, height: screen.height }}
           source={{ uri: this.props.imgUrl }}
