@@ -105,6 +105,13 @@ exports[`AboutView renders correctly 1`] = `
       </Text>
       <View
         style={
+          Object {
+            "marginTop": 20,
+          }
+        }
+      />
+      <View
+        style={
           Array [
             Object {
               "backgroundColor": "transparent",
@@ -150,7 +157,7 @@ exports[`AboutView renders correctly 1`] = `
               Object {
                 "backgroundColor": "transparent",
               },
-              Array [],
+              undefined,
             ]
           }
           testID={undefined}
@@ -184,7 +191,6 @@ exports[`AboutView renders correctly 1`] = `
                 undefined,
                 undefined,
                 Object {
-                  "marginTop": 20,
                   "padding": 8,
                   "paddingHorizontal": 20,
                 },
