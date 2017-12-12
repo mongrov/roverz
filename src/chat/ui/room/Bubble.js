@@ -322,7 +322,7 @@ export default class Bubble extends React.Component {
   }
 
   renderDelete() {
-    if (this.state.canDelete) {
+    if (this.state.canDelete && !this.props.currentMessage.image) {
       return (<TouchableOpacity
         style={[styles.actionBtn]}
         onPress={this._deleteMessage}
@@ -339,6 +339,7 @@ export default class Bubble extends React.Component {
   }
 
   renderMessageText() {
+    console.log(this.props.currentMessage.likes, this.state.likes, this.props.currentMessage.text);
     if (this.props.currentMessage.text) {
       const { containerStyle, wrapperStyle, ...messageTextProps } = this.props;
       if (this.props.renderMessageText) {
@@ -351,6 +352,28 @@ export default class Bubble extends React.Component {
       );
     }
     return null;
+  }
+
+  renderMessageTextWrapper() {
+    return (
+      <View>
+        {
+          !this.props.currentMessage.image && (
+            <View
+              style={{
+                flex: 1,
+                marginRight: 5,
+                marginTop: 5,
+                alignItems: 'flex-end',
+              }}
+            >
+              {this.renderLikes()}
+            </View>
+          )
+        }
+        {this.renderMessageText()}
+      </View>
+    );
   }
 
   renderReply() {
@@ -406,9 +429,19 @@ export default class Bubble extends React.Component {
     if (this.props.currentMessage.image) {
       return (
         <View>
-          {this.renderLikes()}
+          <View
+            style={{
+              position: 'absolute',
+              top: 5,
+              right: 5,
+              zIndex: 999,
+            }}
+          >
+            {this.renderLikes()}
+          </View>
           <MessageImage
             {...this.props}
+
             pressLong={this.pressLong}
           />
         </View>
@@ -454,17 +487,17 @@ export default class Bubble extends React.Component {
   }
 
   renderLikes() {
-    if (this.state.likes > 0) {
+    if (this.state.likes) {
       return (
         <View style={{
           backgroundColor: 'rgba(0,0,0,0.3)',
           flexDirection: 'row',
-          position: 'absolute',
-          top: 5,
-          right: 5,
+          height: 24,
           padding: 3,
           borderRadius: 3,
-          zIndex: 999,
+          justifyContent: 'center',
+          alignItems: 'center',
+          // zIndex: 999,
         }}
         >
           <Icon
@@ -568,7 +601,7 @@ export default class Bubble extends React.Component {
               >
                 <View>
                   {this.renderMessageImage()}
-                  {this.renderMessageText()}
+                  {this.renderMessageTextWrapper()}
                 </View>
               </View>
               <View style={[styles.bottom, this.props.bottomContainerStyle[this.props.position]]}>
