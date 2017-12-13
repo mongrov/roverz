@@ -91,6 +91,7 @@ export default class SearchRoomView extends Component {
 
   renderRow = (rowData, sectionID) =>
     (<ListItem
+      hideChevron={true}
       roundAvatar
       key={sectionID}
       title={rowData.name}
