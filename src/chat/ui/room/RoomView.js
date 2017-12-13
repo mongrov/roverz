@@ -499,6 +499,7 @@ class ChatRoomView extends React.Component {
           backgroundColor: 'rgba(0,0,0,0.05)',
           borderTopColor: 'rgba(0,0,0,0.15)',
           borderTopWidth: 1,
+          // height: 40,
         }}
         >
           {
@@ -561,9 +562,12 @@ class ChatRoomView extends React.Component {
             {...props}
             // multiline={(Platform.OS === 'ios')}
             multiline
+            // composerHeight={40}
             placeholder={t('ph_type_message')}
             textInputProps={{
               disableFullscreenUI: true,
+              // onChange: () => { this.state.showActions = false; },
+              // onEndEditing: () => { this.state.showActions = true; },
             }}
             // onChange={(composerText) => {
             //   this.setState({
@@ -577,14 +581,15 @@ class ChatRoomView extends React.Component {
             //   }
             // }}
             // text={this.state.composerText}
-            numberOfLines={5}
+            numberOfLines={6}
             textInputStyle={{
-              backgroundColor: '#F5F5F5',
+              backgroundColor: '#FFF',
               borderRadius: 3,
               // alignItems: 'flex-start',
               // paddingHorizontal: 5,
               lineHeight: 20,
-              // marginRight: 5,
+              // margin: 3,
+              // alignItems: 'flex-end',
               fontFamily: 'OpenSans-Regular',
             }}
           />
@@ -721,6 +726,7 @@ class ChatRoomView extends React.Component {
             { type: 'phone', style: styl.left.link, onPress: this.onPressPhoneNumber },
           ]}
           style={{ backgroundColor: 'red', zIndex: 100 }}
+          keyboardShouldPersistTaps={'handled'}
         />
       );
     }

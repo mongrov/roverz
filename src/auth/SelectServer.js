@@ -193,7 +193,10 @@ export default class SelectServer extends React.Component {
         </View>
         }
         {this.state.isLoading === false &&
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView
+          style={{ flex: 1 }}
+          keyboardShouldPersistTaps={'handled'}
+        >
           <KeyboardAvoidingView
             behavior={'padding'}
             style={styles.messageContainer}

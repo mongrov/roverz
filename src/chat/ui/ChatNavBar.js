@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
+  Keyboard,
 } from 'react-native';
 import md5 from 'react-native-md5';
 import PropTypes from 'prop-types';
@@ -209,6 +210,7 @@ class ChatNavBar extends React.Component {
   }
 
   goToRoomInfo() {
+    Keyboard.dismiss();
     if (this.state.roomType !== 'direct') {
       Actions.roomInfo({
         group: this.state.obj,
@@ -264,6 +266,7 @@ class ChatNavBar extends React.Component {
         <NavButton
           style={[styles.iconViews]}
           onPress={() => {
+            Keyboard.dismiss();
             const vcuserID = user ? md5.hex_md5(user._id) : '0';
             _super._net.chat.startVideoCall(gid);
             // const tempMsg = '@all Started Video conference';

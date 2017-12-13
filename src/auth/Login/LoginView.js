@@ -307,6 +307,7 @@ class Login extends Component {
       <View style={[styles.viewContainer, { backgroundColor: AppColors.brand().secondary }]}>
         <ScrollView
           automaticallyAdjustContentInsets={false}
+          keyboardShouldPersistTaps={'handled'}
         >
           <KeyboardAvoidingView
             behavior="position"
