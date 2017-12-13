@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'rgba(0,0,0,0.3)',
     borderBottomWidth: 1,
     paddingBottom: 15,
-    paddingTop: 150,
+    paddingTop: 300,
   },
   detailText01: { marginTop: 10, textAlign: 'center' },
   detailText02: { textAlign: 'center' },
@@ -166,8 +166,10 @@ export default class MemberListView extends Component {
         <StatusBar barStyle="light-content" />
         <UserAvatar
           name={AppUtil.avatarInitials(this.state.roomName)}
-          size={150}
-          style={[styles.avatar]}
+          size={this.props.avHeight ? this.props.avHeight : 300}
+          style={[styles.avatar, {
+            width: this.state.layout.width,
+          }]}
         />
         <View
           style={[styles.detailView]}
@@ -189,11 +191,13 @@ MemberListView.defaultProps = {
   group: null,
   roomName: '',
   roomTitle: '',
+  avHeight: null,
 };
 
 MemberListView.propTypes = {
   group: PropTypes.instanceOf(Group),
   roomName: React.PropTypes.string,
   roomTitle: React.PropTypes.string,
+  avHeight: PropTypes.number,
 };
 

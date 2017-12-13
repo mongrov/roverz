@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Linking,
   ActivityIndicator,
+  Keyboard,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
@@ -510,11 +511,14 @@ class ChatRoomView extends React.Component {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
-                onPress={() => Actions.photoLibrary({
-                  groupId: this._group._id,
-                  progressCallback: this._progressCallback,
-                  duration: 0,
-                })}
+                onPress={() => {
+                  Keyboard.dismiss();
+                  Actions.photoLibrary({
+                    groupId: this._group._id,
+                    progressCallback: this._progressCallback,
+                    duration: 0,
+                  });
+                }}
               >
                 <Icon
                   name={'attach-file'}
@@ -534,12 +538,16 @@ class ChatRoomView extends React.Component {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
-                onPress={() => Actions.cameraActions({
-                  group: this._group,
-                  groupId: this._group._id,
-                  progressCallback: this._progressCallback,
-                  duration: 0,
-                })}
+                onPress={() => {
+                  // console.log('hi');
+                  Keyboard.dismiss();
+                  Actions.cameraActions({
+                    group: this._group,
+                    groupId: this._group._id,
+                    progressCallback: this._progressCallback,
+                    duration: 0,
+                  });
+                }}
               >
                 <Icon
                   name={'camera-alt'}
