@@ -9,6 +9,7 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
   },
   viewContainer: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 15,
@@ -109,7 +110,7 @@ export default class SelectServer extends React.Component {
         // error, no settings could be fetched
         this.setState({ isLoading: false });
       } else {
-        Actions.login();
+        Actions.login({ type: 'reset' });
       }
     }
   }
@@ -192,6 +193,7 @@ export default class SelectServer extends React.Component {
         </View>
         }
         {this.state.isLoading === false &&
+        <ScrollView style={{ flex: 1 }}>
           <KeyboardAvoidingView
             behavior={'padding'}
             style={styles.messageContainer}
@@ -254,6 +256,7 @@ export default class SelectServer extends React.Component {
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
+          </ScrollView>
         }
       </View>
     );

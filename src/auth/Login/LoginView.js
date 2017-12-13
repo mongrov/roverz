@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   Image,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import FormValidation from 'tcomb-form-native';
 import { Actions } from 'react-native-router-flux';
@@ -37,6 +38,13 @@ const styles = StyleSheet.create({
   ssoParent: {
     padding: 30,
     paddingBottom: 50,
+  },
+  viewContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'yellow',
   },
   topContainer: {
     flex: 1,
@@ -115,12 +123,14 @@ class Login extends Component {
             clearButtonMode: 'while-editing',
             keyboardType: 'email-address',
             autoCorrect: false,
+            disableFullscreenUI: true,
           },
           Password: {
             error: t('err_login_valid_password'),
             clearButtonMode: 'while-editing',
             secureTextEntry: true,
             autoCorrect: false,
+            disableFullscreenUI: true,
           },
         },
       },
@@ -294,36 +304,40 @@ class Login extends Component {
       );
     }
     return (
-      <KeyboardAvoidingView
-      // style={styles.container}
-        behavior="padding"
-        style={[AppStyles.windowSize]}
-      >
-        <StatusBar barStyle="light-content" />
-        <View style={[styles.topContainer, { backgroundColor: AppColors.brand().secondary }]}>
-          <Image
-            source={Application.logo}
-            style={[AppStyles.loginLogo, styles.logoImg]}
-          />
-          <TouchableOpacity
-            style={[styles.workspaceBtn]}
-            onPress={() => { Actions.chooseInstance({ switchServer: true }); }}
+      <View style={[styles.viewContainer, { backgroundColor: AppColors.brand().secondary }]}>
+        <ScrollView
+          automaticallyAdjustContentInsets={false}
+        >
+          <KeyboardAvoidingView
+            behavior="position"
           >
-            <Text
-              style={{
-                fontSize: 12,
-                color: '#FFF',
-              }}
-            >{t('txt_Workspace')}</Text>
-            <Text
-              style={[styles.workspaceTxt]}
-            >{this.state.serverUrl}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={[styles.formContainer]}>
-          {this.renderForm()}
-        </View>
-      </KeyboardAvoidingView>
+            <StatusBar barStyle="light-content" />
+            <View style={[styles.topContainer, { backgroundColor: AppColors.brand().secondary }]}>
+              <Image
+                source={Application.logo}
+                style={[AppStyles.loginLogo, styles.logoImg]}
+              />
+              <TouchableOpacity
+                style={[styles.workspaceBtn]}
+                onPress={() => { Actions.chooseInstance({ switchServer: true }); }}
+              >
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: '#FFF',
+                  }}
+                >{t('txt_Workspace')}</Text>
+                <Text
+                  style={[styles.workspaceTxt]}
+                >{this.state.serverUrl}</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={[styles.formContainer]}>
+              {this.renderForm()}
+            </View>
+          </KeyboardAvoidingView>
+        </ScrollView>
+      </View>
     );
   }
 
