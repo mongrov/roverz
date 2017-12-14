@@ -561,7 +561,7 @@ class ChatRoomView extends React.Component {
           <Composer
             {...props}
             // multiline={(Platform.OS === 'ios')}
-            multiline
+            // multiline
             // composerHeight={40}
             placeholder={t('ph_type_message')}
             textInputProps={{

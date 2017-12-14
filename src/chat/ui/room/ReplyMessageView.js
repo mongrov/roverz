@@ -629,6 +629,7 @@ export default class ReplyMessageView extends React.Component {
               alignItems: 'flex-start',
               justifyContent: 'flex-start',
               padding: 15,
+              height: 100,
             }}
           >
             <Text

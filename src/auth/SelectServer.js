@@ -110,7 +110,7 @@ export default class SelectServer extends React.Component {
         // error, no settings could be fetched
         this.setState({ isLoading: false });
       } else {
-        Actions.login({ type: 'reset' });
+        Actions.login();
       }
     }
   }

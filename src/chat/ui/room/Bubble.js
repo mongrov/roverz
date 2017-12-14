@@ -322,7 +322,7 @@ export default class Bubble extends React.Component {
   }
 
   renderDelete() {
-    if (this.state.canDelete && !this.props.currentMessage.image) {
+    if (this.state.canDelete) {
       return (<TouchableOpacity
         style={[styles.actionBtn]}
         onPress={this._deleteMessage}
@@ -556,17 +556,22 @@ export default class Bubble extends React.Component {
                 color={'#FFF'}
               />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.actionBtn]}
-              onPress={this._handleCopy}
-            >
-              <Icon
-                name={'content-copy'}
-                type={'material-community'}
-                size={22}
-                color={'#FFF'}
-              />
-            </TouchableOpacity>
+            {
+              !this.props.currentMessage.image &&
+              (
+                <TouchableOpacity
+                  style={[styles.actionBtn]}
+                  onPress={this._handleCopy}
+                >
+                  <Icon
+                    name={'content-copy'}
+                    type={'material-community'}
+                    size={22}
+                    color={'#FFF'}
+                  />
+                </TouchableOpacity>
+              )
+            }
             {this.renderDelete()}
           </View>
         </View>
