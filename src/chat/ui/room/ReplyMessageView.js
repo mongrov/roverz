@@ -9,6 +9,8 @@ import {
   Alert,
   Platform,
   ActionSheetIOS,
+  ScrollView,
+  Dimensions,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements';
@@ -421,6 +423,7 @@ export default class ReplyMessageView extends React.Component {
         paddingLeft: 0,
         flexDirection: 'row',
         alignItems: 'center',
+        backgroundColor: AppColors.brand().secondary,
       }]}
       >
         <NavButton
@@ -609,6 +612,12 @@ export default class ReplyMessageView extends React.Component {
       return null;
     });
 
+    const { width, height } = Dimensions.get('window');
+    let imgHeight = height / 3;
+    if (width > height) {
+      imgHeight = height / 8;
+    }
+
     return (
       <View
         style={{
@@ -619,48 +628,48 @@ export default class ReplyMessageView extends React.Component {
       >
         {this.renderNav()}
         <StatusBar barStyle="light-content" />
-        <View>
-          <View
-            style={{
-              // alignItems: 'center',
-              position: 'relative',
-              backgroundColor: '#f0f0f0',
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
-              padding: 15,
-              height: 100,
-            }}
-          >
+        <View
+          style={{
+            // alignItems: 'center',
+            position: 'relative',
+            backgroundColor: '#f0f0f0',
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            justifyContent: 'flex-start',
+            padding: 15,
+            maxHeight: imgHeight,
+          }}
+        >
+          <ScrollView>
             <Text
               style={{
                 fontSize: 16,
                 flex: 1,
               }}
             >{this.state.actualMessage}</Text>
-            <View
+          </ScrollView>
+          <View
+            style={{
+              padding: 5,
+              backgroundColor: AppColors.brand().third,
+              borderRadius: 3,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <Text
               style={{
-                padding: 5,
-                backgroundColor: AppColors.brand().third,
-                borderRadius: 3,
-                flexDirection: 'row',
-                alignItems: 'center',
+                color: '#FFF',
+                fontSize: 12,
+                marginHorizontal: 5,
               }}
-            >
-              <Text
-                style={{
-                  color: '#FFF',
-                  fontSize: 12,
-                  marginHorizontal: 5,
-                }}
-              >{this.state.msgLikes}</Text>
-              <Icon
-                name={'heart-outline'}
-                type={'material-community'}
-                size={20}
-                color={'#FFF'}
-              />
-            </View>
+            >{this.state.msgLikes}</Text>
+            <Icon
+              name={'heart-outline'}
+              type={'material-community'}
+              size={20}
+              color={'#FFF'}
+            />
           </View>
         </View>
         <GiftedChat
