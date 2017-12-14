@@ -458,25 +458,23 @@ class ChatService {
     const lastSync = appState ? appState.lastSync.getTime() : 0;
     // console.log(`Last Sync:${lastSync}`);
     // console.log('--- [Network] --- ====================================');
-    this.db.app.setLastSync();
     const noOfMsgs = 10;
-    const temp = lastSync > 0 ? Math.floor(lastSync / 1000) : 0;
-    const req1 = this.meteor.traceCall('rooms/get', { $date: temp });
-    const req2 = this.meteor.call('subscriptions/get', { $date: temp });
+    // const temp = lastSync > 0 ? Math.floor(lastSync / 1000) : 0;
+    const req1 = this.meteor.traceCall('rooms/get', { $date: lastSync });
+    const req2 = this.meteor.call('subscriptions/get', { $date: lastSync });
     Promise.all([req1, req2]).then((results) => {
       // // console.log('Then: ', results);
       // results[0] -  rooms, [1] - subscriptions
       // @todo: move this to util - shallowMerge?
-//      const subscriptions = _super._subscription2group(results[1]);
-//      const subsResult = results[1];
-      // Object.keys(groups).forEach((k) => {
-      //   if (k in subscriptions) {
-      //     groups[k] = Object.assign(groups[k], subscriptions[k]);
-      //   }
-      // });
-      // // console.log('Merged:', groups);
       const rooms = results[0];
       const groups = _super._room2group(results[0]);
+      const subscriptions = _super._subscription2group(results[1]);
+      Object.keys(groups).forEach((k) => {
+        if (k in subscriptions) {
+          groups[k] = Object.assign(groups[k], subscriptions[k]);
+        }
+      });
+      // // console.log('Merged:', groups);
       _super.db.groups.addAll(groups);
       Object.keys(rooms).forEach((k) => {
         if (lastSync === 0) {
@@ -489,15 +487,58 @@ class ChatService {
           const tempGroup = _super.db.groups.findById(rooms[k]._id);
           // console.log(subsResult[k]._updatedAt.$date, subsResult[k].rid, tempGroup);
           if (tempGroup) { // if no msgs try to fetch last msg
-            _super.fetchMessages(tempGroup, noOfMsgs);
+            _super.fetchMissedMessages(tempGroup, new Date(lastSync));
           }
         }
       });
-//      this.fetchAllMessagesFromAllGroups();
+      this.db.app.setLastSync();
+      //      this.fetchAllMessagesFromAllGroups();
     }).catch((/* err */) => {
       // console.log('Catch: ', err);
     });
     this.getUserPresence('online');
+  }
+
+  fetchChannelHistory(group, latestTs, oldestTs, count) {
+    // getChannelHistory({rid, latest, oldest, inclusive, count = 20, unreads})
+    const temp = true;
+    const temp1 = temp;
+    const gID = group._id;
+    const req1 = this.meteor.call('getChannelHistory', {
+      // { rid: findResult._id, latest: latestDate, oldest: oldestDate, inclusive, count, unreads }
+      rid: gID,
+      latest: latestTs,
+      oldest: oldestTs,
+      temp,
+      count,
+      temp1 });
+    Promise.all([req1]).then((results) => {
+      // // console.log('Then: ', results);
+      // results[0] is from 'loadHistory'
+      console.log(results);
+      // const msgs = results[0].messages;
+      // _super.yaps2db(group, msgs);
+      // if (msgs.length < n) {
+      //   _super.db.groups.updateNoMoreMessages(group);
+      // }
+    }).catch((err) => {
+      console.log('Catch: ', err);
+    });
+    // this.subscribeToGroup(group);
+  }
+
+  fetchMissedMessages(group, lastSyncTs) {
+    const _super = this;
+    const gID = group._id;
+    // rid, lastMessage.ts
+    const req1 = this.meteor.call('loadMissedMessages', gID, lastSyncTs);
+    Promise.all([req1]).then((results) => {
+      const msgs = results ? results[0] : null;
+      _super.yaps2db(group, msgs);
+    }).catch((err) => {
+      console.log('Catch: ', err);
+    });
+    this.subscribeToGroup(group);
   }
 
   // for now brute force approach on fetching all channels and all messages
