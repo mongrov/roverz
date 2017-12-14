@@ -88,35 +88,9 @@ export default class MemberDetailView extends Component {
   }
 
   componentDidMount() {
-    this._changeListener = (list/* , changes */) => {
-      if (!this._mounted) return;
-      let statColor = '';
-      switch (list[0].status) {
-        case 'online':
-          statColor = AppColors.status().online; break;
-        case 'away':
-          statColor = AppColors.status().away; break;
-        case 'busy':
-          statColor = AppColors.status().busy; break;
-        default:
-          statColor = AppColors.status().default;
-      }
-      this.setState({
-        memberDetail: {
-          _id: list[0]._id,
-          email: list[0].emails,
-          username: list[0].username,
-          name: list[0].name,
-          utcOffset: list[0].utcOffset,
-          avatar: list[0].avatar,
-          type: list[0].type,
-          status: list[0].status,
-          statColor,
-          avatarSuccess: true,
-        },
-      });
-    };
-    this.userDetailList.addListener(this._changeListener);
+    if (this.userDetailList) {
+      this.userDetailList.addListener(this._changeListener);
+    }
     this._mounted = true;
   }
 
@@ -125,6 +99,35 @@ export default class MemberDetailView extends Component {
     this.userDetailList.removeListener(this._changeListener);
     this._changeListener = null;
   }
+
+  _changeListener = (list/* , changes */) => {
+    if (!this._mounted) return;
+    let statColor = '';
+    switch (list[0].status) {
+      case 'online':
+        statColor = AppColors.status().online; break;
+      case 'away':
+        statColor = AppColors.status().away; break;
+      case 'busy':
+        statColor = AppColors.status().busy; break;
+      default:
+        statColor = AppColors.status().default;
+    }
+    this.setState({
+      memberDetail: {
+        _id: list[0]._id,
+        email: list[0].emails,
+        username: list[0].username,
+        name: list[0].name,
+        utcOffset: list[0].utcOffset,
+        avatar: list[0].avatar,
+        type: list[0].type,
+        status: list[0].status,
+        statColor,
+        avatarSuccess: true,
+      },
+    });
+  };
 
   _onLayout = (event) => {
     this.setState({
