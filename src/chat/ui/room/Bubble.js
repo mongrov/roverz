@@ -9,6 +9,7 @@ import {
   ViewPropTypes,
   TouchableOpacity,
   Alert,
+  Keyboard,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
@@ -233,6 +234,7 @@ export default class Bubble extends React.Component {
     img -text reply this.state.original.file, this.state.parentMessage!=null
     */
     if (!this.state.original.file && this.state.parentMessage === null) {
+      Keyboard.dismiss();
       Actions.replyMessage({
         obj: this.props.obj,
         msgId: this.props.currentMessage._id,
@@ -242,6 +244,7 @@ export default class Bubble extends React.Component {
         canDelete: this.state.canDelete,
       });
     } else if (this.state.original.file && this.state.parentMessage === null) {
+      Keyboard.dismiss();
       Actions.imagePreview({
         imageUri: this.props.currentMessage.image,
         obj: this.props.obj,
@@ -252,6 +255,7 @@ export default class Bubble extends React.Component {
       });
     } else if (!this.state.original.file && this.state.parentMessage !== null) {
       if (this.state.parentMessage.image) {
+        Keyboard.dismiss();
         Actions.imagePreview({
           imageUri: this.state.parentMessage.image,
           obj: this.props.obj,
@@ -261,6 +265,7 @@ export default class Bubble extends React.Component {
           canDelete: this.state.canDelete,
         });
       } else {
+        Keyboard.dismiss();
         Actions.replyMessage({
           obj: this.props.obj,
           msgId: this.state.parentMessage._id,
@@ -271,6 +276,7 @@ export default class Bubble extends React.Component {
         });
       }
     } else if (this.state.original.file && this.state.parentMessage !== null) {
+      Keyboard.dismiss();
       Actions.imagePreview({
         imageUri: this.state.parentMessage.image,
         obj: this.props.obj,
