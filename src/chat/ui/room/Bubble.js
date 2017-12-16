@@ -345,7 +345,6 @@ export default class Bubble extends React.Component {
   }
 
   renderMessageText() {
-    console.log(this.props.currentMessage.likes, this.state.likes, this.props.currentMessage.text);
     if (this.props.currentMessage.text) {
       const { containerStyle, wrapperStyle, ...messageTextProps } = this.props;
       if (this.props.renderMessageText) {

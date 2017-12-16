@@ -51,23 +51,25 @@ export default class GroupManager {
     AppUtil.debug(null, `${Constants.MODULE}: addAll`);
     this._realm.write(() => {
       Object.keys(groups).forEach((k) => {
-        var obj = groups[k];
-        let typ = Constants.G_PRIVATE;
-        if (obj.type) {
-          switch (obj.type) {
-            case 'd': typ = Constants.G_DIRECT; break;
-            case 'c': typ = Constants.G_PUBLIC; break;
-            default: typ = Constants.G_PRIVATE; break;
+        let obj = groups[k];
+        if (obj && obj._id) {
+          let typ = Constants.G_PRIVATE;
+          if (obj.type) {
+            switch (obj.type) {
+              case 'd': typ = Constants.G_DIRECT; break;
+              case 'c': typ = Constants.G_PUBLIC; break;
+              default: typ = Constants.G_PRIVATE; break;
+            }
           }
+          obj.type = typ;
+          const existingGroup = this.findById(obj._id);
+          if (existingGroup) {
+            obj.lastMessageAt = existingGroup.lastMessageAt;
+          }
+          obj = AppUtil.removeEmptyValues(obj);
+          AppUtil.debug(obj, null);
+          this._realm.create(Constants.Group, obj, true);
         }
-        obj.type = typ;
-        const existingGroup = this.findById(obj._id);
-        if (existingGroup) {
-          obj.lastMessageAt = existingGroup.lastMessageAt;
-        }
-        obj = AppUtil.removeEmptyValues(obj);
-        AppUtil.debug(obj, null);
-        this._realm.create(Constants.Group, obj, true);
       });
     });
   }

@@ -115,14 +115,6 @@ class ChatService {
         }
       }
     });
-    // this._monRoomFiles = this.meteor.monitorChanges('room_files', (results) => {
-    //   if (results && results.length > 0) {
-    //     for (let i = 0; i < results.length; i += 1) {
-    //       console.log('Ezhil  CS1 ', results);
-    //       this.db.addOrUpdateAttachment(results);
-    //     }
-    //   }
-    // });
   }
 
   getPublicSettings(callBack) {
@@ -259,8 +251,54 @@ class ChatService {
   searchUserOrRoom(searchKey, callBack) {
     var searchConf = { users: true, rooms: true };
     this.meteor.call('spotlight', searchKey, null, searchConf, (err, res) => {
-      callBack(res, 'SUCCESS');
+      if (res) {
+        const currUser = this.getCurrentUser();
+        if (currUser) {
+          const dataUsers = res.users;
+          const dataRooms = res.rooms;
+          let userKeyToRemove = this.findUserKeyInArray(dataUsers, currUser._id);
+          if (userKeyToRemove) {
+            res.users.splice(userKeyToRemove, 1);
+          }
+          if (Application.filterRooms) {
+            Object.keys(Application.filterRooms).forEach((k) => {
+              const filterRoom = Application.filterRooms[k];
+              userKeyToRemove = this.findRoomKeyInArray(dataRooms, filterRoom);
+              if (userKeyToRemove) {
+                res.rooms.splice(userKeyToRemove, 1);
+              }
+            });
+          }
+          callBack(res, 'SUCCESS');
+        } else {
+          callBack(res, 'FAILURE');
+        }
+      } else {
+        callBack(err, 'FAILURE');
+      }
     });
+  }
+
+  findRoomKeyInArray(arrayData, filterRoom) {
+    var matchKey = null;
+    Object.keys(arrayData).forEach((k) => {
+      var obj = arrayData[k];
+      if (obj.name === filterRoom) {
+        matchKey = k;
+      }
+    });
+    return matchKey;
+  }
+
+  findUserKeyInArray(arrayData, idToMatch) {
+    var matchKey = null;
+    Object.keys(arrayData).forEach((k) => {
+      var obj = arrayData[k];
+      if (obj._id === idToMatch) {
+        matchKey = k;
+      }
+    });
+    return matchKey;
   }
 
   // use like createDirectMessage('ananth');
@@ -272,10 +310,13 @@ class ChatService {
   }
 
   // use like createDirectMessage('ananth');
-  deleteMessage(msgID) {
-    this.meteor.traceCall('deleteMessage', { _id: msgID }, (/* err, res */) => {
-      // console.log('delete', err);
-      // console.log('delete', res);
+  deleteMessage(msgID, callBack) {
+    this.meteor.traceCall('deleteMessage', { _id: msgID }, (err, res) => {
+      if (callBack && err) {
+        callBack(err, 'FAILURE');
+      } else if (callBack) {
+        callBack(res, 'SUCCESS');
+      }
     });
   }
 
@@ -497,34 +538,6 @@ class ChatService {
       // console.log('Catch: ', err);
     });
     this.getUserPresence('online');
-  }
-
-  fetchChannelHistory(group, latestTs, oldestTs, count) {
-    // getChannelHistory({rid, latest, oldest, inclusive, count = 20, unreads})
-    const temp = true;
-    const temp1 = temp;
-    const gID = group._id;
-    const req1 = this.meteor.call('getChannelHistory', {
-      // { rid: findResult._id, latest: latestDate, oldest: oldestDate, inclusive, count, unreads }
-      rid: gID,
-      latest: latestTs,
-      oldest: oldestTs,
-      temp,
-      count,
-      temp1 });
-    Promise.all([req1]).then((results) => {
-      // // console.log('Then: ', results);
-      // results[0] is from 'loadHistory'
-      console.log(results);
-      // const msgs = results[0].messages;
-      // _super.yaps2db(group, msgs);
-      // if (msgs.length < n) {
-      //   _super.db.groups.updateNoMoreMessages(group);
-      // }
-    }).catch((err) => {
-      console.log('Catch: ', err);
-    });
-    // this.subscribeToGroup(group);
   }
 
   fetchMissedMessages(group, lastSyncTs) {
