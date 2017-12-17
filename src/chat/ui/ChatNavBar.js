@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   },
   avIcon: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   nameText: {
     textAlign: 'left',
@@ -126,20 +127,27 @@ class ChatNavBar extends React.Component {
       avatarUri: this.avatarUri,
       showAvatar: true,
       roomType: this.roomType,
+      icon: '',
     };
     this.goToRoomInfo = this.goToRoomInfo.bind(this);
   }
 
-  componentDidMount() {
-  }
-
-  setAvType() {
-    if (this.state.roomType === 'private') {
-      return 'lock';
-    } else if (this.state.roomType === 'direct') {
-      return 'perm-identity';
+  componentWillMount() {
+    let icon = '';
+    switch (this.state.roomType) {
+      case 'direct':
+        icon = 'at';
+        break;
+      case 'public':
+        icon = 'pound';
+        break;
+      case 'private':
+        icon = 'lock';
+        break;
+      default:
+        icon = 'pound';
     }
-    return 'supervisor-account';
+    this.setState({ icon });
   }
 
   _renderAvatar() {
@@ -180,33 +188,8 @@ class ChatNavBar extends React.Component {
     });
   }
 
-  iconType() {
-    switch (this.state.roomType) {
-      case 'direct':
-        return 'at';
-      case 'public':
-        return 'pound';
-      case 'private':
-        return 'lock';
-      default:
-        return 'pound';
-    }
-  }
-
   iconColor() {
-    return 'rgba(255, 255, 255, 0.3)';
-  }
-
-  chooseAvIcon(icon) {
-    return (
-      <Icon
-        name={icon}
-        type="material-community"
-        size={16}
-        style={[styles.iconWidth]}
-        color={this.iconColor()}
-      />
-    );
+    return 'rgba(255, 255, 255, 0.7)';
   }
 
   goToRoomInfo() {
@@ -223,19 +206,6 @@ class ChatNavBar extends React.Component {
       if (user) {
         Actions.memberDetail({ memberId: user._id, duration: 0 });
       }
-    }
-  }
-
-  renderAvIcon() {
-    switch (this.state.roomType) {
-      case 'direct':
-        return this.chooseAvIcon('at');
-      case 'public':
-        return this.chooseAvIcon('pound');
-      case 'private':
-        return this.chooseAvIcon('lock');
-      default:
-        return this.chooseAvIcon('pound');
     }
   }
 
@@ -316,7 +286,13 @@ class ChatNavBar extends React.Component {
           {this._renderAvatar()}
           <View style={[styles.titleContainer]}>
             <View style={styles.avIcon}>
-              {this.renderAvIcon()}
+              <Icon
+                name={this.state.icon}
+                type="material-community"
+                size={14}
+                style={{ height: 14 }}
+                color={this.iconColor()}
+              />
               <Text
                 numberOfLines={1}
                 style={[AppStyles.navbarTitle, styles.nameText]}

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   header: {
     top: 0,
     height: 65,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
     width: '100%',
     position: 'absolute',
     justifyContent: 'center',
