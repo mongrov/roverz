@@ -34,7 +34,7 @@ const brand = {
     online: '#35ac19',
     away: '#fcb316',
     busy: '#d30230',
-    default: 'rgba(0,0,0,0.3)',
+    default: '#a8a8a8',
   },
   avatarColors: ['#339194',
     '#93a42a', '#cac640', '#fb6b41', '#a70267', '#0065a4', '#76787a',

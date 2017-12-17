@@ -123,7 +123,7 @@ export default class MemberListView extends Component {
     const userObj = this._service.chat.getUserByID(rowData._id);
     const avatar = userObj.avatar;
     const status = userObj.status;
-    let statColor = 'rgba(0,0,0,0.3)';
+    let statColor = '#a8a8a8';
     switch (status) {
       case 'online':
         statColor = AppColors.status().online; break;
@@ -142,13 +142,26 @@ export default class MemberListView extends Component {
         subtitle={`@${rowData.username}`}
         subtitleStyle={AppStyles.memberListSubTitle}
         onPress={() => Actions.memberDetail({ memberId: rowData._id })}
-        badge={{ value: status, textStyle: { color: statColor }, containerStyle: { marginTop: 8 } }}
+        // badge={{ value: status, textStyle: { color: statColor }, containerStyle: { marginTop: 8 } }}
         leftIcon={
-          <ListItemAvatar
-            source={avatar}
-            name={rowData.name}
-            size={36}
-          />}
+          <View>
+            <ListItemAvatar
+              source={avatar}
+              name={rowData.name}
+              size={36}
+            />
+            <View style={{
+              width: 10,
+              height: 10,
+              borderRadius: 5,
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              backgroundColor: statColor,
+            }}
+            />
+          </View>
+          }
       />
     );
   }
