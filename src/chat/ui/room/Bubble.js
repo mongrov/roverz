@@ -210,16 +210,30 @@ export default class Bubble extends React.Component {
     this._network.chat.setPhotoLike(this.state.original._id);
   }
 
+  _handleDelete = () => {
+    this._network.chat.deleteMessage(this.state.original._id, (err, msg) => {
+      console.log('deleteMessage', err, msg);
+      if (err && msg === 'FAILURE') {
+        Alert.alert(
+          'Error deleting',
+          'Delete action is not allowed',
+          [
+            { text: 'OK' },
+          ],
+          { cancelable: false },
+        );
+      }
+    });
+  }
+
   _deleteMessage = () => {
     Alert.alert(
       t('info_delete'),
       t('info_del_message'),
       [
-        { text: t('txt_no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+        { text: t('txt_no'), onPress: () => {}, style: 'cancel' },
         { text: t('txt_yes'),
-          onPress: () => {
-            this._network.chat.deleteMessage(this.state.original._id);
-          },
+          onPress: () => this._handleDelete(),
         },
       ],
       { cancelable: false },
