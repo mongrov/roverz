@@ -110,7 +110,7 @@ export default class SelectServer extends React.Component {
         // error, no settings could be fetched
         this.setState({ isLoading: false });
       } else {
-        Actions.login();
+        Actions.login({ type: 'reset' });
       }
     }
   }
@@ -194,11 +194,10 @@ export default class SelectServer extends React.Component {
         }
         {this.state.isLoading === false &&
         <ScrollView
-          style={{ flex: 1 }}
           keyboardShouldPersistTaps={'handled'}
         >
           <KeyboardAvoidingView
-            behavior={'padding'}
+            behavior={'position'}
             style={styles.messageContainer}
           >
             <View style={[AppStyles.row]}>
@@ -239,7 +238,7 @@ export default class SelectServer extends React.Component {
                 />
               </View>
             </View>
-            <View style={[AppStyles.row]}>
+            <View style={[AppStyles.row, { alignItems: 'center', justifyContent: 'center' }]}>
               <TouchableOpacity
                 style={{
                   borderWidth: 1,
@@ -251,7 +250,7 @@ export default class SelectServer extends React.Component {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
-                onPress={Actions.pop}
+                onPress={() => Actions.pop({ type: 'reset' })}
               >
                 <Text
                   style={[AppStyles.ListItemTitle, styles.workspace]}

@@ -292,6 +292,7 @@ class Login extends Component {
   }
 
   render() {
+    const getServerUrl = this._service.getServer() ? this._service.getServer() : this.state.serverUrl;
     // const Form = FormValidation.form.Form;
     if (this.state.loading) {
       return (
@@ -330,7 +331,7 @@ class Login extends Component {
                 >{t('txt_Workspace')}</Text>
                 <Text
                   style={[styles.workspaceTxt]}
-                >{this.state.serverUrl}</Text>
+                >{getServerUrl}</Text>
               </TouchableOpacity>
             </View>
             <View style={[styles.formContainer]}>

@@ -9,6 +9,7 @@ import {
   StatusBar,
   Alert,
   Platform,
+  Keyboard,
   ActionSheetIOS,
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -143,6 +144,7 @@ export default class MessageImageView extends React.Component {
     this.renderBubble = this.renderBubble.bind(this);
     this.renderSend = this.renderSend.bind(this);
     this.renderComposer = this.renderComposer.bind(this);
+    this.renderInputToolbar = this.renderInputToolbar.bind(this);
     this.renderMessageText = this.renderMessageText.bind(this);
     this.renderAvatar = this.renderAvatar.bind(this);
     this.onLoadEarlier = this.onLoadEarlier.bind(this);
@@ -524,6 +526,67 @@ export default class MessageImageView extends React.Component {
     );
   }
 
+  renderInputToolbar(props) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+        }}
+      >
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'flex-end',
+          backgroundColor: 'rgba(0,0,0,0.05)',
+          borderTopColor: 'rgba(0,0,0,0.15)',
+          borderTopWidth: 1,
+        }}
+        >
+          {
+            this.state.showActions && (
+              <TouchableOpacity
+                style={{
+                  width: 40,
+                  height: 30,
+                  marginBottom: 7,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => {
+                  Keyboard.dismiss();
+                  this._onPressLike();
+                }}
+              >
+                <Icon
+                  name={'thumb-up'}
+                  size={28}
+                  color={'rgba(0,0,0,0.4)'}
+                />
+              </TouchableOpacity>
+            )
+          }
+          <Composer
+            {...props}
+            placeholder={t('ph_type_message')}
+            textInputProps={{
+              // disableFullscreenUI: true,
+            }}
+            numberOfLines={6}
+            textInputStyle={{
+              backgroundColor: '#FFF',
+              borderRadius: 3,
+              lineHeight: 20,
+              fontFamily: 'OpenSans-Regular',
+            }}
+          />
+          <Send
+            {...props}
+          />
+        </View>
+      </View>
+    );
+  }
+
   renderMessageText(props) {
     return (
       <View style={[bubbleStyl[props.position].container]}>
@@ -622,6 +685,11 @@ export default class MessageImageView extends React.Component {
         <View
           style={{
           }}
+          onLayout={() => {
+            if (width > height) {
+              imgHeight = height / 8;
+            }
+          }}
         >
           <View
             style={{
@@ -681,6 +749,7 @@ export default class MessageImageView extends React.Component {
           renderSend={this.renderSend}
           renderComposer={this.renderComposer}
           renderCustomView={this.renderCustomView}
+          renderInputToolbar={this.renderInputToolbar}
           renderMessageText={this.renderMessageText}
           renderAvatar={this.renderAvatar}
           renderMessageImage={this.renderMessageImage}
