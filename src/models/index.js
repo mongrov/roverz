@@ -225,6 +225,20 @@ class Database {
           obj.text = messages[k].text || '';
           obj.likes = messages[k].likes || 0;
         }
+        if (obj.text) {
+          // convert any emojis in the text
+          obj.text = emoji.emojify(obj.text);
+          obj.isReply = obj.text.includes('?msg=');
+          if (obj.isReply) {
+            let res = obj.text.split('?msg=');
+            res = res[res.length - 1].split(')');
+            const replyMsgId = res[0];
+            obj.replyMessageId = replyMsgId;
+            if (res[1]) {
+              obj.text = res[1].trim();
+            }
+          }
+        }
         AppUtil.debug(obj, null);
       });
       const lastMessage = inGroup.lastMessage;
