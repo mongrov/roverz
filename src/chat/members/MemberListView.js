@@ -20,7 +20,7 @@ import Loading from '../../components/general/Loading';
 import AppUtil from '../../lib/util';
 import Network from '../../network';
 import Group from '../../models/group';
-import { AppStyles, AppSizes } from '../../theme/';
+import { AppStyles, AppSizes, AppColors } from '../../theme/';
 import { ListItemAvatar } from '../ui';
 import Application from '../../constants/config';
 
@@ -120,7 +120,20 @@ export default class MemberListView extends Component {
   }
 
   renderRow = (rowData, sectionID) => {
-    const avatar = this._service.chat.getUserByID(rowData._id).avatar;
+    const userObj = this._service.chat.getUserByID(rowData._id);
+    const avatar = userObj.avatar;
+    const status = userObj.status;
+    let statColor = 'rgba(0,0,0,0.3)';
+    switch (status) {
+      case 'online':
+        statColor = AppColors.status().online; break;
+      case 'away':
+        statColor = AppColors.status().away; break;
+      case 'busy':
+        statColor = AppColors.status().busy; break;
+      default:
+        statColor = AppColors.status().default;
+    }
     return (
       <ListItem
         key={sectionID}
@@ -129,6 +142,7 @@ export default class MemberListView extends Component {
         subtitle={`@${rowData.username}`}
         subtitleStyle={AppStyles.memberListSubTitle}
         onPress={() => Actions.memberDetail({ memberId: rowData._id })}
+        badge={{ value: status, textStyle: { color: statColor }, containerStyle: { marginTop: 8 } }}
         leftIcon={
           <ListItemAvatar
             source={avatar}
