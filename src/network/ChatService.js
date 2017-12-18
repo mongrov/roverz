@@ -504,7 +504,6 @@ class ChatService {
     const req1 = this.meteor.traceCall('rooms/get', { $date: lastSync });
     const req2 = this.meteor.call('subscriptions/get', { $date: lastSync });
     Promise.all([req1, req2]).then((results) => {
-      // // console.log('Then: ', results);
       // results[0] -  rooms, [1] - subscriptions
       // @todo: move this to util - shallowMerge?
       const rooms = results[0];
@@ -518,17 +517,20 @@ class ChatService {
       // // console.log('Merged:', groups);
       _super.db.groups.addAll(groups);
       Object.keys(rooms).forEach((k) => {
-        if (lastSync === 0) {
-          const tempGroup = _super.db.groups.findById(rooms[k]._id);
-          // console.log(subsResult[k].rid, tempGroup);
-          if (tempGroup) {
-            _super.fetchMessages(tempGroup, noOfMsgs);
-          }
-        } else if (new Date(lastSync).getTime() < rooms[k]._updatedAt.getTime()) {
-          const tempGroup = _super.db.groups.findById(rooms[k]._id);
-          // console.log(subsResult[k]._updatedAt.$date, subsResult[k].rid, tempGroup);
-          if (tempGroup) { // if no msgs try to fetch last msg
-            _super.fetchMissedMessages(tempGroup, new Date(lastSync));
+        // lastMessageAt
+        if (rooms[k]._id) {
+          if (lastSync === 0) {
+            const tempGroup = _super.db.groups.findById(rooms[k]._id);
+            // console.log(subsResult[k].rid, tempGroup);
+            if (tempGroup) {
+              _super.fetchMessages(tempGroup, noOfMsgs);
+            }
+          } else if (new Date(lastSync).getTime() < rooms[k]._updatedAt.getTime()) {
+            const tempGroup = _super.db.groups.findById(rooms[k]._id);
+            // console.log(subsResult[k]._updatedAt.$date, subsResult[k].rid, tempGroup);
+            if (tempGroup) { // if no msgs try to fetch last msg
+              _super.fetchMissedMessages(tempGroup, new Date(lastSync));
+            }
           }
         }
       });
@@ -552,14 +554,6 @@ class ChatService {
       console.log('Catch: ', err);
     });
     this.subscribeToGroup(group);
-  }
-
-  // for now brute force approach on fetching all channels and all messages
-  fetchAllMessagesFromAllGroups() {
-    var groups = this.db.groups.list;
-    for (let i = 0; i < groups.length; i += 1) {
-      this.fetchMessages(groups[i], 10);
-    }
   }
 
   // fetch old 'n' messages from a given groupId
