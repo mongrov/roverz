@@ -221,21 +221,49 @@ class Database {
     this.realm.write(() => {
       Object.keys(messages).forEach((k) => {
         const obj = inGroup.findMessageById(messages[k]._id);
-        if (obj) {
-          obj.text = messages[k].text || '';
-          obj.likes = messages[k].likes || 0;
-        }
-        if (obj.text) {
+        if (!obj) { // new message with like/edit
+          const msg = messages[k];
+          msg.user = this.users.findOrCreate(msg.user._id, msg.user.username, msg.user.name);
+          msg.likes = messages[k].likes;
+          if (messages[k].likes) {
+            msg.likes = messages[k].likes;
+          } else {
+            msg.likes = 0;
+          }
+          if (msg.text) {
           // convert any emojis in the text
-          obj.text = emoji.emojify(obj.text);
-          obj.isReply = obj.text.includes('?msg=');
-          if (obj.isReply) {
-            let res = obj.text.split('?msg=');
-            res = res[res.length - 1].split(')');
-            const replyMsgId = res[0];
-            obj.replyMessageId = replyMsgId;
-            if (res[1]) {
-              obj.text = res[1].trim();
+            msg.text = emoji.emojify(msg.text);
+            msg.isReply = msg.text.includes('?msg=');
+            if (msg.isReply) {
+              let res = msg.text.split('?msg=');
+              res = res[res.length - 1].split(')');
+              const replyMsgId = res[0];
+              msg.replyMessageId = replyMsgId;
+              if (res[1]) {
+                msg.text = res[1].trim();
+              }
+            }
+          }
+          AppUtil.debug(msg, null);
+          msg.original = JSON.stringify(msg.original);
+          inGroup.messages.push(msg);
+        } else {
+          if (obj) {
+            obj.text = messages[k].text || '';
+            obj.likes = messages[k].likes || 0;
+          }
+          if (obj && obj.text) {
+            // convert any emojis in the text
+            obj.text = emoji.emojify(obj.text);
+            obj.isReply = obj.text.includes('?msg=');
+            if (obj.isReply) {
+              let res = obj.text.split('?msg=');
+              res = res[res.length - 1].split(')');
+              const replyMsgId = res[0];
+              obj.replyMessageId = replyMsgId;
+              if (res[1]) {
+                obj.text = res[1].trim();
+              }
             }
           }
         }
