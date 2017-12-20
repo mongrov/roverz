@@ -81,7 +81,7 @@ export default class Group {
     if (!messages) return nonExisting;
     for (let i = 0; i < this.messages.length; i += 1) {
       const m = this.messages[i];
-      if (Object.prototype.hasOwnProperty.call(nonExisting, m._id)) {
+      if (m.likes === 0 && Object.prototype.hasOwnProperty.call(nonExisting, m._id)) {
         delete nonExisting[m._id];
       }
     }

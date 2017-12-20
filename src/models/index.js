@@ -182,30 +182,50 @@ class Database {
     this.realm.write(() => {
       Object.keys(missingMessages).forEach((k) => {
         const obj = missingMessages[k];
-        obj.user = this.users.findOrCreate(obj.user._id, obj.user.username, obj.user.name);
-        obj.likes = messages[k].likes;
-        if (messages[k].likes) {
-          obj.likes = messages[k].likes;
-        } else {
-          obj.likes = 0;
-        }
-        if (obj.text) {
-        // convert any emojis in the text
-          obj.text = emoji.emojify(obj.text);
-          obj.isReply = obj.text.includes('?msg=');
-          if (obj.isReply) {
-            let res = obj.text.split('?msg=');
-            res = res[res.length - 1].split(')');
-            const replyMsgId = res[0];
-            obj.replyMessageId = replyMsgId;
-            if (res[1]) {
-              obj.text = res[1].trim();
+        const existingMsg = group.findMessageById(obj._id);
+        if (existingMsg) {
+          existingMsg.text = missingMessages[k].text || '';
+          existingMsg.likes = missingMessages[k].likes || 0;
+          if (existingMsg.text) {
+            // convert any emojis in the text
+            existingMsg.text = emoji.emojify(existingMsg.text);
+            existingMsg.isReply = existingMsg.text.includes('?msg=');
+            if (existingMsg.isReply) {
+              let res = existingMsg.text.split('?msg=');
+              res = res[res.length - 1].split(')');
+              const replyMsgId = res[0];
+              existingMsg.replyMessageId = replyMsgId;
+              if (res[1]) {
+                existingMsg.text = res[1].trim();
+              }
             }
           }
+        } else {
+          obj.user = this.users.findOrCreate(obj.user._id, obj.user.username, obj.user.name);
+          obj.likes = messages[k].likes;
+          if (messages[k].likes) {
+            obj.likes = messages[k].likes;
+          } else {
+            obj.likes = 0;
+          }
+          if (obj.text) {
+          // convert any emojis in the text
+            obj.text = emoji.emojify(obj.text);
+            obj.isReply = obj.text.includes('?msg=');
+            if (obj.isReply) {
+              let res = obj.text.split('?msg=');
+              res = res[res.length - 1].split(')');
+              const replyMsgId = res[0];
+              obj.replyMessageId = replyMsgId;
+              if (res[1]) {
+                obj.text = res[1].trim();
+              }
+            }
+          }
+          AppUtil.debug(obj, null);
+          obj.original = JSON.stringify(obj.original);
+          group.messages.push(obj);
         }
-        AppUtil.debug(obj, null);
-        obj.original = JSON.stringify(obj.original);
-        group.messages.push(obj);
       });
       const lastMessage = group.lastMessage;
       if (lastMessage) {

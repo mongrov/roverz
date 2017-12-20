@@ -37,7 +37,7 @@ it('list getters', () => {
   console.log(db.users.getStatus('2'));
   console.log(db.users.getStatus('10'));
   console.log(db.users.findByUserName('test'));
-  console.log(db.users.findByUserName('ezhil'));
+  console.log(db.users.findByUserName('user'));
   console.log('----**********************----');
 });
 it('updateFullUserData', () => {
