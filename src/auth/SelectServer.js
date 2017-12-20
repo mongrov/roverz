@@ -254,7 +254,7 @@ export default class SelectServer extends React.Component {
               >
                 <Text
                   style={[AppStyles.ListItemTitle, styles.workspace]}
-                >Back</Text>
+                >{t('txt_back')}</Text>
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>

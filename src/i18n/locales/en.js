@@ -32,6 +32,8 @@ export default {
   txt_want_to_logout: 'Do you want to logout?',
   txt_yes: 'Yes',
   txt_no: 'No',
+  // auth folder
+  txt_back: 'Back',
   // chat folder
   hyphen: '----',
   ph_search_roomname: 'Type member/group name...',
@@ -49,6 +51,10 @@ export default {
   txt_loading: 'Loading',
   txt_copy_clipboard: 'Copied to clipboard',
   lbl_send: 'Send',
+  info_delete_err: 'Error deleting',
+  info_del_not_allowed: 'Delete action is not allowed',
+  txt_ok: 'OK',
+  txt_rply: 'Reply',
   // components
   lbl_tryagain: 'Try again',
   err_something_wrong: 'Woops, Something went wrong.',

@@ -451,7 +451,7 @@ export default class ReplyMessageView extends React.Component {
               fontSize: 14,
             }]}
           >
-            Reply
+            {t('txt_rply')}
           </Text>
         </View>
         {this.renderDelete()}

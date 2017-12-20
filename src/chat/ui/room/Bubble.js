@@ -215,10 +215,10 @@ export default class Bubble extends React.Component {
       console.log('deleteMessage', err, msg);
       if (err && msg === 'FAILURE') {
         Alert.alert(
-          'Error deleting',
-          'Delete action is not allowed',
+          t('info_delete_err'),
+          t('info_del_not_allowed'),
           [
-            { text: 'OK' },
+            { text: t('txt_ok') },
           ],
           { cancelable: false },
         );
