@@ -5,6 +5,7 @@ import AppUtil from '../lib/util';
 
 import Application from '../constants/config';
 // import { showCallScreen } from '@webrtc/ui';
+const PushNotification = require('react-native-push-notification');
 
 class ChatService {
 
@@ -20,8 +21,13 @@ class ChatService {
     this._loginSettings = [];
     this.deleteAllowed = false;
     this.blockDeleteInMinutes = 0;
+    this.appState = 0;
     // set the userId (to last loaded from db)
     Application.setUserId(db.userId);
+  }
+
+  setAppState(state) {
+    this.appState = state;
   }
 
   resetDbHandle(newDb) {
@@ -653,6 +659,12 @@ class ChatService {
         // group id is the name of the event
         const group = _super.db.groups.findById(results[0].eventName);
         _super.yaps2db(group, results[0].args);
+        if (this.appState === 0) { // app in background
+          PushNotification.localNotificationSchedule({
+            message: `Received message in ${group.name}`, // (required)
+            date: new Date(Date.now()), // in 60 secs
+          });
+        }
       }
     });
     this._monStreamNotifyRoom = this.meteor.monitorChanges('stream-notify-room', (result) => {
@@ -811,10 +823,9 @@ class ChatService {
     for (let i = 0; i < msgs.length; i += 1) {
       const inM = msgs[i];
       let msgText = inM.msg;
-      if (msgs[i].actionLinks && msgs[i].actionLinks[0].method_id === 'joinMGVCCall') {
+      if (inM.actionLinks && inM.actionLinks[0].method_id === 'joinMGVCCall') {
         msgText = 'Started a Video Call!';
       }
-
       const m = this.yap2message(inM._id, inM.rid, msgText, inM.ts, inM.u._id, inM.u.username, inM.u.name);
       m.original = inM;
       if (inM.attachments && inM.attachments.length > 0) {

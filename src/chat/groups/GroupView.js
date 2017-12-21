@@ -27,6 +27,8 @@ import {
 } from '../ui';
 import t from '../../i18n';
 
+const PushNotification = require('react-native-push-notification');
+
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({
   mainContainer: {
@@ -142,6 +144,8 @@ class GroupList extends Component {
           dataSource: this.state.dataSource.cloneWithRows(this._service.chat.getFilteredChannels(
             this.state.items)),
         });
+        this._service.chat.setAppState(1);
+        this._service.chat.setUserPresence('online');
       }
     }, 100);
     AppState.addEventListener('change', this._handleAppStateChange);
@@ -177,8 +181,12 @@ class GroupList extends Component {
 
   _handleAppStateChange = (nextAppState) => {
     if (nextAppState === 'background') {
+      PushNotification.cancelAllLocalNotifications();
+      this._service.chat.setAppState(0);
       this._service.chat.setUserPresence('away');
     } else if (nextAppState === 'active') {
+      PushNotification.cancelAllLocalNotifications();
+      this._service.chat.setAppState(1);
       this._service.chat.setUserPresence('online');
     }
   }
