@@ -60,11 +60,13 @@ class PushService {
           const data = JSON.parse(notification.ejson);
           if (data && data.rid) {
             const n = new Network();
+            if (n.db && n.db.groups) {
             // lookup group object
-            const gObj = n.db.groups.findById(data.rid);
-            if (gObj) {
-              AppUtil.debug(gObj.heading, 'PUSH - switch screen');
-              Actions.chatDetail({ obj: gObj, title: gObj.heading });
+              const gObj = n.db.groups.findById(data.rid);
+              if (gObj) {
+                AppUtil.debug(gObj.heading, 'PUSH - switch screen');
+                Actions.chatDetail({ obj: gObj, title: gObj.heading });
+              }
             }
           }
         }
