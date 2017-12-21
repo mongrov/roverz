@@ -208,6 +208,7 @@ export default class Bubble extends React.Component {
   _onPressLike = () => {
     console.log('**** like pressed **** ');
     this._network.chat.setPhotoLike(this.state.original._id);
+    this.toggleActions();
   }
 
   _handleDelete = () => {
@@ -238,6 +239,7 @@ export default class Bubble extends React.Component {
       ],
       { cancelable: false },
     );
+    this.toggleActions();
   }
 
   _handleComments = () => {
@@ -300,11 +302,13 @@ export default class Bubble extends React.Component {
         canDelete: this.state.canDelete,
       });
     }
+    this.toggleActions();
   }
 
   _handleCopy = () => {
     Clipboard.setString(this.props.currentMessage.text);
     this.handleMsgCopy();
+    this.toggleActions();
   }
 
   prepareMessages(messages, callback) {
