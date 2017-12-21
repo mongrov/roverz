@@ -232,6 +232,7 @@ class ChatNavBar extends React.Component {
       const gid = this.state.obj._id;
       const user = this._net.chat.getCurrentUser();
       const _super = this;
+      const gtype = this.state.roomType;
       return (
         <NavButton
           style={[styles.iconViews]}
@@ -245,6 +246,7 @@ class ChatNavBar extends React.Component {
               instance: Application.instance,
               groupName: gname,
               groupID: gid,
+              groupType: gtype,
               userID: vcuserID,
             });
           }}
