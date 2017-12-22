@@ -1,6 +1,6 @@
 /* eslint no-use-before-define: ["error", { "variables": false }] */
 
-import PropTypes from 'prop-types';
+import PropTypes, { element } from 'prop-types';
 import React from 'react';
 import {
   Text,
@@ -400,24 +400,46 @@ export default class Bubble extends React.Component {
   }
 
   renderCustomView() {
-    if (this.props.renderCustomView) {
-      return this.props.renderCustomView(this.props);
+    // if (this.props.renderCustomView) {
+    //   return this.props.renderCustomView(this.props);
+    // }
+    // return null;
+    let cvStyle = {};
+    if (this.props.currentMessage.image || this.state.parentMessage != null) {
+      cvStyle = {
+        position: 'absolute',
+        top: 5,
+        right: 0,
+        zIndex: 999,
+      };
+    } else {
+      cvStyle = {
+        alignItems: 'flex-end',
+      };
     }
-    return null;
+    return (
+      <View
+        style={cvStyle}
+      >
+        {this.renderLikes()}
+      </View>
+    );
   }
 
   renderLikes() {
     if (this.state.likes) {
       return (
         <View style={{
-          backgroundColor: 'rgba(0,0,0,0.3)',
+          backgroundColor: AppColors.brand().secondary,
           flexDirection: 'row',
           height: 24,
+          minWidth: 40,
+          maxWidth: 60,
           padding: 3,
-          borderRadius: 3,
+          borderTopLeftRadius: 3,
+          borderBottomLeftRadius: 3,
           justifyContent: 'center',
           alignItems: 'center',
-          // zIndex: 999,
         }}
         >
           <Icon
@@ -533,7 +555,7 @@ export default class Bubble extends React.Component {
               >
                 <View>
                   {this.renderMessageImage()}
-                  {this.renderMessageTextWrapper()}
+                  {this.renderMessageText()}
                 </View>
               </View>
               <View style={[styles.bottom, this.props.bottomContainerStyle[this.props.position]]}>

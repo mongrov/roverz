@@ -120,7 +120,7 @@ class ChatRoomView extends React.Component {
       composerText: '',
     };
     this.onSend = this.onSend.bind(this);
-    this.renderFooter = this.renderFooter.bind(this);
+    this.renderChatFooter = this.renderChatFooter.bind(this);
     this.renderBubble = this.renderBubble.bind(this);
     this.renderAvatar = this.renderAvatar.bind(this);
     this.renderInputToolbar = this.renderInputToolbar.bind(this);
@@ -341,7 +341,7 @@ class ChatRoomView extends React.Component {
     );
   }
 
-  renderFooter() {
+  renderChatFooter() {
     if (this.state.typingText) {
       return (
         <View style={styles.footerContainer}>
@@ -605,7 +605,11 @@ class ChatRoomView extends React.Component {
           { type: 'url', style: styl.left.link },
           { type: 'phone', style: styl.left.link },
         ]}
-        renderFooter={this.renderFooter}
+        renderChatFooter={this.renderChatFooter}
+        // renderFooter={() => <View style={{ flex: 1, height: 30, backgroundColor: 'yellow' }} />}
+        onPressActionButton={() => alert('ji')}
+        // renderChatFooter={() => <View style={{ height: 20, backgroundColor: 'red' }} />}
+        // renderCustomView={() => <View style={{ height: 20, backgroundColor: 'green' }} />}
         // renderCustomView={this.renderCustomView}
         // renderMessageText={this.isMarkDownEnabled() ? this.renderMessageText : null}
         // isLoadingEarlier={this.state.isLoadingEarlier}
