@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
-import Meteor from 'react-native-meteor';
 import emoji from 'node-emoji';
 
 import {
@@ -172,9 +171,9 @@ class ChatRoomView extends React.Component {
       }
     });
     this._didMount = true;
-    if (this._group.moreMessages && this._group.sortedMessages.length < NO_OF_MSGS) {
-      this._network.chat.fetchMessages(this._group, NO_OF_MSGS);
-    }
+    // if (this._group.moreMessages && this._group.sortedMessages.length < NO_OF_MSGS) {
+    //   this._network.chat.fetchMessages(this._group, NO_OF_MSGS);
+    // }
     // quick hack to see if this works for this scroll bug
     // https://github.com/facebook/react-native/issues/1831, &
     // https://github.com/facebook/react-native/issues/1831#issuecomment-231069668
@@ -209,11 +208,10 @@ class ChatRoomView extends React.Component {
     // lets not send an empty message
     if (messages.length > 0 && messages[0].text && messages[0].text.trim().length > 0) {
       const unEmoMsg = emoji.unemojify(messages[0].text.trim());
-      Meteor.call('sendMessage', {
-        rid: this._group._id, msg: unEmoMsg,
-      }, (/* err, res */) => {
-        // Handle Error
-      });
+      this._network.chat.sendMessage(
+        this._group._id,
+        unEmoMsg,
+      );
     }
   }
 
@@ -246,7 +244,7 @@ class ChatRoomView extends React.Component {
   subscriptions() {
     // callback is usually used for when subscription is ready
     // Meteor.subscribe('stream-notify-room', `${this._group._id}/updateMessage`, false, this._roomChanges);
-    Meteor.subscribe('stream-notify-room', `${this._group._id}/typing`, false);
+    // Meteor.subscribe('stream-notify-room', `${this._group._id}/typing`, false);
   }
 
   sendCameraImage(cameraData, cameraMessage, video) {
@@ -607,7 +605,7 @@ class ChatRoomView extends React.Component {
         ]}
         renderChatFooter={this.renderChatFooter}
         // renderFooter={() => <View style={{ flex: 1, height: 30, backgroundColor: 'yellow' }} />}
-        onPressActionButton={() => alert('ji')}
+        // onPressActionButton={() => alert('ji')}
         // renderChatFooter={() => <View style={{ height: 20, backgroundColor: 'red' }} />}
         // renderCustomView={() => <View style={{ height: 20, backgroundColor: 'green' }} />}
         // renderCustomView={this.renderCustomView}
