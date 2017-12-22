@@ -359,7 +359,7 @@ export default class Bubble extends React.Component {
   }
 
   renderMessageImage() {
-    if (this.props.currentMessage.image) {
+    if (this.props.currentMessage.image || this.props.currentMessage.video) {
       const { containerStyle, wrapperStyle, ...messageImageProps } = this.props;
       if (this.props.renderMessageImage) {
         return this.props.renderMessageImage(messageImageProps);

@@ -134,15 +134,15 @@ class ChatRoomView extends React.Component {
     const _super = this;
     AppUtil.debug(new Date().toLocaleString(), '[Performance] RoomView');
     this._callOutstanding = false;
-    this._changeListener = (messages, changes) => {
+    this._changeListener = (/* messages, changes */) => {
       // @todo: This check can be removed after upgrading to react-native 0.45
       if (_super._changeListener == null || _super._callOutstanding === true || !_super._didMount) return;
       // console.log(`***** [chat-${_super._group.name}] got updated  **** `);
       // @todo: there seems to be a bug in realm that doesn't remove the listener
       // console.log(changes);
-      if (changes.modifications && changes.modifications.length > 0) {
-        AppUtil.debug(changes, '[Debug] RoomView changes');
-      }
+      // if (changes.modifications && changes.modifications.length > 0) {
+      //   AppUtil.debug(changes, '[Debug] RoomView changes');
+      // }
       // first mark the channel as read
       // @todo: There is a scenario, when this msg and subscription message is out of order
       // still the unread is present
@@ -150,26 +150,26 @@ class ChatRoomView extends React.Component {
         this._network.chat.setRoomAsRead(_super._group._id);
       }
       _super.prepareMessages();
-      setTimeout(() => { this.setState({ loaded: true }); }, 100);
+      // setTimeout(() => { this.setState({ loaded: true }); }, 100);
     };
     this._group.messages.addListener(this._changeListener);
 
-    this._userTyping = this._network.meteor.monitorChanges('stream-notify-room', (result) => {
-      // AppUtil.debug(result, '[Performance] RoomView userTyping');
-      // user is typing message here result[0].args
-      // args: [ 'test', true ],  - format user, true/false (typing or stopped)
-      if (this._didMount && result[0] !== undefined) {
-        if (result[0].args[1]) {
-          this.setState(({
-            typingText: `${result[0].args[0]} is typing...`,
-          }));
-        } else {
-          this.setState(({
-            typingText: null,
-          }));
-        }
-      }
-    });
+    // this._userTyping = this._network.meteor.monitorChanges('stream-notify-room', (result) => {
+    //   // AppUtil.debug(result, '[Performance] RoomView userTyping');
+    //   // user is typing message here result[0].args
+    //   // args: [ 'test', true ],  - format user, true/false (typing or stopped)
+    //   if (this._didMount && result[0] !== undefined) {
+    //     if (result[0].args[1]) {
+    //       this.setState(({
+    //         typingText: `${result[0].args[0]} is typing...`,
+    //       }));
+    //     } else {
+    //       this.setState(({
+    //         typingText: null,
+    //       }));
+    //     }
+    //   }
+    // });
     this._didMount = true;
     // if (this._group.moreMessages && this._group.sortedMessages.length < NO_OF_MSGS) {
     //   this._network.chat.fetchMessages(this._group, NO_OF_MSGS);
@@ -195,7 +195,7 @@ class ChatRoomView extends React.Component {
   }
 
   componentWillUnmount() {
-    this._network.meteor.stopMonitoringChanges(this._userTyping);
+    // this._network.meteor.stopMonitoringChanges(this._userTyping);
     this._group.messages.removeListener(this._changeListener);
     this._changeListener = null;
     this._didMount = false;
@@ -219,13 +219,13 @@ class ChatRoomView extends React.Component {
     this._network.chat.fetchOldMessages(this._group, NO_OF_MSGS);
   }
 
-  isMarkDownEnabled() {
-    const markdownConf = this._network.getServerSetting('Markdown_Parser');
-    if (markdownConf && !(markdownConf.value === 'disabled')) {
-      return true;
-    }
-    return false;
-  }
+  // isMarkDownEnabled() {
+  //   const markdownConf = this._network.getServerSetting('Markdown_Parser');
+  //   if (markdownConf && !(markdownConf.value === 'disabled')) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   prepareMessages() {
     this._callOutstanding = true;
@@ -235,6 +235,7 @@ class ChatRoomView extends React.Component {
       this.setState({
         messages: msg,
         loadEarlier: this._group.moreMessages,
+        loaded: true,
       });
       this._callOutstanding = false;
     });
@@ -568,7 +569,7 @@ class ChatRoomView extends React.Component {
         <ActivityIndicator
           animating
           size={'large'}
-          color={'red'}
+          color={'rgba(0,0,0,0.3)'}
         />
       </View>
     );
