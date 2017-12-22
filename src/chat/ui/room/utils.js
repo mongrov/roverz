@@ -19,11 +19,16 @@ export function isSameDay(currentMessage = {}, diffMessage = {}) {
 }
 
 export function isSameUser(currentMessage = {}, diffMessage = {}) {
-  return !!(diffMessage.user && currentMessage.user && diffMessage.user._id === currentMessage.user._id);
+  return !!(
+    diffMessage.user &&
+    currentMessage.user &&
+    diffMessage.user._id === currentMessage.user._id
+  );
 }
 
 export function warnDeprecated(fn) {
   return (...args) => {
+    // eslint-disable-next-line
     console.warn(DEPRECATION_MESSAGE);
     return fn(...args);
   };

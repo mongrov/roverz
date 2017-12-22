@@ -8,7 +8,7 @@ import {
   View,
   StatusBar,
   TouchableOpacity,
-  Linking,
+  // Linking,
   ActivityIndicator,
   Keyboard,
 } from 'react-native';
@@ -23,8 +23,6 @@ import {
   Composer,
   // Actions as GCActions,
  } from 'react-native-gifted-chat';
-// import Markdown from 'react-native-simple-markdown'
-import { MarkdownView } from 'react-native-markdown-view';
 import { Actions } from 'react-native-router-flux';
 import AppUtil from '../../../lib/util';
 
@@ -37,9 +35,7 @@ import { ProgressBar } from '../../../components/ui/';
 import { AppStyles, AppSizes, AppColors } from '../../../theme/';
 import Application from '../../../constants/config';
 
-import SendImageMessage from './SendImageMessage';
 import ChatAvatar from './ChatAvatar';
-import CustomView from './CustomView';
 import Bubble from './Bubble';
 import ImageUtil from '../../attachments/ImageUtil';
 import t from '../../../i18n';
@@ -124,15 +120,10 @@ class ChatRoomView extends React.Component {
       composerText: '',
     };
     this.onSend = this.onSend.bind(this);
-    this.renderCustomActions = this.renderCustomActions.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
     this.renderBubble = this.renderBubble.bind(this);
-    this.renderSend = this.renderSend.bind(this);
-    this.renderComposer = this.renderComposer.bind(this);
-    this.renderMessageText = this.renderMessageText.bind(this);
     this.renderAvatar = this.renderAvatar.bind(this);
     this.renderInputToolbar = this.renderInputToolbar.bind(this);
-    this.renderK = this.renderK.bind(this);
     this.onLoadEarlier = this.onLoadEarlier.bind(this);
     this._progressCallback = this._progressCallback.bind(this);
     this.messageCopy = this.messageCopy.bind(this);
@@ -227,17 +218,7 @@ class ChatRoomView extends React.Component {
   }
 
   onLoadEarlier() {
-    // console.log('**** load earlier pressed ****');
     this._network.chat.fetchOldMessages(this._group, NO_OF_MSGS);
-  }
-
-  onPressPhoneNumber(phone) {
-    AppUtil.debug(phone, '[Debug] RoomView msg updates');
-  }
-
-  handleUrlPress(url) {
-    Linking.openURL(url).catch(err => console.error('An error occurred', err));
-    AppUtil.debug(url, '[Debug] RoomView msg updates');
   }
 
   isMarkDownEnabled() {
@@ -313,18 +294,6 @@ class ChatRoomView extends React.Component {
     }, 1000);
   }
 
-  renderCustomActions(props) {
-    if (this.state.showActions) {
-      return (
-        <SendImageMessage
-          {...props}
-          group={this._group}
-          progressCallback={this._progressCallback}
-        />
-      );
-    }
-  }
-
   renderBubble(props) {
     return (
       <Bubble
@@ -367,38 +336,6 @@ class ChatRoomView extends React.Component {
           width: AppStyles.windowSize.width - 90,
           height: 150,
           borderRadius: 8,
-        }}
-      />
-    );
-  }
-
-  renderSend(props) {
-    return (
-      <Send
-        {...props}
-      />
-    );
-  }
-
-  renderComposer(props) {
-    return (
-      <Composer
-        {...props}
-        // multiline={(Platform.OS === 'ios')}
-        multiline
-        placeholder={t('ph_type_message')}
-        textInputProps={{
-          // onChangeText: () => { this.state.showActions = false; },
-          // onEndEditing: () => { this.state.showActions = true; },
-        }}
-        numberOfLines={4}
-        textInputStyle={{
-          backgroundColor: '#F5F5F5',
-          borderRadius: 3,
-          // paddingHorizontal: 5,
-          // lineHeight: 20,
-          // marginRight: 5,
-          fontFamily: 'OpenSans-Regular',
         }}
       />
     );
@@ -479,12 +416,6 @@ class ChatRoomView extends React.Component {
     return null;
   }
 
-  renderK() {
-    return (
-      <View style={{ flex: 1, backgroundColor: 'green', height: 5 }} />
-    );
-  }
-
   renderInputToolbar(props) {
     return (
       <View
@@ -499,7 +430,6 @@ class ChatRoomView extends React.Component {
           backgroundColor: 'rgba(0,0,0,0.05)',
           borderTopColor: 'rgba(0,0,0,0.15)',
           borderTopWidth: 1,
-          // height: 40,
         }}
         >
           {
@@ -560,36 +490,17 @@ class ChatRoomView extends React.Component {
           }
           <Composer
             {...props}
-            // multiline={(Platform.OS === 'ios')}
-            // multiline
-            // composerHeight={40}
             placeholder={t('ph_type_message')}
             textInputProps={{
               disableFullscreenUI: true,
-              // onChange: () => { this.state.showActions = false; },
-              // onEndEditing: () => { this.state.showActions = true; },
             }}
-            // onChange={(composerText) => {
-            //   this.setState({
-            //     composerText,
-            //   });
-            //   console.log(this.state.composerText.length);
-            //   if (!this.state.composerText) {
-            //     this.setState({ showActions: true });
-            //   } else {
-            //     this.setState({ showActions: false });
-            //   }
-            // }}
-            // text={this.state.composerText}
             numberOfLines={6}
             textInputStyle={{
               backgroundColor: '#FFF',
               borderRadius: 3,
-              // alignItems: 'flex-start',
-              // paddingHorizontal: 5,
+              paddingHorizontal: 5,
               lineHeight: 20,
-              // margin: 3,
-              // alignItems: 'flex-end',
+              fontSize: 14,
               fontFamily: 'OpenSans-Regular',
             }}
           />
@@ -598,38 +509,6 @@ class ChatRoomView extends React.Component {
           />
         </View>
       </View>
-    );
-  }
-
-  renderMessageText(props) {
-    return (
-      <View style={[styl[props.position].container]}>
-        <MarkdownView
-          styles={{
-            paragraph: {
-              paddingLeft: 10,
-              paddingRight: 10,
-              color: (props.position === 'left' ? AppColors.chat().textLeft : AppColors.chat().textRight),
-              fontFamily: 'OpenSans-Regular',
-              fontSize: 15,
-            },
-            link: {
-              color: (props.position === 'left' ? AppColors.chat().linkLeft : AppColors.chat().linkRight),
-              textDecorationLine: 'underline',
-            },
-          }}
-        >
-          {props.currentMessage.text}
-        </MarkdownView>
-      </View>
-    );
-  }
-
-  renderCustomView(props) {
-    return (
-      <CustomView
-        {...props}
-      />
     );
   }
 
@@ -691,63 +570,50 @@ class ChatRoomView extends React.Component {
         <ActivityIndicator
           animating
           size={'large'}
-          color={'rgba(0,0,0,0.3)'}
+          color={'red'}
         />
       </View>
     );
   }
 
   renderChat() {
-    if (this.state.loaded) {
-      return (
-        <GiftedChat
-          messages={this.state.messages}
-          onSend={this.onSend}
-          // renderActions={this.renderCustomActions}
-          renderFooter={this.renderFooter}
-          renderBubble={this.renderBubble}
-          renderSend={this.renderSend}
-          renderComposer={this.renderComposer}
-          renderCustomView={this.renderCustomView}
-          renderMessageText={this.isMarkDownEnabled() ? this.renderMessageText : null}
-          renderAvatar={this.renderAvatar}
-          renderAvatarOnTop={true}
-          renderInputToolbar={this.renderInputToolbar}
-          // renderAccessory={this.renderK}
-          loadEarlier={this.state.loadEarlier}
-          onLoadEarlier={this.onLoadEarlier}
-          isLoadingEarlier={this.state.isLoadingEarlier}
-          renderLoading={this.renderLoading}
-          user={{
-            _id: Application.userId,
-          }}
-          parsePatterns={() => [
-            { type: 'url', style: styl.left.link, onPress: this.handleUrlPress },
-            { type: 'phone', style: styl.left.link, onPress: this.onPressPhoneNumber },
-          ]}
-          style={{ backgroundColor: 'red', zIndex: 100 }}
-          keyboardShouldPersistTaps={'handled'}
-        />
-      );
-    }
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
+      <GiftedChat
+        // **** start base
+        messages={this.state.messages}
+        onSend={this.onSend}
+        user={{
+          _id: Application.userId,
         }}
-      >
-        <ActivityIndicator
-          animating
-          size={'large'}
-          color={'rgba(0,0,0,0.3)'}
-        />
-      </View>
+        loadEarlier={this.state.loadEarlier}
+        onLoadEarlier={this.onLoadEarlier}
+        keyboardShouldPersistTaps={'handled'}
+        renderAvatarOnTop={true}
+        isAnimated={true}
+        // **** end base
+
+        // **** start custom renders
+        renderAvatar={this.renderAvatar}
+        renderInputToolbar={this.renderInputToolbar}
+        renderBubble={this.renderBubble}
+        renderLoading={this.renderLoading}
+        // **** end custom renders
+
+        // onLongPress={() => alert('hi')}
+
+        parsePatterns={() => [
+          { type: 'url', style: styl.left.link },
+          { type: 'phone', style: styl.left.link },
+        ]}
+        renderFooter={this.renderFooter}
+        // renderCustomView={this.renderCustomView}
+        // renderMessageText={this.isMarkDownEnabled() ? this.renderMessageText : null}
+        // isLoadingEarlier={this.state.isLoadingEarlier}
+        // renderLoading={this.renderLoading}
+        // style={{ backgroundColor: 'red', zIndex: 100 }}
+      />
     );
   }
-
-// renderMessageText={this.renderMessageText}
 
   render() {
     return (
