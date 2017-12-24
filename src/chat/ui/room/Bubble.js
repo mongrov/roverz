@@ -12,6 +12,9 @@ import {
   Alert,
   Keyboard,
   TouchableOpacity,
+  Modal,
+  Animated,
+  Easing,
 } from 'react-native';
 import {
   MessageText,
@@ -51,6 +54,7 @@ export default class Bubble extends React.Component {
       original,
       parentMessage: null,
       canDelete,
+      actionsModal: false,
     };
     this.handleMsgCopy = this.handleMsgCopy.bind(this);
   }
@@ -87,30 +91,43 @@ export default class Bubble extends React.Component {
     if (this.props.onLongPress) {
       this.props.onLongPress(this.context, this.props.currentMessage);
     } else if (this.props.currentMessage.text) {
-      // const options = ['Copy Text', 'Cancel'];
-      // const cancelButtonIndex = options.length - 1;
-      // this.context.actionSheet().showActionSheetWithOptions(
-      //   {
-      //     options,
-      //     cancelButtonIndex,
-      //   },
-      //   (buttonIndex) => {
-      //     switch (buttonIndex) {
-      //       case 0:
-      //         Clipboard.setString(this.props.currentMessage.text);
-      //         break;
-      //       default:
-      //         break;
-      //     }
-      //   },
-      // );
-      this.toggleActions();
+      const options = ['Copy Text', 'Cancel'];
+      const cancelButtonIndex = options.length - 1;
+      this.context.actionSheet().showActionSheetWithOptions(
+        {
+          options,
+          cancelButtonIndex,
+        },
+        (buttonIndex) => {
+          switch (buttonIndex) {
+            case 0:
+              Clipboard.setString(this.props.currentMessage.text);
+              break;
+            default:
+              break;
+          }
+        },
+      );
+      // this.toggleActions();
     }
   }
 
   toggleActions = () => {
-    const action = this.state.showActions;
-    this.setState({ showActions: !action });
+    // const action = this.state.showActions;
+    // this.setState({ showActions: !action });
+    const action = this.state.actionsModal;
+    this.setState({ actionsModal: !action });
+  }
+
+  toggleModalActions = () => {
+    const action = this.state.actionsModal;
+    this.setState({ actionsModal: !action });
+    this.animatedValue = new Animated.Value(0.8);
+    Animated.timing(this.animatedValue, {
+      toValue: 1,
+      duration: 200,
+      easing: Easing.sin,
+    }).start();
   }
 
   _onPressLike = () => {
@@ -274,6 +291,110 @@ export default class Bubble extends React.Component {
       </TouchableOpacity>);
     }
     return null;
+  }
+
+  renderActionsModal() {
+    const animatedStyle = { transform: [{ scale: this.animatedValue }] };
+    if (this.state.actionsModal) {
+      return (
+        <Modal
+          animationType={'none'}
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              backgroundColor: 'rgba(0,0,0,0.6)',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={this.toggleModalActions}
+          >
+            <Animated.View
+              style={[{
+                backgroundColor: '#FFF',
+                borderRadius: 5,
+                padding: 15,
+                // width: 300,
+                // height: 200,
+              }, animatedStyle]}
+            >
+              <View
+                style={{
+                  alignItems: 'flex-start',
+                  padding: 3,
+                  flexDirection: 'row',
+                  marginVertical: 5,
+                }}
+              >
+                <TouchableOpacity
+                  style={[styles.actionBtn]}
+                  onPress={this._onPressLike}
+                >
+                  <Icon
+                    name={'heart-outline'}
+                    type={'material-community'}
+                    size={22}
+                    color={'#FFF'}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.actionBtn]}
+                  onPress={this._handleComments}
+                >
+                  <Icon
+                    name={'comment-text-outline'}
+                    type={'material-community'}
+                    size={22}
+                    color={'#FFF'}
+                  />
+                </TouchableOpacity>
+                {
+                  !this.props.currentMessage.image &&
+                  (
+                    <TouchableOpacity
+                      style={[styles.actionBtn]}
+                      onPress={this._handleCopy}
+                    >
+                      <Icon
+                        name={'content-copy'}
+                        type={'material-community'}
+                        size={22}
+                        color={'#FFF'}
+                      />
+                    </TouchableOpacity>
+                  )
+                }
+                {this.renderDelete()}
+              </View>
+
+              <TouchableOpacity
+                onPress={() => {
+                  this.toggleModalActions();
+                }}
+                style={{
+                  // flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: 30,
+                  paddingHorizontal: 15,
+                  margin: 3,
+                  borderWidth: 1,
+                  borderRadius: 3,
+                  borderColor: AppColors.brand().fourth,
+                }}
+              >
+                <Text>Cancel</Text>
+              </TouchableOpacity>
+            </Animated.View>
+          </TouchableOpacity>
+        </Modal>
+      );
+    }
   }
 
   renderMessageText() {
@@ -540,7 +661,7 @@ export default class Bubble extends React.Component {
           <TouchableWithoutFeedback
             onLongPress={this.onLongPress}
             accessibilityTraits="text"
-            onPress={this.toggleActions}
+            onPress={this.toggleModalActions}
             {...this.props.touchableProps}
           >
             <View>
@@ -559,6 +680,7 @@ export default class Bubble extends React.Component {
                 </View>
               </View>
               <View style={[styles.bottom, this.props.bottomContainerStyle[this.props.position]]}>
+                {this.renderActionsModal()}
                 {this.renderActions()}
                 <View>
                   {this.renderTime()}

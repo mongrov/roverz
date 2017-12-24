@@ -48,7 +48,7 @@ export default class MessageImage extends React.Component {
   }
 
   handleLongPress = () => {
-    this.props.pressLong();
+    // this.props.pressLong();
   }
 
   render() {

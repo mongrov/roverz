@@ -11,6 +11,8 @@ import {
   // Linking,
   ActivityIndicator,
   Keyboard,
+  TextInput,
+  Dimensions,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
@@ -18,9 +20,7 @@ import emoji from 'node-emoji';
 
 import {
   GiftedChat,
-  // Bubble,
-  Composer,
-  // Actions as GCActions,
+  InputToolbar,
  } from 'react-native-gifted-chat';
 import { Actions } from 'react-native-router-flux';
 import AppUtil from '../../../lib/util';
@@ -28,7 +28,6 @@ import AppUtil from '../../../lib/util';
 // Components
 import Network from '../../../network';
 import Group from '../../../models/group';
-import { Send } from '../../../chat/ui/';
 import { ProgressBar } from '../../../components/ui/';
 
 import { AppStyles, AppSizes, AppColors } from '../../../theme/';
@@ -117,8 +116,16 @@ class ChatRoomView extends React.Component {
       loaded: true,
       attach: this.attach,
       composerText: '',
+      attachMenu: false,
+      height: 44,
+      text: '',
+      layout: {
+        height: Dimensions.get('window').height,
+        width: Dimensions.get('window').width,
+      },
     };
     this.onSend = this.onSend.bind(this);
+    this.renderFooter = this.renderFooter.bind(this);
     this.renderChatFooter = this.renderChatFooter.bind(this);
     this.renderBubble = this.renderBubble.bind(this);
     this.renderAvatar = this.renderAvatar.bind(this);
@@ -126,6 +133,7 @@ class ChatRoomView extends React.Component {
     this.onLoadEarlier = this.onLoadEarlier.bind(this);
     this._progressCallback = this._progressCallback.bind(this);
     this.messageCopy = this.messageCopy.bind(this);
+    this.renderComposer = this.renderComposer.bind(this);
     this.subscriptions();
     this._didMount = false;
   }
@@ -202,16 +210,17 @@ class ChatRoomView extends React.Component {
     AppUtil.debug('Component unmounted', '[Performance] RoomView');
   }
 
-  onSend(messages = []) {
-    /* [ { text: 'Hello', user: { _id: 'wKk3sXsCYvTkXJeLY' }, createdAt: Wed Jun 07 2017 00:26:46 GMT-0700 (PDT),
-       _id: 'e6fa1c61-e77d-4935-aefd-9ee3e10bbdb1' } ] */
-    // lets not send an empty message
-    if (messages.length > 0 && messages[0].text && messages[0].text.trim().length > 0) {
-      const unEmoMsg = emoji.unemojify(messages[0].text.trim());
+  onSend() {
+    if (this.state.text.trim().length > 0) {
+      const unEmoMsg = emoji.unemojify(this.state.text.trim());
       this._network.chat.sendMessage(
         this._group._id,
         unEmoMsg,
       );
+      this.setState({
+        text: '',
+        height: 44,
+      });
     }
   }
 
@@ -341,6 +350,110 @@ class ChatRoomView extends React.Component {
   }
 
   renderChatFooter() {
+    if (this.state.attachMenu) {
+      return (
+        <View
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            borderRadius: 5,
+            padding: 5,
+            backgroundColor: AppColors.brand().fourth,
+          }}
+        >
+          <View
+            style={{
+              flexWrap: 'wrap',
+              alignItems: 'flex-start',
+              padding: 3,
+              flexDirection: 'row',
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: 5,
+                width: 60,
+              }}
+              onPress={() => {
+                Keyboard.dismiss();
+                this.setState({
+                  attachMenu: !this.state.attachMenu,
+                  text: '',
+                });
+                Actions.photoLibrary({
+                  groupId: this._group._id,
+                  progressCallback: this._progressCallback,
+                  duration: 0,
+                });
+              }}
+            >
+              <Icon
+                raised
+                name={'image-multiple'}
+                type={'material-community'}
+                color={'#ff5608'}
+                reverse
+              />
+              <Text
+                numberOfLines={1}
+                ellipsizeMode={'tail'}
+                style={{
+                  color: '#fff',
+                }}
+              >Gallery</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: 5,
+                width: 60,
+              }}
+              onPress={() => {
+                Keyboard.dismiss();
+                this.setState({
+                  attachMenu: !this.state.attachMenu,
+                  text: '',
+                });
+                Actions.cameraActions({
+                  group: this._group,
+                  groupId: this._group._id,
+                  progressCallback: this._progressCallback,
+                  duration: 0,
+                });
+              }}
+            >
+              <Icon
+                raised
+                name={'camera'}
+                type={'material-community'}
+                color={'#01bcd7'}
+                reverse
+              />
+              <Text
+                numberOfLines={1}
+                ellipsizeMode={'tail'}
+                style={{
+                  color: '#fff',
+                }}
+              >Camera</Text>
+            </TouchableOpacity>
+            <View style={{ flex: 3 }} />
+          </View>
+        </View>
+      );
+    }
+  }
+
+  renderFooter() {
     if (this.state.typingText) {
       return (
         <View style={styles.footerContainer}>
@@ -415,101 +528,104 @@ class ChatRoomView extends React.Component {
     return null;
   }
 
-  renderInputToolbar(props) {
+  renderActions = () => (
+    <TouchableOpacity
+      style={{
+        width: 44,
+        height: 44,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+      onPress={() => {
+        Keyboard.dismiss();
+        this.setState({ attachMenu: !this.state.attachMenu });
+      }}
+    >
+      <Icon
+        name={'add-circle'}
+        size={28}
+        color={'rgba(0,0,0,0.4)'}
+      />
+    </TouchableOpacity>
+  )
+
+  renderComposer() {
     return (
       <View
         style={{
           flex: 1,
-          flexDirection: 'column',
-        }}
-      >
-        <View style={{
           flexDirection: 'row',
           alignItems: 'flex-end',
-          backgroundColor: 'rgba(0,0,0,0.05)',
-          borderTopColor: 'rgba(0,0,0,0.15)',
-          borderTopWidth: 1,
         }}
-        >
-          {
-            this.state.showActions && (
-              <TouchableOpacity
-                style={{
-                  width: 40,
-                  height: 30,
-                  marginBottom: 7,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                onPress={() => {
-                  Keyboard.dismiss();
-                  Actions.photoLibrary({
-                    groupId: this._group._id,
-                    progressCallback: this._progressCallback,
-                    duration: 0,
-                  });
-                }}
-              >
-                <Icon
-                  name={'attach-file'}
-                  size={28}
-                  color={'rgba(0,0,0,0.4)'}
-                />
-              </TouchableOpacity>
-            )
-          }
-          {
-            this.state.showActions && (
-              <TouchableOpacity
-                style={{
-                  width: 40,
-                  height: 30,
-                  marginBottom: 7,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                onPress={() => {
-                  // console.log('hi');
-                  Keyboard.dismiss();
-                  Actions.cameraActions({
-                    group: this._group,
-                    groupId: this._group._id,
-                    progressCallback: this._progressCallback,
-                    duration: 0,
-                  });
-                }}
-              >
-                <Icon
-                  name={'camera-alt'}
-                  size={28}
-                  color={'rgba(0,0,0,0.4)'}
-                />
-              </TouchableOpacity>
-            )
-          }
-          <Composer
-            {...props}
-            placeholder={t('ph_type_message')}
-            textInputProps={{
-              disableFullscreenUI: true,
-            }}
-            numberOfLines={6}
-            textInputStyle={{
-              backgroundColor: '#FFF',
-              borderRadius: 3,
-              paddingHorizontal: 5,
-              lineHeight: 20,
-              fontSize: 14,
-              fontFamily: 'OpenSans-Regular',
-            }}
-          />
-          <Send
-            {...props}
-          />
-        </View>
+      >
+        <TextInput
+          multiline
+          placeholder={t('ph_type_message')}
+          style={{
+            flex: 1,
+            padding: 5,
+            fontSize: 16,
+            fontFamily: 'OpenSans-Regular',
+            borderRadius: 5,
+            minHeight: 44,
+            maxHeight: 120,
+            backgroundColor: '#FFF',
+            width: this.state.width,
+            height: Math.min(120, Math.max(44, this.state.height)),
+          }}
+          onChange={(event) => {
+            this.setState({
+              height: event.nativeEvent.contentSize.height,
+            });
+          }}
+          value={this.state.text}
+          onChangeText={text => this.setState({
+            text,
+            attachMenu: false,
+          })}
+          underlineColorAndroid={'rgba(0,0,0,0)'}
+          disableFullscreenUI={true}
+          onLayout={(event) => {
+            this.setState({
+              layout: {
+                width: event.nativeEvent.layout.width,
+              },
+            });
+          }}
+        />
+        {
+          this.state.text.length > 0 &&
+          (
+            <TouchableOpacity
+              style={{
+                width: 44,
+                height: 44,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              onPress={this.onSend}
+            >
+              <Icon
+                name="send"
+                size={30}
+                color={AppColors.brand().third}
+              />
+            </TouchableOpacity>
+          )
+        }
       </View>
     );
   }
+
+  renderInputToolbar = props =>
+    (<InputToolbar
+      {...props}
+      containerStyle={{
+        backgroundColor: '#f4f4f4',
+        paddingVertical: 3,
+        width: Dimensions.get('window').width,
+      }}
+    />)
 
   renderAvatar(props) {
     return (
@@ -580,6 +696,7 @@ class ChatRoomView extends React.Component {
       <GiftedChat
         // **** start base
         messages={this.state.messages}
+        text={this.state.text}
         onSend={this.onSend}
         user={{
           _id: Application.userId,
@@ -596,6 +713,11 @@ class ChatRoomView extends React.Component {
         renderInputToolbar={this.renderInputToolbar}
         renderBubble={this.renderBubble}
         renderLoading={this.renderLoading}
+        renderFooter={this.renderFooter}
+        renderChatFooter={this.renderChatFooter}
+        renderComposer={this.renderComposer}
+        renderActions={this.renderActions}
+        renderSend={() => {}}
         // **** end custom renders
 
         // onLongPress={() => alert('hi')}
@@ -604,7 +726,9 @@ class ChatRoomView extends React.Component {
           { type: 'url', style: styl.left.link },
           { type: 'phone', style: styl.left.link },
         ]}
-        renderChatFooter={this.renderChatFooter}
+        // renderSend={this.renderSend}
+        // renderAccessory={() => <View style={{ height: 50, backgroundColor: 'teal' }} />}
+        // minInputToolbarHeight={this.state.height}
         // renderFooter={() => <View style={{ flex: 1, height: 30, backgroundColor: 'yellow' }} />}
         // onPressActionButton={() => alert('ji')}
         // renderChatFooter={() => <View style={{ height: 20, backgroundColor: 'red' }} />}
