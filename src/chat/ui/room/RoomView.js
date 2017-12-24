@@ -13,6 +13,7 @@ import {
   Keyboard,
   TextInput,
   Dimensions,
+  Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
@@ -21,6 +22,7 @@ import emoji from 'node-emoji';
 import {
   GiftedChat,
   InputToolbar,
+  Composer,
  } from 'react-native-gifted-chat';
 import { Actions } from 'react-native-router-flux';
 import AppUtil from '../../../lib/util';
@@ -549,7 +551,75 @@ class ChatRoomView extends React.Component {
     </TouchableOpacity>
   )
 
-  renderComposer() {
+  renderComposer(props) {
+    if (Platform.OS !== 'ios') {
+      return (
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'flex-end',
+          }}
+        >
+          <TextInput
+            multiline
+            placeholder={t('ph_type_message')}
+            placeholderTextColor={'rgba(0,0,0,0.3)'}
+            style={{
+              flex: 1,
+              padding: 5,
+              fontSize: 16,
+              fontFamily: 'OpenSans-Regular',
+              borderRadius: 5,
+              minHeight: 44,
+              maxHeight: 120,
+              backgroundColor: '#FFF',
+              width: this.state.width,
+              height: Math.min(120, Math.max(44, this.state.height)),
+            }}
+            onChange={(event) => {
+              this.setState({
+                height: event.nativeEvent.contentSize.height,
+              });
+            }}
+            value={this.state.text}
+            onChangeText={text => this.setState({
+              text,
+              attachMenu: false,
+            })}
+            underlineColorAndroid={'rgba(0,0,0,0)'}
+            disableFullscreenUI={true}
+            onLayout={(event) => {
+              this.setState({
+                layout: {
+                  width: event.nativeEvent.layout.width,
+                },
+              });
+            }}
+          />
+          {
+            this.state.text.length > 0 &&
+            (
+              <TouchableOpacity
+                style={{
+                  width: 44,
+                  height: 44,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={this.onSend}
+              >
+                <Icon
+                  name="send"
+                  size={30}
+                  color={AppColors.brand().third}
+                />
+              </TouchableOpacity>
+            )
+          }
+        </View>
+      );
+    }
     return (
       <View
         style={{
@@ -558,39 +628,27 @@ class ChatRoomView extends React.Component {
           alignItems: 'flex-end',
         }}
       >
-        <TextInput
-          multiline
+        <Composer
+          {...props}
           placeholder={t('ph_type_message')}
-          style={{
-            flex: 1,
+          textInputProps={{
+            disableFullscreenUI: true,
+            value: this.state.text,
+            onChangeText: (text) => {
+              this.setState({
+                text,
+                attachMenu: false,
+              });
+            },
+          }}
+          numberOfLines={6}
+          textInputStyle={{
+            backgroundColor: '#FFF',
+            borderRadius: 3,
             padding: 5,
+            lineHeight: 16,
             fontSize: 16,
             fontFamily: 'OpenSans-Regular',
-            borderRadius: 5,
-            minHeight: 44,
-            maxHeight: 120,
-            backgroundColor: '#FFF',
-            width: this.state.width,
-            height: Math.min(120, Math.max(44, this.state.height)),
-          }}
-          onChange={(event) => {
-            this.setState({
-              height: event.nativeEvent.contentSize.height,
-            });
-          }}
-          value={this.state.text}
-          onChangeText={text => this.setState({
-            text,
-            attachMenu: false,
-          })}
-          underlineColorAndroid={'rgba(0,0,0,0)'}
-          disableFullscreenUI={true}
-          onLayout={(event) => {
-            this.setState({
-              layout: {
-                width: event.nativeEvent.layout.width,
-              },
-            });
           }}
         />
         {

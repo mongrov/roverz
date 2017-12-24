@@ -133,7 +133,7 @@ export default class Bubble extends React.Component {
   _onPressLike = () => {
     console.log('**** like pressed **** ');
     this._network.chat.setPhotoLike(this.state.original._id);
-    this.toggleActions();
+    this.toggleModalActions();
   }
 
   _handleDelete = () => {
@@ -153,18 +153,20 @@ export default class Bubble extends React.Component {
   }
 
   _deleteMessage = () => {
-    Alert.alert(
-      t('info_delete'),
-      t('info_del_message'),
-      [
-        { text: t('txt_no'), onPress: () => {}, style: 'cancel' },
-        { text: t('txt_yes'),
-          onPress: () => this._handleDelete(),
-        },
-      ],
-      { cancelable: false },
-    );
-    this.toggleActions();
+    this.setState({ actionsModal: false });
+    setTimeout(() => {
+      Alert.alert(
+        t('info_delete'),
+        t('info_del_message'),
+        [
+          { text: t('txt_no'), onPress: () => {}, style: 'cancel' },
+          { text: t('txt_yes'),
+            onPress: () => this._handleDelete(),
+          },
+        ],
+        { cancelable: false },
+      );
+    }, 100);
   }
 
   _handleComments = () => {
@@ -227,13 +229,13 @@ export default class Bubble extends React.Component {
         canDelete: this.state.canDelete,
       });
     }
-    this.toggleActions();
+    this.toggleModalActions();
   }
 
   _handleCopy = () => {
     Clipboard.setString(this.props.currentMessage.text);
     this.handleMsgCopy();
-    this.toggleActions();
+    this.toggleModalActions();
   }
 
   prepareMessages(messages, callback) {
@@ -269,7 +271,7 @@ export default class Bubble extends React.Component {
   }
 
   pressLong = () => {
-    this.toggleActions();
+    this.toggleModalActions();
   }
 
   handleMsgCopy() {
