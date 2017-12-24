@@ -302,7 +302,7 @@ export default class Bubble extends React.Component {
           transparent={true}
           visible={this.state.modalVisible}
           onRequestClose={() => {
-            alert('Modal has been closed.');
+            // alert('Modal has been closed.');
           }}
         >
           <TouchableOpacity
