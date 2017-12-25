@@ -5,21 +5,21 @@ import Network from '../../network';
 
 class ImageUtil {
 
-  _slugify(desc, acfileame) {
+  _slugify(desc/* , acfileame */) {
     var text = desc;
-    if (!text) {
-      text = acfileame.split('.');
-      text = text[0];
-    }
-    text = text.toString().toLowerCase()
-      .replace(/\s+/g, '-')           // Replace spaces with -
-      .replace(/[^\w\-]+/g, '')       // eslint-disable-line no-useless-escape
-      .replace(/\-\-+/g, '-')         // eslint-disable-line no-useless-escape
-      .replace(/^-+/, '')             // Trim - from start of text
-      .replace(/-+$/, '');            // Trim - from end of text
-    if (text.length < 1) {
-      text = acfileame;
-    }
+    // if (!text) {
+    //   text = acfileame.split('.');
+    //   text = text[0];
+    // }
+    // text = text.toString().toLowerCase()
+    //   .replace(/\s+/g, '-')           // Replace spaces with -
+    //   .replace(/[^\w\-]+/g, '')       // eslint-disable-line no-useless-escape
+    //   .replace(/\-\-+/g, '-')         // eslint-disable-line no-useless-escape
+    //   .replace(/^-+/, '')             // Trim - from start of text
+    //   .replace(/-+$/, '');            // Trim - from end of text
+    // if (text.length < 1) {
+    //   text = acfileame;
+    // }
     return text;
   }
 

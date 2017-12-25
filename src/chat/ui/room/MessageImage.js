@@ -14,12 +14,12 @@ const styles = StyleSheet.create({
   container: {
   },
   image: {
-    width: 285,
-    height: 150,
-    borderRadius: 13,
+    width: 230,
+    height: 230,
+    borderRadius: 8,
     margin: 3,
     resizeMode: 'cover',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   imageActive: {
@@ -40,11 +40,29 @@ export default class MessageImage extends React.Component {
   constructor(props) {
     super(props);
     const obj = this.props.obj;
+    // const _network = new Network();
     this.state = {
       obj,
       modalVisible: false,
       loaded: false,
     };
+  }
+
+  componentWillMount = () => {
+    // console.log(this.props.currentMessage.image);
+    // Image.prefetch('this.props.currentMessage.image', id => console.log(id));
+    // this._network.chat.fixS3Urls(
+    //   [this.props.currentMessage.image],
+    //   (res) => {
+    //     console.log('fixS3Urls');
+    //     console.log(res);
+    //   },
+    //   true,
+    // );
+    // Image.getSize('https://facebook.github.io/react-native/img/header_logo.png', (width, height) => {
+    //   // this.setState({width, height})
+    //   console.log(width, height);
+    // });
   }
 
   handleLongPress = () => {
@@ -88,6 +106,7 @@ export default class MessageImage extends React.Component {
             style={[styles.image, this.props.imageStyle]}
             source={{ uri: this.props.currentMessage.image }}
             onLoad={() => { this.setState({ loaded: true }); }}
+            resizeMethod={'scale'}
           >
             {
               !this.state.loaded &&

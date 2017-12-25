@@ -8,7 +8,7 @@ import {
   View,
   StatusBar,
   TouchableOpacity,
-  // Linking,
+  Linking,
   ActivityIndicator,
   Keyboard,
   TextInput,
@@ -342,11 +342,11 @@ class ChatRoomView extends React.Component {
             replyText: { color: AppColors.chat().replyTextR },
           },
         }}
-        imageStyle={{
-          width: AppStyles.windowSize.width - 90,
-          height: 150,
-          borderRadius: 8,
-        }}
+        // imageStyle={{
+        //   width: AppStyles.windowSize.width - 90,
+        //   height: 150,
+        //   borderRadius: 8,
+        // }}
       />
     );
   }
@@ -781,8 +781,18 @@ class ChatRoomView extends React.Component {
         // onLongPress={() => alert('hi')}
 
         parsePatterns={() => [
-          { type: 'url', style: styl.left.link },
-          { type: 'phone', style: styl.left.link },
+          { type: 'url',
+            style: styl.left.link,
+            onPress: (url) => {
+              Linking.openURL(url).catch(err => console.error('An error occurred', err));
+            },
+          },
+          { type: 'phone',
+            style: styl.left.link,
+            onPress: (url) => {
+              Linking.openURL(`tel:${url}`).catch(err => console.error('An error occurred', err));
+            },
+          },
         ]}
         // renderSend={this.renderSend}
         // renderAccessory={() => <View style={{ height: 50, backgroundColor: 'teal' }} />}
