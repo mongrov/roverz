@@ -293,45 +293,23 @@ export default class PhotoLibrary extends React.Component {
           callback={this.selectImages}
           selected={[]}
           selectedMarker={
-            <View style={{
-              bottom: 0,
-              top: 0,
-              height: '100%',
-              backgroundColor: 'rgba(0,0,0,0.5)',
-              width: '100%',
-              position: 'absolute',
-              justifyContent: 'center',
-            }}
+            <View
+              style={{
+                height: '100%',
+                backgroundColor: 'rgba(0,0,0,0.3)',
+                width: '100%',
+                position: 'absolute',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 200,
+              }}
             >
-              <TouchableOpacity
-                style={{
-                  width: 45,
-                  height: 45,
-                  borderRadius: 23,
-                  position: 'absolute',
-                  backgroundColor: 'transparent',
-                  top: 50,
-                  bottom: 50,
-                  right: 50,
-                  left: 50,
-                  zIndex: 200,
-                  shadowColor: '#000000',
-                  shadowOffset: {
-                    width: 1,
-                    height: 1,
-                  },
-                  shadowRadius: 2,
-                  shadowOpacity: 0.3,
-                  alignItems: 'center',
-                }}
-              >
-                <Icon
-                  name="done"
-                  type="MaterialIcons"
-                  size={45}
-                  color={'#fff'}
-                />
-              </TouchableOpacity>
+              <Icon
+                name="done"
+                type="MaterialIcons"
+                size={45}
+                color={'#fff'}
+              />
             </View>
         }
 
