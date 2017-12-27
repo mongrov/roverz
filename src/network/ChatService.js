@@ -500,9 +500,9 @@ class ChatService {
 
   fetchChannels() {
     const _super = this;
-    const appState = this.db.app.state;
+    const dbAppState = this.db.app.state;
     // console.log(yap);
-    const lastSync = appState ? appState.lastSync.getTime() : 0;
+    const lastSync = dbAppState ? dbAppState.lastSync.getTime() : 0;
     // console.log(`Last Sync:${lastSync}`);
     // console.log('--- [Network] --- ====================================');
     const noOfMsgs = 10;
@@ -659,12 +659,6 @@ class ChatService {
         // group id is the name of the event
         const group = _super.db.groups.findById(results[0].eventName);
         _super.yaps2db(group, results[0].args);
-        if (this.appState === 0) { // app in background
-          PushNotification.localNotificationSchedule({
-            message: `Received message in ${group.name}`, // (required)
-            date: new Date(Date.now()), // in 60 secs
-          });
-        }
       }
     });
     this._monStreamNotifyRoom = this.meteor.monitorChanges('stream-notify-room', (result) => {
@@ -820,6 +814,8 @@ class ChatService {
     if (!msgs || !group || msgs.length === 0) return;
     const yaps = {};
     const editedYaps = {};
+    const currUser = this.getCurrentUser();
+    let msgNotify = false;
     for (let i = 0; i < msgs.length; i += 1) {
       const inM = msgs[i];
       let msgText = inM.msg;
@@ -859,9 +855,18 @@ class ChatService {
       } else {
         yaps[m._id] = m;
       }
+      if (this.appState === 0 && !msgNotify) {
+        msgNotify = !(m.user._id === currUser._id);
+      }
     }
     this.db.addMessages(group, yaps);
     this.db.updateMessages(group, editedYaps);
+    if (this.appState === 0 && msgNotify) { // app in background
+      PushNotification.localNotificationSchedule({
+        message: `Received message in ${group.name}`, // (required)
+        date: new Date(Date.now()), // in 60 secs
+      });
+    }
   }
 
 }
