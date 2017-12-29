@@ -280,17 +280,25 @@ export default class Bubble extends React.Component {
 
   renderDelete() {
     if (this.state.canDelete) {
-      return (<TouchableOpacity
-        style={[styles.actionBtn]}
-        onPress={this._deleteMessage}
-      >
-        <Icon
-          name={'delete'}
-          type={'material-community'}
-          size={22}
-          color={'#FFF'}
-        />
-      </TouchableOpacity>);
+      return (
+        <TouchableOpacity
+          style={[styles.actionBtn]}
+          onPress={this._deleteMessage}
+        >
+          <Icon
+            name={'delete'}
+            type={'material-community'}
+            size={22}
+            color={AppColors.brand().secondary}
+          />
+          <Text style={{
+            paddingLeft: 5,
+            fontSize: 18,
+            fontFamily: 'OpenSans-Regular',
+            color: '#000000',
+          }}
+          >Delete</Text>
+        </TouchableOpacity>);
     }
     return null;
   }
@@ -321,15 +329,15 @@ export default class Bubble extends React.Component {
                 backgroundColor: '#FFF',
                 borderRadius: 5,
                 padding: 15,
-                // width: 300,
-                // height: 200,
+                width: 300,
+                // height: 300,
               }, animatedStyle]}
             >
               <View
                 style={{
                   alignItems: 'flex-start',
                   padding: 3,
-                  flexDirection: 'row',
+                  flexDirection: 'column',
                   marginVertical: 5,
                 }}
               >
@@ -341,9 +349,17 @@ export default class Bubble extends React.Component {
                     name={'heart-outline'}
                     type={'material-community'}
                     size={22}
-                    color={'#FFF'}
+                    color={AppColors.brand().secondary}
                   />
+                  <Text style={{
+                    paddingLeft: 5,
+                    fontSize: 18,
+                    fontFamily: 'OpenSans-Regular',
+                    color: '#000000',
+                  }}
+                  >Like</Text>
                 </TouchableOpacity>
+                <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(0,0,0,0.5)' }} />
                 <TouchableOpacity
                   style={[styles.actionBtn]}
                   onPress={this._handleComments}
@@ -352,9 +368,17 @@ export default class Bubble extends React.Component {
                     name={'comment-text-outline'}
                     type={'material-community'}
                     size={22}
-                    color={'#FFF'}
+                    color={AppColors.brand().secondary}
                   />
+                  <Text style={{
+                    paddingLeft: 5,
+                    fontSize: 18,
+                    fontFamily: 'OpenSans-Regular',
+                    color: '#000000',
+                  }}
+                  >Reply</Text>
                 </TouchableOpacity>
+                <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(0,0,0,0.5)' }} />
                 {
                   !this.props.currentMessage.image &&
                   (
@@ -366,32 +390,21 @@ export default class Bubble extends React.Component {
                         name={'content-copy'}
                         type={'material-community'}
                         size={22}
-                        color={'#FFF'}
+                        color={AppColors.brand().secondary}
                       />
+                      <Text style={{
+                        paddingLeft: 5,
+                        fontSize: 18,
+                        fontFamily: 'OpenSans-Regular',
+                        color: '#000000',
+                      }}
+                      >Copy</Text>
                     </TouchableOpacity>
                   )
                 }
+                <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(0,0,0,0.5)' }} />
                 {this.renderDelete()}
               </View>
-
-              <TouchableOpacity
-                onPress={() => {
-                  this.toggleModalActions();
-                }}
-                style={{
-                  // flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  height: 30,
-                  paddingHorizontal: 15,
-                  margin: 3,
-                  borderWidth: 1,
-                  borderRadius: 3,
-                  borderColor: AppColors.brand().fourth,
-                }}
-              >
-                <Text>Cancel</Text>
-              </TouchableOpacity>
             </Animated.View>
           </TouchableOpacity>
         </Modal>
@@ -770,13 +783,16 @@ const styles = {
     marginRight: 10,
   },
   actionBtn: {
-    padding: 12,
+    padding: 5,
     borderRadius: 3,
-    borderColor: '#fff',
+    // borderColor: '#fff',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.2)',
-    marginHorizontal: 5,
+    marginVertical: 5,
+    width: '100%',
+    // borderTopColor: 'rgba(0,0,0,0.5)',
+    // borderTopWidth: 1,
+    // borderWidth:1,
   },
   replyWrapper: {
     flexDirection: 'row',
