@@ -113,39 +113,55 @@ class GroupList extends Component {
       loaded: false,
       items: this._service.db.groups.sortedList,
       connected: false,
+      appState: AppState.currentState,
     };
+    console.log('APPSTATE GV - constructor', `${AppState.currentState}`);
+  }
+
+  componentWillMount() {
+    console.log('APPSTATE GV - componentWillMount');
   }
 
   componentDidMount() {
+    console.log('APPSTATE GV - componentDidMount start');
     this._service.onLogin(() => {
+      console.log('APPSTATE GV - onLogin');
       // on login, lets sync
       if (this._mounted && this._service.currentUser) {
         this._service.switchToLoggedInUser();
         this.setState({ connected: true });
+        console.log('APPSTATE GV - switchToLoggedInUser');
       }
     });
     this._insideStateUpdate = false;
     this._service.db.groups.list.addListener(() => {
-      if (!this._mounted || this._insideStateUpdate || !this._service.currentUser) return;
+      console.log('APPSTATE GV - list.addListener');
+      if (!this._mounted
+        || this._insideStateUpdate ||
+        !this._service.currentUser ||
+        this.state.appState.match(/inactive|background/)) return;
       this._insideStateUpdate = true;
+      console.log('APPSTATE GV - list.addListener _insideStateUpdate');
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(
           this._service.chat.getFilteredChannels(this.state.items)),
         loaded: true,
         connected: this._service.currentUser,
-      });
-      this._insideStateUpdate = false;
+      }, () => { this._insideStateUpdate = false; console.log('APPSTATE GV - dataSource callback'); });
     });
     this._mounted = true;
     setTimeout(() => {
+      console.log('APPSTATE GV - setTimeout');
       if (this._mounted && this.state.items && this.state.items.length > 0 && !this.state.loaded) {
         this.setState({
           loaded: true,
           dataSource: this.state.dataSource.cloneWithRows(this._service.chat.getFilteredChannels(
             this.state.items)),
+        }, () => {
+          this._service.chat.setAppState(1);
+          this._service.chat.setUserPresence('online');
+          console.log('APPSTATE GV - setTimeout callback');
         });
-        this._service.chat.setAppState(1);
-        this._service.chat.setUserPresence('online');
       }
     }, 100);
     AppState.addEventListener('change', this._handleAppStateChange);
@@ -154,6 +170,7 @@ class GroupList extends Component {
   componentWillUnmount() {
     this._mounted = false;
     AppState.removeEventListener('change', this._handleAppStateChange);
+    console.log('APPSTATE GV - componentWillUnmount');
   }
 
   getUser = (msg) => {
@@ -189,6 +206,11 @@ class GroupList extends Component {
       this._service.chat.setAppState(1);
       this._service.chat.setUserPresence('online');
     }
+    console.log('APPSTATE', `${AppState.currentState} => ${nextAppState}`);
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      console.log('APPSTATE GV - App has come to the foreground!');
+    }
+    this.setState({ appState: nextAppState });
   }
 
   renderRow = (data, sectionID) => {

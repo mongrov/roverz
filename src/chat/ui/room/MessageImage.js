@@ -14,12 +14,12 @@ const styles = StyleSheet.create({
   container: {
   },
   image: {
-    width: 230,
-    height: 230,
+    width: 250,
+    height: 150,
     borderRadius: 8,
     margin: 3,
     resizeMode: 'cover',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   imageActive: {

@@ -14,6 +14,7 @@ import {
   TextInput,
   Dimensions,
   Platform,
+  AppState,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
@@ -125,7 +126,9 @@ class ChatRoomView extends React.Component {
         height: Dimensions.get('window').height,
         width: Dimensions.get('window').width,
       },
+      appState: AppState.currentState,
     };
+    console.log('APPSTATE RV - constructor', `${AppState.currentState}`);
     this.onSend = this.onSend.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
     this.renderChatFooter = this.renderChatFooter.bind(this);
@@ -140,16 +143,27 @@ class ChatRoomView extends React.Component {
     this._didMount = false;
   }
 
+  componentWillMount() {
+    console.log('APPSTATE RV - componentWillMount');
+  }
+
   componentDidMount() {
+    console.log('APPSTATE RV - componentDidMount start');
+    AppState.addEventListener('change', this._handleAppStateChange);
     const _super = this;
     AppUtil.debug(new Date().toLocaleString(), '[Performance] RoomView');
     this._callOutstanding = false;
-    this._changeListener = (/* messages, changes */) => {
+    this._changeListener = (messages, changes) => {
+      console.log('APPSTATE RV - componentDidMount _changeListener');
       // @todo: This check can be removed after upgrading to react-native 0.45
-      if (_super._changeListener == null || _super._callOutstanding === true || !_super._didMount) return;
+      if (_super._changeListener == null ||
+        _super._callOutstanding === true ||
+        !_super._didMount ||
+        _super.state.appState.match(/inactive|background/)) return;
+      console.log('APPSTATE RV - componentDidMount _super._changeListener');
       // console.log(`***** [chat-${_super._group.name}] got updated  **** `);
       // @todo: there seems to be a bug in realm that doesn't remove the listener
-      // console.log(changes);
+      console.log('APPSTATE RV - componentDidMount _super._changeListener', changes);
       // if (changes.modifications && changes.modifications.length > 0) {
       //   AppUtil.debug(changes, '[Debug] RoomView changes');
       // }
@@ -157,6 +171,7 @@ class ChatRoomView extends React.Component {
       // @todo: There is a scenario, when this msg and subscription message is out of order
       // still the unread is present
       if (_super._group.unread > 0) {
+        console.log('APPSTATE RV - componentDidMount setRoomAsRead');
         this._network.chat.setRoomAsRead(_super._group._id);
       }
       _super.prepareMessages();
@@ -195,6 +210,7 @@ class ChatRoomView extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('APPSTATE RV - componentWillReceiveProps');
     if (this.state.attach !== nextProps.attach) {
       // console.log('this.state.attach', nextProps.attach);
       this.setState({
@@ -205,6 +221,8 @@ class ChatRoomView extends React.Component {
   }
 
   componentWillUnmount() {
+    console.log('APPSTATE RV - componentWillUnmount');
+    AppState.removeEventListener('change', this._handleAppStateChange);
     // this._network.meteor.stopMonitoringChanges(this._userTyping);
     this._group.messages.removeListener(this._changeListener);
     this._changeListener = null;
@@ -230,6 +248,14 @@ class ChatRoomView extends React.Component {
     this._network.chat.fetchOldMessages(this._group, NO_OF_MSGS);
   }
 
+  _handleAppStateChange = (nextAppState) => {
+    console.log('APPSTATE RV', `${AppState.currentState} => ${nextAppState}`);
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      console.log('APPSTATE - App has come to the foreground!');
+    }
+    this.setState({ appState: nextAppState });
+  }
+
   // isMarkDownEnabled() {
   //   const markdownConf = this._network.getServerSetting('Markdown_Parser');
   //   if (markdownConf && !(markdownConf.value === 'disabled')) {
@@ -239,16 +265,17 @@ class ChatRoomView extends React.Component {
   // }
 
   prepareMessages() {
+    console.log('APPSTATE RV - prepareMessages start');
     this._callOutstanding = true;
     // refresh control
     this._network.chat.fixYapImageUrls(Array.prototype.slice.call(this._group.sortedMessages), (msg) => {
+      console.log('APPSTATE RV - prepareMessages fixYapImageUrls');
       AppUtil.debug(msg, '[Performance] RoomView msg updates');
       this.setState({
         messages: msg,
         loadEarlier: this._group.moreMessages,
         loaded: true,
-      });
-      this._callOutstanding = false;
+      }, () => { this._callOutstanding = false; console.log('APPSTATE RV - prepareMessages setState'); });
     });
   }
 
@@ -260,15 +287,18 @@ class ChatRoomView extends React.Component {
   }
 
   sendCameraImage(cameraData, cameraMessage, video) {
+    console.log('APPSTATE RV - sendCameraImage');
     const _super = this;
     new ImageUtil().uploadImage(cameraData, this._group._id, video, cameraMessage,
     (fuFileName, fuPercent, fuMsg) => {
       const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
       _super._progressCallback(fuFileName, fuMsg, percentage, 1, 0);
+      console.log('APPSTATE RV - sendCameraImage callback');
     });
   }
 
   _progressCallback(id, msg, percent, totalFiles, fileCount) {
+    console.log('APPSTATE RV - sendCameraImage');
     const _super = this;
     _super.setState({ inProgress: true });
     const { uploadingFile } = _super.state;
