@@ -158,9 +158,9 @@ class GroupList extends Component {
           dataSource: this.state.dataSource.cloneWithRows(this._service.chat.getFilteredChannels(
             this.state.items)),
         }, () => {
-          this._service.chat.setAppState(1);
-          this._service.chat.setUserPresence('online');
-          console.log('APPSTATE GV - setTimeout callback');
+          // this._service.chat.setAppState(1);
+          // this._service.chat.setUserPresence('online');
+          // console.log('APPSTATE GV - setTimeout callback');
         });
       }
     }, 100);

@@ -21,7 +21,7 @@ class ChatService {
     this._loginSettings = [];
     this.deleteAllowed = false;
     this.blockDeleteInMinutes = 0;
-    this.appState = 0;
+    this.appState = 1;
     // set the userId (to last loaded from db)
     Application.setUserId(db.userId);
   }
