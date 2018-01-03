@@ -58,9 +58,6 @@ const styles = StyleSheet.create({
   workspace: { color: '#FFF', fontSize: 16 },
 });
 
-// todo
-// - input should be taken (maybe) similar to website [].brandName
-// -
 export default class SelectServer extends React.Component {
   constructor(props) {
     super(props);
@@ -89,12 +86,14 @@ export default class SelectServer extends React.Component {
     });
     // Get server name
     setTimeout(() => {
-      const serverUrl = this._service.getServer();
-      if (serverUrl && !this.state.switchServer) {
-        Application.resetInstance(serverUrl);
-        this.connectToServer(serverUrl);
-      } else {
-        this.setState({ isLoading: false });
+      if (this._mounted) {
+        const serverUrl = this._service.getServer();
+        if (serverUrl && !this.state.switchServer) {
+          Application.resetInstance(serverUrl);
+          this.connectToServer(serverUrl);
+        } else {
+          this.setState({ isLoading: false });
+        }
       }
     }, 100);
     this._mounted = true;
