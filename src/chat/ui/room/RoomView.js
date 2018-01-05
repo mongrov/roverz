@@ -15,6 +15,7 @@ import {
   Dimensions,
   Platform,
   AppState,
+  Alert,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
@@ -26,6 +27,7 @@ import {
   Composer,
  } from 'react-native-gifted-chat';
 import { Actions } from 'react-native-router-flux';
+import Permissions from 'react-native-permissions';
 import AppUtil from '../../../lib/util';
 
 // Components
@@ -207,6 +209,7 @@ class ChatRoomView extends React.Component {
     if (this.props.attach.cameraData) {
       this.sendCameraImage(this.props.attach.cameraData, this.props.attach.cameraMessage);
     }
+    console.log('Permissions', Permissions.canOpenSettings());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -334,6 +337,25 @@ class ChatRoomView extends React.Component {
     }, 1000);
   }
 
+  _openSettings = () => {
+    Permissions.openSettings();
+  }
+
+  permissionFromSettings = () => {
+    const buttons = [{ text: 'OK', style: 'cancel' }];
+    // if (Permissions.canOpenSettings()) {
+    //   buttons.push({
+    //     text: 'Open Settings',
+    //     onPress: this._openSettings,
+    //   });
+    // }
+    Alert.alert(
+      'Whoops!',
+      'There was a problem getting your permission. Please enable it from settings.',
+      buttons,
+    );
+  }
+
   renderBubble(props) {
     return (
       <Bubble
@@ -414,14 +436,20 @@ class ChatRoomView extends React.Component {
               }}
               onPress={() => {
                 Keyboard.dismiss();
-                this.setState({
-                  attachMenu: !this.state.attachMenu,
-                  text: '',
-                });
-                Actions.photoLibrary({
-                  groupId: this._group._id,
-                  progressCallback: this._progressCallback,
-                  duration: 0,
+                Permissions.request('photo').then((resPhoto) => {
+                  if (resPhoto === 'authorized') {
+                    this.setState({
+                      attachMenu: !this.state.attachMenu,
+                      text: '',
+                    });
+                    Actions.photoLibrary({
+                      groupId: this._group._id,
+                      progressCallback: this._progressCallback,
+                      duration: 0,
+                    });
+                  } else {
+                    this.permissionFromSettings();
+                  }
                 });
               }}
             >
@@ -451,15 +479,27 @@ class ChatRoomView extends React.Component {
               }}
               onPress={() => {
                 Keyboard.dismiss();
-                this.setState({
-                  attachMenu: !this.state.attachMenu,
-                  text: '',
-                });
-                Actions.cameraActions({
-                  group: this._group,
-                  groupId: this._group._id,
-                  progressCallback: this._progressCallback,
-                  duration: 0,
+                Permissions.request('camera').then((resCam) => {
+                  if (resCam === 'authorized') {
+                    Permissions.request('photo').then((resPhoto) => {
+                      if (resPhoto === 'authorized') {
+                        this.setState({
+                          attachMenu: !this.state.attachMenu,
+                          text: '',
+                        });
+                        Actions.cameraActions({
+                          group: this._group,
+                          groupId: this._group._id,
+                          progressCallback: this._progressCallback,
+                          duration: 0,
+                        });
+                      } else {
+                        this.permissionFromSettings();
+                      }
+                    });
+                  } else {
+                    this.permissionFromSettings();
+                  }
                 });
               }}
             >

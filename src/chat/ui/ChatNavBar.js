@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Keyboard,
+  Alert,
 } from 'react-native';
 import md5 from 'react-native-md5';
 import PropTypes from 'prop-types';
@@ -13,6 +14,7 @@ import { NavButton } from 'react-native-nav';
 import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
+import Permissions from 'react-native-permissions';
 import AppUtil from '../../lib/util';
 import { AppStyles, AppColors } from '../../theme/';
 import Group from '../../models/group';
@@ -150,6 +152,21 @@ class ChatNavBar extends React.Component {
     this.setState({ icon });
   }
 
+  permissionFromSettings = () => {
+    const buttons = [{ text: 'OK', style: 'cancel' }];
+    // if (Permissions.canOpenSettings()) {
+    //   buttons.push({
+    //     text: 'Open Settings',
+    //     onPress: this._openSettings,
+    //   });
+    // }
+    Alert.alert(
+      'Whoops!',
+      'There was a problem getting your permission. Please enable it from settings.',
+      buttons,
+    );
+  }
+
   _renderAvatar() {
     if (this.state.showAvatar) {
       return (
@@ -239,15 +256,27 @@ class ChatNavBar extends React.Component {
           onPress={() => {
             Keyboard.dismiss();
             const vcuserID = user ? md5.hex_md5(user._id) : '0';
-            _super._net.chat.startVideoCall(gid);
             // const tempMsg = '@all Started Video conference';
             // _super._net.chat.sendMessage(gid, tempMsg);
-            Actions.videoConference({
-              instance: Application.instance,
-              groupName: gname,
-              groupID: gid,
-              groupType: gtype,
-              userID: vcuserID,
+            Permissions.request('camera').then((resCam) => {
+              if (resCam === 'authorized') {
+                Permissions.request('microphone').then((resMic) => {
+                  if (resMic === 'authorized') {
+                    _super._net.chat.startVideoCall(gid);
+                    Actions.videoConference({
+                      instance: Application.instance,
+                      groupName: gname,
+                      groupID: gid,
+                      groupType: gtype,
+                      userID: vcuserID,
+                    });
+                  } else {
+                    this.permissionFromSettings();
+                  }
+                });
+              } else {
+                this.permissionFromSettings();
+              }
             });
           }}
         >
