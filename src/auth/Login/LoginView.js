@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   StatusBar,
-  ActivityIndicator,
   Image,
   StyleSheet,
   ScrollView,
@@ -19,6 +18,7 @@ import PropTypes from 'prop-types';
 import AppUtil from '../../lib/util';
 
 import { Alerts, Spacer, Text, Button } from '../../components/ui/';
+import CustomActivityIndicator from '../../components/general/ActivityIndicator';
 import t from '../../i18n/';
 import Network from '../../network';
 import { AppStyles, AppColors } from '../../theme/';
@@ -75,7 +75,6 @@ class Login extends Component {
 
   constructor(props) {
     super(props);
-
     // username Email Validation
     const validEmail = FormValidation.refinement(
       FormValidation.String, (email) => {
@@ -101,6 +100,8 @@ class Login extends Component {
         success: '',
         error: '',
       },
+      size: 'large',
+      color: 'rgba(255,255,255,0.3)',
       serverUrl,
       loading: true,
       showForm: false,
@@ -266,10 +267,10 @@ class Login extends Component {
       );
     }
     return (
-      <ActivityIndicator
+      <CustomActivityIndicator
         animating
-        size={'large'}
-        color={'rgba(255,255,255,0.3)'}
+        size={this.state.size}
+        color={this.state.color}
         style={[AppStyles.windowSize, AppStyles.containerCentered]}
       />
     );
@@ -297,10 +298,10 @@ class Login extends Component {
     // const Form = FormValidation.form.Form;
     if (this.state.loading) {
       return (
-        <ActivityIndicator
+        <CustomActivityIndicator
           animating
-          size={'large'}
-          color={'rgba(255,255,255,0.3)'}
+          size={this.state.size}
+          color={this.state.color}
           style={[AppStyles.windowSize, AppStyles.containerCentered]}
         />
       );
