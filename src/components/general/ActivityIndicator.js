@@ -3,16 +3,17 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { AppStyles } from '../../theme/';
 
-export default class CustomActivityIndicator extends React.Component {
+export default class Preloader extends React.Component {
   constructor(props) {
     super(props);
     const size = this.props.size;
     const color = this.props.color;
+    const style = this.props.style;
     this.state = {
       size,
       color,
+      style,
     };
   }
 
@@ -22,18 +23,23 @@ export default class CustomActivityIndicator extends React.Component {
         animating
         size={this.state.size}
         color={this.state.color}
-        style={[AppStyles.windowSize, AppStyles.containerCentered]}
+        style={[this.state.style]}
       />
     );
   }
 }
 
-CustomActivityIndicator.defaultProps = {
+Preloader.defaultProps = {
   size: 'large',
   color: 'rgba(255,255,255,0.3)',
+  style: [],
 };
 
-CustomActivityIndicator.propTypes = {
+Preloader.propTypes = {
   size: PropTypes.string,
   color: PropTypes.string,
+  style: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.shape({}),
+  ]),
 };

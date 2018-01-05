@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import AppUtil from '../../lib/util';
 
 import { Alerts, Spacer, Text, Button } from '../../components/ui/';
-import CustomActivityIndicator from '../../components/general/ActivityIndicator';
+import Preloader from '../../components/general/ActivityIndicator';
 import t from '../../i18n/';
 import Network from '../../network';
 import { AppStyles, AppColors } from '../../theme/';
@@ -63,6 +63,10 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
   formContainer: { backgroundColor: 'white' },
+  textWork: {
+    fontSize: 12,
+    color: '#FFF',
+  },
 });
 
 /* Component ==================================================================== */
@@ -100,8 +104,7 @@ class Login extends Component {
         success: '',
         error: '',
       },
-      size: 'large',
-      color: 'rgba(255,255,255,0.3)',
+      style: [AppStyles.windowSize, AppStyles.containerCentered],
       serverUrl,
       loading: true,
       showForm: false,
@@ -267,12 +270,7 @@ class Login extends Component {
       );
     }
     return (
-      <CustomActivityIndicator
-        animating
-        size={this.state.size}
-        color={this.state.color}
-        style={[AppStyles.windowSize, AppStyles.containerCentered]}
-      />
+      <Preloader style={this.state.style} />
     );
   }
 
@@ -298,12 +296,7 @@ class Login extends Component {
     // const Form = FormValidation.form.Form;
     if (this.state.loading) {
       return (
-        <CustomActivityIndicator
-          animating
-          size={this.state.size}
-          color={this.state.color}
-          style={[AppStyles.windowSize, AppStyles.containerCentered]}
-        />
+        <Preloader style={this.state.style} />
       );
     }
     return (
@@ -326,10 +319,7 @@ class Login extends Component {
                 onPress={() => { Actions.chooseInstance({ switchServer: true }); }}
               >
                 <Text
-                  style={{
-                    fontSize: 12,
-                    color: '#FFF',
-                  }}
+                  style={[styles.textWork]}
                 >{t('txt_Workspace')}</Text>
                 <Text
                   style={[styles.workspaceTxt]}
