@@ -46,7 +46,6 @@
     "react-native-md5": "1.0.0",
     "react-native-meteor": "https://github.com/elarasu/react-native-meteor#e87746b614626aa2588101003463b1ab452803b9",
     "react-native-nav": "2.0.2",
-    "react-native-permissions": "1.0.6",
     "react-native-photo-browser": "https://github.com/elarasu/react-native-photo-browser",
     "react-native-push-notification": "3.0.2",
     "react-native-restart": "0.0.6",
