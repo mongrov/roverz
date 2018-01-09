@@ -1,11 +1,15 @@
 // import moment from 'moment';
 import Meteor from 'react-native-meteor';
 import { Actions } from 'react-native-router-flux';
+import md5 from 'react-native-md5';
+import moment from 'moment';
 import AppUtil from '../lib/util';
 
 import Application from '../constants/config';
 // import { showCallScreen } from '@webrtc/ui';
+
 const PushNotification = require('react-native-push-notification');
+
 
 class ChatService {
 
@@ -821,6 +825,9 @@ class ChatService {
       let msgText = inM.msg;
       if (inM.actionLinks && inM.actionLinks[0].method_id === 'joinMGVCCall') {
         msgText = 'Started a Video Call!';
+        if (!(inM.u._id === currUser._id)) {
+          this.incomingVC(currUser, inM.ts, inM.rid, group);
+        }
       }
       const m = this.yap2message(inM._id, inM.rid, msgText, inM.ts, inM.u._id, inM.u.username, inM.u.name);
       m.original = inM;
@@ -866,6 +873,24 @@ class ChatService {
         message: `Received message in ${group.name}`, // (required)
         date: new Date(Date.now()), // in 60 secs
       });
+    }
+  }
+
+  incomingVC(currUser, ts, gid, group) {
+    if (group && group.type === 'direct') {
+      const msgTs = moment(ts);
+      const currentTsDiff = moment().diff(msgTs, 'minutes');
+      if (currentTsDiff < 1) {
+        const vcuserID = currUser ? md5.hex_md5(currUser._id) : '0';
+        Actions.videoConference({
+          instance: Application.instance,
+          groupName: group.name,
+          groupID: gid,
+          groupType: group.type,
+          userID: vcuserID,
+          callType: 'INCOMING',
+        });
+      }
     }
   }
 

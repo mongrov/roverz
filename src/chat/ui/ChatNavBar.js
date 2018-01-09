@@ -248,6 +248,7 @@ class ChatNavBar extends React.Component {
               groupID: gid,
               groupType: gtype,
               userID: vcuserID,
+              callType: 'OUTGOING',
             });
           }}
         >
