@@ -35,7 +35,7 @@ class Network {
     Network._uiCallback = uicallback;
     Network._chat = new ChatService();
     // init meteor service
-    Network._meteor.init();
+    Network._meteor.init(this.meteorConnectionChange);
     Network._chat.init(Network._meteor, Network._db);
     // save the db
     this.db.setServer(Application.instance).then(() => {
@@ -127,6 +127,13 @@ class Network {
     this.chat.subscribeToAllGroups();
     this.chat.setUserPresence('online');
   }
+
+  meteorConnectionChange(isConnected) {
+    if (Network._db && Network._db.app) {
+      Network._db.app.setServerConnectionStatus(isConnected);
+    }
+  }
+
 }
 
 export default Network;

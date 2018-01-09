@@ -11,6 +11,7 @@ const AppSchema = {
   properties: {
     _id: { type: 'int', default: 0 },
     lastSync: { type: 'date', optional: true },
+    isServerConnected: { type: 'bool', default: false },
   },
 };
 export default class App {
