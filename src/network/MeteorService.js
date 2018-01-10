@@ -6,10 +6,13 @@ import Constants from './constants';
 
 class MeteorService {
 
-  init(cb) {
+  init() {
     // setup meteor
     // console.log('-------------meteor service init---------');
     Meteor.connect(Application.urls.WS_URL);
+  }
+
+  monitorConnection(cb) {
     if (cb) {
       Meteor.ddp.on('connected', () => {
         cb(true);

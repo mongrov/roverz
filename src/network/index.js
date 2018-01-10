@@ -35,7 +35,7 @@ class Network {
     Network._uiCallback = uicallback;
     Network._chat = new ChatService();
     // init meteor service
-    Network._meteor.init(this.meteorConnectionChange);
+    Network._meteor.init();
     Network._chat.init(Network._meteor, Network._db);
     // save the db
     this.db.setServer(Application.instance).then(() => {
@@ -46,6 +46,9 @@ class Network {
       Network._chat.getLoginSettings();
       Network._chat.getPublicSettings(this._publicSettingsCallback);
     });
+    this.onLogin(() => {
+      this.meteorConnectionChange(true);
+    });
   }
 
   // only change the userName, server remains the same
@@ -55,6 +58,10 @@ class Network {
       Constants.DEFAULT_USER;
     // lets set the user to db
     this.db.switchDb(Application.instance, userName);
+    if (this.db && this.db.app) {
+      this.db.app.setServerConnectionStatus(false);
+    }
+    this.meteor.monitorConnection(this.meteorConnectionChange);
     this.chat.resetDbHandle(Network._db);
     // do some basic setup for this user
     this.chat.initSubscriptions();
@@ -130,7 +137,14 @@ class Network {
 
   meteorConnectionChange(isConnected) {
     if (Network._db && Network._db.app) {
+      const prevState = Network._db.app.isServerConnected;
+      if (Network._db.app.isServerConnected === true && isConnected === false) {
+        Network._db.app.setLastSync();
+      }
       Network._db.app.setServerConnectionStatus(isConnected);
+      if (prevState === false && isConnected === true && Network._chat) {
+        Network._chat.fetchChannels();
+      }
     }
   }
 

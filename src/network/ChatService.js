@@ -506,7 +506,7 @@ class ChatService {
     const _super = this;
     const dbAppState = this.db.app.state;
     // console.log(yap);
-    const lastSync = dbAppState ? dbAppState.lastSync.getTime() : 0;
+    const lastSync = (dbAppState && dbAppState.lastSync) ? dbAppState.lastSync.getTime() : 0;
     // console.log(`Last Sync:${lastSync}`);
     // console.log('--- [Network] --- ====================================');
     const noOfMsgs = 10;
