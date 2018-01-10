@@ -15,3 +15,7 @@ it('TabIcon renders correctly', () => {
 
   expect(tree).toMatchSnapshot();
 });
+it(' TabIcon color selection renders correctly', () => {
+  const colorcomponent = renderer.create(<TabIcon />);
+  expect(colorcomponent.AppColors).toMatchSnapshot();
+});

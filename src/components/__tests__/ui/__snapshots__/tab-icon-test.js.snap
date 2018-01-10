@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[` TabIcon color selection renders correctly 1`] = `undefined`;
+
 exports[`TabIcon renders correctly 1`] = `
 <View
   style={

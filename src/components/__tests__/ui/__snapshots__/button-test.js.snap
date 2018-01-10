@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Button color selection renders correctly 1`] = `undefined`;
+
 exports[`Button renders correctly 1`] = `
 <View
   style={
@@ -656,7 +658,7 @@ exports[`Large Button renders correctly 1`] = `
           undefined,
           undefined,
           Object {
-            "padding": 8,
+            "padding": 15,
           },
           undefined,
           undefined,
@@ -691,7 +693,7 @@ exports[`Large Button renders correctly 1`] = `
                 "fontSize": 17.5,
               },
               Object {
-                "fontSize": 12,
+                "fontSize": 20,
               },
               undefined,
               Object {

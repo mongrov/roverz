@@ -77,7 +77,7 @@ it('Small Button with Icon renders correctly', () => {
 
 it('Large Button renders correctly', () => {
   const tree = renderer.create(
-    <Button onPress={onPress} small />,
+    <Button onPress={onPress} large />,
   ).toJSON();
 
   expect(tree).toMatchSnapshot();
@@ -89,4 +89,9 @@ it('Large Button with Icon renders correctly', () => {
   ).toJSON();
 
   expect(tree).toMatchSnapshot();
+});
+
+it('Button color selection renders correctly', () => {
+  const tree = renderer.create(<Button onPress={onPress} backgroundColor={'red'} />);
+  expect(tree.backgroundColor).toMatchSnapshot();
 });
