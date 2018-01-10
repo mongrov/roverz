@@ -22,6 +22,9 @@ class Network {
       Network._uiCallback = null;
       Network._serverName = null;
       Network._meteor = new MeteorService();
+      this.onLogin(() => {
+        this.switchToLoggedInUser();
+      });
     }
   }
 
@@ -46,9 +49,6 @@ class Network {
       Network._chat.getLoginSettings();
       Network._chat.getPublicSettings(this._publicSettingsCallback);
     });
-    this.onLogin(() => {
-      this.meteorConnectionChange(true);
-    });
   }
 
   // only change the userName, server remains the same
@@ -66,6 +66,7 @@ class Network {
     // do some basic setup for this user
     this.chat.initSubscriptions();
     this.dbSync();
+    this.db.app.setServerConnectionStatus(true);
   }
 
   getServer() {
