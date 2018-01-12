@@ -1,5 +1,5 @@
 import RNRestart from 'react-native-restart';
-import NetInfo from 'react-native';
+import { NetInfo } from 'react-native';
 import Database from '../models';
 
 import Constants from './constants';
