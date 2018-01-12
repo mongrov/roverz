@@ -148,7 +148,7 @@ class Login extends Component {
     // to fix that
     this._service.onLogin(() => {
       if (this._mounted && this._service.currentUser) {
-        this._service.switchToLoggedInUser();
+//        this._service.switchToLoggedInUser();
         // looks like we have logged in as an user, skip this screen
         Actions.app({ type: 'reset' });
       }

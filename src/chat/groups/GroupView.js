@@ -124,15 +124,15 @@ class GroupList extends Component {
 
   componentDidMount() {
     console.log('APPSTATE GV - componentDidMount start');
-    this._service.onLogin(() => {
-      console.log('APPSTATE GV - onLogin');
-      // on login, lets sync
-      if (this._mounted && this._service.currentUser) {
-        this._service.switchToLoggedInUser();
-        this.setState({ connected: true });
-        console.log('APPSTATE GV - switchToLoggedInUser');
-      }
-    });
+    // this._service.onLogin(() => {
+    //   console.log('APPSTATE GV - onLogin');
+    //   // on login, lets sync
+    //   if (this._mounted && this._service.currentUser) {
+    //     this._service.switchToLoggedInUser();
+    //     this.setState({ connected: true });
+    //     console.log('APPSTATE GV - switchToLoggedInUser');
+    //   }
+    // });
     this._insideStateUpdate = false;
     this._service.db.groups.list.addListener(() => {
       console.log('APPSTATE GV - list.addListener');

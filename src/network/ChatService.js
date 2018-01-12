@@ -506,11 +506,13 @@ class ChatService {
     const _super = this;
     // console.log(yap);
     var lastSync = lastSyncTime;
-    if (!lastSync) {
+    if (lastSyncTime) {
+      lastSync = lastSyncTime.getTime();
+    } else {
       const dbAppState = this.db.app.state;
       lastSync = (dbAppState && dbAppState.lastSync) ? dbAppState.lastSync.getTime() : 0;
     }
-    // console.log(`Last Sync:${lastSync}`);
+    // console.log(`Ezhil- Last Sync:${lastSync}, ${lastSyncTime}`);
     // console.log('--- [Network] --- ====================================');
     const noOfMsgs = 10;
     // const temp = lastSync > 0 ? Math.floor(lastSync / 1000) : 0;
@@ -530,6 +532,7 @@ class ChatService {
       // // console.log('Merged:', groups);
       _super.db.groups.addAll(groups);
       Object.keys(rooms).forEach((k) => {
+        console.log('Ezhil- rooms[k]._updatedAt ', rooms[k]._updatedAt);
         // lastMessageAt
         if (rooms[k]._id) {
           if (lastSync === 0) {
