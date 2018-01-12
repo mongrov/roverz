@@ -15,7 +15,7 @@ export default class AppManager {
     return this._realm.objects(Constants.App);
   }
 
-  setLastSync() {
+  setLastSync(lastSyncTime) {
     var res = this._realm.objects(Constants.App).filtered('_id = 0');
     if (res && res.length > 0) {
       const obj = res['0'];
@@ -25,7 +25,7 @@ export default class AppManager {
       });
     } else {
       this._realm.write(() => {
-        const obj = { _id: 0, lastSync: new Date() };
+        const obj = { _id: 0, lastSync: lastSyncTime || new Date() };
         AppUtil.debug(obj, `${Constants.MODULE}: saving app state`);
         this._realm.create(Constants.App, obj, true);
       });

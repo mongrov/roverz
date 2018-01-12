@@ -502,11 +502,14 @@ class ChatService {
     return null;
   }
 
-  fetchChannels() {
+  fetchChannels(lastSyncTime) {
     const _super = this;
-    const dbAppState = this.db.app.state;
     // console.log(yap);
-    const lastSync = (dbAppState && dbAppState.lastSync) ? dbAppState.lastSync.getTime() : 0;
+    var lastSync = lastSyncTime;
+    if (!lastSync) {
+      const dbAppState = this.db.app.state;
+      lastSync = (dbAppState && dbAppState.lastSync) ? dbAppState.lastSync.getTime() : 0;
+    }
     // console.log(`Last Sync:${lastSync}`);
     // console.log('--- [Network] --- ====================================');
     const noOfMsgs = 10;

@@ -1,4 +1,5 @@
 import RNRestart from 'react-native-restart';
+import NetInfo from 'react-native';
 import Database from '../models';
 
 import Constants from './constants';
@@ -6,6 +7,8 @@ import PushService from './PushService';
 import MeteorService from './MeteorService';
 import ChatService from './ChatService';
 import Application from '../constants/config';
+
+const PushNotification = require('react-native-push-notification');
 
 class Network {
 
@@ -22,9 +25,20 @@ class Network {
       Network._uiCallback = null;
       Network._serverName = null;
       Network._meteor = new MeteorService();
+      Network.lastSyncTime = null;
+      Network.isNetworkAvailable = false;
       this.onLogin(() => {
         this.switchToLoggedInUser();
+//        AppState.addEventListener('change', );
       });
+//      AppState.removeEventListener('change', this._handleAppStateChange);
+      NetInfo.isConnected.fetch().then((isConnected) => {
+        Network.isNetworkAvailable = isConnected;
+      });
+      NetInfo.isConnected.addEventListener(
+        'connectionChange',
+        this._handleFirstConnectivityChange,
+      );
     }
   }
 
@@ -140,12 +154,38 @@ class Network {
     if (Network._db && Network._db.app) {
       const prevState = Network._db.app.isServerConnected;
       if (Network._db.app.isServerConnected === true && isConnected === false) {
-        Network._db.app.setLastSync();
+        if (Network.lastSyncTime === null) {
+          Network.lastSyncTime = new Date(new Date().getTime - 32000);
+          Network._db.app.setLastSync(Network.lastSyncTime);
+        }
       }
       Network._db.app.setServerConnectionStatus(isConnected);
       if (prevState === false && isConnected === true && Network._chat) {
-        Network._chat.fetchChannels();
+        Network._chat.fetchChannels(Network.lastSyncTime);
+        Network.lastSyncTime = null;
       }
+    }
+  }
+
+  _handleAppState = (nextAppState) => {
+    if (nextAppState === 'background') {
+      PushNotification.cancelAllLocalNotifications();
+      Network._chat.setAppState(0);
+      Network._chat.setUserPresence('away');
+    } else if (nextAppState === 'active') {
+      PushNotification.cancelAllLocalNotifications();
+      Network._chat.setAppState(1);
+      Network._chat.setUserPresence('online');
+    } else { // inactive
+      Network._chat.setAppState(0);
+    }
+  }
+
+  _handleFirstConnectivityChange = (isConnected) => {
+    Network.isNetworkAvailable = isConnected;
+    if (!isConnected && Network.lastSyncTime === null) {
+      Network.lastSyncTime = new Date();
+      Network._db.app.setLastSync(Network.lastSyncTime);
     }
   }
 
