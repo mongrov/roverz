@@ -167,6 +167,7 @@ class Network {
           Network._chat = new ChatService();
           Network._chat.init(Network._meteor, Network._db);
           this.switchToLoggedInUser();
+          Network.lastSyncTime = null;
         } else {
           Network._db.app.setServerConnectionStatus(isConnected);
           Network._chat.fetchChannels(Network.lastSyncTime);
