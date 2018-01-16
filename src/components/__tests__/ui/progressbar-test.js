@@ -16,8 +16,9 @@ it('ProgressBar renders correctly', () => {
   expect(tree).toMatchSnapshot();
 });
 
-it('should change the password value', () => {
+it('progressbar componentWillReceiveProps', () => {
   const progressComponent = renderer.create(<ProgressBar />).getInstance();
   progressComponent.componentWillReceiveProps(50);
   expect(progressComponent.state.progress).toEqual(50);
 });
+

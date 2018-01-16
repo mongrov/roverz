@@ -1,7 +1,7 @@
 /**
  * Tabbar Icon
  *
-    <TabIcon icon={'search'} selected={false} />
+    <TabIcon icon={'search-web'} selected={false} />
  *
  * React Native Starter App
  * https://github.com/mcnamee/react-native-starter-app
@@ -47,7 +47,7 @@ const TabIcon = ({ icon, selected, subTitle }) => (
 );
 
 TabIcon.propTypes = { icon: PropTypes.string.isRequired, selected: PropTypes.bool, subTitle: PropTypes.string };
-TabIcon.defaultProps = { icon: 'search', selected: false, subTitle: '' };
+TabIcon.defaultProps = { icon: 'search-web', selected: false, subTitle: '' };
 
 /* Export Component ==================================================================== */
 export default TabIcon;

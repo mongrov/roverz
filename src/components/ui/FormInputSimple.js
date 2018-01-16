@@ -33,7 +33,7 @@ class CustomFormInputSimple extends Component {
 
   inputProps = () => {
     // Defaults
-    const props = {
+    let props = {
       ...this.props,
       containerStyle: [{
         /* borderBottomColor: AppColors.border,
@@ -51,14 +51,7 @@ class CustomFormInputSimple extends Component {
       }],
     };
 
-    if (this.props.containerStyle) {
-      props.containerStyle.push(this.props.containerStyle);
-    }
-
-    if (this.props.inputStyle) {
-      props.inputStyle.push(this.props.inputStyle);
-    }
-
+    props = [props, this.props.containerStyle, this.props.inputStyle];
     return props;
   }
 

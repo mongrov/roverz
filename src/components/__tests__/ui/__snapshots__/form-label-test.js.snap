@@ -2,10 +2,25 @@
 
 exports[`FormLabel renders correctly 1`] = `
 <View
+  0={
+    Object {
+      "children": "John Smith",
+      "containerStyle": Array [],
+      "labelStyle": Array [
+        Object {
+          "color": "#222222",
+          "fontFamily": "OpenSans-Regular",
+          "marginLeft": 0,
+          "marginRight": 0,
+        },
+      ],
+    }
+  }
+  1={Array []}
   style={
     Array [
       Object {},
-      Array [],
+      undefined,
     ]
   }
 >
@@ -35,15 +50,7 @@ exports[`FormLabel renders correctly 1`] = `
             "marginRight": 20,
             "marginTop": 15,
           },
-          Array [
-            Object {
-              "color": "#222222",
-              "fontFamily": "OpenSans-Regular",
-              "marginLeft": 0,
-              "marginRight": 0,
-            },
-            Array [],
-          ],
+          undefined,
           undefined,
         ],
       ]
@@ -56,10 +63,23 @@ exports[`FormLabel renders correctly 1`] = `
 
 exports[`FormLabel renders correctly 2`] = `
 <View
+  0={
+    Object {
+      "children": "John Smith",
+      "containerStyle": Array [],
+      "labelStyle": Array [
+        Object {
+          "color": "#50527F",
+          "fontFamily": "OpenSans-Regular",
+        },
+      ],
+    }
+  }
+  1={Array []}
   style={
     Array [
       Object {},
-      Array [],
+      undefined,
     ]
   }
 >
@@ -89,13 +109,7 @@ exports[`FormLabel renders correctly 2`] = `
             "marginRight": 20,
             "marginTop": 15,
           },
-          Array [
-            Object {
-              "color": "#50527F",
-              "fontFamily": "OpenSans-Regular",
-            },
-            Array [],
-          ],
+          undefined,
           undefined,
         ],
       ]

@@ -31,18 +31,14 @@ class FormLabelSimple extends Component {
 
   labelProps = () => {
     // Defaults
-    const props = {
+    let props = {
       ...this.props,
       labelStyle: [{
         color: AppColors.brand().secondary,
         fontFamily: AppFonts.base.family,
       }],
     };
-
-    if (this.props.labelStyle) {
-      props.labelStyle.push(this.props.labelStyle);
-    }
-
+    props = [props, this.props.labelStyle];
     return props;
   }
 

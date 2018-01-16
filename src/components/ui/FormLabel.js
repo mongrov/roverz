@@ -31,7 +31,7 @@ class CustomFormLabel extends Component {
 
   labelProps = () => {
     // Defaults
-    const props = {
+    let props = {
       ...this.props,
       labelStyle: [{
         color: AppColors.textPrimary,
@@ -40,11 +40,7 @@ class CustomFormLabel extends Component {
         marginRight: 0,
       }],
     };
-
-    if (this.props.labelStyle) {
-      props.labelStyle.push(this.props.labelStyle);
-    }
-
+    props = [props, this.props.labelStyle];
     return props;
   }
 

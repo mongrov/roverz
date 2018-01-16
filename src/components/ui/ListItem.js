@@ -45,7 +45,7 @@ class CustomListItem extends Component {
 
   listItemProps = () => {
     // Defaults
-    const props = {
+    let props = {
       title: t('lbl_coming_soon'),
       chevronColor: AppColors.textSecondary,
       underlayColor: AppColors.border,
@@ -62,23 +62,7 @@ class CustomListItem extends Component {
       avatarStyle: [AppStyles.avatar],
     };
 
-    if (this.props.containerStyle) {
-      props.containerStyle.push(this.props.containerStyle);
-    }
-
-    if (this.props.titleStyle) {
-      props.titleStyle.push(this.props.titleStyle);
-    }
-
-    if (this.props.subtitleStyle) {
-      props.subtitleStyle.push(this.props.subtitleStyle);
-    }
-
-    if (this.props.avatarStyle) {
-      props.avatarStyle.push(this.props.avatarStyle);
-    }
-
-
+    props = [props, this.props.containerStyle, this.props.titleStyle, this.props.subtitleStyle, this.props.avatarStyle];
     return props;
   }
 
