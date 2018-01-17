@@ -3,6 +3,7 @@
  */
 
 import ProfileView from './profile/ProfileView';
+import ChangePassword from './profile/ChangePassword';
 import ImageGallery from './image/ImageGallery';
 import AboutView from './about/AboutView';
 import ImagePreview from './image/ImagePreview';
@@ -18,6 +19,7 @@ if (!Application.containers.find(item => item.key === 'aboutView')) {
   // key, title, subTitle, component, nav, tab, navBar
   Application.addContainer('aboutView', 'About', '', AboutView, true, true, NavBarBack);
   Application.addContainer('profileView', 'Profile', '', ProfileView, true, true, null);
+  Application.addContainer('changePassword', 'Change Password', '', ChangePassword, true, true, null);
   Application.addContainer('imageGallery', 'Image Preview', '', ImageGallery, true, false, NavBackAbs);
   Application.addContainer('captureImagePreview', 'Image Preview', '', ImagePreview, true, true, NavBackAbs);
   Application.addContainer('videoPreviewSend', 'Video Preview Send', '', VideoPlayer, true, true, NavBackAbs);

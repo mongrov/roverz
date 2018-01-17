@@ -217,6 +217,15 @@ class ChatService {
     });
   }
 
+  setUserPassword(newPwd, callBack) {
+    this.meteor.call('setUserPassword', newPwd, (err) => {
+      if (err) {
+        callBack(err);
+      }
+    });
+  }
+
+
   setUserPresence(presenceStatus) {
     this.meteor.call('UserPresence:setDefaultStatus', presenceStatus, (/* err, res */) => {
       // console.log(err);

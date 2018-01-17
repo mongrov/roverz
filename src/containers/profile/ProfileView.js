@@ -10,6 +10,8 @@ import {
   Icon,
 } from 'react-native-elements';
 
+import { Actions } from 'react-native-router-flux';
+
 import t from '../../i18n/';
 import { Text } from '../../components/ui/';
 import MemberDetailView from '../../chat/members/MemberDetailView';
@@ -29,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: AppColors.brand().sixth,
+    borderBottomColor: 'rgba(255,255,255,0.3)',
   },
   logoutText: {
     marginLeft: 10,
@@ -91,6 +93,19 @@ class ProfileView extends Component {
         <View
           style={{ backgroundColor: AppColors.brand().primary }}
         >
+          <TouchableOpacity
+            onPress={Actions.changePassword}
+            style={[styles.logout]}
+          >
+            <Icon
+              name={'logout-variant'}
+              type={'material-community'}
+              color={'rgba(255,255,255,0.4)'}
+            />
+            <Text
+              style={[styles.logoutText]}
+            >Change Password</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               Alert.alert(
