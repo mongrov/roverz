@@ -28,7 +28,7 @@ class CustomList extends Component {
 
   listProps = () => {
     // Defaults
-    let props = {
+    const props = {
       ...this.props,
       containerStyle: [{
         margin: 0,
@@ -38,7 +38,9 @@ class CustomList extends Component {
         borderBottomWidth: 0,
       }],
     };
-    props = [props, this.props.containerStyle];
+    if (this.props.containerStyle) {
+      props.containerStyle.push(this.props.containerStyle);
+    }
     return props;
   }
 
