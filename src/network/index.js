@@ -8,6 +8,8 @@ import MeteorService from './MeteorService';
 import ChatService from './ChatService';
 import Application from '../constants/config';
 
+const PushNotification = require('react-native-push-notification');
+
 
 class Network {
 
@@ -30,9 +32,7 @@ class Network {
       Network.isFirstTimeNetstatus = true;
       this.onLogin(() => {
         this.switchToLoggedInUser();
-//        AppState.addEventListener('change', );
       });
-//      AppState.removeEventListener('change', this._handleAppStateChange);
       NetInfo.isConnected.fetch().then((isConnected) => {
         Network.isNetworkAvailable = isConnected;
       });
@@ -184,6 +184,16 @@ class Network {
     } else if (!isConnected && Network.lastSyncTime === null) {
       Network.lastSyncTime = new Date();
       Network._db.app.setLastSync(Network.lastSyncTime);
+    }
+  }
+
+  handleAppStateChange = (nextAppState) => {
+    if (nextAppState === 'background') {
+      PushNotification.cancelAllLocalNotifications();
+      Network._chat.setUserPresence('away');
+    } else if (nextAppState === 'active') {
+      PushNotification.cancelAllLocalNotifications();
+      Network._chat.setUserPresence('online');
     }
   }
 }

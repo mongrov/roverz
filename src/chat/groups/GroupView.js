@@ -27,8 +27,6 @@ import {
 } from '../ui';
 import t from '../../i18n';
 
-const PushNotification = require('react-native-push-notification');
-
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({
   mainContainer: {
@@ -197,20 +195,8 @@ class GroupList extends Component {
   }
 
   _handleAppStateChange = (nextAppState) => {
-    if (nextAppState === 'background') {
-      PushNotification.cancelAllLocalNotifications();
-      this._service.chat.setAppState(0);
-      this._service.chat.setUserPresence('away');
-    } else if (nextAppState === 'active') {
-      PushNotification.cancelAllLocalNotifications();
-      this._service.chat.setAppState(1);
-      this._service.chat.setUserPresence('online');
-    }
-    console.log('APPSTATE', `${AppState.currentState} => ${nextAppState}`);
-    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-      console.log('APPSTATE GV - App has come to the foreground!');
-    }
     this.setState({ appState: nextAppState });
+    this._service.handleAppStateChange(nextAppState);
   }
 
   renderRow = (data, sectionID) => {

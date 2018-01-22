@@ -8,8 +8,6 @@ import AppUtil from '../lib/util';
 import Application from '../constants/config';
 // import { showCallScreen } from '@webrtc/ui';
 
-const PushNotification = require('react-native-push-notification');
-
 
 class ChatService {
 
@@ -25,13 +23,7 @@ class ChatService {
     this._loginSettings = [];
     this.deleteAllowed = false;
     this.blockDeleteInMinutes = 0;
-    this.appState = 1;
-    // set the userId (to last loaded from db)
     Application.setUserId(db.userId);
-  }
-
-  setAppState(state) {
-    this.appState = state;
   }
 
   resetDbHandle(newDb) {
@@ -834,7 +826,6 @@ class ChatService {
     const yaps = {};
     const editedYaps = {};
     const currUser = this.getCurrentUser();
-    let msgNotify = false;
     for (let i = 0; i < msgs.length; i += 1) {
       const inM = msgs[i];
       let msgText = inM.msg;
@@ -877,18 +868,9 @@ class ChatService {
       } else {
         yaps[m._id] = m;
       }
-      if (this.appState === 0 && !msgNotify) {
-        msgNotify = !(m.user._id === currUser._id);
-      }
     }
     this.db.addMessages(group, yaps);
     this.db.updateMessages(group, editedYaps);
-    if (this.appState === 0 && msgNotify) { // app in background
-      PushNotification.localNotificationSchedule({
-        message: `Received message in ${group.name}`, // (required)
-        date: new Date(Date.now()), // in 60 secs
-      });
-    }
   }
 
   incomingVC(currUser, ts, gid, group) {
@@ -897,7 +879,7 @@ class ChatService {
       const currentTsDiff = moment().diff(msgTs, 'minutes');
       if (currentTsDiff < 1) {
         const vcuserID = currUser ? md5.hex_md5(currUser._id) : '0';
-        Actions.videoConference({
+        Actions.directConference({
           instance: Application.instance,
           groupName: group.name,
           groupID: gid,

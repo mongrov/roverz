@@ -242,14 +242,25 @@ class ChatNavBar extends React.Component {
             _super._net.chat.startVideoCall(gid);
             // const tempMsg = '@all Started Video conference';
             // _super._net.chat.sendMessage(gid, tempMsg);
-            Actions.videoConference({
-              instance: Application.instance,
-              groupName: gname,
-              groupID: gid,
-              groupType: gtype,
-              userID: vcuserID,
-              callType: 'OUTGOING',
-            });
+            if (gtype === 'direct') {
+              Actions.directConference({
+                instance: Application.instance,
+                groupName: gname,
+                groupID: gid,
+                groupType: gtype,
+                userID: vcuserID,
+                callType: 'OUTGOING',
+              });
+            } else {
+              Actions.videoConference({
+                instance: Application.instance,
+                groupName: gname,
+                groupID: gid,
+                groupType: gtype,
+                userID: vcuserID,
+                callType: 'OUTGOING',
+              });
+            }
           }}
         >
           <Icon
