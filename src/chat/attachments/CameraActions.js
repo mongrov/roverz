@@ -96,6 +96,7 @@ export default class CameraActions extends React.Component {
         type: Camera.constants.Type.back,
         orientation: Camera.constants.Orientation.auto,
         flashMode: Camera.constants.FlashMode.auto,
+        captureQuality: Camera.constants.CaptureQuality['480p'],
       },
       groupId,
       isRecording: false,
@@ -186,6 +187,7 @@ export default class CameraActions extends React.Component {
         audio: true,
         mode: Camera.constants.CaptureMode.video,
         target: Camera.constants.CaptureTarget.disk,
+        quality: Camera.constants.CaptureQuality['480p'],
       })
           .then((data) => {
             if (!this.state.closeBtn) {
@@ -271,6 +273,7 @@ export default class CameraActions extends React.Component {
           style={styles.preview}
           aspect={Camera.constants.Aspect.fill}
           captureTarget={this.state.camera.captureTarget}
+          captureQuality={this.state.camera.captureQuality}
           type={this.state.camera.type}
           flashMode={this.state.camera.flashMode}
           onFocusChanged={() => {}}
