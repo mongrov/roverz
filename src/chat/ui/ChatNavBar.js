@@ -264,7 +264,7 @@ class ChatNavBar extends React.Component {
           }}
         >
           <Icon
-            name="videocam"
+            name={gtype === 'direct' ? 'phone' : 'videocam'}
             size={32}
             color={'#FFF'}
           />
