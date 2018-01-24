@@ -6,7 +6,8 @@ import moment from 'moment';
 import AppUtil from '../lib/util';
 
 import Application from '../constants/config';
-// import { showCallScreen } from '@webrtc/ui';
+
+const PushNotification = require('react-native-push-notification');
 
 
 class ChatService {
@@ -831,8 +832,17 @@ class ChatService {
       let msgText = inM.msg;
       if (inM.actionLinks && inM.actionLinks[0].method_id === 'joinMGVCCall') {
         msgText = 'Started a Video Call!';
-        if (!(inM.u._id === currUser._id)) {
-          this.incomingVC(currUser, inM.ts, inM.rid, group);
+        if (!(inM.u._id === currUser._id) && (group.findMessageById(inM._id) === null)) {
+          if (group && group.type === 'direct') {
+            msgText = 'Started a Call!';
+            this.incomingVC(currUser, inM.ts, inM.rid, group);
+          } else {
+            PushNotification.localNotificationSchedule({
+              message: `Video Call started in ${group.name}`, // (required)
+              playSound: 'vcring.mp3',
+              date: new Date(Date.now()), // in 60 secs
+            });
+          }
         }
       }
       const m = this.yap2message(inM._id, inM.rid, msgText, inM.ts, inM.u._id, inM.u.username, inM.u.name);
