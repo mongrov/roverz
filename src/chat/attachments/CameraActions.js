@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   View,
   Platform,
-
   Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -40,7 +39,7 @@ const styles = StyleSheet.create({
   bottomOverlay: {
     bottom: 0,
     backgroundColor: 'rgba(0,0,0,0.4)',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -97,6 +96,7 @@ export default class CameraActions extends React.Component {
         orientation: Camera.constants.Orientation.auto,
         flashMode: Camera.constants.FlashMode.auto,
         captureQuality: Camera.constants.CaptureQuality['480p'],
+
       },
       groupId,
       isRecording: false,
@@ -106,6 +106,7 @@ export default class CameraActions extends React.Component {
       cameraMessage: '',
       uploadPercent: 0,
       closeBtn: false,
+      timer: 30,
     };
     this.switchType = this.switchType.bind(this);
     this.switchFlash = this.switchFlash.bind(this);
@@ -188,6 +189,7 @@ export default class CameraActions extends React.Component {
         mode: Camera.constants.CaptureMode.video,
         target: Camera.constants.CaptureTarget.disk,
         quality: Camera.constants.CaptureQuality['480p'],
+
       })
           .then((data) => {
             if (!this.state.closeBtn) {
@@ -258,6 +260,22 @@ export default class CameraActions extends React.Component {
     Actions.pop();
   }
 
+  _onLongPressButton = () => {
+    let i = 1;
+    this.startRecording();
+    const t = setInterval(() => {
+      if (i > 30) {
+        this.stopRecording();
+        clearInterval(t);
+      } else {
+        i += 1;
+      }
+      if (this.state.timer > 0) {
+        this.setState({ timer: this.state.timer - 1 });
+      }
+    }, 1000);
+  }
+
   /* eslint-disable global-require */
   render() {
     return (
@@ -282,65 +300,70 @@ export default class CameraActions extends React.Component {
           mirrorImage={false}
         />
         <View style={[styles.overlay, styles.bottomOverlay]}>
-          <TouchableOpacity
-            style={styles.typeButton}
-            onPress={this.switchType}
-          >
-            <Image
-              source={this.typeIcon}
-            />
-          </TouchableOpacity>
-          <View style={styles.buttonsSpace} />
-          <TouchableOpacity
-            style={styles.captureButton}
-            onPress={() => {
-              this.captureImageAndPreview();
-            }}
-            disabled={this.state.isRecording}
-            activeOpacity={0.3}
-            underlayColor={'rgba(0,0,0,0.3)'}
-          >
-            <Icon
-              name="camera-enhance"
-              size={32}
-              color="#000"
-              width={30}
-            />
-          </TouchableOpacity>
-          <View style={styles.buttonsSpace} />
-          {
-              (!this.state.isRecording
-              &&
-              <TouchableOpacity
-                style={styles.captureButton}
-                onPress={this.startRecording}
-                activeOpacity={0.3}
-              >
-                <Image
-                  source={require('./assets/ic_videocam_36pt.png')}
-                />
-              </TouchableOpacity>)
-              ||
-              <TouchableOpacity
-                style={[styles.captureButton, { backgroundColor: 'red' }]}
-                onPress={this.stopRecording}
-                activeOpacity={0.3}
-              >
-                <Image
-                  source={require('./assets/ic_stop_36pt.png')}
-                />
-              </TouchableOpacity>
-          }
-          <View style={styles.buttonsSpace} />
-          <TouchableOpacity
-            style={styles.flashButton}
-            onPress={this.switchFlash}
-            activeOpacity={0.3}
-          >
-            <Image
-              source={this.flashIcon}
-            />
-          </TouchableOpacity>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <TouchableOpacity
+              style={styles.typeButton}
+              onPress={this.switchType}
+            >
+              <Image
+                source={this.typeIcon}
+              />
+            </TouchableOpacity>
+            <View style={styles.buttonsSpace} />
+            <TouchableOpacity
+              style={styles.captureButton}
+              onPress={() => {
+                this.captureImageAndPreview();
+              }}
+              onLongPress={this._onLongPressButton}
+              onPressOut={() => {
+                this.stopRecording();
+              }}
+              disabled={this.state.isRecording}
+              activeOpacity={0.3}
+              underlayColor={'rgba(0,0,0,0.3)'}
+            >
+              <Icon
+                name="camera-enhance"
+                size={32}
+                color="#000"
+                width={30}
+              />
+            </TouchableOpacity>
+            {/* <View style={styles.buttonsSpace} />
+            {
+                (!this.state.isRecording
+                &&
+                <TouchableOpacity
+                  style={styles.captureButton}
+                  onPress={this.startRecording}
+                  activeOpacity={0.3}
+                >
+                  <Image
+                    source={require('./assets/ic_videocam_36pt.png')}
+                  />
+                </TouchableOpacity>)
+                ||
+                <TouchableOpacity
+                  style={[styles.captureButton, { backgroundColor: 'red' }]}
+                  onPress={this.stopRecording}
+                  activeOpacity={0.3}
+                >
+                  <Text>{this.state.timer}</Text>
+                </TouchableOpacity>
+            } */}
+            <View style={styles.buttonsSpace} />
+            <TouchableOpacity
+              style={styles.flashButton}
+              onPress={this.switchFlash}
+              activeOpacity={0.3}
+            >
+              <Image
+                source={this.flashIcon}
+              />
+            </TouchableOpacity>
+          </View>
+          <Text style={{ color: 'red', fontSize: 18 }}>{this.state.timer}</Text>
         </View>
         <TouchableOpacity
           style={[styles.closeButton, {
@@ -386,3 +409,4 @@ CameraActions.propTypes = {
   groupId: PropTypes.string,
   progressCallback: PropTypes.func,
 };
+
