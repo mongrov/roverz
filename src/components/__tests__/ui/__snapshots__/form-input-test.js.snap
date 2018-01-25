@@ -4,10 +4,12 @@ exports[`FormInput renders correctly 1`] = `
 <View
   style={
     Object {
-      "borderBottomColor": "#bdc6cf",
+      "backgroundColor": "rgba(255,255,255,0.05)",
+      "borderBottomColor": "#D0D1D5",
       "borderBottomWidth": 1,
       "marginLeft": 20,
       "marginRight": 20,
+      "marginTop": 10,
       "transform": Array [
         Object {
           "translateX": 0,
@@ -17,31 +19,6 @@ exports[`FormInput renders correctly 1`] = `
   }
 >
   <TextInput
-    0={
-      Object {
-        "containerStyle": Array [
-          Object {
-            "backgroundColor": "rgba(255,255,255,0.05)",
-            "borderBottomColor": "#D0D1D5",
-            "borderBottomWidth": 1,
-            "marginLeft": 20,
-            "marginRight": 20,
-            "marginTop": 10,
-          },
-        ],
-        "inputStyle": Array [
-          Object {
-            "color": "#222222",
-            "fontFamily": "OpenSans-Regular",
-            "paddingHorizontal": 10,
-            "paddingVertical": 3,
-          },
-        ],
-        "value": "John Smith",
-      }
-    }
-    1={Array []}
-    2={Array []}
     selectionColor="#86939e"
     style={
       Array [
@@ -53,9 +30,18 @@ exports[`FormInput renders correctly 1`] = `
         Object {
           "fontSize": 17.5,
         },
-        undefined,
+        Array [
+          Object {
+            "color": "#222222",
+            "fontFamily": "OpenSans-Regular",
+            "paddingHorizontal": 10,
+            "paddingVertical": 3,
+          },
+          Array [],
+        ],
       ]
     }
+    value="John Smith"
   />
 </View>
 `;
@@ -77,23 +63,6 @@ exports[`FormInputSimple renders correctly 1`] = `
   }
 >
   <TextInput
-    0={
-      Object {
-        "containerStyle": Array [
-          Object {},
-        ],
-        "inputStyle": Array [
-          Object {
-            "color": "#777777",
-            "fontFamily": "OpenSans-Regular",
-            "paddingVertical": 3,
-          },
-        ],
-        "value": "John Smith",
-      }
-    }
-    1={Array []}
-    2={Array []}
     selectionColor="#86939e"
     style={
       Array [
@@ -105,9 +74,17 @@ exports[`FormInputSimple renders correctly 1`] = `
         Object {
           "fontSize": 17.5,
         },
-        undefined,
+        Array [
+          Object {
+            "color": "#777777",
+            "fontFamily": "OpenSans-Regular",
+            "paddingVertical": 3,
+          },
+          Array [],
+        ],
       ]
     }
+    value="John Smith"
   />
 </View>
 `;

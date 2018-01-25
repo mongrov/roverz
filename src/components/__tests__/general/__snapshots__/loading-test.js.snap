@@ -98,3 +98,42 @@ exports[`Loading w/ text renders correctly 1`] = `
   </Text>
 </View>
 `;
+
+exports[`Transparent renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#E9EBEE",
+        "flex": 1,
+        "flexDirection": "column",
+        "position": "relative",
+      },
+      Object {
+        "alignItems": "center",
+        "justifyContent": "center",
+      },
+      Object {
+        "backgroundColor": "rgba(255,255,255,0.75)",
+      },
+    ]
+  }
+>
+  <ActivityIndicator
+    animating={true}
+    color="#000"
+    hidesWhenStopped={true}
+    size="large"
+  />
+  <View
+    style={
+      Object {
+        "height": 1,
+        "left": 0,
+        "marginTop": 9,
+        "right": 0,
+      }
+    }
+  />
+</View>
+`;

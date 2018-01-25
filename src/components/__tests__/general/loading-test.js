@@ -23,3 +23,11 @@ it('Loading w/ text renders correctly', () => {
 
   expect(tree).toMatchSnapshot();
 });
+
+it('Transparent renders correctly', () => {
+  const tree = renderer.create(
+    <Loading transparent />,
+  ).toJSON();
+
+  expect(tree).toMatchSnapshot();
+});

@@ -2,56 +2,7 @@
 
 exports[`ListItem renders correctly 1`] = `
 <View
-  0={
-    Object {
-      "avatar": 1,
-      "avatarStyle": Array [
-        Object {
-          "borderRadius": 25,
-          "height": 50,
-          "marginTop": 5,
-          "width": 50,
-        },
-      ],
-      "chevronColor": "#777777",
-      "containerStyle": Array [
-        Object {
-          "backgroundColor": "#FFFFFF",
-          "borderBottomColor": "#D0D1D5",
-          "borderTopColor": "#D0D1D5",
-          "paddingBottom": 12,
-          "paddingTop": 12,
-        },
-      ],
-      "roundAvatar": true,
-      "subTitle": "Sub title",
-      "subtitleStyle": Array [
-        Object {
-          "color": "#777777",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 12.6,
-          "fontWeight": "500",
-          "lineHeight": 18,
-        },
-      ],
-      "title": "Hello world",
-      "titleStyle": Array [
-        Object {
-          "color": "#222222",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 18,
-          "fontWeight": "400",
-          "height": 25,
-          "marginBottom": 2,
-        },
-      ],
-      "underlayColor": "#D0D1D5",
-    }
-  }
-  1={Array []}
-  2={Array []}
-  3={Array []}
-  4={Array []}
+  avatar={1}
   onLongPress={undefined}
   onPress={undefined}
   style={
@@ -64,10 +15,20 @@ exports[`ListItem renders correctly 1`] = `
         "paddingRight": 10,
         "paddingTop": 10,
       },
-      undefined,
+      Array [
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "borderBottomColor": "#D0D1D5",
+          "borderTopColor": "#D0D1D5",
+          "paddingBottom": 12,
+          "paddingTop": 12,
+        },
+        Array [],
+      ],
     ]
   }
-  underlayColor="white"
+  subTitle="Sub title"
+  underlayColor="#D0D1D5"
 >
   <View
     style={
@@ -83,6 +44,83 @@ exports[`ListItem renders correctly 1`] = `
     <View
       style={
         Object {
+          "height": 34,
+          "width": 34,
+        }
+      }
+    >
+      <View
+        activeOpacity={undefined}
+        onLongPress={undefined}
+        onPress={undefined}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "height": 34,
+              "paddingBottom": 10,
+              "paddingRight": 10,
+              "paddingTop": 10,
+              "width": 34,
+            },
+            Object {
+              "borderRadius": 17,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "alignSelf": "stretch",
+                "backgroundColor": "rgba(0,0,0,0.2)",
+                "bottom": 0,
+                "flex": 1,
+                "justifyContent": "center",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              Object {
+                "borderRadius": 17,
+              },
+              undefined,
+            ]
+          }
+        >
+          <Image
+            source={1}
+            style={
+              Array [
+                Object {
+                  "height": 34,
+                  "width": 34,
+                },
+                Object {
+                  "borderRadius": 17,
+                },
+                Array [
+                  Object {
+                    "borderRadius": 25,
+                    "height": 50,
+                    "marginTop": 5,
+                    "width": 50,
+                  },
+                  Array [],
+                ],
+              ]
+            }
+          />
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
           "flex": 1,
           "justifyContent": "center",
         }
@@ -91,7 +129,49 @@ exports[`ListItem renders correctly 1`] = `
       <View
         style={undefined}
       >
-        <View />
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+          style={
+            Array [
+              Object {},
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              Array [
+                Object {
+                  "color": "#43484d",
+                  "fontSize": 17.5,
+                },
+                Object {
+                  "marginLeft": 10,
+                },
+                Array [
+                  Object {
+                    "color": "#222222",
+                    "fontFamily": "OpenSans-Regular",
+                    "fontSize": 18,
+                    "fontWeight": "400",
+                    "height": 25,
+                    "marginBottom": 2,
+                  },
+                  Array [],
+                ],
+                undefined,
+              ],
+            ]
+          }
+        >
+          Hello world
+        </Text>
       </View>
       <View
         style={undefined}
@@ -148,7 +228,7 @@ exports[`ListItem renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#bdc6cf",
+                "color": "#777777",
                 "fontSize": 28,
               },
               Array [

@@ -2,7 +2,7 @@
  * Test to check if the component renders correctly
  */
 /* global it expect */
-import 'react-native';
+import { Platform } from 'react-native';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
@@ -18,7 +18,17 @@ it('ProgressBar renders correctly', () => {
 
 it('progressbar componentWillReceiveProps', () => {
   const progressComponent = renderer.create(<ProgressBar />).getInstance();
-  progressComponent.componentWillReceiveProps(50);
-  expect(progressComponent.state.progress).toEqual(50);
+  const tree = progressComponent.componentWillReceiveProps(50);
+  expect(progressComponent.state.progress).toEqual(tree);
 });
 
+it('android', () => {
+  Platform.OS = 'android';
+  const component = renderer.create(<ProgressBar />).toJSON();
+  expect(component).toMatchSnapshot();
+});
+it('ios', () => {
+  Platform.OS = 'ios';
+  const component = renderer.create(<ProgressBar />).toJSON();
+  expect(component).toMatchSnapshot();
+});

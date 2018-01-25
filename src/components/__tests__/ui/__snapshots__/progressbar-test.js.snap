@@ -15,3 +15,29 @@ exports[`ProgressBar renders correctly 1`] = `
   trackTintColor="#DCDCDC"
 />
 `;
+
+exports[`android 1`] = `
+<Text
+  accessible={true}
+  allowFontScaling={true}
+  ellipsizeMode="tail"
+>
+  Loading
+</Text>
+`;
+
+exports[`ios 1`] = `
+<RCTProgressView
+  progress={0.5}
+  progressTintColor="#43D35D"
+  style={
+    Array [
+      Object {
+        "height": 2,
+      },
+      undefined,
+    ]
+  }
+  trackTintColor="#DCDCDC"
+/>
+`;

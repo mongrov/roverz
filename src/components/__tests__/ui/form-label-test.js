@@ -24,3 +24,12 @@ it('FormLabel renders correctly', () => {
 
   expect(tree).toMatchSnapshot();
 });
+
+it('FormLabel labelprops renders correctly', () => {
+  const tree = renderer.create(
+    <FormLabel labelProps={FormLabel.labelStyle} />,
+  ).toJSON();
+
+  expect(tree).toMatchSnapshot();
+  expect(tree).toBeTruthy();
+});
