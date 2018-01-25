@@ -31,6 +31,7 @@ class Network {
       Network.isMonitorConnectionEnabled = false;
       Network.isFirstTimeNetstatus = true;
       this.onLogin(() => {
+        Network.isFirstTimeNetstatus = false;
         this.switchToLoggedInUser();
       });
       NetInfo.isConnected.fetch().then((isConnected) => {
@@ -147,12 +148,13 @@ class Network {
 
   dbSync() {
     this.push.register();
-    this.chat.fetchChannels();
-    // lets subscribe to all changes in all channels
+    const prevSyncTime = Network.lastSyncTime ? Network.lastSyncTime.getTime() : null;
+    this.chat.fetchChannels(prevSyncTime);
     this.chat.subscribeToAllGroups();
     this.chat.setUserPresence('online');
   }
 
+  // not much used need to test and remove this
   meteorConnectionChange(isConnected) {
     if (Network._db && Network._db.app) {
       const prevState = Network._db.app.isServerConnected;
@@ -179,11 +181,12 @@ class Network {
 
   _handleFirstConnectivityChange = (isConnected) => {
     Network.isNetworkAvailable = isConnected;
-    if (Network.isFirstTimeNetstatus) {
-      Network.isFirstTimeNetstatus = false;
-    } else if (!isConnected && Network.lastSyncTime === null) {
+    if (!Network.isFirstTimeNetstatus && !isConnected && Network.lastSyncTime === null) {
       Network.lastSyncTime = new Date();
       Network._db.app.setLastSync(Network.lastSyncTime);
+    }
+    if (isConnected) {
+      this.reconnectMeteor();
     }
   }
 
@@ -193,9 +196,19 @@ class Network {
       Network._chat.setUserPresence('away');
     } else if (nextAppState === 'active') {
       PushNotification.cancelAllLocalNotifications();
+      this.reconnectMeteor();
       Network._chat.setUserPresence('online');
     }
   }
+
+  reconnectMeteor() {
+    setTimeout(() => {
+      if (Network.currentUser && !Network.isConnected) {
+        Network._meteor.reconnect();
+      }
+    }, 1000);
+  }
+
 }
 
 export default Network;

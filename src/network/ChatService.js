@@ -514,8 +514,6 @@ class ChatService {
       const dbAppState = this.db.app.state;
       lastSync = (dbAppState && dbAppState.lastSync) ? dbAppState.lastSync.getTime() : 0;
     }
-    // console.log(`Ezhil- Last Sync:${lastSync}, ${lastSyncTime}`);
-    // console.log('--- [Network] --- ====================================');
     const noOfMsgs = 10;
     // const temp = lastSync > 0 ? Math.floor(lastSync / 1000) : 0;
     const req1 = this.meteor.traceCall('rooms/get', { $date: lastSync });
@@ -837,11 +835,16 @@ class ChatService {
             msgText = 'Started a Call!';
             this.incomingVC(currUser, inM.ts, inM.rid, group);
           } else {
-            PushNotification.localNotificationSchedule({
-              message: `Video Call started in ${group.name}`, // (required)
-              playSound: 'vcring.mp3',
-              date: new Date(Date.now()), // in 60 secs
-            });
+            const msgTs = moment(inM.ts);
+            const currentTsDiff = moment().diff(msgTs, 'minutes');
+            if (currentTsDiff < 1) {
+              PushNotification.localNotificationSchedule({
+                message: `Video Call started in ${group.name}`, // (required)
+                playSound: true,
+                soundName: 'vcring.mp3',
+                date: new Date(Date.now()), // in 60 secs
+              });
+            }
           }
         }
       }

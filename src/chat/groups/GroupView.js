@@ -113,15 +113,12 @@ class GroupList extends Component {
       connected: false,
       appState: AppState.currentState,
     };
-    console.log('APPSTATE GV - constructor', `${AppState.currentState}`);
   }
 
   componentWillMount() {
-    console.log('APPSTATE GV - componentWillMount');
   }
 
   componentDidMount() {
-    console.log('APPSTATE GV - componentDidMount start');
     // this._service.onLogin(() => {
     //   console.log('APPSTATE GV - onLogin');
     //   // on login, lets sync
@@ -133,13 +130,11 @@ class GroupList extends Component {
     // });
     this._insideStateUpdate = false;
     this._service.db.groups.list.addListener(() => {
-      console.log('APPSTATE GV - list.addListener');
       if (!this._mounted
         || this._insideStateUpdate ||
         !this._service.currentUser ||
         this.state.appState.match(/inactive|background/)) return;
       this._insideStateUpdate = true;
-      console.log('APPSTATE GV - list.addListener _insideStateUpdate');
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(
           this._service.chat.getFilteredChannels(this.state.items)),
@@ -149,7 +144,6 @@ class GroupList extends Component {
     });
     this._mounted = true;
     setTimeout(() => {
-      console.log('APPSTATE GV - setTimeout');
       if (this._mounted && this.state.items && this.state.items.length > 0 && !this.state.loaded) {
         this.setState({
           loaded: true,
@@ -168,7 +162,6 @@ class GroupList extends Component {
   componentWillUnmount() {
     this._mounted = false;
     AppState.removeEventListener('change', this._handleAppStateChange);
-    console.log('APPSTATE GV - componentWillUnmount');
   }
 
   getUser = (msg) => {
