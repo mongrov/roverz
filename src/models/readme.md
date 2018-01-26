@@ -13,4 +13,6 @@
      * avatar to be moved to ModuleConfig ? 
      * active - why do we want this ?
      * UserManager methods - updateStatus & updateFullUserData
-  * 
+  * Group
+     * avatar to be moved outside as well - as this is tight coupling
+     * 

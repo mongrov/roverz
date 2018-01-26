@@ -8,18 +8,23 @@ const UserSchema = {
   name: Constants.User,
   primaryKey: '_id',
   properties: {
+    // -- identity
     _id: 'string',
-    name: 'string',
     username: 'string',
-    status: { type: 'string', default: Constants.U_OFFLINE }, // ONLINE, OFFLINE, AWAY, BUSY
+    name: 'string',
+    emails: { type: 'string', optional: true },
+
+    // -- type & status
+    type: { type: 'string', optional: true },
     active: { type: 'string', optional: true },
+    status: { type: 'string', default: Constants.U_OFFLINE }, // ONLINE, OFFLINE, AWAY, BUSY
     statusConnection: { type: 'string', default: Constants.U_OFFLINE }, // ONLINE, OFFLINE, AWAY, BUSY
     utcOffset: { type: 'string', optional: true },
-    emails: { type: 'string', optional: true },
+    roles: { type: 'string', optional: true },
+
+    // -- meta data
     lastLogin: { type: 'date', optional: true },
     createdAt: { type: 'date', optional: true },
-    type: { type: 'string', optional: true },
-    roles: { type: 'string', optional: true },
   },
 };
 export default class User {

@@ -3,12 +3,14 @@
  */
 export default {
   MODULE: 'Database',
+
   // tables
   App: 'Rover',
   Group: 'Group',
   Message: 'Message',
   User: 'User',
   RemoteFile: 'RemoteFile',
+
   // server
   Servers: 'app:servers',
   LastDBUsed: 'app:database',

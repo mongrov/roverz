@@ -8,13 +8,20 @@ const GroupSchema = {
   name: Constants.Group,
   primaryKey: '_id',
   properties: {
+    // -- identity
     _id: 'string',
     name: { type: 'string', default: '' },
-    type: { type: 'string', default: Constants.G_PUBLIC }, // direct (1:1), public (open channel), private (group)
     title: { type: 'string', default: '' },
+
+    // -- type & status
+    type: { type: 'string', default: Constants.G_PUBLIC }, // direct (1:1), public (open channel), private (group)
     unread: { type: 'int', default: 0 },
+
+    // -- meta data
     updatedAt: { type: 'date', optional: true },
     lastMessageAt: { type: 'date', optional: true },
+
+    // -- data
     messages: { type: 'list', objectType: Constants.Message },
     moreMessages: { type: 'bool', default: true },
   },
@@ -25,7 +32,7 @@ export default class Group {
     return `${Application.urls.SERVER_URL}/avatar/${this.name}`;
   }
   get heading() {
-    return this.title ? this.title : this.name;
+    return this.title || this.name;
   }
   get sortedMessages() {
     return this.messages.sorted(Constants.CREATED_AT, true);
