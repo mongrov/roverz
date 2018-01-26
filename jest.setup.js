@@ -35,16 +35,14 @@ fetch.mockResponseFailure = (error) => {
   );
 };
 
-jest.mock('react-native-img-cache', () => {
-  return {
-    DocumentDir: () => {},
-    ImageCache: {
-      get: {
-        clear: () => {}
-      }
-    }
-  }
-});
+jest.mock('react-native-img-cache', () => ({
+  DocumentDir: () => {},
+  ImageCache: {
+    get: {
+      clear: () => {},
+    },
+  },
+}));
 
 jest.mock('react-native-camera', () => mockCamera);
 
