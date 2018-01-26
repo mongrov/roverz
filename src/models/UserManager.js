@@ -70,7 +70,7 @@ export default class UserManager {
         usr.statusConnection = userData.statusConnection;
       }
       if (userData.utcOffset) {
-        usr.utcOffset = `${userData.utcOffset} `;
+        usr.utcOffset = `${userData.utcOffset}`;
       }
       if (userData.lastLogin) {
         usr.lastLogin = userData.lastLogin;
@@ -79,18 +79,10 @@ export default class UserManager {
         usr.createdAt = userData.createdAt;
       }
       if (userData.roles && userData.roles.length > 0) {
-        let roles = '';
-        for (let i = 0; i < userData.roles.length; i += 1) {
-          roles += `${userData.roles[i]},`;
-        }
-        usr.roles = roles;
+        usr.roles = userData.roles.join(',');
       }
       if (userData.emails && userData.emails.length > 0) {
-        let emails = '';
-        for (let i = 0; i < userData.emails.length; i += 1) {
-          emails += `${userData.emails[i].address},`;
-        }
-        usr.emails = emails;
+        usr.emails = userData.emails.map(elem => elem.address).join(',');
       }
       if (userData.type) {
         usr.type = userData.type;
