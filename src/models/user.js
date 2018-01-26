@@ -1,5 +1,5 @@
 /*
- * User
+ * User model/schema file
  */
 import Application from '../constants/config';
 import Constants from './constants';

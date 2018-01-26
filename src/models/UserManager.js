@@ -19,17 +19,17 @@ export default class UserManager {
 
   // find user by id
   findById(uid) {
-    const res = this.list.filtered(`_id = "${uid}"`);
-    return (res && res.length > 0) ? res['0'] : null;
+    const res = this.findByIdAsList(uid);
+    return res ? res['0'] : null;
   }
 
-    // find user by username
+  // find user by username
   findByUserName(uname) {
     const res = this.list.filtered(`username = "${uname}"`);
     return (res && res.length > 0) ? res['0'] : null;
   }
 
-    // find user by id
+  // find user by id
   findByIdAsList(uid) {
     const res = this.list.filtered(`_id = "${uid}"`);
     return (res && res.length > 0) ? res : null;
@@ -38,7 +38,8 @@ export default class UserManager {
   // ----- mutation helpers ----
 
   // callers responsibility to enclose within write txn
-  findOrCreate(uid, uname, name) {
+  // any _ methods should not be used outside models
+  _findOrCreate(uid, uname, name) {
     var usr = this.findById(uid);
     if (usr) return usr;
     const tname = name || uname;
@@ -49,28 +50,16 @@ export default class UserManager {
   // TODO bulk status update
   updateStatus(uid, uname, name, ustatus) {
     if (!ustatus) return;
-    let usr = this.findById(uid);
     this._realm.write(() => {
-      if (usr) {
-        usr.status = ustatus;
-      } else {
-        const temp = name || uname;
-        usr = { _id: uid, username: uname, status: ustatus, name: temp };
-        this._realm.create(Constants.User, usr, true);
-      }
+      const usr = this._findOrCreate(uid, uname, name);
+      usr.status = ustatus;
     });
   }
 
   updateFullUserData(userData) {
     if (!userData) return;
-    let usr = this.findById(userData._id);
-    const create = !usr;
     this._realm.write(() => {
-      if (create) {
-        const temp = userData.name || userData.username;
-        usr = { _id: userData._id, username: userData.username, name: temp };
-        this._realm.create(Constants.User, usr, true);
-      }
+      const usr = this._findOrCreate(userData._id, userData.username, userData.name);
       if (userData.status) {
         usr.status = userData.status;
       }
@@ -109,11 +98,9 @@ export default class UserManager {
     });
   }
 
-
   getStatus(uid) {
-    var usr = this.findById(uid);
-    if (usr) return usr.status;
-    return null;
+    const usr = this.findById(uid);
+    return usr ? usr.status : usr;
   }
 
 }

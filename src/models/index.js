@@ -201,7 +201,7 @@ class Database {
             }
           }
         } else {
-          obj.user = this.users.findOrCreate(obj.user._id, obj.user.username, obj.user.name);
+          obj.user = this.users._findOrCreate(obj.user._id, obj.user.username, obj.user.name);
           obj.likes = messages[k].likes;
           if (messages[k].likes) {
             obj.likes = messages[k].likes;
@@ -243,7 +243,7 @@ class Database {
         const obj = inGroup.findMessageById(messages[k]._id);
         if (!obj) { // new message with like/edit
           const msg = messages[k];
-          msg.user = this.users.findOrCreate(msg.user._id, msg.user.username, msg.user.name);
+          msg.user = this.users._findOrCreate(msg.user._id, msg.user.username, msg.user.name);
           msg.likes = messages[k].likes;
           if (messages[k].likes) {
             msg.likes = messages[k].likes;

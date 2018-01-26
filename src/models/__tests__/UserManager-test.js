@@ -16,18 +16,18 @@ it('list getters', () => {
   expect(db.users.findById('10')).toBeNull();
   // findOrCreate
   db.realm.write(() => {
-    db.users.findOrCreate('10', 'test');
+    db.users._findOrCreate('10', 'test');
   });
   expect(db.users.findById('10')).not.toBeNull();
   expect(db.users.findByIdAsList('10')).not.toBeNull();
 
   expect(db.users.findByIdAsList('1')).toBeNull();
   expect(db.users.list).toHaveLength(1);
-  expect(db.users.findOrCreate('10')).not.toBeNull();
-  expect(db.users.findOrCreate('10').avatar).not.toBeNull();
+  expect(db.users._findOrCreate('10')).not.toBeNull();
+  expect(db.users._findOrCreate('10').avatar).not.toBeNull();
 
   db.realm.write(() => {
-    db.users.findOrCreate('1', '', 'test name');
+    db.users._findOrCreate('1', '', 'test name');
   });
   db.users.updateStatus('10', 'test', 'test name');
   db.users.updateStatus('10', 'test', 'test name', 'online');
