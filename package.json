@@ -54,7 +54,7 @@
     "react-native-tab-view": "0.0.73",
     "react-native-transformable-image": "git+https://github.com/elarasu/react-native-transformable-image.git",
     "react-native-user-avatar": "1.0.3",
-    "react-native-vector-icons": "4.4.3",
+    "react-native-vector-icons": "4.5.0",
     "react-native-video": "2.0.0",
     "react-redux": "5.0.6",
     "realm": "2.0.12",

@@ -5,9 +5,9 @@ import {
 } from 'react-native';
 import emoji from 'node-emoji';
 import AppUtil from '../lib/util';
-
 import Application from '../constants/config';
 
+// local package refs
 import SchemaV1 from './schema';
 import Constants from './constants';
 import AppManager from './AppManager';
