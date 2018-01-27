@@ -1,10 +1,10 @@
-// import { Alert } from 'react-native';
 import Meteor from 'react-native-meteor';
 import { Actions } from 'react-native-router-flux';
-import AppUtil from '../lib/util';
 
+import AppUtil from '../lib/util';
 import AppConfig from '../constants/config';
 import Network from '../network';
+
 import Constants from './constants';
 
 const PushNotification = require('react-native-push-notification');

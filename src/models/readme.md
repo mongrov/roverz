@@ -5,7 +5,6 @@
    * entity manager should be in upper case (example user manager -> UserManager)
 
 ## Todo
-  * consistent naming
   * remove elix/yap from everywhere
   * in settings add a button to clear cache and wire it  
   * test cases not only to call the method, they should verify the result - otherwise it doesnt' make sense
@@ -28,5 +27,6 @@
      * if just key is coming in, don't add or delete from cache?
   * index
      * all three methods should go under groups
+        * deleteMessage - break into two methods, write unit test
      * db management wrappers should be removed, should be moved to corresponding apps
      * schema.js and migrations should go under app / atleast part of it

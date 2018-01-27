@@ -1,7 +1,8 @@
 import Meteor from 'react-native-meteor';
-import AppUtil from '../lib/util';
 
+import AppUtil from '../lib/util';
 import Application from '../constants/config';
+
 import Constants from './constants';
 
 class MeteorService {

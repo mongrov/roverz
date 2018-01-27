@@ -1,15 +1,15 @@
 import RNRestart from 'react-native-restart';
 import { NetInfo } from 'react-native';
+
 import Database from '../models';
+import Application from '../constants/config';
 
 import Constants from './constants';
 import PushService from './PushService';
 import MeteorService from './MeteorService';
 import ChatService from './ChatService';
-import Application from '../constants/config';
 
 const PushNotification = require('react-native-push-notification');
-
 
 class Network {
 

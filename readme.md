@@ -16,7 +16,11 @@ cleanup following modules:
     "react-native-photo-browser": "https://github.com/elarasu/react-native-photo-browser",
     "react-native-tab-view": "0.0.73",
     "react-native-transformable-image": "git+https://github.com/elarasu/react-native-transformable-image.git",
-    "react-native-vector-icons": "4.4.3",
     "realm": "2.0.12",
+cleanup dev modules that are not required
+
+  * config.js - resetInstance needs to be separated and moved code to utils, write UT
+  * should get rid of 'GoogleAnalyticsTracker'
+  * 
 
 ## Performance data
