@@ -5,7 +5,8 @@
    * entity manager should be in upper case (example user manager -> UserManager)
 
 ## Todo
-  * remove elix/yap from everywhere
+  * reply of reply message is not getting added 
+  * findRootMessage in group need to tested for multiple hierarchy
   * in settings add a button to clear cache and wire it  
   * test cases not only to call the method, they should verify the result - otherwise it doesnt' make sense
      * remove the console.log
