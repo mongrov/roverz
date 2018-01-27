@@ -120,7 +120,7 @@ it('add groups', () => {
   };
   db.updateMessages(db.groups.findById('4'), updatedMessage);
 
-  db.groups.findById('4').commentsList();
+  // db.groups.findById('4').commentsList();
 
   const replyMessage = {
     13: { _id: '22',
@@ -133,7 +133,7 @@ it('add groups', () => {
       user: { _id: '2', username: 'who', name: 'wh' } },
   };
   db.addMessages(db.groups.findById('4'), replyMessage);
-  db.groups.findById('4').commentsList('14');
+  // db.groups.findById('4').commentsList('14');
   console.log('Root Message ', db.groups.findById('4').findRootMessage('22'));
   console.log('Root Message ', db.groups.findById('4').findRootMessage('0'));
   const replyMessage1 = {

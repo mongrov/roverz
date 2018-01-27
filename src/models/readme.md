@@ -7,6 +7,9 @@
 ## Todo
   * consistent naming
   * remove elix/yap from everywhere
+  * test cases not only to call the method, they should verify the result - otherwise it doesnt' make sense
+     * remove the console.log
+     * add automation to verify results of each operation
   * User 
      * statusConnection to be removed
      * emails - change to email
@@ -16,6 +19,8 @@
   * Group
      * avatar to be moved outside as well - as this is tight coupling
      * GroupManager - updateNoMoreMessages - can it be a candidate for Group setter 
+     * findRootMessage - shall we cache it in datastructure, so after we compute, we need not again
+     * findMissingMessages - why do we check likes ?
   * Message
      * original - should be removed
   * RemoteFile

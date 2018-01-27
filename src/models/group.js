@@ -47,39 +47,26 @@ export default class Group {
     return this.type === Constants.G_DIRECT;
   }
   get lastMessage() {
-    if (this.messages.length > 0) {
-      return this.sortedMessages[0];
-    }
-    return null;
+    return (this.messages.length > 0) ? this.sortedMessages[0] : null;
   }
 
-  // TO-DO use indexed search instead of loop
+  // --- find utilities ---
+
   findMessageById(msgId) {
     if (msgId && this.messages.length > 0) {
-      for (let i = 0; i < this.messages.length; i += 1) {
-        const m = this.messages[i];
-        if (m._id === msgId) {
-          return m;
-        }
-      }
+      const res = this.messages.filtered(`_id = "${msgId}"`);
+      return (res && res.length > 0) ? res['0'] : null;
     }
     return null;
   }
 
   findRootMessage(msgId) {
-    let replMsg = null;
-    if (msgId && this.messages.length > 0) {
-      let tempArray = this.messages.filtered(`_id = "${msgId}"`);
-      replMsg = (tempArray && tempArray.length > 0) ? tempArray['0'] : null;
-      while (replMsg && replMsg.isReply) {
-        tempArray = this.messages.filtered(`_id = "${replMsg.replyMessageId}"`);
-        replMsg = (tempArray && tempArray.length > 0) ? tempArray['0'] : null;
-      }
+    var replMsg = this.findMessageById(msgId);
+    while (replMsg && replMsg.isReply) {
+      replMsg = this.findMessageById(replMsg.replyMessageId);
     }
     return replMsg;
   }
-
-  // --- find utilities ---
 
   // find non-present messages {id: message obj} that are not present in group
   // simple algorithm to loop thru group messages would work better
@@ -100,13 +87,6 @@ export default class Group {
       }
     });
     return nonExisting;
-  }
-
-  commentsList(msgId) {
-    if (msgId) {
-      return this.messages.filtered('isReply==true');
-    }
-    return null;
   }
 
 }
