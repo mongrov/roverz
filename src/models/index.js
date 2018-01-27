@@ -45,7 +45,7 @@ class Database {
   get users() {
     return Database._um;
   }
-
+  // refer to RemoteFileManager for methods that can be accessed
   get remotefiles() {
     return Database._rf;
   }

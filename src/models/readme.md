@@ -26,4 +26,7 @@
      * original - should be removed
   * RemoteFile
      * if just key is coming in, don't add or delete from cache?
-  
+  * index
+     * all three methods should go under groups
+     * db management wrappers should be removed, should be moved to corresponding apps
+     * schema.js and migrations should go under app / atleast part of it
