@@ -41,13 +41,9 @@ it('list getters', () => {
   x = db.groups.findByName('GeNeraL');
   expect(x).not.toBeNull();
   x = db.groups.search('ge');
-  // console.log(x);
   x = db.groups.search('gro');
-  // console.log(x);
   x = db.groups.search('genr');
-  // console.log(x);
   x = db.groups.search('zz');
-  // console.log(x);
 
   // @todo: check sorted
   x = db.groups.sortedList; // - TBD
@@ -96,8 +92,8 @@ it('add groups', () => {
     },
   };
   db.groups.addAll(objs);
-  console.log('Root Message ', db.groups.findById('4').findRootMessage(null));
-  console.log('Root Message ', db.groups.findById('4').findRootMessage('1'));
+  db.groups.findById('4').findRootMessage(null).toHaveLength(0);
+  db.groups.findById('4').findRootMessage('1').toHaveLength(0);
   const date = new Date();
   const messages = {
     13: { _id: '14', rid: '4', text: 'wh?', createdAt: date, user: { _id: '2', username: 'who', name: 'wh' } },
@@ -134,8 +130,8 @@ it('add groups', () => {
   };
   db.addMessages(db.groups.findById('4'), replyMessage);
   // db.groups.findById('4').commentsList('14');
-  console.log('Root Message ', db.groups.findById('4').findRootMessage('22'));
-  console.log('Root Message ', db.groups.findById('4').findRootMessage('0'));
+  db.groups.findById('4').findRootMessage('22').toHaveLength(1);
+  db.groups.findById('4').findRootMessage('0').toHaveLength(0);
   const replyMessage1 = {
     13: { _id: '23',
       rid: '4',
@@ -146,17 +142,16 @@ it('add groups', () => {
       user: { _id: '2', username: 'who', name: 'wh' } },
   };
   db.addMessages(db.groups.findById('4'), replyMessage1);
-  console.log('Root Message ', db.groups.findById('4').findRootMessage('23'));
+  db.groups.findById('4').findRootMessage('23');
 
   // delete invalid message id
   db.deleteMessage('4');
+  // test lastMessage
   let lastMessage = db.groups.lastMessage;
-  console.log('GM Test lastmessage', lastMessage);
   expect(lastMessage).not.toBeNull();
   // delete invalid message id
   db.deleteMessage('4', '21');
   lastMessage = db.groups.lastMessage;
-  console.log('GM Test lastmessage after delete ', lastMessage);
   expect(lastMessage).not.toBeNull();
   // delete valid message id
   db.deleteMessage('4', '14');
@@ -164,7 +159,8 @@ it('add groups', () => {
 
   db.groups.updateNoMoreMessages(db.groups.findById('4'));
   db.groups.updateNoMoreMessages(null);
-  console.log('heading', db.groups.findById('4').heading);
+  // TODO Verify heading
+  expect(db.groups.findById('4').heading).not.toBeNull();
   const gobjs = {
     5: { _id: '5',
       name: 'direct 1',
@@ -173,7 +169,8 @@ it('add groups', () => {
     },
   };
   db.groups.addAll(gobjs);
-  console.log('heading', db.groups.findById('5').heading);
+  // TODO Verify heading
+  expect(db.groups.findById('5').heading).not.toBeNull();
 });
 
 // test all group object related methods

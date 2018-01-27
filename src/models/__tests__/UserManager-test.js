@@ -32,13 +32,6 @@ it('list getters', () => {
   db.users.updateStatus('10', 'test', 'test name');
   db.users.updateStatus('10', 'test', 'test name', 'online');
   db.users.updateStatus('20', 'test', '', 'online');
-  console.log('----**********************----');
-  console.log(db.users.getOnlineUsers);
-  console.log(db.users.getStatus('2'));
-  console.log(db.users.getStatus('10'));
-  console.log(db.users.findByUserName('test'));
-  console.log(db.users.findByUserName('user'));
-  console.log('----**********************----');
 });
 it('updateFullUserData', () => {
   var db = new Database();
@@ -64,7 +57,6 @@ it('updateFullUserData', () => {
     user: { _id: '2', username: 'raja', createdAt: date, name: 'r' },
   };
   db.users.updateFullUserData(userData);
-  // console.log(db.users.getStatus('10'));
   const userData1 = {
     _id: '20',
     username: 'rajaa',
@@ -73,9 +65,7 @@ it('updateFullUserData', () => {
     user: { _id: '2', username: 'raja', createdAt: date, name: 'r' },
   };
   db.users.updateFullUserData(userData1);
-  // console.log(db.users.getStatus('20'));
   db.users.updateFullUserData(userData);
-  // console.log(db.users.getStatus('10'));
   const userData2 = {
     _id: '30',
     username: 'raja1',
@@ -85,6 +75,5 @@ it('updateFullUserData', () => {
     user: { _id: '2', username: 'raja', createdAt: date, name: 'r' },
   };
   db.users.updateFullUserData(userData2);
-  // console.log(db.users.getStatus('30'));
   db.users.updateFullUserData();
 });
