@@ -1,11 +1,8 @@
 /*
- * app related data structures
+ * remotefile related methods
  */
 import AppUtil from '../lib/util';
-
 import Constants from './constants';
-
-// roverz master/global holder
 
 export default class RemoteFileManager {
   constructor(realm) {
@@ -30,8 +27,7 @@ export default class RemoteFileManager {
 
   findById(fid) {
     const res = this.list.filtered(`fileId = "${fid}"`);
-    const value = (res && res.length > 0) ? res['0'].value : null;
-    return value;
+    return (res && res.length > 0) ? res['0'].value : null;
   }
 
   addAll(rfList) {
@@ -48,15 +44,14 @@ export default class RemoteFileManager {
     });
   }
 
-  // delete all settings
+  // delete all remotefile items
   deleteAll() {
     const settingsList = this.list;
     if (!settingsList || Object.keys(settingsList).length <= 0) return;
     AppUtil.debug(null, `${Constants.MODULE}: deleteAll`);
     this._realm.write(() => {
-      this._realm.deleteAll();
+      this._realm.delete(settingsList);
     });
   }
-
 
 }

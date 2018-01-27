@@ -46,7 +46,6 @@ class Database {
     return Database._um;
   }
 
-
   get remotefiles() {
     return Database._rf;
   }
@@ -295,7 +294,6 @@ class Database {
       }
     });
   }
-
 
   deleteMessage(groupId, msgId) {
     AppUtil.debug(null, `${Constants.MODULE}: deleteMessage [Group:${groupId},message${msgId} ]`);

@@ -15,4 +15,9 @@
      * UserManager methods - updateStatus & updateFullUserData
   * Group
      * avatar to be moved outside as well - as this is tight coupling
-     * 
+  * Message
+     * original - should be removed
+  * RemoteFile
+     * in settings add a button to clear cache and wire it
+     * if just key is coming in, don't add or delete from cache?
+  

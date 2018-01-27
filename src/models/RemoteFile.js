@@ -1,9 +1,7 @@
 /*
- * app related data structures
+ * file cache - mostly for images
  */
 import Constants from './constants';
-
-// roverz master/global holder
 
 const RemoteFileSchema = {
   name: Constants.RemoteFile,
@@ -13,6 +11,8 @@ const RemoteFileSchema = {
     url: { type: 'string', default: '' },
   },
 };
+
 export default class RemoteFile {
 }
+
 RemoteFile.schema = RemoteFileSchema;
