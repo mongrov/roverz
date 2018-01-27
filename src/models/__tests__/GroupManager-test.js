@@ -10,7 +10,7 @@ function sampleGroups() {
   var db = new Database();
   var objs = {
     777: { _id: '777', name: 'direct 1', type: 'd' },
-    4: { _id: '4', name: 'privae1' },
+    4: { _id: '4', name: 'private1' },
     123: { _id: '123', name: 'public group2', type: 'c' },
     844: { _id: '844', name: 'private2', type: 'y' }, // invalid type
     444: { _id: '444', name: 'public group1', type: 'c' },
@@ -40,13 +40,51 @@ it('list getters', () => {
   expect(x).toMatchObject({ _id: '1' });
   x = db.groups.findByName('GeNeraL');
   expect(x).not.toBeNull();
+
+  // search
   x = db.groups.search('ge');
+  expect(x).toHaveLength(1);
   x = db.groups.search('gro');
+  expect(x).toHaveLength(2);
   x = db.groups.search('genr');
+  expect(x).toHaveLength(0);
   x = db.groups.search('zz');
+  expect(x).toHaveLength(0);
 
   // @todo: check sorted
+});
+
+it('sorted list', () => {
+  // sorted groups is based on last messages added at
+  var db = new Database();
+  db.switchDb('inst', 'test');
+  // lets reset the db
+  db.reset();
+  sampleGroups();
+  let date = new Date(new Date().getTime() - 60000); // one minute before
+  let messages = {
+    1: { _id: '14', rid: '1', text: 'one', createdAt: date, user: { _id: '2', username: 'who', name: 'wh' } },
+  };
+  db.addMessages(db.groups.findById('1'), messages);
+  messages = {
+    2: { _id: '2', rid: '444', text: 'second', createdAt: new Date(), user: { _id: '2', username: 'who', name: 'wh' } },
+  };
+  db.addMessages(db.groups.findById('444'), messages);
+  date = new Date(new Date().getTime() - 30000);
+  messages = {
+    3: { _id: '3', rid: '844', text: 'third', createdAt: date, user: { _id: '2', username: 'who', name: 'wh' } },
+  };
+  db.addMessages(db.groups.findById('844'), messages);
+  let x = db.groups.sortedList; // - TBD
+  expect(x[0]).toMatchObject({ _id: '444' });
+
+  date = new Date(new Date().getTime());
+  messages = {
+    4: { _id: '4', rid: '844', text: 'fourth', createdAt: date, user: { _id: '2', username: 'who', name: 'wh' } },
+  };
+  db.addMessages(db.groups.findById('844'), messages);
   x = db.groups.sortedList; // - TBD
+  expect(x[0]).toMatchObject({ _id: '844' });
 });
 
 it('delete groups', () => {

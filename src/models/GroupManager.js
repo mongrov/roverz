@@ -63,6 +63,7 @@ export default class GroupManager {
           const existingGroup = this.findById(obj._id);
           if (existingGroup) {
             obj.lastMessageAt = existingGroup.lastMessageAt;
+            obj.type = existingGroup.type;
           }
           obj = AppUtil.removeEmptyValues(obj);
           AppUtil.debug(obj, null);
