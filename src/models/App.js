@@ -14,6 +14,8 @@ const AppSchema = {
     isServerConnected: { type: 'bool', default: false },
   },
 };
+
 export default class App {
 }
+
 App.schema = AppSchema;
