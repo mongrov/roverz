@@ -2,7 +2,6 @@
  * Group Manager class
  */
 import AppUtil from '../lib/util';
-
 import Constants from './constants';
 
 // wrapper class for all groups related db functions
@@ -14,6 +13,7 @@ export default class GroupManager {
   get list() {
     return this._realm.objects(Constants.Group);
   }
+
   // ----- simple filters ----
   get sortedList() {
     return this.list.sorted(Constants.LAST_MESSAGE_AT, true);
@@ -36,11 +36,9 @@ export default class GroupManager {
     const res = this.list.filtered(`name =[c] "${gname}"`);
     return (res && res.length > 0) ? res['0'] : null;
   }
-
-  // case insensitve find (returns only first)
+  // search for groups with a given name
   search(gname) {
-    const res = this.list.filtered(`name CONTAINS[c] "${gname}"`);
-    return res;
+    return this.list.filtered(`name CONTAINS[c] "${gname}"`);
   }
 
   // ----- mutation helpers ----

@@ -1,7 +1,7 @@
 # Models package
 
 ## naming schema 
-   * entity should be named in lower case (example, User -> user)
+   * entity should be named in lower case (example, User -> user) and singular
    * entity manager should be in upper case (example user manager -> UserManager)
 
 ## Todo
@@ -15,6 +15,7 @@
      * UserManager methods - updateStatus & updateFullUserData
   * Group
      * avatar to be moved outside as well - as this is tight coupling
+     * GroupManager - updateNoMoreMessages - can it be a candidate for Group setter 
   * Message
      * original - should be removed
   * RemoteFile

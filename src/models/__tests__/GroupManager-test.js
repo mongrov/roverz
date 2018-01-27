@@ -91,6 +91,9 @@ it('add groups', () => {
       name: 'direct 1',
       type: 'd',
     },
+    23: {
+      name: 'direct 2',
+    },
   };
   db.groups.addAll(objs);
   console.log('Root Message ', db.groups.findById('4').findRootMessage(null));
