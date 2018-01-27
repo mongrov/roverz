@@ -1,4 +1,3 @@
-// import moment from 'moment';
 import Meteor from 'react-native-meteor';
 import { Actions } from 'react-native-router-flux';
 import md5 from 'react-native-md5';
@@ -6,9 +5,9 @@ import moment from 'moment';
 
 import AppUtil from '../lib/util';
 import Application from '../constants/config';
+import NetworkUtil from './util';
 
 const PushNotification = require('react-native-push-notification');
-
 
 class ChatService {
 
@@ -268,14 +267,14 @@ class ChatService {
         if (currUser) {
           const dataUsers = res.users;
           const dataRooms = res.rooms;
-          let userKeyToRemove = this.findUserKeyInArray(dataUsers, currUser._id);
+          let userKeyToRemove = NetworkUtil.findUserKeyInArray(dataUsers, currUser._id);
           if (userKeyToRemove) {
             res.users.splice(userKeyToRemove, 1);
           }
           if (Application.filterRooms) {
             Object.keys(Application.filterRooms).forEach((k) => {
               const filterRoom = Application.filterRooms[k];
-              userKeyToRemove = this.findRoomKeyInArray(dataRooms, filterRoom);
+              userKeyToRemove = NetworkUtil.findRoomKeyInArray(dataRooms, filterRoom);
               if (userKeyToRemove) {
                 res.rooms.splice(userKeyToRemove, 1);
               }
@@ -289,28 +288,6 @@ class ChatService {
         callBack(err, 'FAILURE');
       }
     });
-  }
-
-  findRoomKeyInArray(arrayData, filterRoom) {
-    var matchKey = null;
-    Object.keys(arrayData).forEach((k) => {
-      var obj = arrayData[k];
-      if (obj.name === filterRoom) {
-        matchKey = k;
-      }
-    });
-    return matchKey;
-  }
-
-  findUserKeyInArray(arrayData, idToMatch) {
-    var matchKey = null;
-    Object.keys(arrayData).forEach((k) => {
-      var obj = arrayData[k];
-      if (obj._id === idToMatch) {
-        matchKey = k;
-      }
-    });
-    return matchKey;
   }
 
   // use like createDirectMessage('ananth');
