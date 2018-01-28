@@ -137,7 +137,7 @@ class GroupList extends Component {
       this._insideStateUpdate = true;
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(
-          this._service.chat.getFilteredChannels(this.state.items)),
+          this._service.chat.service.getFilteredChannels(this.state.items)),
         loaded: true,
         connected: this._service.currentUser,
       }, () => { this._insideStateUpdate = false; console.log('APPSTATE GV - dataSource callback'); });
@@ -147,7 +147,7 @@ class GroupList extends Component {
       if (this._mounted && this.state.items && this.state.items.length > 0 && !this.state.loaded) {
         this.setState({
           loaded: true,
-          dataSource: this.state.dataSource.cloneWithRows(this._service.chat.getFilteredChannels(
+          dataSource: this.state.dataSource.cloneWithRows(this._service.chat.service.getFilteredChannels(
             this.state.items)),
         }, () => {
           // this._service.chat.setAppState(1);

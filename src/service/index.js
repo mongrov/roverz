@@ -4,6 +4,7 @@
  * -- This is the business logic layer for chat --
  */
 // import { ModuleConfig } from '../constants/';
+import Application from '../constants/config';
 
 // Enable debug output when in Debug mode
 // const DEBUG_MODE = ModuleConfig.DEV;
@@ -37,6 +38,19 @@ class Chat {
     return this._db;
   }
 
+  getFilteredChannels(channelList) {
+    if (channelList) {
+      const filteredList = {};
+      Object.keys(channelList).forEach((k) => {
+        var obj = channelList[k];
+        if (obj.name && Application.filterRooms.indexOf(obj.name) < 0) {
+          filteredList[k] = obj;
+        }
+      });
+      return filteredList;
+    }
+    return null;
+  }
 }
 
 /* Export ==================================================================== */

@@ -463,20 +463,6 @@ class ChatService {
     this.meteor.subscribe('fullUserData', userName, 1);
   }
 
-  getFilteredChannels(channelList) {
-    if (channelList) {
-      const filteredList = {};
-      Object.keys(channelList).forEach((k) => {
-        var obj = channelList[k];
-        if (obj.name && Application.filterRooms.indexOf(obj.name) < 0) {
-          filteredList[k] = obj;
-        }
-      });
-      return filteredList;
-    }
-    return null;
-  }
-
   fetchChannels(lastSyncTime) {
     const _super = this;
     // console.log(yap);
