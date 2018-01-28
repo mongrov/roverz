@@ -29,8 +29,14 @@ class Chat {
 
   // @todo - do any reinitializations here
   set db(dbHandle) {
+    console.log('****** db is set ********');
     this._db = dbHandle;
   }
+
+  get db() {
+    return this._db;
+  }
+
 }
 
 /* Export ==================================================================== */

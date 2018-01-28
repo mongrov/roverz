@@ -202,7 +202,7 @@ class ChatNavBar extends React.Component {
         duration: 0,
       });
     } else {
-      const user = this._net.chat.findUserByUserName(this.state.displayName);
+      const user = this._net.chat.service.db.users.findByUserName(this.state.displayName);
       if (user) {
         Actions.memberDetail({ memberId: user._id, duration: 0 });
       }

@@ -120,7 +120,7 @@ export default class MemberListView extends Component {
   }
 
   renderRow = (rowData, sectionID) => {
-    const userObj = this._service.chat.getUserByID(rowData._id);
+    const userObj = this._service.chat.service.db.users.findById(rowData._id);
     const avatar = userObj.avatar;
     const status = userObj.status;
     let statColor = '#a8a8a8';

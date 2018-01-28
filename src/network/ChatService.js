@@ -35,6 +35,10 @@ class ChatService {
     this._cache = newDb.remotefiles.cacheList;
   }
 
+  get service() {
+    return this._service;
+  }
+
   // getUsersOfRoom, groupId, true (show all)
   // getUsersOfRoom, groupId, false (show online)
   // profile view: fullUserData
@@ -390,18 +394,6 @@ class ChatService {
         callBack(err, 'FAILURE');
       }
     });
-  }
-
-  getUserAsList(userId) {
-    return this.db.users.findByIdAsList(userId);
-  }
-
-  getUserByID(userId) {
-    return this.db.users.findById(userId);
-  }
-
-  findUserByUserName(userName) {
-    return this.db.users.findByUserName(userName);
   }
 
   startVideoCall(rid) {

@@ -66,7 +66,7 @@ export default class MemberDetailView extends Component {
     const memberId = this.props.memberId;
     this._service = new Network();
     this._mounted = false;
-    this.userDetailList = this._service.chat.getUserAsList(this.props.memberId);
+    this.userDetailList = this._service.chat.service.db.users.findByIdAsList(this.props.memberId);
     this.state = {
       memberId,
       memberDetail: {
