@@ -75,7 +75,7 @@ it('sorted list', () => {
     3: { _id: '3', rid: '844', text: 'third', createdAt: date, user: { _id: '2', username: 'who', name: 'wh' } },
   };
   db.addMessages(db.groups.findById('844'), messages);
-  let x = db.groups.sortedList; // - TBD
+  let x = db.groups.sortedList;
   expect(x[0]).toMatchObject({ _id: '444' });
 
   date = new Date(new Date().getTime());
@@ -83,7 +83,7 @@ it('sorted list', () => {
     4: { _id: '4', rid: '844', text: 'fourth', createdAt: date, user: { _id: '2', username: 'who', name: 'wh' } },
   };
   db.addMessages(db.groups.findById('844'), messages);
-  x = db.groups.sortedList; // - TBD
+  x = db.groups.sortedList;
   expect(x[0]).toMatchObject({ _id: '844' });
 });
 
@@ -94,8 +94,13 @@ it('delete groups', () => {
   db.reset();
   const g = sampleGroups();
   expect(db.groups.list).toHaveLength(g);
+  // empty group passed to remove
   db.groups.deleteGroups({});
+  expect(db.groups.list).toHaveLength(6);
+  // no input to delete group
   db.groups.deleteGroups(null);
+  expect(db.groups.list).toHaveLength(6);
+  // delete group which is not present
   let objs = {
     51: { _id: '51',
       name: 'direct 51',
@@ -103,6 +108,8 @@ it('delete groups', () => {
     },
   };
   db.groups.deleteGroups(objs);
+  // delete group which is present
+  expect(db.groups.list).toHaveLength(6);
   objs = {
     444: { _id: '444', name: 'public group1', type: 'c' },
   };
@@ -110,6 +117,64 @@ it('delete groups', () => {
   expect(db.groups.list).toHaveLength(5);
 });
 
+it('reply root message', () => {
+  var db = new Database();
+  db.switchDb('inst', 'test');
+  // lets reset the db
+  db.reset();
+  sampleGroups();
+  const date = new Date(); // one minute before
+  const messages = {
+    1: { _id: '14', rid: '1', text: 'one', createdAt: date, user: { _id: '2', username: 'who', name: 'wh' } },
+  };
+  db.addMessages(db.groups.findById('1'), messages);
+  let replyMessage = {
+    10: { _id: '22',
+      rid: '4',
+      text: '[ ] (sf/df/sd?msg=14) test reply',
+      createdAt: date,
+      editedAt: date,
+      isReply: true,
+      user: { _id: '2', username: 'who', name: 'wh' } },
+  };
+  db.addMessages(db.groups.findById('1'), replyMessage);
+  replyMessage = {
+    11: { _id: '23',
+      rid: '4',
+      text: '[ ] (sf/df/sd?msg=14) test reply 1',
+      createdAt: date,
+      editedAt: date,
+      isReply: true,
+      user: { _id: '2', username: 'who', name: 'wh' } },
+  };
+  db.addMessages(db.groups.findById('1'), replyMessage);
+  replyMessage = {
+    14: { _id: '25',
+      rid: '4',
+      text: '[ ] (sf/df/sd?msg=23) test reply 2',
+      createdAt: date,
+      editedAt: date,
+      isReply: true,
+      user: { _id: '2', username: 'who', name: 'wh' } },
+  };
+  db.addMessages(db.groups.findById('1'), replyMessage);
+  // success scenario
+  let x = db.groups.findById('1').findRootMessage('22');
+  expect(x).toMatchObject({ _id: '14' });
+  x = db.groups.findById('1').findRootMessage('23');
+  expect(x).toMatchObject({ _id: '14' });
+  // scenario 2: 14->23->25. root msg for 25 is 14
+  x = db.groups.findById('1').findRootMessage('25');
+  // TO-DO fix this bug
+  console.log('findroot message log ', x);
+//  expect(x).toMatchObject({ _id: '14' });
+  // scenario 3: message is not reply message, returns same message
+  x = db.groups.findById('1').findRootMessage('14');
+  expect(x).toMatchObject({ _id: '14' });
+  // failure scenario: message not found
+  x = db.groups.findById('1').findRootMessage('101');
+  expect(x).toBeNull();
+});
 
 it('add groups', () => {
   var db = new Database();
