@@ -3,6 +3,7 @@ import { Actions } from 'react-native-router-flux';
 import md5 from 'react-native-md5';
 import moment from 'moment';
 
+import Service from '../service';
 import AppUtil from '../lib/util';
 import Application from '../constants/config';
 import NetworkUtil from './util';
@@ -24,10 +25,13 @@ class ChatService {
     this.deleteAllowed = false;
     this.blockDeleteInMinutes = 0;
     Application.setUserId(db.userId);
+    this._service = new Service();
+    this._service.db = this.db;
   }
 
   resetDbHandle(newDb) {
     this.db = newDb;
+    this._service.db = this.db;
     this._cache = newDb.remotefiles.cacheList;
   }
 
