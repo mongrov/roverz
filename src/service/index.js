@@ -23,8 +23,9 @@ import Application from '../constants/config';
 
 class Chat {
   constructor() {
-    if (!this._db) {
+    if (!this._db && !this._service) {
       this._db = null;
+      this._service = null;
     }
   }
 
@@ -33,15 +34,40 @@ class Chat {
     console.log('****** db is set ********');
     this._db = dbHandle;
   }
-
   get db() {
     return this._db;
   }
+
+  set service(backendService) {
+    this._service = backendService;
+  }
+  get service() {
+    return this._service;
+  }
+
+  // ---- init section over, service methods follow ----
 
   // return available channels/groups to display
   get availableChannels() {
     return this.db.groups.filteredSortedList(Application.filterRooms);
   }
+
+  // ---- service actions -----
+
+  // Todo
+  // - these can be disabled in UI and can be shown only
+  //   only if connectivity present ? - TBD
+
+  // Direct messages (DMs) are private, 1-on-1 conversation between team members. You can
+  // think of a DM as a private group with only two members.
+  createDirectMessage(userName, cb) {
+    this.service.createDirectMessage(userName, cb);
+  }
+
+  joinRoom(roomId, cb) {
+    this.service.joinRoom(roomId, cb);
+  }
+
 }
 
 /* Export ==================================================================== */

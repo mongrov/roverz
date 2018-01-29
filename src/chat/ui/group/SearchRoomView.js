@@ -76,13 +76,13 @@ export default class SearchRoomView extends Component {
 
   createRoom(username, _id) {
     if (username) {
-      this.state._network.chat.createDirectMessage(username, this._createRoomCallback);
+      this.state._network.chat.service.createDirectMessage(username, this._createRoomCallback);
     } else {
-      this.state._network.chat.joinRoom(_id, this._createRoomCallback);
+      this.state._network.chat.service.joinRoom(_id, this._createRoomCallback);
     }
   }
 
-  _createRoomCallback(data) {
+  _createRoomCallback(err, data) {
     const gObj = this.state._network.db.groups.findById(data.rid);
     if (gObj) {
       Actions.chatDetail({ obj: gObj, title: gObj.heading });

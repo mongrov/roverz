@@ -4,6 +4,7 @@ import md5 from 'react-native-md5';
 import moment from 'moment';
 
 import Service from '../service';
+import RocketChat from '../rc';
 import AppUtil from '../lib/util';
 import Application from '../constants/config';
 import NetworkUtil from './util';
@@ -25,8 +26,15 @@ class ChatService {
     this.deleteAllowed = false;
     this.blockDeleteInMinutes = 0;
     Application.setUserId(db.userId);
+
+    // set rc
+    this._rc = new RocketChat();
+    this._rc.meteor = this.meteor;
+
+    // set service object
     this._service = new Service();
     this._service.db = this.db;
+    this._service.service = this._rc;
   }
 
   resetDbHandle(newDb) {
@@ -299,14 +307,6 @@ class ChatService {
   }
 
   // use like createDirectMessage('ananth');
-  createDirectMessage(userName, callBack) {
-    this.meteor.call('createDirectMessage', userName, (err, res) => {
-      // console.log(err);
-      callBack(res, 'SUCCESS');
-    });
-  }
-
-  // use like createDirectMessage('ananth');
   deleteMessage(msgID, callBack) {
     this.meteor.traceCall('deleteMessage', { _id: msgID }, (err, res) => {
       if (callBack && err) {
@@ -314,13 +314,6 @@ class ChatService {
       } else if (callBack) {
         callBack(res, 'SUCCESS');
       }
-    });
-  }
-
-  joinRoom(roomId, callBack) {
-    this.meteor.call('joinRoom', roomId, null, (err, res) => {
-      // console.log(err);
-      callBack(res, 'SUCCESS');
     });
   }
 
