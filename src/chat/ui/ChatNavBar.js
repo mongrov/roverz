@@ -128,12 +128,15 @@ class ChatNavBar extends React.Component {
       showAvatar: true,
       roomType: this.roomType,
       icon: '',
+      status: '',
     };
     this.goToRoomInfo = this.goToRoomInfo.bind(this);
   }
 
+
   componentWillMount() {
     let icon = '';
+    let usr = '';
     switch (this.state.roomType) {
       case 'direct':
         icon = 'at';
@@ -147,7 +150,13 @@ class ChatNavBar extends React.Component {
       default:
         icon = 'pound';
     }
-    this.setState({ icon });
+    if (this.state.roomType === 'direct') {
+      usr = this._net.chat.service.db.users.findByUserName(this.state.displayName);
+    }
+    this.setState({
+      icon,
+      status: usr.status ? usr.status : '',
+    });
   }
 
   _renderAvatar() {
@@ -311,15 +320,13 @@ class ChatNavBar extends React.Component {
                 numberOfLines={1}
                 style={[AppStyles.navbarTitle, styles.nameText]}
               >
-                {this.state.displayName}
+                {this.state.displayTitle}
               </Text>
             </View>
-            {(!!this.state.displayTitle &&
-              <Text
-                numberOfLines={1}
-                style={[AppStyles.navbarTitle, styles.titleText]}
-              >{this.state.displayTitle}</Text>
-            )}
+            <Text
+              numberOfLines={1}
+              style={[AppStyles.navbarTitle, styles.titleText]}
+            >{this.state.status ? this.state.status : ''}</Text>
           </View>
         </TouchableOpacity>
         {this.renderVideoConfIcon()}
