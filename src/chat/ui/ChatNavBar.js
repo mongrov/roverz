@@ -11,13 +11,15 @@ import md5 from 'react-native-md5';
 import PropTypes from 'prop-types';
 import { NavButton } from 'react-native-nav';
 import { Actions } from 'react-native-router-flux';
-import { CachedImage } from 'react-native-img-cache';
-import UserAvatar from 'react-native-user-avatar';
+// import { CachedImage } from 'react-native-img-cache';
+// import UserAvatar from 'react-native-user-avatar';
 import AppUtil from '../../lib/util';
 import { AppStyles, AppColors } from '../../theme/';
 import Group from '../../models/group';
 import Network from '../../network';
 import Application from '../../constants/config';
+import { ListItemAvatar } from './';
+
 
 const styles = StyleSheet.create({
   navContainer: {
@@ -71,6 +73,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 4,
+
   },
   avatarImage: {
     width: 36,
@@ -80,6 +84,7 @@ const styles = StyleSheet.create({
     zIndex: 20,
     left: 0,
     top: 0,
+    // borderWidth: 4,
   },
   userAvatar: {
     position: 'absolute',
@@ -152,6 +157,7 @@ class ChatNavBar extends React.Component {
     }
     if (this.state.roomType === 'direct') {
       usr = this._net.chat.service.db.users.findByUserName(this.state.displayName);
+      console.log('viswa', this.state.status);
     }
     this.setState({
       icon,
@@ -161,34 +167,48 @@ class ChatNavBar extends React.Component {
 
   _renderAvatar() {
     if (this.state.showAvatar) {
+      if (this.state.roomType === 'direct') {
+        let statColor = '#a8a8a8';
+        switch (this.state.status) {
+          case 'online':
+            statColor = AppColors.status().online; break;
+          case 'away':
+            statColor = AppColors.status().away; break;
+          case 'busy':
+            statColor = AppColors.status().busy; break;
+          default:
+            statColor = AppColors.status().default;
+        }
+        return (
+          <View>
+            <ListItemAvatar
+              source={this.avatarUri}
+              name={AppUtil.avatarInitials(this.state.displayTitle ? this.state.displayTitle : this.state.displayName)}
+              size={36}
+            />
+            <View style={{
+              width: 10,
+              height: 10,
+              borderRadius: 5,
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              backgroundColor: statColor,
+            }}
+            />
+          </View>
+        );
+      }
       return (
-        <View
-          style={[styles.avatarView]}
-        >
-          <CachedImage
-            style={[styles.avatarImage]}
-            source={{ uri: this.avatarUri }}
-            onError={() => { this._hideAvatarView(); }}
-          />
-          <UserAvatar
+        <View>
+          <ListItemAvatar
+            source={this.avatarUri}
             name={AppUtil.avatarInitials(this.state.displayTitle ? this.state.displayTitle : this.state.displayName)}
             size={36}
-            style={[styles.userAvatar]}
           />
         </View>
       );
     }
-    return (
-      <View
-        style={[styles.noAvatarView]}
-      >
-        <UserAvatar
-          name={AppUtil.avatarInitials(this.state.displayTitle ? this.state.displayTitle : this.state.displayName)}
-          size={36}
-          style={[styles.noUserAvatar]}
-        />
-      </View>
-    );
   }
 
   _hideAvatarView() {
