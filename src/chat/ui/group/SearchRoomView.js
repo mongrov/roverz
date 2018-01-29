@@ -13,6 +13,7 @@ import {
   StatusBar,
   TextInput,
   View,
+  Keyboard,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import Loading from '../../../components/general/Loading';
@@ -98,7 +99,10 @@ export default class SearchRoomView extends Component {
       titleStyle={AppStyles.memberListTitle}
       subtitle={rowData.username ? `@${rowData.username}` : ''}
       subtitleStyle={AppStyles.memberListSubTitle}
-      onPress={() => this.createRoom(rowData.username, rowData._id)}
+      onPress={() => {
+        Keyboard.dismiss();
+        this.createRoom(rowData.username, rowData._id);
+      }}
       leftIcon={
         <ListItemAvatar
           source={`${ModuleConfig.urls.SERVER_URL}/avatar/${rowData.username}?_dc=undefined`}
@@ -114,6 +118,7 @@ export default class SearchRoomView extends Component {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={false}
+        keyboardShouldPersistTaps={'always'}
         style={[AppStyles.container, { paddingTop: AppSizes.navbarHeight }]}
       >
         <StatusBar barStyle="light-content" />
@@ -138,11 +143,12 @@ export default class SearchRoomView extends Component {
             underlineColorAndroid={'transparent'}
           />
         </View>
-        <List style={{ paddingTop: 0, backgroundColor: '#fff' }}>
+        <List keyboardShouldPersistTaps={'always'} style={{ paddingTop: 0, backgroundColor: '#fff' }}>
           <ListView
             renderRow={this.renderRow}
             dataSource={this.state.dataSource}
             enableEmptySections={true}
+            keyboardShouldPersistTaps={'always'}
           />
         </List>
       </ScrollView>
