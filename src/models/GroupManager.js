@@ -27,6 +27,15 @@ export default class GroupManager {
   get directList() {
     return this.list.filtered(`type="${Constants.G_DIRECT}"`);
   }
+  // filter out groups with given names ['a','b']
+  // assumption is this list would be very few, don't overload this
+  filteredList(groupNames) {
+    if (!groupNames || groupNames.length <= 0) return this.list;
+    return this.list.filtered(groupNames.map(gname => `name != "${gname}"`).join(' AND '));
+  }
+  filteredSortedList(groupNames) {
+    return this.filteredList(groupNames).sorted(Constants.LAST_MESSAGE_AT, true);
+  }
   findById(gid) {
     const res = this.list.filtered(`_id = "${gid}"`);
     return (res && res.length > 0) ? res['0'] : null;

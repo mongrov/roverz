@@ -326,3 +326,22 @@ it('group findMissingMessages', () => {
   db.addMessages(obj, msgs);
   expect(obj.sortedMessages).not.toBeNull();
 });
+
+it('filter out groups', () => {
+  var db = new Database();
+  db.switchDb('inst', 'test');
+  // lets reset the db
+  db.reset();
+  const g = sampleGroups();
+  expect(db.groups.list).toHaveLength(g);
+  expect(db.groups.filteredList()).toHaveLength(g);
+  // empty array
+  expect(db.groups.filteredList([])).toHaveLength(g);
+  expect(db.groups.filteredList(['unknown'])).toHaveLength(g);
+  expect(db.groups.filteredList(['general'])).toHaveLength(g - 1);
+  expect(db.groups.filteredList(['general', 'onemoreunknown'])).toHaveLength(g - 1);
+  // shouldn't exclude 'public' matches
+  expect(db.groups.filteredList(['public', 'general'])).toHaveLength(g - 1);
+  // two successful one
+  expect(db.groups.filteredSortedList(['private2', 'general'])).toHaveLength(g - 2);
+});
