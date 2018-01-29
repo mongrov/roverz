@@ -1,10 +1,9 @@
 /* global it expect jest */
 import 'react-native';
 
-import Service from '../';
-
-it('get filtered channels', () => {
-  var s = new Service();
-  expect(s.getFilteredChannels()).toBeNull();
-});
+// import Service from '../';
+// @todo - to remove this test case - not of use
+// it('get filtered channels', () => {
+//   // var s = new Service();
+// });
 

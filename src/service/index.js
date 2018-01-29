@@ -38,18 +38,9 @@ class Chat {
     return this._db;
   }
 
-  getFilteredChannels(channelList) {
-    if (channelList) {
-      const filteredList = {};
-      Object.keys(channelList).forEach((k) => {
-        var obj = channelList[k];
-        if (obj.name && Application.filterRooms.indexOf(obj.name) < 0) {
-          filteredList[k] = obj;
-        }
-      });
-      return filteredList;
-    }
-    return null;
+  // return available channels/groups to display
+  get availableChannels() {
+    return this.db.groups.filteredSortedList(Application.filterRooms);
   }
 }
 

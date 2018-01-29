@@ -109,7 +109,7 @@ class GroupList extends Component {
     this.state = {
       dataSource: dataSource.cloneWithRows(dataSource),
       loaded: false,
-      items: this._service.db.groups.sortedList,
+      items: this._service.chat.service.availableChannels,
       connected: false,
       appState: AppState.currentState,
     };
@@ -136,8 +136,7 @@ class GroupList extends Component {
         this.state.appState.match(/inactive|background/)) return;
       this._insideStateUpdate = true;
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(
-          this._service.chat.service.getFilteredChannels(this.state.items)),
+        dataSource: this.state.dataSource.cloneWithRows(this.state.items),
         loaded: true,
         connected: this._service.currentUser,
       }, () => { this._insideStateUpdate = false; console.log('APPSTATE GV - dataSource callback'); });
@@ -147,8 +146,7 @@ class GroupList extends Component {
       if (this._mounted && this.state.items && this.state.items.length > 0 && !this.state.loaded) {
         this.setState({
           loaded: true,
-          dataSource: this.state.dataSource.cloneWithRows(this._service.chat.service.getFilteredChannels(
-            this.state.items)),
+          dataSource: this.state.dataSource.cloneWithRows(this.state.items),
         }, () => {
           // this._service.chat.setAppState(1);
           // this._service.chat.setUserPresence('online');
