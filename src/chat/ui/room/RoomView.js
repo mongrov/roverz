@@ -574,7 +574,7 @@ class ChatRoomView extends React.Component {
       }}
     >
       <Icon
-        name={'add-circle'}
+        name={'playlist-add'}
         size={28}
         color={'rgba(0,0,0,0.4)'}
       />
