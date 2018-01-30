@@ -8,9 +8,6 @@
   * reply of reply message is not getting added 
   * findRootMessage in group need to tested for multiple hierarchy
   * in settings add a button to clear cache and wire it  
-  * test cases not only to call the method, they should verify the result - otherwise it doesnt' make sense
-     * remove the console.log
-     * add automation to verify results of each operation
   * User 
      * statusConnection to be removed
      * avatar to be moved out - as its tied to module config

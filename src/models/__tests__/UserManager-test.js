@@ -67,7 +67,7 @@ it('update users', () => {
     name: 'harry',
   };
   db.users.updateFullUserData(userData);
-  expect(db.users.findById('11').status).toMatch('online');
+  expect(db.users.findById('11').status).toMatch('offline');
 });
 
 it('update status', () => {
