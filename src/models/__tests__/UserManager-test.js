@@ -27,6 +27,7 @@ it('users create and read', () => {
   expect(db.users.findById('10')).not.toBeNull();
   expect(db.users.findByUserName('john')).not.toBeNull();
   expect(db.users.findByIdAsList('22')).not.toBeNull();
+  expect(db.users.findByUserName('john').avatar).not.toBeNull();
 });
 
 it('update users', () => {
