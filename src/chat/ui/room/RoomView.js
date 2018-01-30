@@ -589,6 +589,7 @@ class ChatRoomView extends React.Component {
             flex: 1,
             flexDirection: 'row',
             alignItems: 'flex-end',
+            paddingRight: 7,
           }}
         >
           <TextInput
