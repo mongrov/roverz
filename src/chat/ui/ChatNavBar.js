@@ -11,8 +11,6 @@ import md5 from 'react-native-md5';
 import PropTypes from 'prop-types';
 import { NavButton } from 'react-native-nav';
 import { Actions } from 'react-native-router-flux';
-// import { CachedImage } from 'react-native-img-cache';
-// import UserAvatar from 'react-native-user-avatar';
 import AppUtil from '../../lib/util';
 import { AppStyles, AppColors } from '../../theme/';
 import Group from '../../models/group';
@@ -73,7 +71,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 4,
 
   },
   avatarImage: {
@@ -84,7 +81,6 @@ const styles = StyleSheet.create({
     zIndex: 20,
     left: 0,
     top: 0,
-    // borderWidth: 4,
   },
   userAvatar: {
     position: 'absolute',
@@ -157,7 +153,6 @@ class ChatNavBar extends React.Component {
     }
     if (this.state.roomType === 'direct') {
       usr = this._net.chat.service.db.users.findByUserName(this.state.displayName);
-      console.log('viswa', this.state.status);
     }
     this.setState({
       icon,
@@ -340,13 +335,14 @@ class ChatNavBar extends React.Component {
                 numberOfLines={1}
                 style={[AppStyles.navbarTitle, styles.nameText]}
               >
-                {this.state.displayTitle}
+                {this.state.roomType === 'direct' ? this.state.displayTitle : this.state.displayName}
               </Text>
             </View>
             <Text
               numberOfLines={1}
               style={[AppStyles.navbarTitle, styles.titleText]}
-            >{this.state.status ? this.state.status : ''}</Text>
+            >{this.state.status && this.state.roomType === 'direct' ? this.state.status : this.state.displayTitle}
+            </Text>
           </View>
         </TouchableOpacity>
         {this.renderVideoConfIcon()}
