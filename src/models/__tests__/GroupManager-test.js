@@ -117,6 +117,38 @@ it('delete groups', () => {
   expect(db.groups.list).toHaveLength(5);
 });
 
+it('update groups', () => {
+  var db = new Database();
+  db.switchDb('inst', 'test');
+  // lets reset the db
+  db.reset();
+  const g = sampleGroups();
+  expect(db.groups.findById('777').heading).toBe('direct 1');
+  let objs = {
+    777: { _id: '777', name: 'direct 1', title: 'direct title', type: 'c' },
+    4: { _id: '4', name: 'private1' },
+    123: { _id: '123', name: 'public group2', type: 'c' },
+    844: { _id: '844', name: 'private2', type: 'y' }, // invalid type
+    444: { _id: '444', name: 'public group1', type: 'c' },
+    1: { _id: '1', name: 'general', type: 'c' },
+  };
+  db.groups.addAll(objs);
+  expect(db.groups.list).toHaveLength(g);
+  expect(db.groups.findById('777').heading).toBe('direct title');
+  // passing invalid groups for add or update groups
+  db.groups.addAll(null);
+  expect(db.groups.list).toHaveLength(g);
+  // passing invalid groups for add or update groups
+  db.groups.addAll({});
+  expect(db.groups.list).toHaveLength(g);
+  // passing invalid group without _id
+  objs = {
+    777: { name: 'direct 1', title: 'direct title', type: 'c' },
+  };
+  db.groups.addAll(objs);
+  expect(db.groups.list).toHaveLength(g);
+});
+
 it('reply root message', () => {
   var db = new Database();
   db.switchDb('inst', 'test');
@@ -176,123 +208,22 @@ it('reply root message', () => {
   expect(x).toBeNull();
 });
 
-it('add groups', () => {
+it('more messages', () => {
   var db = new Database();
   db.switchDb('inst', 'test');
   // lets reset the db
   db.reset();
-  db.groups.addAll(null);
-  expect(db.groups.list).toHaveLength(0);
-  db.groups.addAll({});
-  expect(db.groups.list).toHaveLength(0);
-  const objs = {
-    4: { _id: '4',
-      name: 'direct 1',
-      type: 'd',
-    },
-    23: {
-      name: 'direct 2',
-    },
-  };
-  db.groups.addAll(objs);
-  db.groups.findById('4').findRootMessage(null).toHaveLength(0);
-  db.groups.findById('4').findRootMessage('1').toHaveLength(0);
-  const date = new Date();
-  const messages = {
-    13: { _id: '14', rid: '4', text: 'wh?', createdAt: date, user: { _id: '2', username: 'who', name: 'wh' } },
-    15: { _id: '115',
-      rid: '4',
-      text: 'wasdfh?',
-      likes: 2,
-      createdAt: date,
-      user: { _id: '2', username: 'who', name: 'wh' } },
-  };
-  db.addMessages(db.groups.findById('4'), messages);
-  db.groups.addAll(objs);
-  const updatedMessage = {
-    13: { _id: '14',
-      rid: '4',
-      text: 'ez',
-      createdAt: date,
-      editedAt: date,
-      user: { _id: '2', username: 'who', name: 'wh' } },
-  };
-  db.updateMessages(db.groups.findById('4'), updatedMessage);
+  sampleGroups();
+  // Default value should be true
+  expect(db.groups.findById('4').moreMessages).toBe(true);
 
-  // db.groups.findById('4').commentsList();
-
-  const replyMessage = {
-    13: { _id: '22',
-      rid: '4',
-      text: '[ ] (sf/df/sd?msg=14) test reply',
-      createdAt: date,
-      editedAt: date,
-      isReply: true,
-      replyMessageId: '14',
-      user: { _id: '2', username: 'who', name: 'wh' } },
-  };
-  db.addMessages(db.groups.findById('4'), replyMessage);
-  // db.groups.findById('4').commentsList('14');
-  db.groups.findById('4').findRootMessage('22').toHaveLength(1);
-  db.groups.findById('4').findRootMessage('0').toHaveLength(0);
-  const replyMessage1 = {
-    13: { _id: '23',
-      rid: '4',
-      text: '[ ] (sf/df/sd?msg=14) test reply',
-      createdAt: date,
-      editedAt: date,
-      isReply: true,
-      user: { _id: '2', username: 'who', name: 'wh' } },
-  };
-  db.addMessages(db.groups.findById('4'), replyMessage1);
-  db.groups.findById('4').findRootMessage('23');
-
-  // delete invalid message id
-  db.deleteMessage('4');
-  // test lastMessage
-  let lastMessage = db.groups.lastMessage;
-  expect(lastMessage).not.toBeNull();
-  // delete invalid message id
-  db.deleteMessage('4', '21');
-  lastMessage = db.groups.lastMessage;
-  expect(lastMessage).not.toBeNull();
-  // delete valid message id
-  db.deleteMessage('4', '14');
-  lastMessage = db.groups.lastMessage;
-
+  // when updated the more messages as false. it need to update in db
   db.groups.updateNoMoreMessages(db.groups.findById('4'));
-  db.groups.updateNoMoreMessages(null);
-  // TODO Verify heading
-  expect(db.groups.findById('4').heading).not.toBeNull();
-  const gobjs = {
-    5: { _id: '5',
-      name: 'direct 1',
-      type: 'd',
-      title: 'title',
-    },
-  };
-  db.groups.addAll(gobjs);
-  // TODO Verify heading
-  expect(db.groups.findById('5').heading).not.toBeNull();
-});
+  expect(db.groups.findById('4').moreMessages).toBe(false);
 
-// test all group object related methods
-it('group getters', () => {
-  var db = new Database();
-  db.switchDb('inst', 'test');
-  // lets reset the db
-  db.reset();
-  const g = sampleGroups();
-  const gobjs = db.groups.list;
-  expect(gobjs).toHaveLength(g);
-  expect(gobjs[0].avatar).not.toBeNull();
-  let obj = db.groups.findById('1');
-  expect(obj.isPublic).toBeTruthy();
-  obj = db.groups.findById('777');
-  expect(obj.isDirect).toBeTruthy();
-  obj = db.groups.findById('844');
-  expect(obj.isPrivate).toBeTruthy();
-  expect(obj.lastMessage).toBeNull();
+  // when group is passes as null, no changes in prev value
+  db.groups.updateNoMoreMessages(null);
+  expect(db.groups.findById('1').moreMessages).toBe(true);
 });
 
 it('group findMissingMessages', () => {
@@ -344,4 +275,29 @@ it('filter out groups', () => {
   expect(db.groups.filteredList(['public', 'general'])).toHaveLength(g - 1);
   // two successful one
   expect(db.groups.filteredSortedList(['private2', 'general'])).toHaveLength(g - 2);
+});
+
+it('group methods', () => {
+  var db = new Database();
+  db.switchDb('inst', 'test');
+  // lets reset the db
+  db.reset();
+  sampleGroups();
+  // private group types
+  expect(db.groups.privateList[0].isPrivate).toBe(true);
+  expect(db.groups.privateList[0].isPublic).toBe(false);
+  expect(db.groups.privateList[0].isDirect).toBe(false);
+
+  // public group types
+  expect(db.groups.publicList[0].isPrivate).toBe(false);
+  expect(db.groups.publicList[0].isPublic).toBe(true);
+  expect(db.groups.publicList[0].isDirect).toBe(false);
+
+  // direct group types
+  expect(db.groups.directList[0].isPrivate).toBe(false);
+  expect(db.groups.directList[0].isPublic).toBe(false);
+  expect(db.groups.directList[0].isDirect).toBe(true);
+
+  // avatar
+  expect(db.groups.findById('4').avatar).not.toBeNull();
 });
