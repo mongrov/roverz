@@ -327,11 +327,11 @@ export default {
 
   // Login
   loginLogo: {
-    width: 200,
+    width: 270,
     resizeMode: 'contain',
   },
   loginLogoSplash: {
-    width: 200,
+    width: 270,
     resizeMode: 'contain',
   },
   loginButton: {

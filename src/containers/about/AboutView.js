@@ -72,7 +72,7 @@ export default class AboutView extends React.Component {
             source={this.state.logo}
             style={{
               opacity: 1,
-              width: 150,
+              width: 270,
               resizeMode: 'contain',
             }}
           />

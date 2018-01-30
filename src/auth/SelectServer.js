@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
   },
-  logo: { opacity: 1, width: 150 },
+  logo: { opacity: 1 },
   loadText: {
     fontSize: 14,
     color: 'rgba(255,255,255,0.7)',

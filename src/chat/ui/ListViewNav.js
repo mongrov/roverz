@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   navImage: {
     opacity: 1,
     width: 130,
-    height: 30,
+    height: 50,
   },
   titleText: {
     paddingHorizontal: 43,
