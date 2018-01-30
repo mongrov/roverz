@@ -6,45 +6,48 @@ import 'react-native';
 
 import Database from '../';
 
-it('list getters', () => {
+it('users create and read', () => {
   var db = new Database();
   db.switchDb('inst', 'test');
   // lets reset the db
   db.reset();
+  // in intial no user findById
   expect(db.users.list).toHaveLength(0);
-  // findById
   expect(db.users.findById('10')).toBeNull();
-  // findOrCreate
+  expect(db.users.findByUserName('john')).toBeNull();
+  expect(db.users.findByIdAsList('10')).toBeNull();
+
   db.realm.write(() => {
-    db.users._findOrCreate('10', 'test');
+    db.users._findOrCreate('10', 'john', 'test10');
+    db.users._findOrCreate('22', 'harry');
   });
+
+  // after adding users read need to return value
+  expect(db.users.list).toHaveLength(2);
   expect(db.users.findById('10')).not.toBeNull();
-  expect(db.users.findByIdAsList('10')).not.toBeNull();
-
-  expect(db.users.findByIdAsList('1')).toBeNull();
-  expect(db.users.list).toHaveLength(1);
-  expect(db.users._findOrCreate('10')).not.toBeNull();
-  expect(db.users._findOrCreate('10').avatar).not.toBeNull();
-
-  db.realm.write(() => {
-    db.users._findOrCreate('1', '', 'test name');
-  });
-  db.users.updateStatus('10', 'test', 'test name');
-  db.users.updateStatus('10', 'test', 'test name', 'online');
-  db.users.updateStatus('20', 'test', '', 'online');
+  expect(db.users.findByUserName('john')).not.toBeNull();
+  expect(db.users.findByIdAsList('22')).not.toBeNull();
 });
-it('updateFullUserData', () => {
+
+it('update users', () => {
   var db = new Database();
   db.switchDb('inst', 'test');
   // lets reset the db
   db.reset();
   expect(db.users.list).toHaveLength(0);
+  // negative scenario
+  db.users.updateFullUserData();
+  expect(db.users.list).toHaveLength(0);
+  // const date = new Date();
+  let userData = {
+  };
+  db.users.updateFullUserData(userData);
   const date = new Date();
-  const userData = {
+  userData = {
     _id: '10',
     status: 'online',
     active: 'true',
-    username: 'raja',
+    username: 'john',
     name: 'r',
     statusConnection: 'online',
     utcOffset: 'ab',
@@ -54,26 +57,38 @@ it('updateFullUserData', () => {
     emails: [{ address: 'mailID@test.com', verified: true }],
     editedAt: date,
     type: 'user',
-    user: { _id: '2', username: 'raja', createdAt: date, name: 'r' },
   };
   db.users.updateFullUserData(userData);
-  const userData1 = {
-    _id: '20',
-    username: 'rajaa',
-    name: 'ra',
-    editedAt: date,
-    user: { _id: '2', username: 'raja', createdAt: date, name: 'r' },
+  expect(db.users.findById('10')).not.toBeNull();
+  userData = {
+    _id: '11',
+    username: 'harry',
+    name: 'harry',
   };
-  db.users.updateFullUserData(userData1);
   db.users.updateFullUserData(userData);
-  const userData2 = {
-    _id: '30',
-    username: 'raja1',
-    tname: 'ra1',
-    uname: 'r',
-    editedAt: date,
-    user: { _id: '2', username: 'raja', createdAt: date, name: 'r' },
-  };
-  db.users.updateFullUserData(userData2);
-  db.users.updateFullUserData();
+  expect(db.users.findById('11').status).toMatch('online');
+});
+
+it('update status', () => {
+  var db = new Database();
+  db.switchDb('inst', 'test');
+  // lets reset the db
+  db.reset();
+  expect(db.users.list).toHaveLength(0);
+  // updateStatus need to have status
+  db.users.updateStatus('22', 'harry', 'test22');
+  expect(db.users.findById('22')).toBeNull();
+
+  // updateStatus success scenario
+  db.users.updateStatus('22', 'harry', 'test22', 'offline');
+  expect(db.users.findById('22')).not.toBeNull();
+  db.users.updateStatus('11', 'john', 'test11', 'offline');
+  db.users.updateStatus('33', 'apsar', 'test33', 'offline');
+  expect(db.users.getOnlineUsers).toHaveLength(0);
+  db.users.updateStatus('44', 'ro1', 'test44', 'online');
+  expect(db.users.getOnlineUsers).toHaveLength(1);
+
+  expect(db.users.getStatus('55')).toBeNull();
+  expect(db.users.getStatus('44')).toMatch('online');
+  expect(db.users.getStatus('33')).toMatch('offline');
 });

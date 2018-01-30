@@ -60,9 +60,9 @@ it('switchDb test', () => {
   expect(db.users.findById('3')).toBeNull();
   // findOrCreate
   db.realm.write(() => {
-    db.users.findOrCreate('1', 'test', 'test name');
-    db.users.findOrCreate('2', 'test1', 'test name');
-    db.users.findOrCreate('3', 'test2', 'test name');
+    db.users._findOrCreate('1', 'test', 'test name');
+    db.users._findOrCreate('2', 'test1', 'test name');
+    db.users._findOrCreate('3', 'test2', 'test name');
   });
   expect(db.users.findById('3')).not.toBeNull();
   expect(db.users.list).toHaveLength(3);
@@ -71,8 +71,8 @@ it('switchDb test', () => {
   db.reset();
   expect(db.users.list).toHaveLength(0);
   db.realm.write(() => {
-    db.users.findOrCreate('10', 'test10', 'test name');
-    db.users.findOrCreate('22', 'test22', 'test name');
+    db.users._findOrCreate('10', 'test10', 'test name');
+    db.users._findOrCreate('22', 'test22', 'test name');
   });
   expect(db.users.findById('10')).not.toBeNull();
   expect(db.users.list).toHaveLength(2);

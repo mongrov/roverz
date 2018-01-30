@@ -40,10 +40,11 @@ export default class UserManager {
   // callers responsibility to enclose within write txn
   // any _ methods should not be used outside models
   _findOrCreate(uid, uname, name) {
-    var usr = this.findById(uid);
+    if (!uid) return null;
+    let usr = this.findById(uid);
     if (usr) return usr;
     const tname = name || uname;
-    usr = { _id: uid, username: uname, name: tname };
+    usr = { _id: uid, username: uname, name: tname, status: Constants.U_OFFLINE };
     return this._realm.create(Constants.User, usr, true);
   }
 
@@ -60,6 +61,7 @@ export default class UserManager {
     if (!userData) return;
     this._realm.write(() => {
       const usr = this._findOrCreate(userData._id, userData.username, userData.name);
+      if (!usr) return;
       if (userData.status) {
         usr.status = userData.status;
       }
