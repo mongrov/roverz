@@ -160,7 +160,7 @@ class Network {
       const prevState = Network._db.app.isServerConnected;
       if (prevState === true && isConnected === false) {
         if (Network.lastSyncTime === null) {
-          Network.lastSyncTime = new Date(new Date().getTime - 32000);
+          Network.lastSyncTime = new Date(new Date().getTime() - 32000);
           Network._db.app.setLastSync(Network.lastSyncTime);
         }
       }

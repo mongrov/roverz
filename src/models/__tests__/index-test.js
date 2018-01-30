@@ -31,6 +31,18 @@ it('set server connection test', () => {
   expect(db.app.isServerConnected).toBe(false);
 });
 
+it('set last sync test', () => {
+  var db = new Database();
+  db.switchDb('inst', 'test');
+// lets reset the db
+  db.reset();
+  expect(db.app.state).toBeNull(); // no state
+  db.app.setLastSync();
+  expect(db.app.state).toBeDefined(); // not null
+  const t = new Date(new Date().getTime() - 32000);
+  db.app.setLastSync(t);
+  expect(db.app.state.lastSync.getTime()).toBe(t.getTime());
+});
 
 // lets switch the db
 it('switchDb test', () => {
