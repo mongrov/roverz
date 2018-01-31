@@ -23,6 +23,7 @@ import Group from '../../models/group';
 import { AppStyles, AppSizes, AppColors } from '../../theme/';
 import { ListItemAvatar } from '../ui';
 import Application from '../../constants/config';
+import Constants from '../../models/constants';
 
 const { height, width } = Dimensions.get('window');
 
@@ -125,11 +126,11 @@ export default class MemberListView extends Component {
     const status = userObj.status;
     let statColor = '#a8a8a8';
     switch (status) {
-      case 'online':
+      case Constants.U_ONLINE:
         statColor = AppColors.status().online; break;
-      case 'away':
+      case Constants.U_AWAY:
         statColor = AppColors.status().away; break;
-      case 'busy':
+      case Constants.U_BUSY:
         statColor = AppColors.status().busy; break;
       default:
         statColor = AppColors.status().default;
@@ -227,4 +228,3 @@ MemberListView.propTypes = {
   roomTitle: React.PropTypes.string,
   avHeight: PropTypes.number,
 };
-

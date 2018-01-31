@@ -37,6 +37,7 @@ import ModuleConfig from '../../../constants/config';
 import { Send } from '../';
 import ChatAvatar from './ChatAvatar';
 import t from '../../../i18n';
+import Constants from '../../../models/constants';
 
 const textStyle = {
   // fontSize: 30,
@@ -233,9 +234,9 @@ export default class ReplyMessageView extends React.Component {
   }
 
   setAvType() {
-    if (this.state.roomType === 'private') {
+    if (this.state.roomType === Constants.G_PRIVATE) {
       return 'lock';
-    } else if (this.state.roomType === 'direct') {
+    } else if (this.state.roomType === Constants.G_DIRECT) {
       return 'perm-identity';
     }
     return 'supervisor-account';
@@ -368,11 +369,11 @@ export default class ReplyMessageView extends React.Component {
 
   iconType() {
     switch (this.state.roomType) {
-      case 'direct':
+      case Constants.G_DIRECT:
         return 'at';
-      case 'public':
+      case Constants.G_PUBLIC:
         return 'pound';
-      case 'private':
+      case Constants.G_PRIVATE:
         return 'lock';
       default:
         return 'pound';
@@ -461,11 +462,11 @@ export default class ReplyMessageView extends React.Component {
 
   renderAvIcon() {
     switch (this.state.roomType) {
-      case 'direct':
+      case Constants.G_DIRECT:
         return this.chooseAvIcon('at');
-      case 'public':
+      case Constants.G_PUBLIC:
         return this.chooseAvIcon('pound');
-      case 'private':
+      case Constants.G_PRIVATE:
         return null;
       default:
         return this.chooseAvIcon('pound');
@@ -782,3 +783,4 @@ ReplyMessageView.propTypes = {
   obj: React.PropTypes.object,    // eslint-disable-line react/forbid-prop-types
   canDelete: React.PropTypes.bool,
 };
+

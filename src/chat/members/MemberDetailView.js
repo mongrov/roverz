@@ -16,6 +16,7 @@ import AppUtil from '../../lib/util';
 import Network from '../../network';
 import Group from '../../models/group';
 import { AppStyles, AppSizes, AppColors } from '../../theme/';
+import Constants from '../../models/constants';
 
 const styles = StyleSheet.create({
   container: { position: 'relative' },
@@ -104,11 +105,11 @@ export default class MemberDetailView extends Component {
     if (!this._mounted) return;
     let statColor = '';
     switch (list[0].status) {
-      case 'online':
+      case Constants.U_ONLINE:
         statColor = AppColors.status().online; break;
-      case 'away':
+      case Constants.U_AWAY:
         statColor = AppColors.status().away; break;
-      case 'busy':
+      case Constants.U_BUSY:
         statColor = AppColors.status().busy; break;
       default:
         statColor = AppColors.status().default;
@@ -219,4 +220,3 @@ MemberDetailView.propTypes = {
   memberUsername: PropTypes.string,
   avHeight: PropTypes.number,
 };
-

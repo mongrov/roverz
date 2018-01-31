@@ -17,6 +17,7 @@ import Group from '../../models/group';
 import Network from '../../network';
 import Application from '../../constants/config';
 import { ListItemAvatar } from './';
+import Constants from '../../models/constants';
 
 
 const styles = StyleSheet.create({
@@ -137,39 +138,41 @@ class ChatNavBar extends React.Component {
 
   componentWillMount() {
     let icon = '';
-    let usr = null;
+    let usr = {};
     switch (this.state.roomType) {
-      case 'direct':
+      case Constants.G_DIRECT:
         icon = 'at';
         break;
-      case 'public':
+      case Constants.G_PUBLIC:
         icon = 'pound';
         break;
-      case 'private':
+      case Constants.G_PRIVATE:
         icon = 'lock';
         break;
       default:
         icon = 'pound';
     }
-    if (this.state.roomType === 'direct') {
+    if (this.state.roomType === Constants.G_DIRECT) {
       usr = this._net.chat.service.db.users.findByUserName(this.state.displayName);
+    } else {
+      usr.status = Constants.U_OFFLINE;
     }
     this.setState({
       icon,
-      status: usr && usr.status ? usr.status : '',
+      status: usr.status,
     });
   }
 
   _renderAvatar() {
     if (this.state.showAvatar) {
-      if (this.state.roomType === 'direct') {
+      if (this.state.roomType === Constants.G_DIRECT) {
         let statColor = '#a8a8a8';
         switch (this.state.status) {
-          case 'online':
+          case Constants.U_ONLINE:
             statColor = AppColors.status().online; break;
-          case 'away':
+          case Constants.U_AWAY:
             statColor = AppColors.status().away; break;
-          case 'busy':
+          case Constants.U_BUSY:
             statColor = AppColors.status().busy; break;
           default:
             statColor = AppColors.status().default;
@@ -218,7 +221,7 @@ class ChatNavBar extends React.Component {
 
   goToRoomInfo() {
     Keyboard.dismiss();
-    if (this.state.roomType !== 'direct') {
+    if (this.state.roomType !== Constants.G_DIRECT) {
       Actions.roomInfo({
         group: this.state.obj,
         roomName: this.state.displayName,
@@ -266,7 +269,7 @@ class ChatNavBar extends React.Component {
             _super._net.chat.startVideoCall(gid);
             // const tempMsg = '@all Started Video conference';
             // _super._net.chat.sendMessage(gid, tempMsg);
-            if (gtype === 'direct') {
+            if (gtype === Constants.G_DIRECT) {
               Actions.directConference({
                 instance: Application.instance,
                 groupName: gname,
@@ -288,7 +291,7 @@ class ChatNavBar extends React.Component {
           }}
         >
           <Icon
-            name={gtype === 'direct' ? 'phone' : 'videocam'}
+            name={gtype === Constants.G_DIRECT ? 'phone' : 'videocam'}
             size={28}
             color={'#FFF'}
           />
@@ -335,13 +338,14 @@ class ChatNavBar extends React.Component {
                 numberOfLines={1}
                 style={[AppStyles.navbarTitle, styles.nameText]}
               >
-                {this.state.roomType === 'direct' ? this.state.displayTitle : this.state.displayName}
+                {this.state.roomType === Constants.G_DIRECT ? this.state.displayTitle : this.state.displayName}
               </Text>
             </View>
             <Text
               numberOfLines={1}
               style={[AppStyles.navbarTitle, styles.titleText]}
-            >{this.state.status && this.state.roomType === 'direct' ? this.state.status : this.state.displayTitle}
+            >{this.state.status && this.state.roomType === Constants.G_DIRECT ?
+              this.state.status : this.state.displayTitle}
             </Text>
           </View>
         </TouchableOpacity>
@@ -361,3 +365,4 @@ ChatNavBar.propTypes = {
 
 /* Export Component ==================================================================== */
 export default ChatNavBar;
+
