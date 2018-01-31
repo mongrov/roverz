@@ -145,6 +145,9 @@ class Network {
   get db() {
     return Network._db;
   }
+  get service() {
+    return Network._service;
+  }
 
   get currentUser() {
     return Network._meteor.getCurrentUser();
@@ -183,7 +186,7 @@ class Network {
     // const prevSyncTime = Network.lastSyncTime ? Network.lastSyncTime.getTime() : null;
     this.chat.fetchChannels(Network.lastSyncTime);
     this.chat.subscribeToAllGroups();
-    this.chat.setUserPresence('online');
+    this.service.setUserPresence('online');
   }
 
   // not much used need to test and remove this
@@ -225,11 +228,11 @@ class Network {
   handleAppStateChange = (nextAppState) => {
     if (nextAppState === 'background') {
       PushNotification.cancelAllLocalNotifications();
-      Network._chat.setUserPresence('away');
+      this.service.setUserPresence('away');
     } else if (nextAppState === 'active') {
       PushNotification.cancelAllLocalNotifications();
       this.reconnectMeteor();
-      Network._chat.setUserPresence('online');
+      this.service.setUserPresence('online');
     }
   }
 

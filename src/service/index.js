@@ -5,10 +5,9 @@
  */
 // import { ModuleConfig } from '../constants/';
 import Application from '../constants/config';
+import AppUtil from '../lib/util';
 
-// Enable debug output when in Debug mode
-// const DEBUG_MODE = ModuleConfig.DEV;
-
+const MODULE = 'ChatService';
 // use cases:
 // 1) user sends a message:
 //  (a) UI would send message to db
@@ -66,6 +65,20 @@ class ChatService {
 
   joinRoom(roomId, cb) {
     this.service.joinRoom(roomId, cb);
+  }
+
+  // - presence
+  setUserPresence(presenceStatus, cb) {
+    this.service.setUserPresence(presenceStatus, (err, res) => {
+      AppUtil.debug(res, `${MODULE}: setUserPresence - ${presenceStatus}`);
+      if (cb) cb(err, res);
+    });
+  }
+  getUserPresence(state, cb) {
+    this.service.getUserPresence(state, (err, res) => {
+      AppUtil.debug(res, `${MODULE}: getUserPresence - ${state}`);
+      if (cb) cb(err, res);
+    });
   }
 
 }

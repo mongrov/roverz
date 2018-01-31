@@ -218,26 +218,11 @@ class ChatService {
     });
   }
 
-  setOnline() {
-    this.meteor.call('setPresence', 'online', (/* err, res */) => {
-      // console.log(err);
-      // console.log(res);
-    });
-  }
-
   setUserPassword(newPwd, callBack) {
     this.meteor.call('setUserPassword', newPwd, (err) => {
       if (err) {
         callBack(err);
       }
-    });
-  }
-
-
-  setUserPresence(presenceStatus) {
-    this.meteor.call('UserPresence:setDefaultStatus', presenceStatus, (/* err, res */) => {
-      // console.log(err);
-      // console.log(res);
     });
   }
 
@@ -349,17 +334,6 @@ class ChatService {
       });
     }, 2000);
   }
-
-  getUserPresence(state) {
-    const methodType = `UserPresence:${state}`;
-    this.meteor.call(methodType, (/* err */) => {
-      // console.log(err);
-    });
-    // this.meteor.call(methodType, (err, res) => {
-    //   // console.log(err);
-    // });
-  }
-
 
   getMembersList(groupId, callBack, onlineUserList) {
     const _super = this;
@@ -507,7 +481,8 @@ class ChatService {
     }).catch((/* err */) => {
       // console.log('Catch: ', err);
     });
-    this.getUserPresence('online');
+    // @ezhil - why are we calling this ?
+    this.service.getUserPresence('online');
   }
 
   fetchMissedMessages(group, lastSyncTs) {

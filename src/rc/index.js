@@ -65,6 +65,15 @@ class RC {
     this.meteor.call('joinRoom', roomId, null, cb);
   }
 
+  // presence api's
+  getUserPresence(state, cb) {
+    const methodType = `UserPresence:${state}`;
+    this.meteor.call(methodType, cb);
+  }
+  setUserPresence(presenceStatus, cb) {
+    this.meteor.call('UserPresence:setDefaultStatus', presenceStatus, cb);
+  }
+
 }
 
 /* Export ==================================================================== */

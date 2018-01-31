@@ -135,7 +135,6 @@ class ChatNavBar extends React.Component {
     this.goToRoomInfo = this.goToRoomInfo.bind(this);
   }
 
-
   componentWillMount() {
     let icon = '';
     let usr = {};

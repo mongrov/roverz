@@ -62,10 +62,10 @@ const UTIL = {
   debug: (str, title) => {
     if (DEBUG_MODE && (title || str)) {
       if (title) {
-        // console.log(`=== DEBUG: ${title} ===========================`);
+        console.log(`=== DEBUG: ${title} ===========================`);
       }
       if (str) {
-        // console.log(str);
+        console.log(str);
         // // console.log('%c ...', 'color: #CCC');
       }
     }
