@@ -107,4 +107,18 @@ export default class GroupManager {
     }
   }
 
+  deleteMessage(groupId, msgId) {
+    AppUtil.debug(null, `${Constants.MODULE}: deleteMessage [Group:${groupId},message${msgId} ]`);
+    const group = this.findById(groupId);
+    if (group) {
+      const messageToBeDeleted = group.findMessageById(msgId);
+      AppUtil.debug(messageToBeDeleted, null);
+      if (messageToBeDeleted) {
+        this._realm.write(() => {
+          this._realm.delete(messageToBeDeleted);
+        });
+      }
+    }
+  }
+
 }

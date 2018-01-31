@@ -297,16 +297,7 @@ class Database {
 
   deleteMessage(groupId, msgId) {
     AppUtil.debug(null, `${Constants.MODULE}: deleteMessage [Group:${groupId},message${msgId} ]`);
-    const group = this.groups.findById(groupId);
-    if (group) {
-      const messageToBeDeleted = group.findMessageById(msgId);
-      AppUtil.debug(messageToBeDeleted, null);
-      if (messageToBeDeleted) {
-        this.realm.write(() => {
-          this.realm.delete(messageToBeDeleted);
-        });
-      }
-    }
+    this.groups.deleteMessage(groupId, msgId);
   }
 
 }

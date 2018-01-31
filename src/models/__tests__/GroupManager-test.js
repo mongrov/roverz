@@ -208,6 +208,31 @@ it('reply root message', () => {
   expect(x).toBeNull();
 });
 
+it('delete messages', () => {
+  var db = new Database();
+  db.switchDb('inst', 'test');
+  // lets reset the db
+  db.reset();
+  sampleGroups();
+  const date = new Date(); // one minute before
+  const messages = {
+    1: { _id: '14', rid: '1', text: 'one', createdAt: date, user: { _id: '2', username: 'who', name: 'wh' } },
+  };
+  // default scenario
+  expect(db.groups.findById('1').sortedMessages).toHaveLength(0);
+  db.addMessages(db.groups.findById('1'), messages);
+  expect(db.groups.findById('1').sortedMessages).toHaveLength(1);
+  db.groups.deleteMessage('1', '14');
+  expect(db.groups.findById('1').sortedMessages).toHaveLength(0);
+  // group not present or invalid
+  db.addMessages(db.groups.findById('1'), messages);
+  db.groups.deleteMessage('100', '14');
+  expect(db.groups.findById('1').sortedMessages).toHaveLength(1);
+  // messageId not present or invalid
+  db.groups.deleteMessage('1', '140');
+  expect(db.groups.findById('1').sortedMessages).toHaveLength(1);
+});
+
 it('more messages', () => {
   var db = new Database();
   db.switchDb('inst', 'test');
