@@ -1,8 +1,10 @@
 import RNRestart from 'react-native-restart';
-import { NetInfo } from 'react-native';
+import { NetInfo, AppState } from 'react-native';
 
 import Database from '../models';
 import Application from '../constants/config';
+import Service from '../service';
+import RocketChat from '../rc';
 
 import Constants from './constants';
 import PushService from './PushService';
@@ -41,7 +43,37 @@ class Network {
         'connectionChange',
         this._handleFirstConnectivityChange,
       );
+
+      Network.states = {
+        _app: 'active',  // 'active', 'inactive', 'background'
+        _network: false, // true - isConnected
+      };
+      this._initConnectionHandlers();
+      // set service object
+      const rc = new RocketChat();
+      rc.meteor = Network._meteor;
+      Network._service = new Service();
+      Network._service.db = Network._db;
+      Network._service.service = rc;
     }
+  }
+
+  // handlers to update network/app states
+  _initConnectionHandlers() {
+    // first handle network state
+    NetInfo.isConnected.fetch().then((isConnected) => {
+      Network.states._network = isConnected;
+    });
+    // this method is not called every time on simulator, when the network
+    // is connected, but disconnect immediately happens
+    NetInfo.isConnected.addEventListener('connectionChange', (isConnected) => {
+      Network.states._network = isConnected;
+    });
+
+    // handle app state
+    AppState.addEventListener('change', (newAppState) => {
+      Network.states._app = newAppState;
+    });
   }
 
   // @todo: we still need to fix the user name
@@ -148,8 +180,8 @@ class Network {
 
   dbSync() {
     this.push.register();
-    const prevSyncTime = Network.lastSyncTime ? Network.lastSyncTime.getTime() : null;
-    this.chat.fetchChannels(prevSyncTime);
+    // const prevSyncTime = Network.lastSyncTime ? Network.lastSyncTime.getTime() : null;
+    this.chat.fetchChannels(Network.lastSyncTime);
     this.chat.subscribeToAllGroups();
     this.chat.setUserPresence('online');
   }

@@ -459,7 +459,7 @@ class ChatService {
   fetchChannels(lastSyncTime) {
     const _super = this;
     // console.log(yap);
-    var lastSync = lastSyncTime;
+    var lastSync = lastSyncTime || 0;
     if (lastSyncTime) {
       lastSync = lastSyncTime.getTime();
     } else {

@@ -7,22 +7,51 @@
 // Enable debug output when in Debug mode
 // const DEBUG_MODE = ModuleConfig.DEV;
 
+// lifecycle methods of service
+//  - connect()
+//  - reconnect()
+//  - disconnect()
+//  - server settings
+//  - events for the same
+//  --- connected
+//  --- disconnected
+// lifecycle methods for user
+//  - login()
+//  - logout()
+//  - user settings
+
+// const ServiceConfig = {
+//   constructor() {
+//     this.name = 'RocketChat',
+//     this.server = 'xyz'
+//   }
+// };
+
+// basic criteria:
+// 1) we want to do things, only if meteor is connected
+//
+
 class RC {
   constructor() {
-    if (!this._meteor) {
-      this._meteor = null;
+    if (!RC._meteor) {
+      RC._meteor = null;
     }
   }
 
   // @todo - do any reinitializations here
   set meteor(meteorObj) {
     console.log('****** meteor is set ********');
-    this._meteor = meteorObj;
+    RC._meteor = meteorObj;
   }
 
   get meteor() {
-    return this._meteor;
+    return RC._meteor;
   }
+
+  // -- RC connection lifecycle methods
+  // connect(serverName) {
+
+  // }
 
   // --- RC calls, general signature of a call would be
   //  any callback would carry (error, result) / (err,res) as two arguments

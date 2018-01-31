@@ -21,28 +21,28 @@ import Application from '../constants/config';
 //  (d) this layer observes db changes and would get the change
 //  (e) queues the request
 
-class Chat {
+class ChatService {
   constructor() {
-    if (!this._db && !this._service) {
-      this._db = null;
-      this._service = null;
+    if (!ChatService._db && !ChatService._service) {
+      ChatService._db = null;
+      ChatService._service = null;
     }
   }
 
   // @todo - do any reinitializations here
   set db(dbHandle) {
     console.log('****** db is set ********');
-    this._db = dbHandle;
+    ChatService._db = dbHandle;
   }
   get db() {
-    return this._db;
+    return ChatService._db;
   }
 
   set service(backendService) {
-    this._service = backendService;
+    ChatService._service = backendService;
   }
   get service() {
-    return this._service;
+    return ChatService._service;
   }
 
   // ---- init section over, service methods follow ----
@@ -71,4 +71,4 @@ class Chat {
 }
 
 /* Export ==================================================================== */
-export default Chat;
+export default ChatService;

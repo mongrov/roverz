@@ -11,6 +11,15 @@ class MeteorService {
     // setup meteor
     // console.log('-------------meteor service init---------');
     Meteor.connect(Application.urls.WS_URL);
+    Meteor.waitDdpConnected(() => {
+      console.log('****** WAIT DdpConnected ***** ');
+    });
+    Meteor.ddp.on('connected', () => {
+      console.log('***** ddp on CONNECT ******');
+    });
+    Meteor.ddp.on('disconnected', () => {
+      console.log('***** ddp on DISCONNECT ******');
+    });
   }
 
   monitorConnection(cb) {
