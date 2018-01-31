@@ -94,6 +94,19 @@ class ProfileView extends Component {
           style={{ backgroundColor: AppColors.brand().primary }}
         >
           <TouchableOpacity
+            onPress={Actions.cropImage}
+            style={[styles.logout]}
+          >
+            <Icon
+              name={'logout-variant'}
+              type={'material-community'}
+              color={'rgba(255,255,255,0.4)'}
+            />
+            <Text
+              style={[styles.logoutText]}
+            >Set Profile Picture</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={Actions.changePassword}
             style={[styles.logout]}
           >

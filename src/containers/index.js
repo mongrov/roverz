@@ -8,6 +8,8 @@ import ImageGallery from './image/ImageGallery';
 import AboutView from './about/AboutView';
 import ImagePreview from './image/ImagePreview';
 import VideoPlayer from './video/VideoPlayer';
+import CropImage from './profile/CropImage';
+
 
 import Application from '../constants/config';
 
@@ -23,6 +25,7 @@ if (!Application.containers.find(item => item.key === 'aboutView')) {
   Application.addContainer('imageGallery', 'Image Preview', '', ImageGallery, true, false, NavBackAbs);
   Application.addContainer('captureImagePreview', 'Image Preview', '', ImagePreview, true, true, NavBackAbs);
   Application.addContainer('videoPreviewSend', 'Video Preview Send', '', VideoPlayer, true, true, NavBackAbs);
+  Application.addContainer('cropImage', 'CropImage', '', CropImage, true, true, NavBackAbs);
 }
 
 export { AboutView, ImageGallery, ProfileView, ImagePreview };
