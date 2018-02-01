@@ -677,6 +677,8 @@ class ChatRoomView extends React.Component {
             backgroundColor: '#FFF',
             borderRadius: 3,
             padding: 5,
+            marginRight: 5,
+            marginLeft: 0,
             lineHeight: 16,
             fontSize: 16,
             fontFamily: 'OpenSans-Regular',
