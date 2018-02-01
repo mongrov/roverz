@@ -302,17 +302,6 @@ class ChatService {
     });
   }
 
-  createChannel(channelName, isPrivate, isReadonly, userList) {
-    var methodName = 'createPrivateGroup';
-    if (!isPrivate) {
-      methodName = 'createChannel';
-    }
-    this.meteor.call(methodName, channelName, userList, isReadonly, (/* err, res */) => {
-      // console.log(err);
-      // console.log(res);
-    });
-  }
-
   loginWithSaml(credential) {
     const _super = this;
     setTimeout(() => {

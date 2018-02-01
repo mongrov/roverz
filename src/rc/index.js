@@ -65,6 +65,11 @@ class RC {
     this.meteor.call('joinRoom', roomId, null, cb);
   }
 
+  createChannel(channelName, isPrivate, isReadonly, userList, cb) {
+    var methodName = !isPrivate ? 'createChannel' : 'createPrivateGroup';
+    this.meteor.call(methodName, channelName, userList, isReadonly, cb);
+  }
+
   // presence api's
   getUserPresence(state, cb) {
     const methodType = `UserPresence:${state}`;

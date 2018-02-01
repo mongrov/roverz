@@ -62,7 +62,12 @@ class ChatService {
   createDirectMessage(userName, cb) {
     this.service.createDirectMessage(userName, cb);
   }
-
+  createChannel(channelName, isReadonly, userList, cb) {
+    this.service.createChannel(channelName, false, isReadonly, userList, cb);
+  }
+  createGroup(channelName, isReadonly, userList, cb) {
+    this.service.createChannel(channelName, true, isReadonly, userList, cb);
+  }
   joinRoom(roomId, cb) {
     this.service.joinRoom(roomId, cb);
   }
