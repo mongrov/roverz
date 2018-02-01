@@ -297,7 +297,7 @@ export default class Bubble extends React.Component {
             fontFamily: 'OpenSans-Regular',
             color: '#000000',
           }}
-          >Delete</Text>
+          >{t('txt_delete')}</Text>
         </TouchableOpacity>);
     }
     return null;
@@ -357,7 +357,7 @@ export default class Bubble extends React.Component {
                     fontFamily: 'OpenSans-Regular',
                     color: '#000000',
                   }}
-                  >Like</Text>
+                  >{t('txt_like_txt')}</Text>
                 </TouchableOpacity>
                 <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(0,0,0,0.5)' }} />
                 <TouchableOpacity
@@ -376,7 +376,7 @@ export default class Bubble extends React.Component {
                     fontFamily: 'OpenSans-Regular',
                     color: '#000000',
                   }}
-                  >Reply</Text>
+                  >{t('txt_rply')}</Text>
                 </TouchableOpacity>
                 <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(0,0,0,0.5)' }} />
                 {
@@ -398,7 +398,7 @@ export default class Bubble extends React.Component {
                         fontFamily: 'OpenSans-Regular',
                         color: '#000000',
                       }}
-                      >Copy</Text>
+                      >{t('txt_copy')}</Text>
                     </TouchableOpacity>
                   )
                 }

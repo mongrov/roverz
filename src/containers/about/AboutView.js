@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
+import t from '../../i18n/';
 
 import { AppStyles, AppColors } from '../../theme';
 import { Button } from '../../components/ui/';
@@ -96,7 +97,7 @@ export default class AboutView extends React.Component {
             >{`Build: ${this.state.aboutDetails.build}`}</Text>
             <View style={{ marginTop: 20 }} />
             <Button
-              title={'Help'}
+              title={t('lbl_help')}
               onPress={Actions.helpView}
               backgroundColor="transparent"
               small

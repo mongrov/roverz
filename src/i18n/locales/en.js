@@ -55,6 +55,12 @@ export default {
   info_del_not_allowed: 'Delete action is not allowed',
   txt_ok: 'OK',
   txt_rply: 'Reply',
+  txt_delete: 'Delete',
+  txt_like_txt: 'Like',
+  txt_copy: 'Copy',
+  txt_gallery: 'Gallery',
+  txt_camera: 'Camera',
+
   // components
   lbl_tryagain: 'Try again',
   err_something_wrong: 'Woops, Something went wrong.',
@@ -64,4 +70,13 @@ export default {
   // container folder
   lbl_profile: 'Profile',
   lbl_logout: 'Logout',
+  lbl_help: 'Help',
+  err_enter_new_password: 'Enter new password',
+  err_enter_password_again: 'Enter new password again',
+  err_password_not_match: 'Passwords not matching',
+  info_processing: 'Processing...',
+  info_success: 'success...',
+  lbl_update_password: 'Update password',
+  txt_set_profile_pic: 'Set Profile Picture',
+  txt_change_password: 'Change Password',
 };

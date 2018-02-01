@@ -20,6 +20,7 @@ import Network from '../../network';
 import { AppColors } from '../../theme/';
 // import Application from '../../constants/config';
 import { Alerts, Button } from '../../components/ui/';
+import t from '../../i18n/';
 
 const styles = StyleSheet.create({
   container: {
@@ -66,14 +67,14 @@ class ChangePassword extends Component {
         //   disableFullscreenUI: true,
         // },
         NewPassword: {
-          error: 'Enter new password',
+          error: t('err_enter_new_password'),
           clearButtonMode: 'while-editing',
           secureTextEntry: true,
           autoCorrect: false,
           disableFullscreenUI: true,
         },
         PasswordAgain: {
-          error: 'Enter new password again',
+          error: t('err_enter_password_again'),
           clearButtonMode: 'while-editing',
           secureTextEntry: true,
           autoCorrect: false,
@@ -109,12 +110,12 @@ class ChangePassword extends Component {
       console.log(pwdValue.NewPassword);
       console.log(pwdValue.PasswordAgain);
       if (pwdValue.NewPassword !== pwdValue.PasswordAgain) {
-        this.setState({ resultMsg: { error: 'Passwords not matching' } });
+        this.setState({ resultMsg: { error: t('err_password_not_match') } });
       } else {
-        this.setState({ resultMsg: { success: 'Processing...' } });
+        this.setState({ resultMsg: { success: t('info_processing') } });
         this._service.chat.setUserPassword(pwdValue.NewPassword, (res) => {
           console.log(res);
-          this.setState({ resultMsg: { success: 'success...' } });
+          this.setState({ resultMsg: { success: t('info_success') } });
         });
       }
       // this.setState({ form_values: credentials }, () => {
@@ -157,7 +158,7 @@ class ChangePassword extends Component {
             options={this.options}
           />
           <Button
-            title={'Update password'}
+            title={t('lbl_update_password')}
             onPress={this.updatePassword}
             backgroundColor="transparent"
             style={[]}

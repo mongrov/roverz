@@ -104,7 +104,7 @@ class ProfileView extends Component {
             />
             <Text
               style={[styles.logoutText]}
-            >Set Profile Picture</Text>
+            >{t('txt_set_profile_pic')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={Actions.changePassword}
@@ -117,7 +117,7 @@ class ProfileView extends Component {
             />
             <Text
               style={[styles.logoutText]}
-            >Change Password</Text>
+            >{t('txt_change_password')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {

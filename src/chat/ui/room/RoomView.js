@@ -438,7 +438,7 @@ class ChatRoomView extends React.Component {
                 style={{
                   color: '#fff',
                 }}
-              >Gallery</Text>
+              >{t('txt_gallery')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -476,7 +476,7 @@ class ChatRoomView extends React.Component {
                 style={{
                   color: '#fff',
                 }}
-              >Camera</Text>
+              >{t('txt_camera')}</Text>
             </TouchableOpacity>
             <View style={{ flex: 3 }} />
           </View>
