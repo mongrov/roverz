@@ -256,7 +256,7 @@ class ChatNavBar extends React.Component {
     if (mgvcEnabled === true) {
       const gname = this.state.obj.name;
       const gid = this.state.obj._id;
-      const user = this._net.chat.getCurrentUser();
+      const user = this._net.service.loggedInUserObj;
       const _super = this;
       const gtype = this.state.roomType;
       return (

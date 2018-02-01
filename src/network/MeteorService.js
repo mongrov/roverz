@@ -11,26 +11,6 @@ class MeteorService {
     // setup meteor
     // console.log('-------------meteor service init---------');
     Meteor.connect(Application.urls.WS_URL);
-    Meteor.waitDdpConnected(() => {
-      console.log('****** WAIT DdpConnected ***** ');
-    });
-    Meteor.ddp.on('connected', () => {
-      console.log('***** ddp on CONNECT ******');
-    });
-    Meteor.ddp.on('disconnected', () => {
-      console.log('***** ddp on DISCONNECT ******');
-    });
-  }
-
-  monitorConnection(cb) {
-    if (cb) {
-      Meteor.ddp.on('connected', () => {
-        cb(true);
-      });
-      Meteor.ddp.on('disconnected', () => {
-        cb(false);
-      });
-    }
   }
 
   logout() {
@@ -43,13 +23,23 @@ class MeteorService {
     return Meteor.status();
   }
 
-  getCurrentUser() {
+  get loggedInUser() {
     return Meteor.user();
   }
 
   // @todo: this method to be tested
   monitorAction(name, cb) {
     Meteor.getData().on(name, cb);
+  }
+  // NOTE - callback would return connection status (true/falsee)
+  monitorConnection(cb) {
+    if (!cb) return;
+    Meteor.ddp.on('connected', () => {
+      cb(true);
+    });
+    Meteor.ddp.on('disconnected', () => {
+      cb(false);
+    });
   }
 
   // monitor for collection changes and fire callback

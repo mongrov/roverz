@@ -56,6 +56,10 @@ class RC {
   // --- RC calls, general signature of a call would be
   //  any callback would carry (error, result) / (err,res) as two arguments
 
+  get loggedInUser() {
+    return this.meteor.loggedInUser;
+  }
+
   // use like createDirectMessage('ananth');
   createDirectMessage(userName, cb) {
     this.meteor.call('createDirectMessage', userName, cb);
@@ -71,6 +75,7 @@ class RC {
   }
 
   // presence api's
+  // @todo - this also is a set method, should be renamed appropriately
   getUserPresence(state, cb) {
     const methodType = `UserPresence:${state}`;
     this.meteor.call(methodType, cb);

@@ -162,8 +162,9 @@ class ChatService {
   canMessageBeDeleted(message) {
 //    var deletePermission = false;
     var deleteOwn = false;
-    if (this.getCurrentUser() && message && message.u && message.u._id) {
-      deleteOwn = (message.u._id === this.getCurrentUser()._id);
+    const currentUsr = this.service.loggedInUserObj;
+    if (currentUsr && message && message.u && message.u._id) {
+      deleteOwn = (message.u._id === currentUsr._id);
     }
 //    deletePermission = this.deleteAllowed && deleteOwn;
     // if (this.blockDeleteInMinutes && this.blockDeleteInMinutes !== 0) {
@@ -264,7 +265,7 @@ class ChatService {
     var searchConf = { users: true, rooms: true };
     this.meteor.call('spotlight', searchKey, null, searchConf, (err, res) => {
       if (res) {
-        const currUser = this.getCurrentUser();
+        const currUser = this.service.loggedInUserObj;
         if (currUser) {
           const dataUsers = res.users;
           const dataRooms = res.rooms;
@@ -398,20 +399,6 @@ class ChatService {
     this.meteor.stopMonitoringChanges(this._monStreamRoomMessages);
     this.meteor.stopMonitoringChanges(this._monStreamNotifyRoom);
     this.meteor.logout();
-  }
-
-  getCurrentUser() {
-    var user = this.meteor.getCurrentUser();
-    /*
-      { _id: '6Qk76sozAy6oNSopT',
-      emails: [ { address: 'emailID', verified: true } ],
-      username: 'kumar',
-      _version: 1 }
-    */
-    if (user) {
-      return this.db.users.findById(user._id);
-    }
-    return null;
   }
 
   // TODO unsubscribe after we get data in monitor changes users
@@ -740,7 +727,7 @@ class ChatService {
     if (!msgs || !group || msgs.length === 0) return;
     const yaps = {};
     const editedYaps = {};
-    const currUser = this.getCurrentUser();
+    const currUser = this.service.loggedInUserObj;
     for (let i = 0; i < msgs.length; i += 1) {
       const inM = msgs[i];
       let msgText = inM.msg;

@@ -132,13 +132,13 @@ class GroupList extends Component {
     this._service.db.groups.list.addListener(() => {
       if (!this._mounted
         || this._insideStateUpdate ||
-        !this._service.currentUser ||
+        !this._service.service.loggedInUser ||
         this.state.appState.match(/inactive|background/)) return;
       this._insideStateUpdate = true;
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(this.state.items),
         loaded: true,
-        connected: this._service.currentUser,
+        connected: this._service.service.loggedInUser,
       }, () => { this._insideStateUpdate = false; console.log('APPSTATE GV - dataSource callback'); });
     });
     this._mounted = true;

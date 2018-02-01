@@ -71,7 +71,7 @@ class ProfileView extends Component {
   }
 
   updateCurrentUserInfo() {
-    const userData = this._service.currentUser;
+    const userData = this._service.service.loggedInUser;
     if (userData && this._mounted) {
       this.setState({
         currentUser: {

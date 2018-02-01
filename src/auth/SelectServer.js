@@ -79,7 +79,7 @@ export default class SelectServer extends React.Component {
 
   componentDidMount() {
     this._service.onLogin(() => {
-      if (this._mounted && this._service.currentUser) {
+      if (this._mounted && this._service.service.loggedInUser) {
 //        this._service.switchToLoggedInUser();
         Actions.app({ type: 'reset' });
       }

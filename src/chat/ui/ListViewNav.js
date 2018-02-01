@@ -73,7 +73,7 @@ class ListViewNav extends React.Component {
   }
 
   getCurrentUser() {
-    return this.net.chat.getCurrentUser();
+    return this.net.service.loggedInUserObj;
   }
 
   updateCurrentUserInfo() {

@@ -101,9 +101,7 @@ class Network {
 
   // only change the userName, server remains the same
   switchToLoggedInUser() {
-    const userName = Network._meteor.getCurrentUser() ?
-      Network._meteor.getCurrentUser().username :
-      Constants.DEFAULT_USER;
+    const userName = this.service.loggedInUser ? this.service.loggedInUser.username : Constants.DEFAULT_USER;
     // lets set the user to db
     this.db.switchDb(Application.instance, userName);
     if (this.db && this.db.app) {
@@ -147,10 +145,6 @@ class Network {
   }
   get service() {
     return Network._service;
-  }
-
-  get currentUser() {
-    return Network._meteor.getCurrentUser();
   }
 
   // returns if meteor is connected for now
@@ -238,7 +232,7 @@ class Network {
 
   reconnectMeteor() {
     setTimeout(() => {
-      if (Network.currentUser && !Network.isConnected) {
+      if (this.service.loggedInUser && !Network.isConnected) {
         Network._meteor.reconnect();
       }
     }, 1000);

@@ -194,7 +194,7 @@ class Menu extends Component {
       username: 'kumar',
       _version: 1
     } */
-    return this.net.chat.getCurrentUser();
+    return this.net.service.loggedInUserObj;
   }
 
   updateCurrentUserInfo() {

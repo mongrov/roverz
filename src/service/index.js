@@ -51,7 +51,26 @@ class ChatService {
     return this.db.groups.filteredSortedList(Application.filterRooms);
   }
 
+  get loggedInUserObj() {
+    var user = this.loggedInUser;
+    /*
+      { _id: '6Qk76sozAy6oNSopT',
+      emails: [ { address: 'emailID', verified: true } ],
+      username: 'kumar',
+      _version: 1 }
+    */
+    if (user) {
+      return this.db.users.findById(user._id);
+    }
+    return null;
+  }
+
   // ---- service actions -----
+
+  // @todo: need to remove this from any reference in UI - lets use the above obj from db
+  get loggedInUser() {
+    return this.service.loggedInUser;
+  }
 
   // Todo
   // - these can be disabled in UI and can be shown only

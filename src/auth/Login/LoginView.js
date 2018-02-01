@@ -147,7 +147,7 @@ class Login extends Component {
     // @todo: This would clash with the regular skip/login buttons
     // to fix that
     this._service.onLogin(() => {
-      if (this._mounted && this._service.currentUser) {
+      if (this._mounted && this._service.service.loggedInUser) {
 //        this._service.switchToLoggedInUser();
         // looks like we have logged in as an user, skip this screen
         Actions.app({ type: 'reset' });
