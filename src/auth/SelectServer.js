@@ -178,6 +178,7 @@ export default class SelectServer extends React.Component {
     return (
       <View
         style={[styles.viewContainer, { backgroundColor: AppColors.brand().secondary }]}
+        testID={'welcome'}
       >
         <StatusBar barStyle="light-content" />
         {this.state.isLoading === true &&

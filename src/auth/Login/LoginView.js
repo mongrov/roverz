@@ -128,6 +128,7 @@ class Login extends Component {
             keyboardType: 'email-address',
             autoCorrect: false,
             disableFullscreenUI: true,
+            testID: 'email-text',
           },
           Password: {
             error: t('err_login_valid_password'),
@@ -253,6 +254,7 @@ class Login extends Component {
                 onPress={this.login}
                 backgroundColor="transparent"
                 style={[]}
+                testID={'login-button'}
               />
             </View>
           </View>
