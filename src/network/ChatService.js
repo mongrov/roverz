@@ -159,24 +159,6 @@ class ChatService {
     });
   }
 
-  canMessageBeDeleted(message) {
-//    var deletePermission = false;
-    var deleteOwn = false;
-    const currentUsr = this.service.loggedInUserObj;
-    if (currentUsr && message && message.u && message.u._id) {
-      deleteOwn = (message.u._id === currentUsr._id);
-    }
-//    deletePermission = this.deleteAllowed && deleteOwn;
-    // if (this.blockDeleteInMinutes && this.blockDeleteInMinutes !== 0) {
-    //   const msgTs = moment(message.ts);
-    //   const currentTsDiff = moment().diff(msgTs, 'minutes');
-    //   if (currentTsDiff > this.blockDeleteInMinutes) {
-    //     return false;
-    //   }
-    // }
-    return deleteOwn;
-  }
-
   /* Need to see if these are required, remove it from db? */
   get loginSettings() {
     return this._loginSettings;
@@ -208,14 +190,6 @@ class ChatService {
     this.meteor.subscribe('meteor.loginServiceConfiguration');
     this.meteor.monitorChanges('meteor_accounts_loginServiceConfiguration', (results) => {
       this.addLoginSettings(results);
-    });
-  }
-
-  // use like setPhotoLike('kXLJrEEMKa9WSziPn');
-  setPhotoLike(messageId) {
-    this.meteor.call('setReaction', ':thumbsup:', messageId, (/* err, res */) => {
-      // console.log(err);
-      // console.log(res);
     });
   }
 
@@ -351,10 +325,6 @@ class ChatService {
         callBack(err, 'FAILURE');
       }
     });
-  }
-
-  startVideoCall(rid) {
-    this.meteor.call('mgvc:updateTimeout', rid, null);
   }
 
   searchRoom(roomId, searchText, resultSize, callBack) {

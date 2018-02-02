@@ -265,7 +265,7 @@ class ChatNavBar extends React.Component {
           onPress={() => {
             Keyboard.dismiss();
             const vcuserID = user ? md5.hex_md5(user._id) : '0';
-            _super._net.chat.startVideoCall(gid);
+            _super._net.service.startVideoConference(gid);
             // const tempMsg = '@all Started Video conference';
             // _super._net.chat.sendMessage(gid, tempMsg);
             if (gtype === Constants.G_DIRECT) {

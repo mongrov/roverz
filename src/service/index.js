@@ -51,6 +51,7 @@ class ChatService {
     return this.db.groups.filteredSortedList(Application.filterRooms);
   }
 
+  // @todo: cache this lookup, no need to do db find every time ?
   get loggedInUserObj() {
     var user = this.loggedInUser;
     /*
@@ -64,6 +65,26 @@ class ChatService {
     }
     return null;
   }
+
+  // @todo: move this method to lookup message as a db object (message)
+  canDelete(message) {
+    //    var deletePermission = false;
+    var deleteOwn = false;
+    const currentUsr = this.loggedInUserObj;
+    if (currentUsr && message && message.u && message.u._id) {
+      deleteOwn = (message.u._id === currentUsr._id);
+    }
+    //    deletePermission = this.deleteAllowed && deleteOwn;
+    // if (this.blockDeleteInMinutes && this.blockDeleteInMinutes !== 0) {
+    //   const msgTs = moment(message.ts);
+    //   const currentTsDiff = moment().diff(msgTs, 'minutes');
+    //   if (currentTsDiff > this.blockDeleteInMinutes) {
+    //     return false;
+    //   }
+    // }
+    return deleteOwn;
+  }
+
 
   // ---- service actions -----
 
@@ -103,6 +124,16 @@ class ChatService {
       AppUtil.debug(res, `${MODULE}: getUserPresence - ${state}`);
       if (cb) cb(err, res);
     });
+  }
+
+  // - reactions
+  setLike(messageId, cb) {
+    this.service.setLikeReaction(messageId, cb);
+  }
+
+  // - conference calls
+  startVideoConference(rid) {
+    this.service.startVideoConference(rid);
   }
 
 }

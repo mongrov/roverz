@@ -279,7 +279,7 @@ export default class MessageImageView extends React.Component {
   }
 
   _onPressLike = () => {
-    this._network.chat.setPhotoLike(this.state.msgId);
+    this._network.service.setLike(this.state.msgId);
   }
 
   _deleteMessage = () => {

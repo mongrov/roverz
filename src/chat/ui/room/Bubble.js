@@ -46,7 +46,7 @@ export default class Bubble extends React.Component {
     const likes = this.props.currentMessage.likes;
     const isReply = this.props.currentMessage.isReply;
     const original = JSON.parse(this.props.currentMessage.original);
-    const canDelete = this._network.chat.canMessageBeDeleted(original);
+    const canDelete = this._network.service.canDelete(original);
     this.state = {
       showActions: false,
       likes,
@@ -132,7 +132,7 @@ export default class Bubble extends React.Component {
 
   _onPressLike = () => {
     console.log('**** like pressed **** ');
-    this._network.chat.setPhotoLike(this.state.original._id);
+    this._network.service.setLike(this.state.original._id);
     this.toggleModalActions();
   }
 

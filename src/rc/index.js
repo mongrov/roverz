@@ -84,6 +84,20 @@ class RC {
     this.meteor.call('UserPresence:setDefaultStatus', presenceStatus, cb);
   }
 
+  // reaction api's
+  setReaction(reaction, messageId, cb) {
+    this.meteor.call('setReaction', reaction, messageId, cb);
+  }
+  // use like setLikeReaction('kXLJrEEMKa9WSziPn');
+  setLikeReaction(messageId, cb) {
+    this.setReaction(':thumbsup:', messageId, cb);
+  }
+
+  // conference calls
+  startVideoConference(rid) {
+    this.meteor.call('mgvc:updateTimeout', rid, null);
+  }
+
 }
 
 /* Export ==================================================================== */

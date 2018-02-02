@@ -284,7 +284,7 @@ export default class ReplyMessageView extends React.Component {
 
   _onPressLike = () => {
     // console.log('**** like pressed **** ');
-    this._network.chat.setPhotoLike(this.state.msgId);
+    this._network.service.setLike(this.state.msgId);
   }
 
   _deleteMessage = () => {
