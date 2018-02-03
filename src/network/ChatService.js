@@ -16,7 +16,6 @@ class ChatService {
   init(meteor, db) {
     this.meteor = meteor;
     this.db = db;
-    this._groupSubsriptionMap = {};
     this._monStreamNotifyUser = null;
     this._monUsers = null;
     this._monStreamRoomMessages = null;
@@ -27,13 +26,12 @@ class ChatService {
     this.blockDeleteInMinutes = 0;
     Application.setUserId(db.userId);
 
-    // set rc
-    this._rc = new RocketChat();
-    this._rc.meteor = this.meteor;
-
     // set service object
     this._service = new Service();
     this._service.db = this.db;
+    // set rc
+    this._rc = new RocketChat(this._service);
+    this._rc.meteor = this.meteor;
     this._service.service = this._rc;
   }
 
@@ -46,94 +44,15 @@ class ChatService {
   get service() {
     return this._service;
   }
+  get rc() {
+    return this._rc;
+  }
 
   // getUsersOfRoom, groupId, true (show all)
   // getUsersOfRoom, groupId, false (show online)
   // profile view: fullUserData
   // https://instance/avatar/kumar
 
-  // break subscriptions to user
-  initSubscriptions() {
-    var _super = this;
-    const uid = Meteor.userId();
-    // console.log(`[Meteor] UserId is : ${uid}`);
-
-    // save the user to db
-    this.db.setUserId(uid);
-    Application.setUserId(uid);
-
-    // Need to vet all these and see what all we actually use in client
-    // this._subscribe('stream-notify-all', "public-settings-changed", false);
-    this.meteor.subscribe('stream-notify-user', `${uid}/subscriptions-changed`, false);
-    this.meteor.subscribe('stream-notify-user', `${uid}/notification`, false);
-    this.meteor.subscribe('stream-notify-user', `${uid}/rooms-changed`, false);
-    this.meteor.subscribe('stream-notify-user', `${uid}/message`, false);
-    this.meteor.subscribe('stream-notify-user', `${uid}/webrtc`, false);
-//    this.meteor.subscribe('stream-notify-user', `${Meteor.userId()}/rooms-changed`, false);
-
-    // this._subscribe('stream-notify-user', Meteor.userId()+"/otr", false);
-    // this._subscribe('stream-notify-logged', "permissions-changed", false);
-    // this._subscribe('meteor.loginServiceConfiguration');
-    // this._subscribe('stream-notify-logged', 'roles-change', false);
-    // this._subscribe('stream-notify-logged', 'updateEmojiCustom', false); // no
-    // this._subscribe('stream-notify-logged', 'deleteEmojiCustom', false); // no
-    // this._subscribe('stream-notify-logged', 'Users:NameChanged', false);
-    // this._subscribe('stream-notify-logged', 'updateAvatar', false);
-    // this._subscribe('stream-notify-logged', 'permissions-changed', false);
-    // this._subscribe('stream-notify-all', 'updateCustomSound', false); // no
-    // this._subscribe('stream-notify-all', 'deleteCustomSound', false); // no
-    this.meteor.subscribe('roles');
-    this.meteor.subscribe('userData');
-    this.meteor.subscribe('activeUsers');
-    // this._subscribe('users', cb);
-
-    // @todo: The return value to be used for unsubscribe
-    this._monStreamNotifyUser = this.meteor.monitorChanges('stream-notify-user', (results) => {
-      if (results && results.length > 0) {
-        // // console.log('User changes:', results);
-        // take some action here
-        // update subscriptions-changed
-        if (results[0].eventName.endsWith('subscriptions-changed') || results[0].eventName.endsWith('rooms-changed')) {
-          // console.log('User Subscription updated:', results[0].args[0], results[0].args[1]);
-          const msgs = [];
-          msgs.push(results[0].args[1]);
-          const subscriptions = _super._subscription2group(msgs);
-          if (results[0].args[0] === 'removed') {
-            // TODO no need to create group object and send for delete instead use ID
-            _super.db.groups.deleteGroups(subscriptions);
-          } else {
-            _super.db.groups.addAll(subscriptions);
-            for (let i = 0; i < subscriptions.length; i += 1) {
-              _super.subscribeToGroup(_super.db.groups.findById(subscriptions[i]._id));
-            }
-          }
-        }
-        // check for webrtc
-        // [ { _id: 'id',
-        // eventName: 'wKk3sXsCYvTkXJeLY/webrtc',
-        // args:
-        //  [ 'call',
-        //    { from: 'xvx4w2hLb29SYXsK4',
-        //      room: 'wKk3sXsCYvTkXJeLYxvx4w2hLb29SYXsK4',
-        //      media: { audio: true } } ],
-        // _version: 3 } ]
-        if (results[0].eventName.endsWith('/webrtc')) {
-          // console.log('WebRTC updates', results);
-          if (results[0].args[0] === 'call') {
-            // new incoming call, lets for now show ios call
-            // showCallScreen(results[0].args[1]);
-          }
-        }
-      }
-    });
-    this._monUsers = this.meteor.monitorChanges('users', (results) => {
-      if (results && results.length > 0) {
-        for (let i = 0; i < results.length; i += 1) {
-          _super.db.users.updateFullUserData(results[i]);
-        }
-      }
-    });
-  }
 
   getPublicSettings(callBack) {
     this.meteor.call('public-settings/get', (err, res) => {
@@ -442,7 +361,7 @@ class ChatService {
     }).catch((err) => {
       console.log('Catch: ', err);
     });
-    this.subscribeToGroup(group);
+    this.rc._subscribeToGroup(gID);
   }
 
   // fetch old 'n' messages from a given groupId
@@ -480,7 +399,7 @@ class ChatService {
     }).catch((/* err */) => {
       // console.log('Catch: ', err);
     });
-    this.subscribeToGroup(group);
+    this.rc._subscribeToGroup(group._id);
   }
 
   // ----- [private] methods -------
@@ -500,42 +419,12 @@ class ChatService {
     return groups;
   }
 
-  _subscription2group(inSubscriptions) {
-    const groups = [];
-    if (inSubscriptions && inSubscriptions.length > 0) {
-      for (let i = 0; i < inSubscriptions.length; i += 1) {
-        const obj = inSubscriptions[i];
-        if (obj.t !== 'l') { // ignore live chat for now
-          let r = { _id: obj.rid, name: obj.name, title: obj.fname, updatedAt: obj._updatedAt, unread: obj.unread };
-          r = AppUtil.removeEmptyValues(r);
-          if (r._id) {
-            groups[r._id] = r;
-          }
-        }
-      }
-    }
-    return groups;
-  }
-
-  // subscribe to all changes in group
-  // - to handle deleted, this is tested only for add
-  subscribeToGroup(group) {
-    if (!Object.prototype.hasOwnProperty.call(this._groupSubsriptionMap, group._id)) {
-      this.meteor.subscribe('stream-room-messages', group._id, false); // , function(err, res) {
-      this.meteor.subscribe('stream-notify-room', `${group._id}/deleteMessage`, false);
-      this._groupSubsriptionMap[group._id] = 'ADDED'; // use set or array instead of map
-    }
-    //   // console.log("***** room-change:", err);
-    //   // console.log("***** room-change:", res);
-    // });
-  }
-
   // subscribe for changes from all groups
   subscribeToAllGroups() {
     var groups = this.db.groups.list;
     var _super = this;
     for (let i = 0; i < groups.length; i += 1) {
-      this.subscribeToGroup(groups[i]);
+      this.rc._subscribeToGroup(groups[i]._id);
     }
     this._monStreamRoomMessages = this.meteor.monitorChanges('stream-room-messages', (results) => {
       if (results && results.length > 0) {

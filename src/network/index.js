@@ -50,10 +50,10 @@ class Network {
       };
       this._initConnectionHandlers();
       // set service object
-      const rc = new RocketChat();
-      rc.meteor = Network._meteor;
       Network._service = new Service();
       Network._service.db = Network._db;
+      const rc = new RocketChat(Network._service);
+      rc.meteor = Network._meteor;
       Network._service.service = rc;
     }
   }
@@ -94,6 +94,7 @@ class Network {
       // lets set the server name to db
       // Network._db = new Database(Application.base.instance, Constants.DEFAULT_USER);
 
+      this.service.connect(Application.instance);
       Network._chat.getLoginSettings();
       Network._chat.getPublicSettings(this._publicSettingsCallback);
     });
@@ -112,7 +113,7 @@ class Network {
     }
     this.chat.resetDbHandle(Network._db);
     // do some basic setup for this user
-    this.chat.initSubscriptions();
+    this.service.login(Application.instance, userName);
     this.dbSync();
     this.db.app.setServerConnectionStatus(true);
   }

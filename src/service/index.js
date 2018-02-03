@@ -30,7 +30,7 @@ class ChatService {
 
   // @todo - do any reinitializations here
   set db(dbHandle) {
-    console.log('****** db is set ********');
+    console.log('****** servicedb is set ********');
     ChatService._db = dbHandle;
   }
   get db() {
@@ -42,6 +42,18 @@ class ChatService {
   }
   get service() {
     return ChatService._service;
+  }
+
+  connect(serverName) {
+    console.log('****** service connect to server  *****', serverName);
+    this.service.connect(serverName);
+  }
+
+  login(serverName, userName) {
+    console.log('****** service login  *****', serverName, userName);
+    this.db.setUserId(this.service.userId);
+    Application.setUserId(this.service.userId);
+    this.service.login(serverName, userName);
   }
 
   // ---- init section over, service methods follow ----
@@ -134,6 +146,23 @@ class ChatService {
   // - conference calls
   startVideoConference(rid) {
     this.service.startVideoConference(rid);
+  }
+
+  // -- internal service call backs
+
+  // @todo: convert this to a single call in db (batch txn update)
+  _updateUsers(users) {
+    if (users && users.length > 0) {
+      for (let i = 0; i < users.length; i += 1) {
+        this.db.users.updateFullUserData(users[i]);
+      }
+    }
+  }
+  _deleteGroups(groups) {
+    this.db.groups.deleteGroups(groups);
+  }
+  _updateGroups(groups) {
+    this.db.groups.addAll(groups);
   }
 
 }

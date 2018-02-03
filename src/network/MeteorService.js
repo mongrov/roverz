@@ -26,6 +26,9 @@ class MeteorService {
   get loggedInUser() {
     return Meteor.user();
   }
+  get userId() {
+    return Meteor.userId();
+  }
 
   // @todo: this method to be tested
   monitorAction(name, cb) {
