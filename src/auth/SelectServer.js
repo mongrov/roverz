@@ -235,6 +235,7 @@ export default class SelectServer extends React.Component {
                   title={t('confirm')}
                   onPress={this.sendServerUrl}
                   backgroundColor="transparent"
+                  testID={'select-server'}
                 />
               </View>
             </View>

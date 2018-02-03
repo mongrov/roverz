@@ -136,6 +136,7 @@ class Login extends Component {
             secureTextEntry: true,
             autoCorrect: false,
             disableFullscreenUI: true,
+            testID: 'password-text',
           },
         },
       },
@@ -238,6 +239,7 @@ class Login extends Component {
             status={this.state.resultMsg.status}
             success={this.state.resultMsg.success}
             error={this.state.resultMsg.error}
+            testID={'alert'}
           />
 
           <Form
@@ -319,6 +321,7 @@ class Login extends Component {
               <TouchableOpacity
                 style={[styles.workspaceBtn]}
                 onPress={() => { Actions.chooseInstance({ switchServer: true }); }}
+                testID={'workspace'}
               >
                 <Text
                   style={[styles.textWork]}

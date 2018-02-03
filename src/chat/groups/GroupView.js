@@ -277,6 +277,7 @@ class GroupList extends Component {
               renderRow={this.renderRow}
               dataSource={this.state.dataSource}
               enableEmptySections={true}
+              testID={'groupview'}
             />
           </List>
         </ScrollView>
