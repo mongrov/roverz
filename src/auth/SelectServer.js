@@ -103,9 +103,9 @@ export default class SelectServer extends React.Component {
     this._mounted = false;
   }
 
-  settingsCallback = (data) => {
+  settingsCallback = (err/* , data */) => {
     if (this._mounted) {
-      if (!data) {
+      if (err) {
         // error, no settings could be fetched
         this.setState({ isLoading: false });
       } else {

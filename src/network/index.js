@@ -24,8 +24,6 @@ class Network {
       Network._push = new PushService();
       Network._push.init();
       Network._db = new Database();
-      Network._publicSettings = null;
-      Network._uiCallback = null;
       Network._serverName = null;
       Network._meteor = new MeteorService();
       Network.lastSyncTime = null;
@@ -82,8 +80,6 @@ class Network {
     if (Network._chat) {
       Network._chat.logout();
     }
-    Network._publicSettings = null;
-    Network._uiCallback = uicallback;
     Network._chat = new ChatService();
     // init meteor service
     Network._meteor.init();
@@ -91,12 +87,7 @@ class Network {
     // save the db
     this.db.setServer(Application.instance).then(() => {
       Network._serverName = Application.space;
-      // lets set the server name to db
-      // Network._db = new Database(Application.base.instance, Constants.DEFAULT_USER);
-
-      this.service.connect(Application.instance);
-      Network._chat.getLoginSettings();
-      Network._chat.getPublicSettings(this._publicSettingsCallback);
+      this.service.connect(Application.instance, uicallback);
     });
   }
 
@@ -124,11 +115,6 @@ class Network {
 
   getServerSetting(key) {
     return this.serverSettings ? this.serverSettings[key] : null;
-  }
-
-  _publicSettingsCallback(data) {
-    Network._publicSettings = data;
-    Network._uiCallback(data);
   }
 
   // get variables
@@ -173,7 +159,7 @@ class Network {
   }
 
   get serverSettings() {
-    return Network._publicSettings;
+    return this.service.settings;
   }
 
   dbSync() {

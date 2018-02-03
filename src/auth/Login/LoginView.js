@@ -162,9 +162,9 @@ class Login extends Component {
     if (serverUrl) {
       this.setState({ serverUrl });
     }
-    const saml = this._service.chat.getLoginSetting('service');
+    const saml = this._service.service.getLoginSetting('service');
     if (saml && saml === 'saml') {
-      const tempText = this._service.chat.getLoginSetting('buttonLabelText');
+      const tempText = this._service.service.getLoginSetting('buttonLabelText');
       this.setState({ showSSO: true });
       if (tempText) {
         this.setState({ ssoText: tempText });

@@ -121,6 +121,29 @@ class RC {
     this.meteor.call('mgvc:updateTimeout', rid, null);
   }
 
+  getPublicSettings(cb) {
+    this.meteor.call('public-settings/get', (err, res) => {
+      if (err) {
+        cb(err, null);
+      } else {
+        const settingsList = {};
+        if (res && res.length > 0) {
+          for (let i = 0; i < res.length; i += 1) {
+            const resdata = res[i];
+            settingsList[resdata._id] = resdata;
+            // if (resdata._id === 'Message_AllowDeleting' && resdata.value) {
+            //   this.deleteAllowed = resdata.value;
+            // }
+            // if (resdata._id === 'Message_AllowDeleting_BlockDeleteInMinutes' && resdata.value) {
+            //   this.blockDeleteInMinutes = resdata.value;
+            // }
+          }
+        }
+        cb(null, settingsList);
+      }
+    });
+  }
+
   // ---- local methods ---- (not to be called outside)
 
   // @todo: need to decide when to call
@@ -128,11 +151,13 @@ class RC {
     // unsubscribe and clean the handles
     // RC._mUsers
     // RC._mStreamNotifyUser
+    RC._groupSubsriptionMap = {};
   }
 
   // call this method once connection is made to a meteor server
   // @todo: check each of the enabled subscriptions, if required/not
   _initNetworkSubscriptions() {
+    var _super = this;
     // this._subscribe('meteor.loginServiceConfiguration');
     this.meteor.subscribe('roles');
     this.meteor.subscribe('userData');
@@ -146,9 +171,12 @@ class RC {
     // this._subscribe('stream-notify-all', 'updateCustomSound', false); // no
     // this._subscribe('stream-notify-all', 'deleteCustomSound', false); // no
 
+    // login configs
+    this.meteor.subscribe('meteor.loginServiceConfiguration');
+
     // monitor for any updates and send it to service
-    RC._mUsers = this.meteor.monitorChanges('users', (results) => {
-      this.service._updateUsers(results);
+    RC._mLoginCfg = this.meteor.monitorChanges('meteor_accounts_loginServiceConfiguration', (results) => {
+      _super.service._updateLoginConfig(results);
     });
   }
 
@@ -164,6 +192,10 @@ class RC {
     this.meteor.subscribe('stream-notify-user', `${uid}/webrtc`, false);
     // this.meteor.subscribe('stream-notify-user', `${Meteor.userId()}/rooms-changed`, false);
     // this._subscribe('stream-notify-user', Meteor.userId()+"/otr", false);
+
+    RC._mUsers = this.meteor.monitorChanges('users', (results) => {
+      _super.service._updateUsers(results);
+    });
 
     // monitor for any updates and send it to service
     // @todo: The return value to be used for unsubscribe

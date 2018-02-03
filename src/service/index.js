@@ -20,17 +20,21 @@ const MODULE = 'ChatService';
 //  (d) this layer observes db changes and would get the change
 //  (e) queues the request
 
+// NOTE: for timebeing this is by design a singleton class for both chat & service classes
+
 class ChatService {
   constructor() {
     if (!ChatService._db && !ChatService._service) {
       ChatService._db = null;
       ChatService._service = null;
+      ChatService._serverSettings = null;
+      ChatService._loginSettings = [];
     }
   }
 
   // @todo - do any reinitializations here
   set db(dbHandle) {
-    console.log('****** servicedb is set ********');
+    console.log('****** servicedb is set ********', dbHandle);
     ChatService._db = dbHandle;
   }
   get db() {
@@ -43,10 +47,39 @@ class ChatService {
   get service() {
     return ChatService._service;
   }
+  set settings(s) {
+    ChatService._serverSettings = s;
+  }
+  get settings() {
+    return ChatService._serverSettings;
+  }
+  set loginSettings(ls) {
+    ChatService._loginSettings = ls;
+  }
+  get loginSettings() {
+    return ChatService._loginSettings;
+  }
+  getLoginSetting(key) {
+    for (let i = 0; i < this.loginSettings.length; i += 1) {
+      if (Object.prototype.hasOwnProperty.call(this.loginSettings[i], key)) {
+        // @todo: sending just 'saml' is stupidity, need to send the whole array
+        return this.loginSettings[i][key];
+      }
+    }
+    return null;
+  }
 
-  connect(serverName) {
+  // @todo - to remove the callback later
+  // for timebeing using the same logic to
+  // fetch the settings and return back cb
+  connect(serverName, cb) {
     console.log('****** service connect to server  *****', serverName);
+    this._reset();
     this.service.connect(serverName);
+    this.service.getPublicSettings((err, settings) => {
+      this.settings = settings;
+      cb(err, settings);
+    });
   }
 
   login(serverName, userName) {
@@ -150,8 +183,15 @@ class ChatService {
 
   // -- internal service call backs
 
+  _reset() {
+    this.settings = null;
+    this.loginSettings = [];
+  }
+
   // @todo: convert this to a single call in db (batch txn update)
   _updateUsers(users) {
+    // console.log("**** update users **** ====> ", this.db);
+    // console.log("**** update users **** ====> ", this.db && this.db.users && this.db.users.list);
     if (users && users.length > 0) {
       for (let i = 0; i < users.length; i += 1) {
         this.db.users.updateFullUserData(users[i]);
@@ -164,7 +204,9 @@ class ChatService {
   _updateGroups(groups) {
     this.db.groups.addAll(groups);
   }
-
+  _updateLoginConfig(loginDetails) {
+    this.loginSettings = this.loginSettings.concat(loginDetails);
+  }
 }
 
 /* Export ==================================================================== */

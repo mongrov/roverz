@@ -21,7 +21,6 @@ class ChatService {
     this._monStreamRoomMessages = null;
     this._monStreamNotifyRoom = null;
     this._cache = db.remotefiles ? db.remotefiles.cacheList : {};
-    this._loginSettings = [];
     this.deleteAllowed = false;
     this.blockDeleteInMinutes = 0;
     Application.setUserId(db.userId);
@@ -48,69 +47,8 @@ class ChatService {
     return this._rc;
   }
 
-  // getUsersOfRoom, groupId, true (show all)
-  // getUsersOfRoom, groupId, false (show online)
   // profile view: fullUserData
   // https://instance/avatar/kumar
-
-
-  getPublicSettings(callBack) {
-    this.meteor.call('public-settings/get', (err, res) => {
-      if (err) {
-        // console.log(err);
-        callBack(null);
-      } else {
-        const settingsList = {};
-        if (res && res.length > 0) {
-          for (let i = 0; i < res.length; i += 1) {
-            const resdata = res[i];
-            settingsList[resdata._id] = resdata;
-            if (resdata._id === 'Message_AllowDeleting' && resdata.value) {
-              this.deleteAllowed = resdata.value;
-            }
-            if (resdata._id === 'Message_AllowDeleting_BlockDeleteInMinutes' && resdata.value) {
-              this.blockDeleteInMinutes = resdata.value;
-            }
-          }
-        }
-        callBack(settingsList);
-      }
-    });
-  }
-
-  /* Need to see if these are required, remove it from db? */
-  get loginSettings() {
-    return this._loginSettings;
-  }
-
-  clearLoginSettings() {
-    this._loginSettings = [];
-  }
-
-  addLoginSettings(loginDetails) {
-    this._loginSettings = this._loginSettings.concat(loginDetails);
-  }
-
-  getLoginSetting(key) {
-    for (let i = 0; i < this._loginSettings.length; i += 1) {
-      if (Object.prototype.hasOwnProperty.call(this._loginSettings[i], key)) {
-        // @todo: sending just 'saml' is stupidity, need to send the whole array
-        return this._loginSettings[i][key];
-      }
-    }
-    return null;
-  }
-
-  /* @todo: meteor when called again for login settings, the new subcription still gets old table
-   * values - To be fixed
-   */
-  getLoginSettings() {
-    this.clearLoginSettings();
-    this.meteor.subscribe('meteor.loginServiceConfiguration');
-    this.meteor.monitorChanges('meteor_accounts_loginServiceConfiguration', (results) => {
-      this.addLoginSettings(results);
-    });
-  }
 
   setUserPassword(newPwd, callBack) {
     this.meteor.call('setUserPassword', newPwd, (err) => {
@@ -218,6 +156,8 @@ class ChatService {
     }, 2000);
   }
 
+  // getUsersOfRoom, groupId, true (show all)
+  // getUsersOfRoom, groupId, false (show online)
   getMembersList(groupId, callBack, onlineUserList) {
     const _super = this;
     const offline = !!onlineUserList;
