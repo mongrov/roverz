@@ -8,6 +8,8 @@ import Application from '../constants/config';
 import AppUtil from '../lib/util';
 
 const MODULE = 'ChatService';
+const DEFAULT_USER = 'default';
+
 // use cases:
 // 1) user sends a message:
 //  (a) UI would send message to db
@@ -24,9 +26,9 @@ const MODULE = 'ChatService';
 
 class ChatService {
   constructor() {
-    if (!ChatService._db && !ChatService._service) {
+    if (!ChatService._db && !ChatService._provider) {
       ChatService._db = null;
-      ChatService._service = null;
+      ChatService._provider = null;
       ChatService._serverSettings = null;
       ChatService._loginSettings = [];
     }
@@ -41,11 +43,11 @@ class ChatService {
     return ChatService._db;
   }
 
-  set service(backendService) {
-    ChatService._service = backendService;
+  set provider(backendService) {
+    ChatService._provider = backendService;
   }
-  get service() {
-    return ChatService._service;
+  get provider() {
+    return ChatService._provider;
   }
   set settings(s) {
     ChatService._serverSettings = s;
@@ -75,8 +77,8 @@ class ChatService {
   connect(serverName, cb) {
     console.log('****** service connect to server  *****', serverName);
     this._reset();
-    this.service.connect(serverName);
-    this.service.getPublicSettings((err, settings) => {
+    this.provider.connect(serverName);
+    this.provider.getPublicSettings((err, settings) => {
       this.settings = settings;
       cb(err, settings);
     });
@@ -84,9 +86,9 @@ class ChatService {
 
   login(serverName, userName) {
     console.log('****** service login  *****', serverName, userName);
-    this.db.setUserId(this.service.userId);
-    Application.setUserId(this.service.userId);
-    this.service.login(serverName, userName);
+    this.db.setUserId(this.provider.userId);
+    Application.setUserId(this.provider.userId);
+    this.provider.login(serverName, userName);
   }
 
   // ---- init section over, service methods follow ----
@@ -135,7 +137,7 @@ class ChatService {
 
   // @todo: need to remove this from any reference in UI - lets use the above obj from db
   get loggedInUser() {
-    return this.service.loggedInUser;
+    return this.provider.loggedInUser;
   }
 
   // Todo
@@ -145,27 +147,27 @@ class ChatService {
   // Direct messages (DMs) are private, 1-on-1 conversation between team members. You can
   // think of a DM as a private group with only two members.
   createDirectMessage(userName, cb) {
-    this.service.createDirectMessage(userName, cb);
+    this.provider.createDirectMessage(userName, cb);
   }
   createChannel(channelName, isReadonly, userList, cb) {
-    this.service.createChannel(channelName, false, isReadonly, userList, cb);
+    this.provider.createChannel(channelName, false, isReadonly, userList, cb);
   }
   createGroup(channelName, isReadonly, userList, cb) {
-    this.service.createChannel(channelName, true, isReadonly, userList, cb);
+    this.provider.createChannel(channelName, true, isReadonly, userList, cb);
   }
   joinRoom(roomId, cb) {
-    this.service.joinRoom(roomId, cb);
+    this.provider.joinRoom(roomId, cb);
   }
 
   // - presence
   setUserPresence(presenceStatus, cb) {
-    this.service.setUserPresence(presenceStatus, (err, res) => {
+    this.provider.setUserPresence(presenceStatus, (err, res) => {
       AppUtil.debug(res, `${MODULE}: setUserPresence - ${presenceStatus}`);
       if (cb) cb(err, res);
     });
   }
   getUserPresence(state, cb) {
-    this.service.getUserPresence(state, (err, res) => {
+    this.provider.getUserPresence(state, (err, res) => {
       AppUtil.debug(res, `${MODULE}: getUserPresence - ${state}`);
       if (cb) cb(err, res);
     });
@@ -173,12 +175,12 @@ class ChatService {
 
   // - reactions
   setLike(messageId, cb) {
-    this.service.setLikeReaction(messageId, cb);
+    this.provider.setLikeReaction(messageId, cb);
   }
 
   // - conference calls
   startVideoConference(rid) {
-    this.service.startVideoConference(rid);
+    this.provider.startVideoConference(rid);
   }
 
   // -- internal service call backs
@@ -207,6 +209,30 @@ class ChatService {
   _updateLoginConfig(loginDetails) {
     this.loginSettings = this.loginSettings.concat(loginDetails);
   }
+
+  // connection life cycle from servie
+  _connectionChange(serverName, isConnected) {
+    console.log('**** _connectionChange', serverName, isConnected);
+    if (!isConnected && this.db && this.db.app) {
+      this.db.app.setServerConnectionStatus(isConnected);
+    }
+  }
+
+  _onLogin(serverName, userName) {
+    console.log('**** loggedin to ', serverName, userName);
+    const uname = userName || DEFAULT_USER;
+    // lets set the user to db
+    this.db.switchDb(serverName, uname);
+    // if (this.db && this.db.app) {
+    //   this.db.app.setServerConnectionStatus(false);
+    // }
+    // this.chat.resetDbHandle(Network._db);
+    this.login(serverName, uname);
+    console.log('************* connection status **************');
+    this.db.app.setServerConnectionStatus(true);
+    // this.dbSync();
+  }
+
 }
 
 /* Export ==================================================================== */

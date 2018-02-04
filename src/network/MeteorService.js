@@ -34,7 +34,7 @@ class MeteorService {
   monitorAction(name, cb) {
     Meteor.getData().on(name, cb);
   }
-  // NOTE - callback would return connection status (true/falsee)
+  // NOTE - callback would return connection status (true/false)
   monitorConnection(cb) {
     if (!cb) return;
     Meteor.ddp.on('connected', () => {
