@@ -240,7 +240,7 @@ class GroupList extends Component {
       return (<Loading />);
     }
     return (
-      <View style={[styles.mainContainer]} >
+      <View style={[styles.mainContainer]} testID={'group-view'} >
         <TouchableOpacity
           style={[styles.plusButton, { backgroundColor: AppColors.brand().third }]}
           onPress={Actions.searchRoom}
@@ -277,7 +277,6 @@ class GroupList extends Component {
               renderRow={this.renderRow}
               dataSource={this.state.dataSource}
               enableEmptySections={true}
-              testID={'groupview'}
             />
           </List>
         </ScrollView>
