@@ -31,7 +31,7 @@ class ChatService {
     // set rc
     this._rc = new RocketChat(this._service);
     this._rc.meteor = this.meteor;
-    this._service.service = this._rc;
+    this._service.provider = this._rc;
   }
 
   resetDbHandle(newDb) {
@@ -247,14 +247,14 @@ class ChatService {
     }
     const noOfMsgs = 10;
     // const temp = lastSync > 0 ? Math.floor(lastSync / 1000) : 0;
-    const req1 = this.meteor.traceCall('rooms/get', { $date: lastSync });
+    const req1 = this.meteor.call('rooms/get', { $date: lastSync });
     const req2 = this.meteor.call('subscriptions/get', { $date: lastSync });
     Promise.all([req1, req2]).then((results) => {
       // results[0] -  rooms, [1] - subscriptions
       // @todo: move this to util - shallowMerge?
       const rooms = results[0];
       const groups = _super._room2group(results[0]);
-      const subscriptions = _super._subscription2group(results[1]);
+      const subscriptions = _super.rc._subscription2group(results[1]);
       Object.keys(groups).forEach((k) => {
         if (k in subscriptions) {
           groups[k] = Object.assign(groups[k], subscriptions[k]);
@@ -287,7 +287,7 @@ class ChatService {
       // console.log('Catch: ', err);
     });
     // @ezhil - why are we calling this ?
-    this.service.getUserPresence('online');
+    this.rc.getUserPresence('online');
   }
 
   fetchMissedMessages(group, lastSyncTs) {

@@ -52,7 +52,7 @@ class Network {
       Network._service.db = Network._db;
       const rc = new RocketChat(Network._service);
       rc.meteor = Network._meteor;
-      Network._service.service = rc;
+      Network._service.provider = rc;
     }
   }
 
