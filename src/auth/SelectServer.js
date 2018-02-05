@@ -252,6 +252,7 @@ export default class SelectServer extends React.Component {
                   justifyContent: 'center',
                 }}
                 onPress={() => Actions.pop({ type: 'reset' })}
+                testID={'back-login'}
               >
                 <Text
                   style={[AppStyles.ListItemTitle, styles.workspace]}
