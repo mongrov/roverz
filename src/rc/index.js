@@ -34,6 +34,7 @@ import AppUtil from '../lib/util';
 
 // Open Questions to be addressed
 // - why do we have to subscribe to all groups separately ?
+// - why service calls should be starting with '_' ? follow a naming pattern
 
 const MODULE = 'RC';
 
@@ -43,6 +44,11 @@ class RC {
       RC._service = serviceObj;
       RC._meteor = null;
       RC._groupSubsriptionMap = {};
+      RC._serverName = null;
+      RC._state = {
+        _server: false, // meteor server side connection status
+        _login: false, // logged in state
+      };
     }
   }
 
@@ -50,23 +56,49 @@ class RC {
   set meteor(meteorObj) {
     console.log('****** RC meteor is set ********');
     RC._meteor = meteorObj;
+    this.meteor.monitorConnection((isConnected) => {
+      this._meteorConnectionChange(isConnected);
+    });
+    this.meteor.monitorAction('onLogin', () => {
+      this._onLogin();
+    });
   }
-
   get meteor() {
     return RC._meteor;
   }
   get userId() {
     return this.meteor.userId;
   }
-
   get service() {
     return RC._service;
+  }
+  get serverName() {
+    return RC._serverName;
   }
 
   // -- RC connection lifecycle methods
 
+  // @todo - don't do anything for now, should see where it would be useful
+  _meteorConnectionChange(isConnected) {
+    AppUtil.debug(null, `${MODULE}: _meteorConnectionChange - ${isConnected}`);
+    if (RC._state._server !== isConnected) {
+      RC._state._server = isConnected;
+      if (!isConnected) RC._state._login = false;
+      this.service._connectionChange(this.serverName, isConnected);
+    }
+  }
+
+  _onLogin() {
+    AppUtil.debug(null, `${MODULE}: _onLogin`);
+    if (!RC._state._login) {
+      RC._state._login = true;
+      this.service._onLogin(this.serverName, this.loggedInUser && this.loggedInUser.username);
+    }
+  }
+
   connect(serverName) {
     AppUtil.debug(null, `${MODULE}: connect - ${serverName}`);
+    RC._serverName = serverName;
     this._initNetworkSubscriptions();
   }
 

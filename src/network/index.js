@@ -6,7 +6,6 @@ import Application from '../constants/config';
 import Service from '../service';
 import RocketChat from '../rc';
 
-import Constants from './constants';
 import PushService from './PushService';
 import MeteorService from './MeteorService';
 import ChatService from './ChatService';
@@ -27,20 +26,9 @@ class Network {
       Network._serverName = null;
       Network._meteor = new MeteorService();
       Network.lastSyncTime = null;
-      Network.isNetworkAvailable = false;
-      Network.isMonitorConnectionEnabled = false;
-      Network.isFirstTimeNetstatus = true;
       this.onLogin(() => {
-        Network.isFirstTimeNetstatus = false;
         this.switchToLoggedInUser();
       });
-      NetInfo.isConnected.fetch().then((isConnected) => {
-        Network.isNetworkAvailable = isConnected;
-      });
-      NetInfo.isConnected.addEventListener(
-        'connectionChange',
-        this._handleFirstConnectivityChange,
-      );
 
       Network.states = {
         _app: 'active',  // 'active', 'inactive', 'background'
@@ -51,7 +39,7 @@ class Network {
       Network._service = new Service();
       Network._service.db = Network._db;
       const rc = new RocketChat(Network._service);
-      rc.meteor = Network._meteor;
+      // rc.meteor = Network._meteor;
       Network._service.provider = rc;
     }
   }
@@ -83,6 +71,7 @@ class Network {
     Network._chat = new ChatService();
     // init meteor service
     Network._meteor.init();
+    Network._service.provider.meteor = Network._meteor;
     Network._chat.init(Network._meteor, Network._db);
     // save the db
     this.db.setServer(Application.instance).then(() => {
@@ -93,20 +82,12 @@ class Network {
 
   // only change the userName, server remains the same
   switchToLoggedInUser() {
-    const userName = this.service.loggedInUser ? this.service.loggedInUser.username : Constants.DEFAULT_USER;
-    // lets set the user to db
-    this.db.switchDb(Application.instance, userName);
-    if (this.db && this.db.app) {
-      this.db.app.setServerConnectionStatus(false);
-    }
-    if (!Network.isMonitorConnectionEnabled) {
-      this.meteor.monitorConnection(this.meteorConnectionChange);
-    }
-    this.chat.resetDbHandle(Network._db);
-    // do some basic setup for this user
-    this.service.login(Application.instance, userName);
-    this.dbSync();
-    this.db.app.setServerConnectionStatus(true);
+    // @todo - kludge, this code needs to move out/removed
+    setTimeout(() => {
+      this.chat.resetDbHandle(Network._db);
+      this.dbSync();
+      console.log('************* dbSync done **************');
+    }, 1000);
   }
 
   getServer() {
@@ -170,49 +151,13 @@ class Network {
     this.service.setUserPresence('online');
   }
 
-  // not much used need to test and remove this
-  meteorConnectionChange(isConnected) {
-    if (Network._db && Network._db.app) {
-      const prevState = Network._db.app.isServerConnected;
-      if (prevState === true && isConnected === false) {
-        if (Network.lastSyncTime === null) {
-          Network.lastSyncTime = new Date(new Date().getTime() - 32000);
-          Network._db.app.setLastSync(Network.lastSyncTime);
-        }
-      }
-      if (prevState === false && isConnected === true) {
-        if (!Network._chat) {
-          Network._chat = new ChatService();
-          Network._chat.init(Network._meteor, Network._db);
-          this.switchToLoggedInUser();
-          Network.lastSyncTime = null;
-        } else {
-          Network._db.app.setServerConnectionStatus(isConnected);
-          Network._chat.fetchChannels(Network.lastSyncTime);
-          Network.lastSyncTime = null;
-        }
-      }
-    }
-  }
-
-  _handleFirstConnectivityChange = (isConnected) => {
-    Network.isNetworkAvailable = isConnected;
-    if (!Network.isFirstTimeNetstatus && !isConnected && Network.lastSyncTime === null) {
-      Network.lastSyncTime = new Date();
-      Network._db.app.setLastSync(Network.lastSyncTime);
-    }
-    if (isConnected) {
-      this.reconnectMeteor();
-    }
-  }
-
   handleAppStateChange = (nextAppState) => {
     if (nextAppState === 'background') {
       PushNotification.cancelAllLocalNotifications();
       this.service.setUserPresence('away');
     } else if (nextAppState === 'active') {
       PushNotification.cancelAllLocalNotifications();
-      this.reconnectMeteor();
+      // this.reconnectMeteor();
       this.service.setUserPresence('online');
     }
   }

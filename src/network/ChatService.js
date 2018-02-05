@@ -21,8 +21,6 @@ class ChatService {
     this._monStreamRoomMessages = null;
     this._monStreamNotifyRoom = null;
     this._cache = db.remotefiles ? db.remotefiles.cacheList : {};
-    this.deleteAllowed = false;
-    this.blockDeleteInMinutes = 0;
     Application.setUserId(db.userId);
 
     // set service object
@@ -36,7 +34,7 @@ class ChatService {
 
   resetDbHandle(newDb) {
     this.db = newDb;
-    this._service.db = this.db;
+    // this._service.db = this.db;
     this._cache = newDb.remotefiles.cacheList;
   }
 
@@ -245,6 +243,8 @@ class ChatService {
       const dbAppState = this.db.app.state;
       lastSync = (dbAppState && dbAppState.lastSync) ? dbAppState.lastSync.getTime() : 0;
     }
+    // @todo - lets come back to this variable later
+    lastSync = 0;
     const noOfMsgs = 10;
     // const temp = lastSync > 0 ? Math.floor(lastSync / 1000) : 0;
     const req1 = this.meteor.call('rooms/get', { $date: lastSync });
