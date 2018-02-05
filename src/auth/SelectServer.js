@@ -208,6 +208,7 @@ export default class SelectServer extends React.Component {
                 />
                 <Alerts
                   error={this.state.resultMsg.error}
+                  testID={'workspace-error'}
                 />
                 <Text style={
                 [AppStyles.ListItemTitle, styles.workspace]
@@ -225,6 +226,7 @@ export default class SelectServer extends React.Component {
                   value={this.state.serverUrl}
                   underlineColorAndroid={'transparent'}
                   autoCorrect={false}
+                  testID={'workspace-textinput'}
                 />
               </View>
             </View>
@@ -235,7 +237,7 @@ export default class SelectServer extends React.Component {
                   title={t('confirm')}
                   onPress={this.sendServerUrl}
                   backgroundColor="transparent"
-                  testID={'select-server'}
+                  testID={'server-confirm'}
                 />
               </View>
             </View>
