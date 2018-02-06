@@ -128,7 +128,7 @@ class Login extends Component {
             keyboardType: 'email-address',
             autoCorrect: false,
             disableFullscreenUI: true,
-            placeholder: 'Email',
+            placeholder: 'e-mail or username',
           },
           Password: {
             error: t('err_login_valid_password'),
@@ -137,7 +137,7 @@ class Login extends Component {
             autoCorrect: false,
             disableFullscreenUI: true,
             testID: 'password-text',
-            placeholder: 'Pass',
+            placeholder: 'password',
           },
         },
       },

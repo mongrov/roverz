@@ -7,7 +7,7 @@ export default {
   err_enter_valid_workspace: 'Enter a valid workspace name',
   err_workspace_name_empty: 'Workspace name is empty',
   confirm: 'Confirm',
-  lbl_enter_your_workspace: 'Please enter your workspace name',
+  lbl_enter_your_workspace: 'Workspace',
   lbl_sso: 'SSO Login',
   lbl_login_btn: 'Login',
   lbl_login_username: 'Username or Email',
