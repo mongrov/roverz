@@ -89,7 +89,11 @@ class ChatService {
     this.db.setUserId(this.provider.userId);
     Application.setUserId(this.provider.userId);
     this.provider.login(serverName, userName);
+    this.db.app.allMessages.addListener(this._messagesListener);
   }
+
+  // logout
+  // removeListener - messagesListener
 
   // ---- init section over, service methods follow ----
 
@@ -231,6 +235,10 @@ class ChatService {
     console.log('************* connection status **************');
     this.db.app.setServerConnectionStatus(true);
     // this.dbSync();
+  }
+
+  _messagesListener(messages, changes) {
+    console.log('****** messages db updated with ******', changes);
   }
 
 }

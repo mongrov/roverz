@@ -13,6 +13,11 @@ export default class AppManager {
     return (res && res.length > 0) ? res['0'] : null;
   }
 
+  // return all messages
+  get allMessages() {
+    return this._realm.objects(Constants.Message);
+  }
+
   setLastSync(lastSyncTime) {
     var obj = this.state || { _id: 0, lastSync: null };
     this._realm.write(() => {
