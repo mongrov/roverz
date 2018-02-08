@@ -4,6 +4,7 @@
  * -- This is the business logic layer for chat --
  */
 // import { ModuleConfig } from '../constants/';
+import queueFactory from 'react-native-queue';
 import Application from '../constants/config';
 import AppUtil from '../lib/util';
 
@@ -241,6 +242,63 @@ class ChatService {
     console.log('****** messages db updated with ******', changes);
   }
 
+  _test() {
+    queueFactory().then((queue) => {
+      console.log('******* queuefactory created *******');
+      // Register the worker function for "example-job" jobs.
+      queue.addWorker('example-job', async (id, payload) => {
+        console.log(`EXECUTING "example-job" with id: ${id}`);
+        console.log(payload, 'payload');
+
+        await new Promise((resolve) => {
+          setTimeout(() => {
+            console.log('"example-job" has completed!');
+            resolve();
+          }, 5000);
+        });
+      });
+
+      // Create a couple "example-job" jobs.
+
+      // Example job passes a payload of data to 'example-job' worker.
+      // Default settings are used (note the empty options object).
+      // Because false is passed, the queue won't automatically start when this job is created, so usually queue.start()
+      // would have to be manually called. However in the final createJob() below we don't pass false so it will start
+      // the queue.
+      // NOTE: We pass false for example purposes. In most scenarios starting queue on createJob() is perfectly fine.
+      queue.createJob('example-job', {
+        emailAddress: 'foo@bar.com',
+        randomData: {
+          random: 'object',
+          of: 'arbitrary data',
+        },
+      }, {}, false);
+
+      // Create another job with an example timeout option set.
+      // false is passed so queue still hasn't started up.
+      queue.createJob('example-job', {
+        emailAddress: 'example@gmail.com',
+        randomData: {
+          random: 'object',
+          of: 'arbitrary data',
+        },
+      }, {
+        timeout: 1000, // This job will timeout in 1000 ms and be marked failed
+      }, false);
+
+      // This will automatically start the queue after adding the new job so
+      // we don't have to manually call queue.start().
+      queue.createJob('example-job', {
+        emailAddress: 'another@gmail.com',
+        randomData: {
+          random: 'object',
+          of: 'arbitrary data',
+        },
+      });
+
+      console.log('The above jobs are processing in the background of app now.');
+    });
+  }
 }
 
 /* Export ==================================================================== */

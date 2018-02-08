@@ -48,6 +48,7 @@
     "react-native-nav": "2.0.2",
     "react-native-photo-browser": "https://github.com/elarasu/react-native-photo-browser",
     "react-native-push-notification": "3.0.2",
+    "react-native-queue": "^1.0.1",
     "react-native-restart": "0.0.6",
     "react-native-router-flux": "3.39.2",
     "react-native-side-menu": "1.1.3",

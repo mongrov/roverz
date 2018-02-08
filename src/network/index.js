@@ -23,9 +23,7 @@ class Network {
       Network._push = new PushService();
       Network._push.init();
       Network._db = new Database();
-      Network._serverName = null;
       Network._meteor = new MeteorService();
-      Network.lastSyncTime = null;
       this.onLogin(() => {
         this.switchToLoggedInUser();
       });
@@ -74,9 +72,8 @@ class Network {
     Network._service.provider.meteor = Network._meteor;
     Network._chat.init(Network._meteor, Network._db);
     // save the db
-    this.db.setServer(Application.instance).then(() => {
-      Network._serverName = Application.space;
-      this.service.connect(Application.instance, uicallback);
+    this.db.setServer(serverName).then(() => {
+      this.service.connect(serverName, uicallback);
     });
   }
 
@@ -145,8 +142,7 @@ class Network {
 
   dbSync() {
     this.push.register();
-    // const prevSyncTime = Network.lastSyncTime ? Network.lastSyncTime.getTime() : null;
-    this.chat.fetchChannels(Network.lastSyncTime);
+    this.chat.fetchChannels(null);
     this.chat.subscribeToAllGroups();
     this.service.setUserPresence('online');
   }
