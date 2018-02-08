@@ -250,6 +250,25 @@ class ChatNavBar extends React.Component {
     );
   }
 
+  renderGeoIcon = () => {
+    return (
+      <NavButton
+        style={[styles.iconViews]}
+        onPress={() => {
+          Keyboard.dismiss();
+          Actions.geoView();
+        }}
+      >
+        <Icon
+          type={'material-community'}
+          name={'map-marker-plus'}
+          size={28}
+          color={'#FFF'}
+        />
+      </NavButton>
+    );
+  }
+
   renderVideoConfIcon() {
     const mgvcConf = this._net.getServerSetting('MGVC_Enabled');
     const mgvcEnabled = mgvcConf && mgvcConf.value;
@@ -349,6 +368,7 @@ class ChatNavBar extends React.Component {
           </View>
         </TouchableOpacity>
         {this.renderVideoConfIcon()}
+        {this.renderGeoIcon()}
       </View>
     );
   }
