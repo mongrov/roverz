@@ -180,7 +180,7 @@ class RC {
   // @todo: need to add cb
   setRoomAsRead(groupId) {
     this.meteor.call('readMessages', groupId);
-  }  
+  }
 
   // ---- local methods ---- (not to be called outside)
 

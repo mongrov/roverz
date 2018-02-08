@@ -190,7 +190,7 @@ class ChatService {
 
   setRoomAsRead(rid) {
     this.provider.setRoomAsRead(rid);
-  }  
+  }
 
   // -- internal service call backs
 
