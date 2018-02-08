@@ -195,11 +195,12 @@ class ChatService {
       lastSync = (dbAppState && dbAppState.lastSync) ? dbAppState.lastSync.getTime() : 0;
     }
     // @todo - lets come back to this variable later
-    lastSync = 0;
+    // lastSync = 0;
     const noOfMsgs = 10;
     // const temp = lastSync > 0 ? Math.floor(lastSync / 1000) : 0;
     const req1 = this.meteor.call('rooms/get', { $date: lastSync });
     const req2 = this.meteor.call('subscriptions/get', { $date: lastSync });
+    this.db.app.setLastSync(); // set the lastSync to now - before the call
     Promise.all([req1, req2]).then((results) => {
       // results[0] -  rooms, [1] - subscriptions
       // @todo: move this to util - shallowMerge?
@@ -214,7 +215,7 @@ class ChatService {
       // // console.log('Merged:', groups);
       _super.db.groups.addAll(groups);
       Object.keys(rooms).forEach((k) => {
-        console.log('Ezhil- rooms[k]._updatedAt ', rooms[k]._updatedAt);
+        // console.log('Ezhil- rooms[k]._updatedAt ', rooms[k]._updatedAt);
         // lastMessageAt
         if (rooms[k]._id) {
           if (lastSync === 0) {
@@ -232,7 +233,6 @@ class ChatService {
           }
         }
       });
-      this.db.app.setLastSync();
       //      this.fetchAllMessagesFromAllGroups();
     }).catch((/* err */) => {
       // console.log('Catch: ', err);

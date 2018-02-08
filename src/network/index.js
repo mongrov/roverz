@@ -142,7 +142,7 @@ class Network {
 
   dbSync() {
     this.push.register();
-    this.chat.fetchChannels(null);
+    this.chat.fetchChannels();
     this.chat.subscribeToAllGroups();
     this.service.setUserPresence('online');
   }
