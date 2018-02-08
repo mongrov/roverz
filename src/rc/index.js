@@ -4,6 +4,7 @@
 // import { ModuleConfig } from '../constants/';
 // import Application from '../constants/config';
 import AppUtil from '../lib/util';
+import Application from '../constants/config';
 
 // Enable debug output when in Debug mode
 // const DEBUG_MODE = ModuleConfig.DEV;
@@ -176,10 +177,32 @@ class RC {
     });
   }
 
+  // message api's
+  sendMessage(rid, msg, cb) {
+    this.meteor.call('sendMessage', { rid, msg }, cb);
+  }
+
+  deleteMessage(msgID, cb) {
+    this.meteor.call('deleteMessage', { _id: msgID }, cb);
+  }
+
+  // @todo - need to have server url not referenced here
+  replyMessage(groupObj, msgId, replyText, cb) {
+    var grptype = 'direct';
+    if (groupObj.isPrivate) {
+      grptype = 'group';
+    } else if (groupObj.isPublic) {
+      grptype = 'channel';
+    }
+    const replyFormat = `[ ](${Application.urls.SERVER_URL}/${grptype}/${groupObj.name}?msg=${msgId})`;
+    const rMsg = `${replyFormat} ${replyText}`;
+    this.sendMessage(groupObj._id, rMsg, cb);
+  }
+
   // set room as read
   // @todo: need to add cb
-  setRoomAsRead(groupId) {
-    this.meteor.call('readMessages', groupId);
+  setRoomAsRead(rid) {
+    this.meteor.call('readMessages', rid);
   }
 
   // ---- local methods ---- (not to be called outside)

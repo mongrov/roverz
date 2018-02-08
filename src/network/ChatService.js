@@ -56,35 +56,7 @@ class ChatService {
     });
   }
 
-  replyMessage(argGroup, argMessageId, argMsgText) {
-    var grptype = 'direct';
-    if (argGroup.isPrivate) {
-      grptype = 'group';
-    } else if (argGroup.isPublic) {
-      grptype = 'channel';
-    }
-    const msgObj = argGroup.findMessageById(argMessageId);
-    const replyForMsg = `[ ](${Application.urls.SERVER_URL}/${grptype}/${argGroup.name}?msg=${msgObj._id})`;
-
-    const testMsg = `${replyForMsg} ${argMsgText}`;
-    this.meteor.call('sendMessage', {
-      rid: argGroup._id, msg: testMsg,
-    }, (/* err, res */) => {
-      // console.log(err);
-      // console.log(res);
-    });
-  }
-
-  sendMessage(roomID, msgtoSend) {
-    this.meteor.call('sendMessage', {
-      rid: roomID, msg: msgtoSend,
-    }, (/* err, res */) => {
-      // console.log(err);
-      // console.log(res);
-    });
-  }
-
-    // use like searchUserOrRoom('e');
+  // use like searchUserOrRoom('e');
   searchUserOrRoom(searchKey, callBack) {
     var searchConf = { users: true, rooms: true };
     this.meteor.call('spotlight', searchKey, null, searchConf, (err, res) => {
@@ -112,17 +84,6 @@ class ChatService {
         }
       } else {
         callBack(err, 'FAILURE');
-      }
-    });
-  }
-
-  // use like createDirectMessage('ananth');
-  deleteMessage(msgID, callBack) {
-    this.meteor.traceCall('deleteMessage', { _id: msgID }, (err, res) => {
-      if (callBack && err) {
-        callBack(err, 'FAILURE');
-      } else if (callBack) {
-        callBack(res, 'SUCCESS');
       }
     });
   }

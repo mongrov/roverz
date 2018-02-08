@@ -137,9 +137,9 @@ export default class Bubble extends React.Component {
   }
 
   _handleDelete = () => {
-    this._network.chat.deleteMessage(this.state.original._id, (err, msg) => {
+    this._network.service.deleteMessage(this.state.original._id, (err, msg) => {
       console.log('deleteMessage', err, msg);
-      if (err && msg === 'FAILURE') {
+      if (err) {
         Alert.alert(
           t('info_delete_err'),
           t('info_del_not_allowed'),

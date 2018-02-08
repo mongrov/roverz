@@ -15,7 +15,7 @@ const MessageSchema = {
     // -- type & status
     type: { type: 'int', default: 0 }, // text, image
     isReply: { type: 'bool', default: false },
-    status: { type: 'int', default: 0 }, // delivered, read
+    status: { type: 'int', default: Constants.M_LOCAL }, // delivered, read
     likes: { type: 'int', default: 0 }, // thumsup value
 
     // -- data
@@ -31,6 +31,13 @@ const MessageSchema = {
 };
 
 export default class Message {
+  setStatusAsDelivered() {
+    this.status = Constants.M_DELIVERED;
+  }
+
+  setStatusAsRead() {
+    this.status = Constants.M_READ;
+  }
 }
 
 Message.schema = MessageSchema;

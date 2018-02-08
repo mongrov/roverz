@@ -232,7 +232,7 @@ class ChatRoomView extends React.Component {
   onSend() {
     if (this.state.text.trim().length > 0) {
       const unEmoMsg = emoji.unemojify(this.state.text.trim());
-      this._network.chat.sendMessage(
+      this._network.service.sendMessage(
         this._group._id,
         unEmoMsg,
       );

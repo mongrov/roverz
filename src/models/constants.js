@@ -32,4 +32,8 @@ export default {
   U_AWAY: 'away',
   U_BUSY: 'busy',
 
+  // Message status
+  M_LOCAL: 0,
+  M_DELIVERED: 10,
+  M_READ: 100,
 };

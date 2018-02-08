@@ -188,6 +188,19 @@ class ChatService {
     this.provider.startVideoConference(rid);
   }
 
+  // -- message calls
+  sendMessage(rid, msg, cb) {
+    this.provider.sendMessage(rid, msg, cb);
+  }
+
+  deleteMessage(msgID, cb) {
+    this.provider.deleteMessage(msgID, cb);
+  }
+
+  replyMessage(groupObj, msgId, replyText, cb) {
+    this.provider.replyMessage(groupObj, msgId, replyText, cb);
+  }
+
   setRoomAsRead(rid) {
     this.provider.setRoomAsRead(rid);
   }

@@ -225,7 +225,7 @@ export default class ReplyMessageView extends React.Component {
     // lets not send an empty message
     if (messages.length > 0 && messages[0].text && messages[0].text.trim().length > 0) {
       const unEmoMsg = emoji.unemojify(messages[0].text.trim());
-      this._network.chat.replyMessage(this._group, this.state.msgId, unEmoMsg);
+      this._network.service.replyMessage(this._group, this.state.msgId, unEmoMsg);
     }
   }
 
@@ -295,7 +295,7 @@ export default class ReplyMessageView extends React.Component {
         { text: t('txt_no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
         { text: t('txt_yes'),
           onPress: () => {
-            this._network.chat.deleteMessage(this.state.msgId);
+            this._network.service.deleteMessage(this.state.msgId);
             Actions.pop();
           },
         },
