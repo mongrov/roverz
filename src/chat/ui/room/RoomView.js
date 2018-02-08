@@ -850,6 +850,7 @@ class ChatRoomView extends React.Component {
           position: 'relative',
           backgroundColor: '#FFF',
         }]}
+        testID={'chatroom-display'}
       >
         <StatusBar barStyle="light-content" hidden={false} />
         {this.renderChat()}

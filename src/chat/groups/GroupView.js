@@ -195,6 +195,7 @@ class GroupList extends Component {
     return (
       <ListItem
         key={`list-row-${sectionID}`}
+        testID={`user-${data.name}`}
         onPress={() => {
           Actions.chatDetail({ obj: data, title: data.heading, duration: 0 });
         }}
