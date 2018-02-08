@@ -171,8 +171,7 @@ class ChatRoomView extends React.Component {
       // @todo: There is a scenario, when this msg and subscription message is out of order
       // still the unread is present
       if (_super._group.unread > 0) {
-        console.log('APPSTATE RV - componentDidMount setRoomAsRead');
-        this._network.chat.setRoomAsRead(_super._group._id);
+        this._network.service.setRoomAsRead(_super._group._id);
       }
       _super.prepareMessages();
       // setTimeout(() => { this.setState({ loaded: true }); }, 100);

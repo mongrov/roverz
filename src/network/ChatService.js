@@ -56,11 +56,6 @@ class ChatService {
     });
   }
 
-  // set room as read
-  setRoomAsRead(groupId) {
-    this.meteor.call('readMessages', groupId);
-  }
-
   replyMessage(argGroup, argMessageId, argMsgText) {
     var grptype = 'direct';
     if (argGroup.isPrivate) {
@@ -226,11 +221,6 @@ class ChatService {
     this.meteor.stopMonitoringChanges(this._monStreamRoomMessages);
     this.meteor.stopMonitoringChanges(this._monStreamNotifyRoom);
     this.meteor.logout();
-  }
-
-  // TODO unsubscribe after we get data in monitor changes users
-  pullFullUserData(userName) {
-    this.meteor.subscribe('fullUserData', userName, 1);
   }
 
   fetchChannels(lastSyncTime) {

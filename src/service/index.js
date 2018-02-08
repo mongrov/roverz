@@ -188,6 +188,10 @@ class ChatService {
     this.provider.startVideoConference(rid);
   }
 
+  setRoomAsRead(rid) {
+    this.provider.setRoomAsRead(rid);
+  }  
+
   // -- internal service call backs
 
   _reset() {
@@ -236,6 +240,7 @@ class ChatService {
     console.log('************* connection status **************');
     this.db.app.setServerConnectionStatus(true);
     // this.dbSync();
+    this._test();
   }
 
   _messagesListener(messages, changes) {
@@ -296,7 +301,7 @@ class ChatService {
         },
       });
 
-      console.log('The above jobs are processing in the background of app now.');
+      console.log('*********************** The above jobs are processing in the background of app now.');
     });
   }
 }
