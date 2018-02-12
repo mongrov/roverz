@@ -7,8 +7,27 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"prop-types": "15.6.0",
 		"react": "16.0.0-alpha.6",
-		"react-native": "0.44.3"
+		"react-native": "0.44.3",
+		"react-native-camera": "0.12.0",
+		"react-native-device-info": "0.12.1",
+		"react-native-fetch-blob": "0.10.8",
+		"react-native-htmlview": "0.12.1",
+		"react-native-nav": "2.0.2",
+		"react-native-push-notification": "3.0.2",
+		"react-native-restart": "0.0.6",
+		"react-native-router-flux": "3.39.2",
+		"react-native-vector-icons": "4.5.0",
+		"react-native-video": "2.0.0",
+		"react-native-video-player": "0.8.6",
+		"react-native-viewpager": "0.2.13",
+		"react-redux": "5.0.6",
+		"realm": "2.0.12",
+		"redux": "3.7.2",
+		"redux-logger": "3.0.6",
+		"redux-thunk": "^2.2.0",
+		"roverz-chat": "https://github.com/elarasu/roverz-chat"
 	},
 	"devDependencies": {
 		"babel-jest": "22.2.2",
