@@ -158,7 +158,7 @@ class ChatNavBar extends React.Component {
     }
     this.setState({
       icon,
-      status: usr.status,
+      status: (usr && usr.status) || Constants.U_OFFLINE,
     });
   }
 
