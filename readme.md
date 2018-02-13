@@ -1,4 +1,7 @@
 # roverz
+![alt text][logo]
+
+[logo]: src/images/logo-inverse.png "roverz"
 A native chat client for [Rocket.Chat](https://rocket.chat/)
 
 ## Example project setup
