@@ -25,7 +25,7 @@ export default {
     ModuleConfig.gaTrackingId = 'UA-110176262-1';
     ModuleConfig.init();
     ModuleConfig.setLogo(require('../images/logo.png'));  // eslint-disable-line global-require
-    ModuleConfig.setNavLogo(require('../images/logo-flat.png'));  // eslint-disable-line global-require
+    ModuleConfig.setNavLogo(require('../images/logo.png'));  // eslint-disable-line global-require
     ModuleConfig.setFilterRooms([
       'support', 'exceptions',
     ]);
