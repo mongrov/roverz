@@ -8,6 +8,7 @@ import RocketChat from '../rc';
 import AppUtil from '../lib/util';
 import Application from '../constants/config';
 import NetworkUtil from './util';
+import DBConstants from '../models/constants';
 
 const PushNotification = require('react-native-push-notification');
 
@@ -521,6 +522,7 @@ class ChatService {
         }
       }
       m.likes = 0;
+      m.type = DBConstants.M_DELIVERED;
       if (inM.reactions) {
         Object.keys(inM.reactions).forEach((key) => {
           if (key.indexOf('thumbsup') >= 0) {

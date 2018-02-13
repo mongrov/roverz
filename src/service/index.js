@@ -189,8 +189,9 @@ class ChatService {
   }
 
   // -- message calls
-  sendMessage(rid, msg, cb) {
-    this.provider.sendMessage(rid, msg, cb);
+  sendMessage(groupObj, msg, cb) {
+    this.provider.sendMessage(groupObj._id, msg, cb);
+    // this.db.groups.addMessage(groupObj, msg);
   }
 
   deleteMessage(msgID, cb) {
@@ -258,6 +259,18 @@ class ChatService {
 
   _messagesListener(messages, changes) {
     console.log('****** messages db updated with ******', changes);
+    changes.insertions.forEach((index) => {
+      const insertedMsg = messages[index];
+      if (insertedMsg.type === 0) {
+        console.log('***** This message needs to be sent to backend ****', insertedMsg);
+      }
+    });
+    changes.deletions.forEach((index) => {
+      const deletedMsg = messages[index];
+      if (deletedMsg.type === 0) {
+        console.log('***** This message needs to be deleted at backend ****', deletedMsg);
+      }
+    });
   }
 
   _test() {
