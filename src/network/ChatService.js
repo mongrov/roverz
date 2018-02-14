@@ -3,8 +3,6 @@ import { Actions } from 'react-native-router-flux';
 import md5 from 'react-native-md5';
 import moment from 'moment';
 
-import Service from '../service';
-import RocketChat from '../rc';
 import AppUtil from '../lib/util';
 import Application from '../constants/config';
 import NetworkUtil from './util';
