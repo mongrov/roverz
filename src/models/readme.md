@@ -12,7 +12,7 @@
      * statusConnection to be removed
      * avatar to be moved out - as its tied to module config
      * active - why do we want this ?
-     * UserManager methods - updateStatus & updateFullUserData - should support bulk instead of individual
+     * UserManager methods - updateStatus - should support bulk instead of individual
   * Group
      * avatar to be moved outside as well
      * GroupManager - updateNoMoreMessages - can it be a candidate for Group setter 

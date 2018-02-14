@@ -262,7 +262,7 @@ class RC {
     // @todo: The return value to be used for unsubscribe
     RC._mStreamNotifyUser = this.meteor.monitorChanges('stream-notify-user', (results) => {
       if (results && results.length > 0) {
-        // // console.log('User changes:', results);
+        // console.log('******=====$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ User changes:', results);
         const resEventName = results[0].eventName;
         // take some action here
         // update subscriptions-changed

@@ -68,7 +68,7 @@ class MeteorService {
   // Meteor subscription wrapper
   // should have atleast one argument (topic)
   subscribe(...args) {
-    AppUtil.debug(`${args}`, `${Constants.MODULE}: subscribe`);
+    // AppUtil.debug(`${args}`, `${Constants.MODULE}: subscribe`);
     // args atleast should have length 1 (topic)
     if (args.length <= 0) {
       AppUtil.debug('Invalid args passed', null);

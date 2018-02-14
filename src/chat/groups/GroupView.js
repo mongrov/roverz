@@ -139,7 +139,7 @@ class GroupList extends Component {
         dataSource: this.state.dataSource.cloneWithRows(this.state.items),
         loaded: true,
         connected: this._service.service.loggedInUser,
-      }, () => { this._insideStateUpdate = false; console.log('APPSTATE GV - dataSource callback'); });
+      }, () => { this._insideStateUpdate = false; });
     });
     this._mounted = true;
     setTimeout(() => {

@@ -57,38 +57,53 @@ export default class UserManager {
     });
   }
 
-  updateFullUserData(userData) {
-    if (!userData) return;
+  // pass array of userData
+  updateFullUserData(usersData) {
+    if (!usersData || usersData.length <= 0) return;
     this._realm.write(() => {
-      const usr = this._findOrCreate(userData._id, userData.username, userData.name);
-      if (!usr) return;
-      if (userData.status) {
-        usr.status = userData.status;
-      }
-      if (userData.active) {
-        usr.active = `${userData.active}`;
-      }
-      if (userData.statusConnection) {
-        usr.statusConnection = userData.statusConnection;
-      }
-      if (userData.utcOffset) {
-        usr.utcOffset = `${userData.utcOffset}`;
-      }
-      if (userData.lastLogin) {
-        usr.lastLogin = userData.lastLogin;
-      }
-      if (userData.createdAt) {
-        usr.createdAt = userData.createdAt;
-      }
-      if (userData.roles && userData.roles.length > 0) {
-        usr.roles = userData.roles.join(',');
-      }
-      if (userData.emails && userData.emails.length > 0) {
-        usr.emails = userData.emails.map(elem => elem.address).join(',');
-      }
-      if (userData.type) {
-        usr.type = userData.type;
-      }
+      usersData.forEach((userData) => {
+        const usr = this._findOrCreate(userData._id, userData.username, userData.name);
+        if (userData.status && usr.status !== userData.status) {
+          console.log('***** user status updated ****', usr.status, userData.status);
+          usr.status = userData.status;
+        }
+        const activ = `${userData.active}`;
+        if (userData.active && usr.active !== activ) {
+          console.log('***** user active updated ****', usr.active, activ);
+          usr.active = activ;
+        }
+        if (userData.statusConnection && usr.statusConnection !== userData.statusConnection) {
+          console.log('***** user statusConnection updated ****', usr.statusConnection, userData.statusConnection);
+          usr.statusConnection = userData.statusConnection;
+        }
+        const utc = `${userData.utcOffset}`;
+        if (userData.utcOffset && usr.utcOffset !== utc) {
+          console.log('***** user utcOffset updated ****', usr.utcOffset, utc);
+          usr.utcOffset = utc;
+        }
+        if (userData.lastLogin && usr.lastLogin !== userData.lastLogin) {
+          console.log('***** user lastLogin updated ****', usr.lastLogin, userData.lastLogin);
+          usr.lastLogin = userData.lastLogin;
+        }
+        if (userData.createdAt && usr.createdAt !== userData.createdAt) {
+          console.log('***** user createdAt updated ****', usr.createdAt, userData.createdAt);
+          usr.createdAt = userData.createdAt;
+        }
+        const r = userData.roles && userData.roles.join(',');
+        if (userData.roles && userData.roles.length > 0 && usr.roles !== r) {
+          console.log('***** user roles updated ****', usr.roles, r);
+          usr.roles = r;
+        }
+        const e = userData.emails && userData.emails.map(elem => elem.address).join(',');
+        if (userData.emails && userData.emails.length > 0 && usr.emails !== e) {
+          console.log('***** user emails updated ****', usr.emails, e);
+          usr.emails = userData.emails.map(elem => elem.address).join(',');
+        }
+        if (userData.type && usr.type !== userData.type) {
+          console.log('***** user type updated ****', usr.type, userData.type);
+          usr.type = userData.type;
+        }
+      });
     });
   }
 

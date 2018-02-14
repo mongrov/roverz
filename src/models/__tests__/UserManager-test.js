@@ -39,10 +39,12 @@ it('update users', () => {
   // negative scenario
   db.users.updateFullUserData();
   expect(db.users.list).toHaveLength(0);
+  db.users.updateFullUserData([]);
+  expect(db.users.list).toHaveLength(0);
   // const date = new Date();
   let userData = {
   };
-  db.users.updateFullUserData(userData);
+  db.users.updateFullUserData([userData]);
   const date = new Date();
   userData = {
     _id: '10',
@@ -59,14 +61,14 @@ it('update users', () => {
     editedAt: date,
     type: 'user',
   };
-  db.users.updateFullUserData(userData);
+  db.users.updateFullUserData([userData]);
   expect(db.users.findById('10')).not.toBeNull();
   userData = {
     _id: '11',
     username: 'harry',
     name: 'harry',
   };
-  db.users.updateFullUserData(userData);
+  db.users.updateFullUserData([userData]);
   expect(db.users.findById('11').status).toMatch('offline');
 });
 

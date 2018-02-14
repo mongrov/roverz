@@ -1,6 +1,6 @@
 {
   "name": "roverz-chat",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "chat related react-native code",
   "private": true,
   "scripts": {
@@ -12,7 +12,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/elarasu/roverz-chat.git"
+    "url": "https://github.com/mongrov/roverz.git"
   },
   "keywords": [
     "chat",

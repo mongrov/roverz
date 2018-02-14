@@ -86,7 +86,6 @@ class ChatService {
   }
 
   login(serverName, userName) {
-    console.log('****** service login  *****', serverName, userName);
     this.db.setUserId(this.provider.userId);
     Application.setUserId(this.provider.userId);
     this.provider.login(serverName, userName);
@@ -213,23 +212,20 @@ class ChatService {
     this.loginSettings = [];
   }
 
-  // @todo: convert this to a single call in db (batch txn update)
   _updateUsers(users) {
-    // console.log("**** update users **** ====> ", this.db);
-    // console.log("**** update users **** ====> ", this.db && this.db.users && this.db.users.list);
-    if (users && users.length > 0) {
-      for (let i = 0; i < users.length; i += 1) {
-        this.db.users.updateFullUserData(users[i]);
-      }
-    }
+    // console.log('**** update users **** ====> ', users);
+    this.db.users.updateFullUserData(users);
   }
   _deleteGroups(groups) {
+    console.log('**** delete groups **** ====> ', groups);
     this.db.groups.deleteGroups(groups);
   }
   _updateGroups(groups) {
+    console.log('**** update groups **** ====> ', groups);
     this.db.groups.addAll(groups);
   }
   _updateLoginConfig(loginDetails) {
+    // console.log('**** update login config **** ====> ', loginDetails);
     this.loginSettings = this.loginSettings.concat(loginDetails);
   }
 
@@ -242,7 +238,6 @@ class ChatService {
   }
 
   _onLogin(serverName, userName) {
-    console.log('**** loggedin to ', serverName, userName);
     const uname = userName || DEFAULT_USER;
     // lets set the user to db
     this.db.switchDb(serverName, uname);
@@ -251,14 +246,12 @@ class ChatService {
     // }
     // this.chat.resetDbHandle(Network._db);
     this.login(serverName, uname);
-    console.log('************* connection status **************');
     this.db.app.setServerConnectionStatus(true);
     // this.dbSync();
-    this._test();
+    // this._test();
   }
 
   _messagesListener(messages, changes) {
-    console.log('****** messages db updated with ******', changes);
     changes.insertions.forEach((index) => {
       const insertedMsg = messages[index];
       if (insertedMsg.type === 0) {
