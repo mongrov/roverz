@@ -27,7 +27,7 @@
 		"redux": "3.7.2",
 		"redux-logger": "3.0.6",
 		"redux-thunk": "^2.2.0",
-		"roverz-chat": "https://github.com/elarasu/roverz-chat"
+		"roverz-chat": "https://github.com/mongrov/roverz"
 	},
 	"devDependencies": {
 		"babel-jest": "22.2.2",

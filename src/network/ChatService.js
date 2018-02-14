@@ -14,7 +14,7 @@ const PushNotification = require('react-native-push-notification');
 
 class ChatService {
 
-  init(meteor, db) {
+  init(meteor, db, service) {
     this.meteor = meteor;
     this.db = db;
     this._monStreamNotifyUser = null;
@@ -25,12 +25,8 @@ class ChatService {
     Application.setUserId(db.userId);
 
     // set service object
-    this._service = new Service();
-    this._service.db = this.db;
-    // set rc
-    this._rc = new RocketChat(this._service);
-    this._rc.meteor = this.meteor;
-    this._service.provider = this._rc;
+    this._service = service;
+    this._rc = this._service.provider;
   }
 
   resetDbHandle(newDb) {

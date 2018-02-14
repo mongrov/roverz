@@ -70,7 +70,7 @@ class Network {
     // init meteor service
     Network._meteor.init();
     Network._service.provider.meteor = Network._meteor;
-    Network._chat.init(Network._meteor, Network._db);
+    Network._chat.init(Network._meteor, Network._db, Network._service);
     // save the db
     this.db.setServer(serverName).then(() => {
       this.service.connect(serverName, uicallback);
