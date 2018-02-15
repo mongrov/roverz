@@ -1,6 +1,7 @@
 /*
  * User Manager class
  */
+import AppUtil from '../lib/util';
 import Constants from './constants';
 
 // wrapper class for all user related db functions
@@ -64,43 +65,44 @@ export default class UserManager {
       usersData.forEach((userData) => {
         const usr = this._findOrCreate(userData._id, userData.username, userData.name);
         if (userData.status && usr.status !== userData.status) {
-          console.log('***** user status updated ****', usr.status, userData.status);
+          AppUtil.debug(null, `${Constants.MODULE}: user status [${usr.username},${usr.status},${userData.status}]`);
           usr.status = userData.status;
         }
         const activ = `${userData.active}`;
         if (userData.active && usr.active !== activ) {
-          console.log('***** user active updated ****', usr.active, activ);
+          AppUtil.debug(null, `${Constants.MODULE}: user active [${usr.username},${usr.active},${activ}]`);
           usr.active = activ;
         }
         if (userData.statusConnection && usr.statusConnection !== userData.statusConnection) {
-          console.log('***** user statusConnection updated ****', usr.statusConnection, userData.statusConnection);
-          usr.statusConnection = userData.statusConnection;
+          const usc = userData.statusConnection;
+          AppUtil.debug(null, `${Constants.MODULE}:statusConnection[${usr.username},${usr.statusConnection},${usc}]`);
+          usr.statusConnection = usc;
         }
         const utc = `${userData.utcOffset}`;
         if (userData.utcOffset && usr.utcOffset !== utc) {
-          console.log('***** user utcOffset updated ****', usr.utcOffset, utc);
+          AppUtil.debug(null, `${Constants.MODULE}:utcOffset[${usr.username},${usr.utcOffset},${utc}]`);
           usr.utcOffset = utc;
         }
         if (userData.lastLogin && usr.lastLogin !== userData.lastLogin) {
-          console.log('***** user lastLogin updated ****', usr.lastLogin, userData.lastLogin);
+          AppUtil.debug(null, `${Constants.MODULE}:lastLogin[${usr.username},${usr.lastLogin},${userData.lastLogin}]`);
           usr.lastLogin = userData.lastLogin;
         }
         if (userData.createdAt && usr.createdAt !== userData.createdAt) {
-          console.log('***** user createdAt updated ****', usr.createdAt, userData.createdAt);
+          AppUtil.debug(null, `${Constants.MODULE}:createdAt[${usr.username},${usr.createdAt},${userData.createdAt}]`);
           usr.createdAt = userData.createdAt;
         }
         const r = userData.roles && userData.roles.join(',');
         if (userData.roles && userData.roles.length > 0 && usr.roles !== r) {
-          console.log('***** user roles updated ****', usr.roles, r);
+          AppUtil.debug(null, `${Constants.MODULE}: user roles [${usr.username},${usr.roles},${r}]`);
           usr.roles = r;
         }
         const e = userData.emails && userData.emails.map(elem => elem.address).join(',');
         if (userData.emails && userData.emails.length > 0 && usr.emails !== e) {
-          console.log('***** user emails updated ****', usr.emails, e);
+          AppUtil.debug(null, `${Constants.MODULE}: user emails [${usr.username},${usr.emails},${e}]`);
           usr.emails = userData.emails.map(elem => elem.address).join(',');
         }
         if (userData.type && usr.type !== userData.type) {
-          console.log('***** user type updated ****', usr.type, userData.type);
+          AppUtil.debug(null, `${Constants.MODULE}: user type [${usr.username},${usr.type},${userData.type}]`);
           usr.type = userData.type;
         }
       });
