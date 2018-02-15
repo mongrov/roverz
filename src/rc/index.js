@@ -154,6 +154,17 @@ class RC {
     this.meteor.call('mgvc:updateTimeout', rid, null);
   }
 
+    // conference calls
+  // @todo: check if we want to replace null with cb
+  updateVideoCallStatus(rid, status) {
+    this.meteor.call('mgcall:updateStatus', rid, status);
+  }
+
+  // - conference calls
+  getVideoCallStatus(rid, cb) {
+    this.meteor.call('mgcall:getStatus', rid, cb);
+  }
+
   getPublicSettings(cb) {
     this.meteor.call('public-settings/get', (err, res) => {
       if (err) {
@@ -262,7 +273,7 @@ class RC {
     // @todo: The return value to be used for unsubscribe
     RC._mStreamNotifyUser = this.meteor.monitorChanges('stream-notify-user', (results) => {
       if (results && results.length > 0) {
-        // console.log('******=====$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ User changes:', results);
+        // // console.log('User changes:', results);
         const resEventName = results[0].eventName;
         // take some action here
         // update subscriptions-changed

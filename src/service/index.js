@@ -187,6 +187,16 @@ class ChatService {
     this.provider.startVideoConference(rid);
   }
 
+  // - conference calls
+  updateVideoCallStatus(rid, status) {
+    this.provider.updateVideoCallStatus(rid, status);
+  }
+
+  // - conference calls
+  getVideoCallStatus(rid, cb) {
+    this.provider.getVideoCallStatus(rid, cb);
+  }
+
   // -- message calls
   sendMessage(groupObj, msg, cb) {
     this.provider.sendMessage(groupObj._id, msg, cb);
