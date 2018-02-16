@@ -65,12 +65,12 @@ export default class UserManager {
       usersData.forEach((userData) => {
         const usr = this._findOrCreate(userData._id, userData.username, userData.name);
         if (userData.status && usr.status !== userData.status) {
-          AppUtil.debug(null, `${Constants.MODULE}: user status [${usr.username},${usr.status},${userData.status}]`);
+          AppUtil.debug(null, `${Constants.MODULE}:status[${usr.username},${usr.status},${userData.status}]`);
           usr.status = userData.status;
         }
         const activ = `${userData.active}`;
         if (userData.active && usr.active !== activ) {
-          AppUtil.debug(null, `${Constants.MODULE}: user active [${usr.username},${usr.active},${activ}]`);
+          AppUtil.debug(null, `${Constants.MODULE}:active[${usr.username},${usr.active},${activ}]`);
           usr.active = activ;
         }
         if (userData.statusConnection && usr.statusConnection !== userData.statusConnection) {
@@ -93,16 +93,16 @@ export default class UserManager {
         }
         const r = userData.roles && userData.roles.join(',');
         if (userData.roles && userData.roles.length > 0 && usr.roles !== r) {
-          AppUtil.debug(null, `${Constants.MODULE}: user roles [${usr.username},${usr.roles},${r}]`);
+          AppUtil.debug(null, `${Constants.MODULE}:roles[${usr.username},${usr.roles},${r}]`);
           usr.roles = r;
         }
         const e = userData.emails && userData.emails.map(elem => elem.address).join(',');
         if (userData.emails && userData.emails.length > 0 && usr.emails !== e) {
-          AppUtil.debug(null, `${Constants.MODULE}: user emails [${usr.username},${usr.emails},${e}]`);
+          AppUtil.debug(null, `${Constants.MODULE}:emails[${usr.username},${usr.emails},${e}]`);
           usr.emails = userData.emails.map(elem => elem.address).join(',');
         }
         if (userData.type && usr.type !== userData.type) {
-          AppUtil.debug(null, `${Constants.MODULE}: user type [${usr.username},${usr.type},${userData.type}]`);
+          AppUtil.debug(null, `${Constants.MODULE}:type[${usr.username},${usr.type},${userData.type}]`);
           usr.type = userData.type;
         }
       });

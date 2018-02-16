@@ -38,6 +38,7 @@ import Application from '../constants/config';
 // - why service calls should be starting with '_' ? follow a naming pattern
 
 const MODULE = 'RC';
+const FETCH_GROUP_MIN_MSGS = 5;
 
 class RC {
   constructor(serviceObj) {
@@ -106,6 +107,7 @@ class RC {
   login(serverName, userName) {
     AppUtil.debug(null, `${MODULE}: login - ${userName} at ${serverName}`);
     this._initUserSubscriptions(this.userId);
+    this._fetchChannels();
   }
 
   // --- RC calls, general signature of a call would be
@@ -275,10 +277,7 @@ class RC {
             // TODO no need to create group object and send for delete instead use ID
             _super.service._deleteGroups(groups);
           } else {
-            _super.service._updateGroups(groups);
-            for (let i = 0; i < groups.length; i += 1) {
-              _super._subscribeToGroup(groups[i]._id);
-            }
+            _super._updateGroups(groups);
           }
         }
         // check for webrtc
@@ -299,6 +298,26 @@ class RC {
         }
       }
     });
+
+    // monitor for any updates on room
+    RC._mStreamRoomMessages = this.meteor.monitorChanges('stream-room-messages', (results) => {
+      if (results && results.length > 0) {
+        // console.log("***** new message ****", results[0].eventName, results[0].args);
+        // group id is the name of the event
+        // const group = _super.db.groups.findById(results[0].eventName);
+        _super.service.yaps2db({ _id: results[0].eventName }, results[0].args);
+      }
+    });
+    // message deleed and updated should reflect here
+    RC._mStreamNotifyRoom = this.meteor.monitorChanges('stream-notify-room', (result) => {
+      if (result && result.length > 0) {
+        const resEventName = result[0].eventName;
+        if (resEventName && resEventName.endsWith('/deleteMessage')) {
+          const groupId = resEventName.substring(0, resEventName.lastIndexOf('/deleteMessage'));
+          _super.service._deleteMessage(groupId, result[0].args[0]._id);
+        }
+      }
+    });
   }
 
   // subscribe to all changes in group
@@ -312,7 +331,131 @@ class RC {
     }
   }
 
+  // subscribe for changes from all groups
+  // pass array of groups
+  _subscribeToGroups(groups) {
+    // console.log("***** subscribe to groups ****** ", groups);
+    Object.keys(groups).forEach((k) => {
+      this._subscribeToGroup(groups[k]._id);
+    });
+  }
+
+  // fetch groups from a given date/time
+  _fetchChannels() {
+    const _super = this;
+    const lastSync = this.service.lastSync;
+    // const temp = lastSync > 0 ? Math.floor(lastSync / 1000) : 0;
+    const req1 = this.meteor.call('rooms/get', { $date: lastSync });
+    const req2 = this.meteor.call('subscriptions/get', { $date: lastSync });
+    Promise.all([req1, req2]).then((results) => {
+      // results[0] -  rooms, [1] - subscriptions
+      // @todo: move this to util - shallowMerge?
+      const rooms = results[0];
+      const groups = _super._room2group(rooms);
+      const subscriptions = _super._subscription2group(results[1]);
+      Object.keys(groups).forEach((k) => {
+        if (k in subscriptions) {
+          groups[k] = Object.assign(subscriptions[k], groups[k]);
+        }
+      });
+      // console.log('********** groups to be updated *********', groups);
+      _super._updateGroups(groups);
+    }).catch(() => {
+      // cb(err, null);
+    });
+  }
+
+  // fetch 'n' messages from a given list of groups
+  _fetchMessages(groups, n) {
+    const _super = this;
+    const reqs = [];
+    const fetchingGroups = [];
+    Object.keys(groups).forEach((k) => {
+      const group = groups[k];
+      // console.log('==== fetch ====', group.name);
+      const req = this.meteor.call('loadHistory', group._id, null, n, null);
+      reqs.push(req);
+      fetchingGroups.push(group);
+    });
+    Promise.all(reqs).then((results) => {
+      // console.log('Then: ', results);
+      // results[0] is from 'loadHistory'
+      // const msgs = results[0].messages;
+      for (let i = 0; i < results.length; i += 1) {
+        _super.service.yaps2db(fetchingGroups[i], results[i].messages);
+      }
+    }).catch((/* err */) => {
+      // console.log('Catch: ', err);
+    });
+  }
+
+  // fetch messages from a given time for list of groups
+  _fetchMissedMessages(groups, lastSyncTs) {
+    const _super = this;
+    const reqs = [];
+    const fetchingGroups = [];
+    Object.keys(groups).forEach((k) => {
+      const group = groups[k];
+      // console.log('==== group ====', group.name, lastSyncTs, group.updatedAt.getTime());
+      if (lastSyncTs < group.updatedAt.getTime()) {
+        const gID = group._id;
+        // console.log('==== group ====', group.name, lastSyncTs, gID);
+        // rid, lastMessage.ts
+        const req = this.meteor.call('loadMissedMessages', gID, new Date(lastSyncTs));
+        reqs.push(req);
+        fetchingGroups.push(group);
+      }
+    });
+    // console.log('===== fetchMissedMessages ====', reqs);
+    if (reqs.length > 0) {
+      Promise.all(reqs).then((results) => {
+        // console.log('Then: ', results);
+        // const msgs = results ? results[0] : null;
+        for (let i = 0; i < results.length; i += 1) {
+          // console.log('**** loaded missing messages *****', results[i], fetchingGroups[i]);
+          _super.service.yaps2db(fetchingGroups[i], results[i]);
+        }
+      }).catch((err) => {
+        console.log('Catch: ', err);
+      });
+    }
+  }
+
   // ---- utilities ----
+
+  _updateGroups(groups) {
+    const lastSync = this.service.lastSync;
+    const newSyncDate = new Date();
+    this.service._updateGroups(groups);
+    if (lastSync === 0) {
+      this._fetchMessages(groups, FETCH_GROUP_MIN_MSGS);
+    } else {
+      this._fetchMissedMessages(groups, lastSync);
+    }
+    this._subscribeToGroups(groups);
+    this.service.lastSync = newSyncDate;
+  }
+
+  _room2group(inRooms) {
+    const groups = {};
+    if (inRooms && inRooms.length > 0) {
+      for (let i = 0; i < inRooms.length; i += 1) {
+        const obj = inRooms[i];
+        if (obj.t !== 'l') { // ignore live chat
+          let r = { _id: obj._id,
+            name: obj.name,
+            type: obj.t,
+            title: obj.topic || obj.fname,
+            updatedAt: obj._updatedAt,
+            readonly: obj.ro || false };
+          r = AppUtil.removeEmptyValues(r);
+          groups[r._id] = r;
+          // console.log(' room ===> ', r.name, r.updatedAt);
+        }
+      }
+    }
+    return groups;
+  }
 
   // convert subscriptions to group structure
   _subscription2group(inSubscriptions) {
@@ -325,6 +468,7 @@ class RC {
           r = AppUtil.removeEmptyValues(r);
           if (r._id) {
             groups[r._id] = r;
+            // console.log(' subscription  ===> ', r.name, r.updatedAt);
           }
         }
       }

@@ -24,6 +24,7 @@ const GroupSchema = {
     // -- data
     messages: { type: 'list', objectType: Constants.Message },
     moreMessages: { type: 'bool', default: true },
+    readonly: { type: 'bool', default: false },
   },
 };
 
