@@ -5,8 +5,15 @@
  */
 // import { ModuleConfig } from '../constants/';
 import queueFactory from 'react-native-queue';
+import moment from 'moment';
+import { Actions } from 'react-native-router-flux';
+import md5 from 'react-native-md5';
+
 import Application from '../constants/config';
 import AppUtil from '../lib/util';
+import DBConstants from '../models/constants';
+
+const PushNotification = require('react-native-push-notification');
 
 const MODULE = 'ChatService';
 const DEFAULT_USER = 'default';
@@ -71,6 +78,13 @@ class ChatService {
     }
     return null;
   }
+  get lastSync() {
+    const dbAppState = this.db.app.state;
+    return (dbAppState && dbAppState.lastSync) ? dbAppState.lastSync.getTime() : 0;
+  }
+  set lastSync(lastSyncTime) {
+    this.db.app.setLastSync(lastSyncTime);
+  }
 
   // @todo - to remove the callback later
   // for timebeing using the same logic to
@@ -86,14 +100,19 @@ class ChatService {
   }
 
   login(serverName, userName) {
+    this._resetHandlers();
     this.db.setUserId(this.provider.userId);
     Application.setUserId(this.provider.userId);
-    this.provider.login(serverName, userName);
     this.db.app.allMessages.addListener(this._messagesListener);
+
+    // figure out last sync date/time from db
+    this.provider.login(serverName, userName);
   }
 
   // logout
-  // removeListener - messagesListener
+  logout() {
+    this._resetHandlers();
+  }
 
   // ---- init section over, service methods follow ----
 
@@ -217,6 +236,12 @@ class ChatService {
 
   // -- internal service call backs
 
+  // login/logout related handlers
+  _resetHandlers() {
+    this.db.app.allMessages.removeListener(this._messagesListener);
+  }
+
+  // connection related handlers
   _reset() {
     this.settings = null;
     this.loginSettings = [];
@@ -231,8 +256,12 @@ class ChatService {
     this.db.groups.deleteGroups(groups);
   }
   _updateGroups(groups) {
-    console.log('**** update groups **** ====> ', groups);
+    // console.log('**** update groups **** ====> ', groups);
     this.db.groups.addAll(groups);
+  }
+  _deleteMessage(groupId, messageId) {
+    // console.log('**** delete message **** ====> ', groupId, messageId);
+    this.db.deleteMessage(groupId, messageId);
   }
   _updateLoginConfig(loginDetails) {
     // console.log('**** update login config **** ====> ', loginDetails);
@@ -274,6 +303,104 @@ class ChatService {
         console.log('***** This message needs to be deleted at backend ****', deletedMsg);
       }
     });
+  }
+
+  // -- following three methods need to be cleanedup --
+
+  // convert yap message to internal message
+  yap2message(id, rid, text, createdAt, userId, userUserName, userName) {
+    return { _id: id, rid, text, createdAt, user: { _id: userId, username: userUserName, name: userName } };
+  }
+
+  // yap messages from server
+  // @todo:
+  // if (msgs.length < n) {
+  //   _super.db.groups.updateNoMoreMessages(group);
+  // }
+  yaps2db(group, msgs) {
+    const groupObj = this.db.groups.findById(group._id);
+    if (!msgs || !groupObj || msgs.length === 0) return;
+    const yaps = {};
+    const editedYaps = {};
+    const currUser = this.loggedInUserObj;
+    for (let i = 0; i < msgs.length; i += 1) {
+      const inM = msgs[i];
+      let msgText = inM.msg;
+      if (inM.actionLinks && inM.actionLinks[0].method_id === 'joinMGVCCall') {
+        msgText = 'Started a Video Call!';
+        if (!(inM.u._id === currUser._id) && (groupObj.findMessageById(inM._id) === null)) {
+          if (groupObj && groupObj.type === 'direct') {
+            msgText = 'Started a Call!';
+            this.incomingVC(currUser, inM.ts, inM.rid, groupObj);
+          } else {
+            const msgTs = moment(inM.ts);
+            const currentTsDiff = moment().diff(msgTs, 'minutes');
+            if (currentTsDiff < 1) {
+              PushNotification.localNotificationSchedule({
+                message: `Video Call started in ${groupObj.name}`, // (required)
+                playSound: true,
+                soundName: 'vcring.mp3',
+                date: new Date(Date.now()), // in 60 secs
+              });
+            }
+          }
+        }
+      }
+      const m = this.yap2message(inM._id, inM.rid, msgText, inM.ts, inM.u._id, inM.u.username, inM.u.name);
+      m.original = inM;
+      if (inM.attachments && inM.attachments.length > 0) {
+        const atM = inM.attachments[0];
+        if (m.text === '') {
+          if (atM.description) {
+            m.text = atM.description;
+          } else {
+            m.text = atM.text ? atM.text : atM.title;
+          }
+        }
+        if (atM.image_url) {
+          m.image = atM.image_url.startsWith('http') ||
+          atM.image_url.startsWith('//') ? atM.image_url : `${Application.urls.SERVER_URL}${atM.image_url}`;
+          if (inM.file) {
+            m.remoteFile = inM.file._id;
+          }
+        }
+      }
+      m.likes = 0;
+      m.type = DBConstants.M_DELIVERED;
+      if (inM.reactions) {
+        Object.keys(inM.reactions).forEach((key) => {
+          if (key.indexOf('thumbsup') >= 0) {
+            const tempUsers = inM.reactions[key];
+            m.likes = tempUsers.usernames.length;
+          }
+        });
+      }
+      if (inM.editedAt || inM.reactions) {
+        editedYaps[m._id] = m;
+      } else {
+        yaps[m._id] = m;
+      }
+    }
+    this.db.addMessages(groupObj, yaps);
+    this.db.updateMessages(groupObj, editedYaps);
+  }
+
+  incomingVC(currUser, ts, gid, group) {
+    if (group && group.type === 'direct') {
+      const msgTs = moment(ts);
+      const currentTsDiff = moment().diff(msgTs, 'minutes');
+      if (currentTsDiff < 1) {
+        const vcuserID = currUser ? md5.hex_md5(currUser._id) : '0';
+        Actions.directConference({
+          instance: Application.instance,
+          groupName: group.name,
+          groupID: gid,
+          groupType: group.type,
+          userID: vcuserID,
+          callType: 'INCOMING',
+        });
+      }
+    }
   }
 
   _test() {

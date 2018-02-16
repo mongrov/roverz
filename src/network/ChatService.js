@@ -210,7 +210,7 @@ class ChatService {
       // // console.log('Merged:', groups);
       _super.db.groups.addAll(groups);
       Object.keys(rooms).forEach((k) => {
-        // console.log('Ezhil- rooms[k]._updatedAt ', rooms[k]._updatedAt);
+        // console.log('Ezhil- rooms[k] ', rooms[k]);
         // lastMessageAt
         if (rooms[k]._id) {
           if (lastSync === 0) {
@@ -243,6 +243,7 @@ class ChatService {
     const req1 = this.meteor.call('loadMissedMessages', gID, lastSyncTs);
     Promise.all([req1]).then((results) => {
       const msgs = results ? results[0] : null;
+      // console.log('**** loaded missing messages *****', gID, msgs);
       _super.yaps2db(group, msgs);
     }).catch((err) => {
       console.log('Catch: ', err);
