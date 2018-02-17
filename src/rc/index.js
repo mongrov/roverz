@@ -288,7 +288,7 @@ class RC {
             // TODO no need to create group object and send for delete instead use ID
             _super.service._deleteGroups(groups);
           } else {
-            _super._updateGroups(groups);
+            _super._updateGroups(groups, false);
           }
         }
         // check for webrtc
@@ -370,7 +370,7 @@ class RC {
         }
       });
       // console.log('********** groups to be updated *********', groups);
-      _super._updateGroups(groups);
+      _super._updateGroups(groups, true);
     }).catch(() => {
       // cb(err, null);
     });
@@ -410,9 +410,11 @@ class RC {
       // console.log('==== group ====', group.name, lastSyncTs, group.updatedAt.getTime());
       if (lastSyncTs < group.updatedAt.getTime()) {
         const gID = group._id;
-        // console.log('==== group ====', group.name, lastSyncTs, gID);
+        // sync from last date when the group had message
+        const lastMessageAt = _super.service._lastMessageAt(gID);
+        console.log('==== group ====', group.name, new Date(lastSyncTs), gID, lastMessageAt);
         // rid, lastMessage.ts
-        const req = this.meteor.call('loadMissedMessages', gID, new Date(lastSyncTs));
+        const req = this.meteor.call('loadMissedMessages', gID, lastMessageAt);
         reqs.push(req);
         fetchingGroups.push(group);
       }
@@ -434,17 +436,21 @@ class RC {
 
   // ---- utilities ----
 
-  _updateGroups(groups) {
+  _updateGroups(groups, fetchMessages) {
+    if (!groups || Object.keys(groups).length <= 0) return;
     const lastSync = this.service.lastSync;
     const newSyncDate = new Date();
     this.service._updateGroups(groups);
-    if (lastSync === 0) {
-      this._fetchMessages(groups, FETCH_GROUP_MIN_MSGS);
-    } else {
-      this._fetchMissedMessages(groups, lastSync);
+    if (fetchMessages) {
+      if (lastSync === 0) {
+        this._fetchMessages(groups, FETCH_GROUP_MIN_MSGS);
+      } else {
+        this._fetchMissedMessages(groups, lastSync);
+      }
+      // console.log('======== setting new last sync date========', groups);
+      this.service.lastSync = newSyncDate;
     }
     this._subscribeToGroups(groups);
-    this.service.lastSync = newSyncDate;
   }
 
   _room2group(inRooms) {
@@ -470,7 +476,7 @@ class RC {
 
   // convert subscriptions to group structure
   _subscription2group(inSubscriptions) {
-    const groups = [];
+    const groups = {};
     if (inSubscriptions && inSubscriptions.length > 0) {
       for (let i = 0; i < inSubscriptions.length; i += 1) {
         const obj = inSubscriptions[i];

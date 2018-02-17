@@ -296,7 +296,7 @@ class Database {
   }
 
   deleteMessage(groupId, msgId) {
-    AppUtil.debug(null, `${Constants.MODULE}: deleteMessage [Group:${groupId},message${msgId} ]`);
+    // AppUtil.debug(null, `${Constants.MODULE}: deleteMessage [Group:${groupId},message:${msgId}]`);
     this.groups.deleteMessage(groupId, msgId);
   }
 

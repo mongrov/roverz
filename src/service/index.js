@@ -290,6 +290,11 @@ class ChatService {
     // this._test();
   }
 
+  _lastMessageAt(groupId) {
+    const groupObj = this.db.groups.findById(groupId);
+    return (groupObj && groupObj.lastMessageAt) || 0;
+  }
+
   _messagesListener(messages, changes) {
     changes.insertions.forEach((index) => {
       const insertedMsg = messages[index];

@@ -108,7 +108,7 @@ export default class GroupManager {
   }
 
   addMessage(groupObj, msg) {
-    AppUtil.debug(null, `${Constants.MODULE}: addMessage [Group:${groupObj._id},message:${msg} ]`);
+    AppUtil.debug(null, `${Constants.MODULE}: addMessage [Group:${groupObj._id},message:${msg}]`);
     this._realm.write(() => {
       const obj = this._realm.create(Constants.Message, { text: msg });
       groupObj.messages.push(obj);
@@ -116,7 +116,7 @@ export default class GroupManager {
   }
 
   deleteMessage(groupId, msgId) {
-    AppUtil.debug(null, `${Constants.MODULE}: deleteMessage [Group:${groupId},message:${msgId} ]`);
+    AppUtil.debug(null, `${Constants.MODULE}: deleteMessage [Group:${groupId},message:${msgId}]`);
     const group = this.findById(groupId);
     if (group) {
       const messageToBeDeleted = group.findMessageById(msgId);
