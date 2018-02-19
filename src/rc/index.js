@@ -45,8 +45,10 @@ class RC {
     if (!RC._service) {
       RC._service = serviceObj;
       RC._meteor = null;
-      RC._groupSubsriptionMap = {};
+      RC._groupSubscriptionMap = {};
       RC._serverName = null;
+      RC._pendingMessages = [];
+      RC._initialFetchPending = false;
       RC._state = {
         _server: false, // meteor server side connection status
         _login: false, // logged in state
@@ -101,11 +103,13 @@ class RC {
   connect(serverName) {
     AppUtil.debug(null, `${MODULE}: connect - ${serverName}`);
     RC._serverName = serverName;
+    this._cleanupNetwork();
     this._initNetworkSubscriptions();
   }
 
   login(serverName, userName) {
     AppUtil.debug(null, `${MODULE}: login - ${userName} at ${serverName}`);
+    this._cleanupLogin();
     this._initUserSubscriptions(this.userId);
     this._fetchChannels();
     // @todo - @ezhil - why are we calling this ?
@@ -113,7 +117,7 @@ class RC {
   }
 
   logout() {
-    this._cleanup();
+    this._cleanupLogin();
     this.meteor.logout();
   }
 
@@ -227,13 +231,16 @@ class RC {
 
   // ---- local methods ---- (not to be called outside)
 
-  _cleanup() {
-    RC._groupSubsriptionMap = {};
+  _cleanupNetwork() {
+    this.meteor.stopMonitoringChanges(RC._mLoginCfg);
+    RC._mLoginCfg = null;
+  }
+
+  _cleanupLogin() {
+    RC._groupSubscriptionMap = {};
     // unsubscribe and clean the handles
     // RC._mUsers
     // RC._mStreamNotifyUser
-    this.meteor.stopMonitoringChanges(RC._mLoginCfg);
-    RC._mLoginCfg = null;
     this.meteor.stopMonitoringChanges(RC._mUsers);
     RC._mUsers = null;
     this.meteor.stopMonitoringChanges(RC._mStreamNotifyUser);
@@ -242,6 +249,7 @@ class RC {
     RC._mStreamRoomMessages = null;
     this.meteor.stopMonitoringChanges(RC._mStreamNotifyRoom);
     RC._mStreamNotifyRoom = null;
+    RC._pendingMessages = [];
   }
 
   // call this method once connection is made to a meteor server
@@ -332,7 +340,12 @@ class RC {
         // console.log("***** new message ****", results[0].eventName, results[0].args);
         // group id is the name of the event
         // const group = _super.db.groups.findById(results[0].eventName);
-        _super.service.yaps2db({ _id: results[0].eventName }, results[0].args);
+        if (RC._initialFetchPending) {
+          console.log('******** adding now to array ****** ', results[0].args);
+          RC._pendingMessages.push({ _id: results[0].eventName, msgs: results[0].args });
+        } else {
+          _super.service.yaps2db({ _id: results[0].eventName }, results[0].args);
+        }
       }
     });
     // message deleed and updated should reflect here
@@ -351,10 +364,10 @@ class RC {
   // @todo: where do we monitor the tables?
   //  - need to cleanup the subscriptions based on map
   _subscribeToGroup(groupId) {
-    if (!Object.prototype.hasOwnProperty.call(RC._groupSubsriptionMap, groupId)) {
+    if (!Object.prototype.hasOwnProperty.call(RC._groupSubscriptionMap, groupId)) {
       this.meteor.subscribe('stream-room-messages', groupId, false);
       this.meteor.subscribe('stream-notify-room', `${groupId}/deleteMessage`, false);
-      RC._groupSubsriptionMap[groupId] = 'ADDED'; // use set or array instead of map
+      RC._groupSubscriptionMap[groupId] = 'ADDED'; // use set or array instead of map
     }
   }
 
@@ -374,6 +387,7 @@ class RC {
     // const temp = lastSync > 0 ? Math.floor(lastSync / 1000) : 0;
     const req1 = this.meteor.call('rooms/get', { $date: lastSync });
     const req2 = this.meteor.call('subscriptions/get', { $date: lastSync });
+    RC._initialFetchPending = true;
     Promise.all([req1, req2]).then((results) => {
       // results[0] -  rooms, [1] - subscriptions
       // @todo: move this to util - shallowMerge?
@@ -386,9 +400,19 @@ class RC {
         }
       });
       // console.log('********** groups to be updated *********', groups);
+      while (RC._pendingMessages.length > 0) {
+        const msgObj = RC._pendingMessages.shift();
+        console.log('******** pushing now the pre-fetched change ****** ', msgObj);
+        _super.service.yaps2db({ _id: msgObj._id }, msgObj.msgs);
+      }
+      RC._initialFetchPending = false;
       _super._updateGroups(groups, true);
+
+      // lets see if anything in message list that needs to be sync
     }).catch(() => {
       // cb(err, null);
+      // todo - this path is bound to choke, need to see how to recover
+      RC._initialFetchPending = false;
     });
   }
 
@@ -411,6 +435,7 @@ class RC {
       for (let i = 0; i < results.length; i += 1) {
         _super.service.yaps2db(fetchingGroups[i], results[i].messages);
       }
+      _super._subscribeToGroups(groups);
     }).catch((/* err */) => {
       // console.log('Catch: ', err);
     });
@@ -444,6 +469,7 @@ class RC {
           // console.log('**** loaded missing messages *****', results[i], fetchingGroups[i]);
           _super.service.yaps2db(fetchingGroups[i], results[i]);
         }
+        _super._subscribeToGroups(groups);
       }).catch((err) => {
         console.log('Catch: ', err);
       });
@@ -465,8 +491,12 @@ class RC {
       }
       // console.log('======== setting new last sync date========', groups);
       this.service.lastSync = newSyncDate;
+    } else {
+      // subscription in case of fetching path, should happen
+      // after fetch is done, so this call would happen within
+      // fetch methods
+      this._subscribeToGroups(groups);
     }
-    this._subscribeToGroups(groups);
   }
 
   _room2group(inRooms) {

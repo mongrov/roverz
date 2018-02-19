@@ -21,7 +21,6 @@ import {
 
 import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
-import RNRestart from 'react-native-restart';
 import { AppSizes, AppColors } from '../../../theme/';
 import Network from '../../../network';
 import Text from '../../../components/ui/Text';
@@ -131,13 +130,7 @@ class Menu extends Component {
                 { text: t('txt_no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                 { text: t('txt_yes'),
                   onPress: () => {
-                    this.net.meteor.logout();
-                    this.net.db.setUserId(null);
-                    Application.setUserId(null);
-                    this.net.chat.logout();
-                    setTimeout(() => {
-                      RNRestart.Restart();
-                    }, 300);
+                    this.net.logout();
                   },
                 },
               ],

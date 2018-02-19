@@ -242,7 +242,9 @@ class ChatService {
 
   // login/logout related handlers
   _resetHandlers() {
-    this.db.app.allMessages.removeListener(this._messagesListener);
+    if (this.db && this.db.app) {
+      this.db.app.allMessages.removeListener(this._messagesListener);
+    }
   }
 
   // connection related handlers

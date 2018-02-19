@@ -63,7 +63,7 @@ class Network {
   setServer(serverName, uicallback) {
     // close existing meteor connection
     if (Network._chat) {
-      Network._chat.logout();
+      this.service.logout();
     }
     Network._chat = new ChatService();
     // init meteor service
