@@ -87,7 +87,9 @@ class RC {
     AppUtil.debug(null, `${MODULE}: _meteorConnectionChange - ${isConnected}`);
     if (RC._state._server !== isConnected) {
       RC._state._server = isConnected;
-      if (!isConnected) RC._state._login = false;
+      if (!isConnected) {
+        RC._state._login = false;
+      }
       this.service._connectionChange(this.serverName, isConnected);
     }
   }
@@ -250,6 +252,7 @@ class RC {
     this.meteor.stopMonitoringChanges(RC._mStreamNotifyRoom);
     RC._mStreamNotifyRoom = null;
     RC._pendingMessages = [];
+    RC._initialFetchPending = true;
   }
 
   // call this method once connection is made to a meteor server
@@ -387,7 +390,6 @@ class RC {
     // const temp = lastSync > 0 ? Math.floor(lastSync / 1000) : 0;
     const req1 = this.meteor.call('rooms/get', { $date: lastSync });
     const req2 = this.meteor.call('subscriptions/get', { $date: lastSync });
-    RC._initialFetchPending = true;
     Promise.all([req1, req2]).then((results) => {
       // results[0] -  rooms, [1] - subscriptions
       // @todo: move this to util - shallowMerge?
@@ -400,12 +402,6 @@ class RC {
         }
       });
       // console.log('********** groups to be updated *********', groups);
-      while (RC._pendingMessages.length > 0) {
-        const msgObj = RC._pendingMessages.shift();
-        console.log('******** pushing now the pre-fetched change ****** ', msgObj);
-        _super.service.yaps2db({ _id: msgObj._id }, msgObj.msgs);
-      }
-      RC._initialFetchPending = false;
       _super._updateGroups(groups, true);
 
       // lets see if anything in message list that needs to be sync
@@ -414,6 +410,15 @@ class RC {
       // todo - this path is bound to choke, need to see how to recover
       RC._initialFetchPending = false;
     });
+  }
+
+  _flushMessages() {
+    while (RC._pendingMessages.length > 0) {
+      const msgObj = RC._pendingMessages.shift();
+      console.log('******** pushing now the pre-fetched change ****** ', msgObj);
+      this.service.yaps2db({ _id: msgObj._id }, msgObj.msgs);
+    }
+    RC._initialFetchPending = false;
   }
 
   // fetch 'n' messages from a given list of groups
@@ -435,6 +440,7 @@ class RC {
       for (let i = 0; i < results.length; i += 1) {
         _super.service.yaps2db(fetchingGroups[i], results[i].messages);
       }
+      _super._flushMessages();
       _super._subscribeToGroups(groups);
     }).catch((/* err */) => {
       // console.log('Catch: ', err);
@@ -469,6 +475,7 @@ class RC {
           // console.log('**** loaded missing messages *****', results[i], fetchingGroups[i]);
           _super.service.yaps2db(fetchingGroups[i], results[i]);
         }
+        _super._flushMessages();
         _super._subscribeToGroups(groups);
       }).catch((err) => {
         console.log('Catch: ', err);
