@@ -110,6 +110,11 @@ class RC {
     this._fetchChannels();
   }
 
+  logout() {
+    this._cleanup();
+    this.meteor.logout();
+  }
+
   // --- RC calls, general signature of a call would be
   //  any callback would carry (error, result) / (err,res) as two arguments
 
@@ -220,12 +225,21 @@ class RC {
 
   // ---- local methods ---- (not to be called outside)
 
-  // @todo: need to decide when to call
   _cleanup() {
+    RC._groupSubsriptionMap = {};
     // unsubscribe and clean the handles
     // RC._mUsers
     // RC._mStreamNotifyUser
-    RC._groupSubsriptionMap = {};
+    this.meteor.stopMonitoringChanges(RC._mLoginCfg);
+    RC._mLoginCfg = null;
+    this.meteor.stopMonitoringChanges(RC._mUsers);
+    RC._mUsers = null;
+    this.meteor.stopMonitoringChanges(RC._mStreamNotifyUser);
+    RC._mStreamNotifyUser = null;
+    this.meteor.stopMonitoringChanges(RC._mStreamRoomMessages);
+    RC._mStreamRoomMessages = null;
+    this.meteor.stopMonitoringChanges(RC._mStreamNotifyRoom);
+    RC._mStreamNotifyRoom = null;
   }
 
   // call this method once connection is made to a meteor server

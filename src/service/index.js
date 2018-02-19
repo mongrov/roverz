@@ -112,6 +112,10 @@ class ChatService {
   // logout
   logout() {
     this._resetHandlers();
+    this.db.setDBPath(null);
+    this.db.setUserId(null);
+    Application.setUserId(null);
+    this.provider.logout();
   }
 
   // ---- init section over, service methods follow ----

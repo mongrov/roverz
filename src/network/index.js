@@ -2,7 +2,6 @@ import RNRestart from 'react-native-restart';
 import { NetInfo, AppState } from 'react-native';
 
 import Database from '../models';
-import Application from '../constants/config';
 import Service from '../service';
 import RocketChat from '../rc';
 
@@ -128,9 +127,7 @@ class Network {
   }
 
   logout() {
-    this.db.setUserId(null);
-    Application.setUserId(null);
-    this.chat.logout();
+    this.service.logout();
     setTimeout(() => {
       RNRestart.Restart();
     }, 300);
