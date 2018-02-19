@@ -15,10 +15,6 @@ class ChatService {
   init(meteor, db, service) {
     this.meteor = meteor;
     this.db = db;
-    this._monStreamNotifyUser = null;
-    this._monUsers = null;
-    this._monStreamRoomMessages = null;
-    this._monStreamNotifyRoom = null;
     this._cache = db.remotefiles ? db.remotefiles.cacheList : {};
     Application.setUserId(db.userId);
 
@@ -170,87 +166,6 @@ class ChatService {
     });
   }
 
-  logout() {
-    this.db.setDBPath(null);
-    this.meteor.stopMonitoringChanges(this._monStreamNotifyUser);
-    this.meteor.stopMonitoringChanges(this._monUsers);
-    this.meteor.stopMonitoringChanges(this._monStreamRoomMessages);
-    this.meteor.stopMonitoringChanges(this._monStreamNotifyRoom);
-    this.meteor.logout();
-  }
-
-  fetchChannels(lastSyncTime) {
-    const _super = this;
-    // console.log(yap);
-    var lastSync = lastSyncTime || 0;
-    if (lastSyncTime) {
-      lastSync = lastSyncTime.getTime();
-    } else {
-      const dbAppState = this.db.app.state;
-      lastSync = (dbAppState && dbAppState.lastSync) ? dbAppState.lastSync.getTime() : 0;
-    }
-    // @todo - lets come back to this variable later
-    // lastSync = 0;
-    const noOfMsgs = 10;
-    // const temp = lastSync > 0 ? Math.floor(lastSync / 1000) : 0;
-    const req1 = this.meteor.call('rooms/get', { $date: lastSync });
-    const req2 = this.meteor.call('subscriptions/get', { $date: lastSync });
-    this.db.app.setLastSync(); // set the lastSync to now - before the call
-    Promise.all([req1, req2]).then((results) => {
-      // results[0] -  rooms, [1] - subscriptions
-      // @todo: move this to util - shallowMerge?
-      const rooms = results[0];
-      const groups = _super._room2group(results[0]);
-      const subscriptions = _super.rc._subscription2group(results[1]);
-      Object.keys(groups).forEach((k) => {
-        if (k in subscriptions) {
-          groups[k] = Object.assign(groups[k], subscriptions[k]);
-        }
-      });
-      // // console.log('Merged:', groups);
-      _super.db.groups.addAll(groups);
-      Object.keys(rooms).forEach((k) => {
-        // console.log('Ezhil- rooms[k] ', rooms[k]);
-        // lastMessageAt
-        if (rooms[k]._id) {
-          if (lastSync === 0) {
-            const tempGroup = _super.db.groups.findById(rooms[k]._id);
-            // console.log(subsResult[k].rid, tempGroup);
-            if (tempGroup) {
-              _super.fetchMessages(tempGroup, noOfMsgs);
-            }
-          } else if (new Date(lastSync).getTime() < rooms[k]._updatedAt.getTime()) {
-            const tempGroup = _super.db.groups.findById(rooms[k]._id);
-            // console.log(subsResult[k]._updatedAt.$date, subsResult[k].rid, tempGroup);
-            if (tempGroup) { // if no msgs try to fetch last msg
-              _super.fetchMissedMessages(tempGroup, new Date(lastSync));
-            }
-          }
-        }
-      });
-      //      this.fetchAllMessagesFromAllGroups();
-    }).catch((/* err */) => {
-      // console.log('Catch: ', err);
-    });
-    // @ezhil - why are we calling this ?
-    this.rc.getUserPresence('online');
-  }
-
-  fetchMissedMessages(group, lastSyncTs) {
-    const _super = this;
-    const gID = group._id;
-    // rid, lastMessage.ts
-    const req1 = this.meteor.call('loadMissedMessages', gID, lastSyncTs);
-    Promise.all([req1]).then((results) => {
-      const msgs = results ? results[0] : null;
-      // console.log('**** loaded missing messages *****', gID, msgs);
-      _super.yaps2db(group, msgs);
-    }).catch((err) => {
-      console.log('Catch: ', err);
-    });
-    this.rc._subscribeToGroup(gID);
-  }
-
   // fetch old 'n' messages from a given groupId
   fetchOldMessages(group, n) {
     const _super = this;
@@ -271,67 +186,7 @@ class ChatService {
     }
   }
 
-  // fetch 'n' messages from a given groupId
-  fetchMessages(group, n) {
-    const _super = this;
-    const req1 = this.meteor.call('loadHistory', group._id, null, n, null);
-    Promise.all([req1]).then((results) => {
-      // // console.log('Then: ', results);
-      // results[0] is from 'loadHistory'
-      const msgs = results[0].messages;
-      _super.yaps2db(group, msgs);
-      if (msgs.length < n) {
-        _super.db.groups.updateNoMoreMessages(group);
-      }
-    }).catch((/* err */) => {
-      // console.log('Catch: ', err);
-    });
-    this.rc._subscribeToGroup(group._id);
-  }
-
   // ----- [private] methods -------
-
-  _room2group(inRooms) {
-    const groups = {};
-    if (inRooms && inRooms.length > 0) {
-      for (let i = 0; i < inRooms.length; i += 1) {
-        const obj = inRooms[i];
-        if (obj.t !== 'l') { // ignore live chat
-          let r = { _id: obj._id, name: obj.name, type: obj.t, title: obj.topic };
-          r = AppUtil.removeEmptyValues(r);
-          groups[r._id] = r;
-        }
-      }
-    }
-    return groups;
-  }
-
-  // subscribe for changes from all groups
-  subscribeToAllGroups() {
-    var groups = this.db.groups.list;
-    var _super = this;
-    for (let i = 0; i < groups.length; i += 1) {
-      this.rc._subscribeToGroup(groups[i]._id);
-    }
-    this._monStreamRoomMessages = this.meteor.monitorChanges('stream-room-messages', (results) => {
-      if (results && results.length > 0) {
-        // group id is the name of the event
-        const group = _super.db.groups.findById(results[0].eventName);
-        _super.yaps2db(group, results[0].args);
-      }
-    });
-    this._monStreamNotifyRoom = this.meteor.monitorChanges('stream-notify-room', (result) => {
-          // message deleed and updated should reflect here
-      if (result && result[0] !== undefined) {
-        if (result[0].eventName && result[0].eventName.endsWith('/deleteMessage')) {
-          const groupId = result[0].eventName.substring(0, result[0].eventName.lastIndexOf('/deleteMessage'));
-          this.db.deleteMessage(groupId, result[0].args[0]._id);
-        }
-      }
-    });
-
-    return this._monStreamRoomMessages;
-  }
 
   // fix s3Url
   // pass array of fileIds []

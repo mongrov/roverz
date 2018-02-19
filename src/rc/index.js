@@ -108,6 +108,8 @@ class RC {
     AppUtil.debug(null, `${MODULE}: login - ${userName} at ${serverName}`);
     this._initUserSubscriptions(this.userId);
     this._fetchChannels();
+    // @todo - @ezhil - why are we calling this ?
+    this.getUserPresence('online');
   }
 
   logout() {
