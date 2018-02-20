@@ -282,10 +282,10 @@ class ChatNavBar extends React.Component {
           onPress={() => {
             Keyboard.dismiss();
             const vcuserID = user ? md5.hex_md5(user._id) : '0';
-            _super._net.service.startVideoConference(gid);
             // const tempMsg = '@all Started Video conference';
             // _super._net.chat.sendMessage(gid, tempMsg);
             if (gtype === Constants.G_DIRECT) {
+              _super._net.service.updateVideoCallStatus(gid, 'mgcall_init');
               Actions.directConference({
                 instance: Application.instance,
                 groupName: gname,
@@ -295,6 +295,7 @@ class ChatNavBar extends React.Component {
                 callType: 'OUTGOING',
               });
             } else {
+              _super._net.service.startVideoConference(gid);
               Actions.videoConference({
                 instance: Application.instance,
                 groupName: gname,

@@ -331,9 +331,10 @@ class ChatService {
     const currUser = this.service.loggedInUserObj;
     for (let i = 0; i < msgs.length; i += 1) {
       const inM = msgs[i];
+      console.log('Ezhil chatservice message ', inM);
       let msgText = inM.msg;
-      if (inM.actionLinks && inM.actionLinks[0].method_id === 'joinMGVCCall') {
-        msgText = 'Started a Video Call!';
+      if (inM.t && inM.t === 'mgcall_init') {
+        msgText = 'Started a Call!';
         if (!(inM.u._id === currUser._id) && (group.findMessageById(inM._id) === null)) {
           if (group && group.type === 'direct') {
             msgText = 'Started a Call!';

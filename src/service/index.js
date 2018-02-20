@@ -337,23 +337,24 @@ class ChatService {
     for (let i = 0; i < msgs.length; i += 1) {
       const inM = msgs[i];
       let msgText = inM.msg;
+      if (inM.t && inM.t === 'mgcall_init') {
+        msgText = 'Started a Call!';
+        if (!(inM.u._id === currUser._id) && (groupObj.findMessageById(inM._id) === null)) {
+          this.incomingVC(currUser, inM.ts, inM.rid, groupObj);
+        }
+      }
       if (inM.actionLinks && inM.actionLinks[0].method_id === 'joinMGVCCall') {
         msgText = 'Started a Video Call!';
         if (!(inM.u._id === currUser._id) && (groupObj.findMessageById(inM._id) === null)) {
-          if (groupObj && groupObj.type === 'direct') {
-            msgText = 'Started a Call!';
-            this.incomingVC(currUser, inM.ts, inM.rid, groupObj);
-          } else {
-            const msgTs = moment(inM.ts);
-            const currentTsDiff = moment().diff(msgTs, 'minutes');
-            if (currentTsDiff < 1) {
-              PushNotification.localNotificationSchedule({
-                message: `Video Call started in ${groupObj.name}`, // (required)
-                playSound: true,
-                soundName: 'vcring.mp3',
-                date: new Date(Date.now()), // in 60 secs
-              });
-            }
+          const msgTs = moment(inM.ts);
+          const currentTsDiff = moment().diff(msgTs, 'minutes');
+          if (currentTsDiff < 1) {
+            PushNotification.localNotificationSchedule({
+              message: `Video Call started in ${groupObj.name}`, // (required)
+              playSound: true,
+              soundName: 'vcring.mp3',
+              date: new Date(Date.now()), // in 60 secs
+            });
           }
         }
       }
@@ -399,8 +400,8 @@ class ChatService {
   incomingVC(currUser, ts, gid, group) {
     if (group && group.type === 'direct') {
       const msgTs = moment(ts);
-      const currentTsDiff = moment().diff(msgTs, 'minutes');
-      if (currentTsDiff < 1) {
+      const currentTsDiff = moment().diff(msgTs, 'seconds');
+      if (currentTsDiff < 20) {
         const vcuserID = currUser ? md5.hex_md5(currUser._id) : '0';
         Actions.directConference({
           instance: Application.instance,

@@ -1,11 +1,12 @@
 import Meteor from 'react-native-meteor';
-import { Actions } from 'react-native-router-flux';
+// import { Actions } from 'react-native-router-flux';
 
 import AppUtil from '../lib/util';
 import AppConfig from '../constants/config';
-import Network from '../network';
+// import Network from '../network';
 
 import Constants from './constants';
+import VCUtil from '../network/VCUtil';
 
 const PushNotification = require('react-native-push-notification');
 
@@ -30,6 +31,18 @@ class PushService {
 
         // lets clear the badge
         PushNotification.setApplicationIconBadgeNumber(0);
+        const pushData = JSON.parse(notification.ejson);
+        const pushMsg = notification.message;
+        console.log('Kumar push', notification);
+        console.log('Kumar push', pushData, pushMsg);
+
+        if (pushData.name === null && pushMsg === 'Started a call' && !notification.foreground) {
+          PushService.handlePushAnswer(pushData);
+        } else if (pushData.name === null && pushMsg === 'Started a call' && notification.foreground) {
+          PushNotification.cancelAllLocalNotifications();
+        } else if (pushData.name === null && pushMsg === 'Call Ended') {
+          PushService.handlePushDecline();
+        }
 
         // - lets take the user to the correct channel, refresh the contents
         // notification object have
@@ -57,18 +70,20 @@ class PushService {
         //   - ejson is there and rid is specified
         if (notification && notification.foreground === false && notification.userInteraction === true &&
           notification.ejson) {
-          const data = JSON.parse(notification.ejson);
-          if (data && data.rid) {
-            const n = new Network();
-            if (n.db && n.db.groups) {
-            // lookup group object
-              const gObj = n.db.groups.findById(data.rid);
-              if (gObj) {
-                AppUtil.debug(gObj.heading, 'PUSH - switch screen');
-                Actions.chatDetail({ obj: gObj, title: gObj.heading });
-              }
-            }
-          }
+          // Actions.app({ type: 'reset' });
+          // Actions.helpView({ type: 'reset' });
+          // const data = JSON.parse(notification.ejson);
+          // if (data && data.rid) {
+          //   const n = new Network();
+          //   if (n.db && n.db.groups) {
+          //   // lookup group object
+          //     const gObj = n.db.groups.findById(data.rid);
+          //     if (gObj) {
+          //       AppUtil.debug(gObj.heading, 'PUSH - switch screen');
+          //       Actions.chatDetail({ obj: gObj, title: gObj.heading });
+          //     }
+          //   }
+          // }
         }
       },
 
@@ -94,6 +109,16 @@ class PushService {
         */
       requestPermissions: true,
     });
+
+    PushService.handlePushAnswer = (pushData) => {
+      console.log('Kumar push handlePushAnswer', pushData.rid, pushData.sender._id);
+      console.log('Kumar push getInstance', VCUtil.getInstance());
+      VCUtil.getInstance().incomingVC(pushData.rid, pushData.sender._id);
+    };
+    PushService.handlePushDecline = () => {
+      console.log('Kumar push handlePushDecline');
+      VCUtil.getInstance().incomingVCDisconnect();
+    };
   }
 
   // register token, user to backend
