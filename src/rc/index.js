@@ -252,7 +252,6 @@ class RC {
     this.meteor.stopMonitoringChanges(RC._mStreamNotifyRoom);
     RC._mStreamNotifyRoom = null;
     RC._pendingMessages = [];
-    RC._initialFetchPending = true;
   }
 
   // call this method once connection is made to a meteor server
@@ -284,6 +283,7 @@ class RC {
   // subscriptions to user
   _initUserSubscriptions(uid) {
     var _super = this;
+    RC._initialFetchPending = true;
     // Need to vet all these and see what all we actually use in client
     // this._subscribe('stream-notify-all', "public-settings-changed", false);
     this.meteor.subscribe('stream-notify-user', `${uid}/subscriptions-changed`, false);
@@ -343,11 +343,9 @@ class RC {
         // console.log("***** new message ****", results[0].eventName, results[0].args);
         // group id is the name of the event
         // const group = _super.db.groups.findById(results[0].eventName);
-        if (RC._initialFetchPending) {
-          console.log('******** adding now to array ****** ', results[0].args);
-          RC._pendingMessages.push({ _id: results[0].eventName, msgs: results[0].args });
-        } else {
-          _super.service.yaps2db({ _id: results[0].eventName }, results[0].args);
+        RC._pendingMessages.push({ _id: results[0].eventName, msgs: results[0].args });
+        if (!RC._initialFetchPending) {
+          _super._flushMessages();
         }
       }
     });
@@ -415,7 +413,7 @@ class RC {
   _flushMessages() {
     while (RC._pendingMessages.length > 0) {
       const msgObj = RC._pendingMessages.shift();
-      console.log('******** pushing now the pre-fetched change ****** ', msgObj);
+      // console.log('******** pushing now the pre-fetched change ****** ', msgObj);
       this.service.yaps2db({ _id: msgObj._id }, msgObj.msgs);
     }
     RC._initialFetchPending = false;
