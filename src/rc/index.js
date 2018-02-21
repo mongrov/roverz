@@ -344,7 +344,9 @@ class RC {
         // group id is the name of the event
         // const group = _super.db.groups.findById(results[0].eventName);
         RC._pendingMessages.push({ _id: results[0].eventName, msgs: results[0].args });
+        console.log('****** live message ******', RC._initialFetchPending, results[0].args);
         if (!RC._initialFetchPending) {
+          console.log('****** flush messages ******');
           _super._flushMessages();
         }
       }
@@ -439,7 +441,6 @@ class RC {
         _super.service.yaps2db(fetchingGroups[i], results[i].messages);
       }
       _super._flushMessages();
-      _super._subscribeToGroups(groups);
     }).catch((/* err */) => {
       // console.log('Catch: ', err);
     });
@@ -456,7 +457,10 @@ class RC {
       if (lastSyncTs < group.updatedAt.getTime()) {
         const gID = group._id;
         // sync from last date when the group had message
-        const lastMessageAt = _super.service._lastMessageAt(gID);
+        let lastMessageAt = _super.service._lastMessageAt(gID);
+        if (lastMessageAt === 0) {
+          lastMessageAt = lastSyncTs;
+        }
         console.log('==== group ====', group.name, new Date(lastSyncTs), gID, lastMessageAt);
         // rid, lastMessage.ts
         const req = this.meteor.call('loadMissedMessages', gID, lastMessageAt);
@@ -474,10 +478,11 @@ class RC {
           _super.service.yaps2db(fetchingGroups[i], results[i]);
         }
         _super._flushMessages();
-        _super._subscribeToGroups(groups);
       }).catch((err) => {
         console.log('Catch: ', err);
       });
+    } else {
+      _super._flushMessages();
     }
   }
 
@@ -488,19 +493,18 @@ class RC {
     const lastSync = this.service.lastSync;
     const newSyncDate = new Date();
     this.service._updateGroups(groups);
+    // subscription in case of fetching path, should happen
+    // after fetch is done, so this call would happen within
+    // fetch methods
+    this._subscribeToGroups(groups);
     if (fetchMessages) {
       if (lastSync === 0) {
         this._fetchMessages(groups, FETCH_GROUP_MIN_MSGS);
       } else {
         this._fetchMissedMessages(groups, lastSync);
       }
-      // console.log('======== setting new last sync date========', groups);
+      // console.log('======== setting new last sync date========', newSyncDate);
       this.service.lastSync = newSyncDate;
-    } else {
-      // subscription in case of fetching path, should happen
-      // after fetch is done, so this call would happen within
-      // fetch methods
-      this._subscribeToGroups(groups);
     }
   }
 
