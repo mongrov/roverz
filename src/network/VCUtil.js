@@ -23,13 +23,14 @@ export default class VCUtil {
     return VCUtil.myInstance;
   }
 
-  incomingVC(groupID, rUID) {
-    console.log('Kumar push VCUTIL invc ', groupID, rUID);
+  incomingVC(groupID, rUID, rUName) {
+    console.log('Kumar push VCUTIL invc ', groupID, rUID, rUName);
     this._gid = groupID;
     this._remoteuid = rUID;
+    this._remoteName = rUName;
     PushNotification.cancelAllLocalNotifications();
     PushNotification.localNotificationSchedule({
-      message: 'Video Call started in groupID', // (required)
+      message: `Video Calling ${this._remoteName}`, // (required)
       playSound: false,
       autoCancel: false,
       vcData: {
@@ -37,7 +38,7 @@ export default class VCUtil {
         rUID,
       },
       date: new Date(Date.now()), // in 60 secs
-      actions: '["Accept", "Reject"]',
+      // actions: '["Accept", "Reject"]',
     });
     InCallManager.startRingtone('_BUNDLE_');
     InCallManager.turnScreenOn();
