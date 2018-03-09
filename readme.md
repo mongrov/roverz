@@ -12,17 +12,31 @@ A native chat client library for [Rocket.Chat](https://rocket.chat/)
 ## Features
 
 Overview of features that are supported in this library
-   * chat client
+   * groups
+      * private (groups)
+      * public(channels)
+      * 1:1 (direct)
+   * messages
       * text
-      * images
+      * image (camera & gallery)
       * video attachments
    * threaded messages
    * login/logout
    * emoji
-   * caching images
+   * image caching
+   * pinch and zoom in messages
+
+You can embed this library within your application to have collaboration within your app.
 
 ## Installation
 For a fully working example, please refer to example/readme.md 
+
+## Quick Start
+
+You can download a sample app (with additional features) from app store
+   * https://itunes.apple.com/us/app/mongrov/id1313167859?ls=1&mt=8
+   * https://play.google.com/store/apps/details?id=com.mongrov.app
+   
 
 ## Usage
 
