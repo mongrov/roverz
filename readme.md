@@ -24,9 +24,9 @@ Overview of features that are supported in this library
    * login/logout
    * emoji
    * image caching
-   * pinch and zoom in messages
+   * pinch and zoom on images
 
-You can embed this library within your application to have collaboration within your app.
+You can embed this library to have collaboration feature in your application.
 
 ## Installation
 For a fully working example, please refer to example/readme.md 
