@@ -5,18 +5,30 @@
 
 
 [logo]: src/images/logo-inverse.png "roverz"
-A native chat client for [Rocket.Chat](https://rocket.chat/)
+A native chat client library for [Rocket.Chat](https://rocket.chat/)
 
 ## Screenshots
 
 ## Features
 
+Overview of features that are supported in this library
+   * chat client
+      * text
+      * images
+      * video attachments
+   * threaded messages
+   * login/logout
+   * emoji
+   * caching images
+
 ## Installation
-Please refer to example/readme.md for instructions
+For a fully working example, please refer to example/readme.md 
 
 ## Usage
 
-## Contributing
+In order to include this library into your project, please add this library to your react-native project by
+
+``` npm install --save https://github.com/mongrov/roverz  ```
 
 ## Roadmap
 
