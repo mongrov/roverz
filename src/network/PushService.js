@@ -28,20 +28,23 @@ class PushService {
       onNotification(notification) {
         // Alert.alert('NOTIFICATION', JSON.stringify(notification));
         AppUtil.debug(notification, 'PUSH Notification');
+        console.log('Kumar pushy', notification);
 
         // lets clear the badge
         PushNotification.setApplicationIconBadgeNumber(0);
-        const pushData = JSON.parse(notification.ejson);
-        const pushMsg = notification.message;
-        console.log('Kumar push', notification);
-        console.log('Kumar push', pushData, pushMsg);
+        console.log('Kumar pushy', notification);
+        if (notification && notification.ejson) {
+          const pushData = JSON.parse(notification.ejson);
+          const pushMsg = notification.message;
+          console.log('Kumar push', pushData, pushMsg);
 
-        if (pushData.name === null && pushMsg === 'Started a call' && !notification.foreground) {
-          PushService.handlePushAnswer(pushData);
-        } else if (pushData.name === null && pushMsg === 'Started a call' && notification.foreground) {
-          PushNotification.cancelAllLocalNotifications();
-        } else if (pushData.name === null && pushMsg === 'Call Ended') {
-          PushService.handlePushDecline();
+          if (pushData.name === null && pushMsg === 'Started a call' && !notification.foreground) {
+            PushService.handlePushAnswer(pushData);
+          } else if (pushData.name === null && pushMsg === 'Started a call' && notification.foreground) {
+            PushNotification.cancelAllLocalNotifications();
+          } else if (pushData.name === null && pushMsg === 'Call Ended') {
+            PushService.handlePushDecline();
+          }
         }
 
         // - lets take the user to the correct channel, refresh the contents
@@ -113,7 +116,7 @@ class PushService {
     PushService.handlePushAnswer = (pushData) => {
       console.log('Kumar push handlePushAnswer', pushData.rid, pushData.sender._id);
       console.log('Kumar push getInstance', VCUtil.getInstance());
-      VCUtil.getInstance().incomingVC(pushData.rid, pushData.sender._id);
+      VCUtil.getInstance().incomingVC(pushData.rid, pushData.sender._id, pushData.sender.username);
     };
     PushService.handlePushDecline = () => {
       console.log('Kumar push handlePushDecline');
