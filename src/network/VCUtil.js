@@ -1,7 +1,7 @@
 import md5 from 'react-native-md5';
 
 // import Network from 'roverz-chat/src/network';
-import InCallManager from 'react-native-incall-manager';
+// import InCallManager from 'react-native-incall-manager';
 import PushNotification from 'react-native-push-notification';
 import { Actions } from 'react-native-router-flux';
 import Application from '../constants/config';
@@ -40,8 +40,8 @@ export default class VCUtil {
       date: new Date(Date.now()), // in 60 secs
       // actions: '["Accept", "Reject"]',
     });
-    InCallManager.startRingtone('_BUNDLE_');
-    InCallManager.turnScreenOn();
+    // InCallManager.startRingtone('_BUNDLE_');
+    // InCallManager.turnScreenOn();
 
     // if (!this._net) {
     //   this._net = new Network();
@@ -58,7 +58,7 @@ export default class VCUtil {
 
   incomingVCDisconnect() {
     PushNotification.cancelAllLocalNotifications();
-    InCallManager.stopRingtone();
+    // InCallManager.stopRingtone();
   }
 
   handleCall() {
