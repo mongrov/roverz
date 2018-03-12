@@ -8,6 +8,8 @@
 A native chat client library for [Rocket.Chat](https://rocket.chat/)
 
 ## Screenshots
+![Screenshots][screenshots]
+
 [screenshots]: docs/assets/roverz-oss-main-800px.png "Screenshots"
 
 ## Features
