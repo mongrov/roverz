@@ -33,14 +33,15 @@ You can embed this library to have collaboration in your application.
 
 ## Demo / Quick Start
 
-1. You can download mongrov official app from app store
-   * https://itunes.apple.com/us/app/mongrov/id1313167859?ls=1&mt=8
-   * https://play.google.com/store/apps/details?id=com.mongrov.app
-1. On install, tap on `app.mongrov.com` under label `WORKSPACE`
-1. give your rocket.chat server on the page (if you dont have one, you can use open.rocket.chat or register with app.mongrov.com)
-1. once logged in you can use full features of the app with your server
+1. Download mongrov official app from app store and install on your device
+   * [Apple App Store](https://itunes.apple.com/us/app/mongrov/id1313167859?ls=1&mt=8)
+   * [Google Play Store](https://play.google.com/store/apps/details?id=com.mongrov.app)
+1. On launching app, tap on `app.mongrov.com` under label `WORKSPACE`
+1. give your rocket.chat server full name on this dialog 
+   1. if you dont have one, you can use open.rocket.chat or app.mongrov.com
+1. user your username and password to login to the server
 
-NOTE: if you want to use notifications, please use app.mongrov.com
+NOTE: if you want to test notifications, please use app.mongrov.com
 
 ## roverz Quick Start
 A fully working example have been included in example directory. 
