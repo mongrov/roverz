@@ -9,6 +9,8 @@ A native chat client for [Rocket.Chat](https://rocket.chat/)
 
 ## Screenshots
 
+[screenshots]: ../docs/assets/roverz-screens.jpg "Screenshots"
+
 ## Prerequisites
 Install latest Node and React Native. 
 
