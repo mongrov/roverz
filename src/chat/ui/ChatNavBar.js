@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Keyboard,
 } from 'react-native';
-import md5 from 'react-native-md5';
+
 import PropTypes from 'prop-types';
 import { NavButton } from 'react-native-nav';
 import { Actions } from 'react-native-router-flux';
@@ -15,7 +15,7 @@ import AppUtil from '../../lib/util';
 import { AppStyles, AppColors } from '../../theme/';
 import Group from '../../models/group';
 import Network from '../../network';
-import Application from '../../constants/config';
+
 import { ListItemAvatar } from './';
 import Constants from '../../models/constants';
 
@@ -118,6 +118,7 @@ class ChatNavBar extends React.Component {
     super(props);
     const obj = this.props.obj;
     this._net = new Network();
+    this.customButtons = this.props.customButtons;
     this.displayName = obj.name;
     this.displayTitle = obj.title;
     this.roomType = obj.type;
@@ -250,74 +251,6 @@ class ChatNavBar extends React.Component {
     );
   }
 
-  renderGeoIcon = () => (
-    <NavButton
-      style={[styles.iconViews]}
-      onPress={() => {
-        Keyboard.dismiss();
-        Actions.geoView();
-      }}
-    >
-      <Icon
-        type={'material-community'}
-        name={'map-marker-plus'}
-        size={28}
-        color={'#FFF'}
-      />
-    </NavButton>
-  )
-
-  renderVideoConfIcon() {
-    const mgvcConf = this._net.getServerSetting('MGVC_Enabled');
-    const mgvcEnabled = mgvcConf && mgvcConf.value;
-    if (mgvcEnabled === true) {
-      const gname = this.state.obj.name;
-      const gid = this.state.obj._id;
-      const user = this._net.service.loggedInUserObj;
-      const _super = this;
-      const gtype = this.state.roomType;
-      return (
-        <NavButton
-          style={[styles.iconViews]}
-          onPress={() => {
-            Keyboard.dismiss();
-            const vcuserID = user ? md5.hex_md5(user._id) : '0';
-            // const tempMsg = '@all Started Video conference';
-            // _super._net.chat.sendMessage(gid, tempMsg);
-            if (gtype === Constants.G_DIRECT) {
-              _super._net.service.updateVideoCallStatus(gid, 'mgcall_init');
-              Actions.directConference({
-                instance: Application.instance,
-                groupName: gname,
-                groupID: gid,
-                groupType: gtype,
-                userID: vcuserID,
-                callType: 'OUTGOING',
-              });
-            } else {
-              _super._net.service.startVideoConference(gid);
-              Actions.videoConference({
-                instance: Application.instance,
-                groupName: gname,
-                groupID: gid,
-                groupType: gtype,
-                userID: vcuserID,
-                callType: 'OUTGOING',
-              });
-            }
-          }}
-        >
-          <Icon
-            name={gtype === Constants.G_DIRECT ? 'phone' : 'videocam'}
-            size={28}
-            color={'#FFF'}
-          />
-        </NavButton>
-      );
-    }
-    return null;
-  }
-
   render() {
     return (
       <View
@@ -366,8 +299,7 @@ class ChatNavBar extends React.Component {
             </Text>
           </View>
         </TouchableOpacity>
-        {this.renderVideoConfIcon()}
-        {this.renderGeoIcon()}
+        {this.customButtons()}
       </View>
     );
   }
@@ -375,10 +307,12 @@ class ChatNavBar extends React.Component {
 
 ChatNavBar.defaultProps = {
   obj: null,
+  customButtons: () => {},
 };
 
 ChatNavBar.propTypes = {
   obj: PropTypes.instanceOf(Group),
+  customButtons: PropTypes.func,
 };
 
 /* Export Component ==================================================================== */
