@@ -477,7 +477,45 @@ class ChatRoomView extends React.Component {
                 }}
               >{t('txt_camera')}</Text>
             </TouchableOpacity>
-            <View style={{ flex: 3 }} />
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: 5,
+                width: 60,
+              }}
+              onPress={() => {
+                Keyboard.dismiss();
+                this.setState({
+                  attachMenu: !this.state.attachMenu,
+                  text: '',
+                });
+                Actions.audioRecord({
+                  group: this._group,
+                  groupId: this._group._id,
+                  progressCallback: this._progressCallback,
+                  duration: 0,
+                });
+              }}
+            >
+              <Icon
+                raised
+                name={'microphone'}
+                type={'material-community'}
+                color={'#0ba83a'}
+                reverse
+              />
+              <Text
+                numberOfLines={1}
+                ellipsizeMode={'tail'}
+                style={{
+                  color: '#fff',
+                }}
+              >{'Audio'}</Text>
+            </TouchableOpacity>
+            <View style={{ flex: 2 }} />
           </View>
         </View>
       );
