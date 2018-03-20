@@ -208,6 +208,11 @@ class RC {
     this.meteor.call('sendMessage', { rid, msg }, cb);
   }
 
+  sendLocationMessage(roomid, long, lat, cb) {
+    this.meteor.call('sendMessage',
+    { rid: roomid, msg: '', location: { type: 'Point', coordinates: [long, lat] } }, cb);
+  }
+
   deleteMessage(msgID, cb) {
     this.meteor.call('deleteMessage', { _id: msgID }, cb);
   }

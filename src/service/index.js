@@ -226,6 +226,12 @@ class ChatService {
     // this.db.groups.addMessage(groupObj, msg);
   }
 
+  // -- message calls
+  sendLocationMessage(groupObj, long, lat, cb) {
+    this.provider.sendLocationMessage(groupObj._id, long, lat, cb);
+    // this.db.groups.addMessage(groupObj, msg);
+  }
+
   deleteMessage(msgID, cb) {
     this.provider.deleteMessage(msgID, cb);
   }
