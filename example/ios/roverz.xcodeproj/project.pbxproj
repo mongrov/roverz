@@ -54,6 +54,7 @@
 		A944AA612031CF1F00714772 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A944AA5C2031CF1F00714772 /* OpenSans-SemiBold.ttf */; };
 		A944AA622031CF1F00714772 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A944AA5D2031CF1F00714772 /* OpenSans-Bold.ttf */; };
 		A944AA632031CF1F00714772 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A944AA5E2031CF1F00714772 /* OpenSans-Light.ttf */; };
+		A9F5C1042060F25900DFA80E /* libReactNativeAudioToolkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F5C1002060F24100DFA80E /* libReactNativeAudioToolkit.a */; };
 		C144D72F57E1424B9870B3E0 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 050010BE7B0746E3AA16B2ED /* FontAwesome.ttf */; };
 		E1B4753EB32D4F1FB4CE50B4 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F6ADC0A2EBC49DEB20F794F /* SimpleLineIcons.ttf */; };
 		E1D40FC9AC514B05817B4985 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A9BD9C128D24D9280F6DD07 /* MaterialIcons.ttf */; };
@@ -301,6 +302,13 @@
 			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
 			remoteInfo = RCTCamera;
 		};
+		A9F5C0FF2060F24100DFA80E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9F5C0DE2060F24100DFA80E /* ReactNativeAudioToolkit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5E8FD9831D269F5D00CF68CC;
+			remoteInfo = ReactNativeAudioToolkit;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -348,6 +356,7 @@
 		A944AA5C2031CF1F00714772 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-SemiBold.ttf"; path = "../assets/fonts/OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		A944AA5D2031CF1F00714772 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Bold.ttf"; path = "../assets/fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		A944AA5E2031CF1F00714772 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Light.ttf"; path = "../assets/fonts/OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		A9F5C0DE2060F24100DFA80E /* ReactNativeAudioToolkit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeAudioToolkit.xcodeproj; path = "../node_modules/react-native-audio-toolkit/ios/ReactNativeAudioToolkit/ReactNativeAudioToolkit.xcodeproj"; sourceTree = "<group>"; };
 		ADAEAA5586304B5BBC232320 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		B8D0ADD8006F42FF9EA5AFA2 /* libRNFetchBlob.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFetchBlob.a; sourceTree = "<group>"; };
 		CA8D38C7141F45E8941EA37B /* RealmReact.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RealmReact.xcodeproj; path = "../node_modules/realm/react-native/ios/RealmReact.xcodeproj"; sourceTree = "<group>"; };
@@ -372,6 +381,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9F5C1042060F25900DFA80E /* libReactNativeAudioToolkit.a in Frameworks */,
 				04C09EC42031B881009D2623 /* libRCTPushNotification.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -599,6 +609,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				A9F5C0DE2060F24100DFA80E /* ReactNativeAudioToolkit.xcodeproj */,
 				04C09E9F2031B869009D2623 /* RCTPushNotification.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -668,6 +679,14 @@
 			isa = PBXGroup;
 			children = (
 				A944AA402031CD3A00714772 /* libRCTCamera.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A9F5C0DF2060F24100DFA80E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A9F5C1002060F24100DFA80E /* libReactNativeAudioToolkit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -864,6 +883,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = A9F5C0DF2060F24100DFA80E /* Products */;
+					ProjectRef = A9F5C0DE2060F24100DFA80E /* ReactNativeAudioToolkit.xcodeproj */;
 				},
 				{
 					ProductGroup = 043A028F2031B78B00226275 /* Products */;
@@ -1111,6 +1134,13 @@
 			fileType = archive.ar;
 			path = libRCTCamera.a;
 			remoteRef = A944AA3F2031CD3A00714772 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A9F5C1002060F24100DFA80E /* libReactNativeAudioToolkit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeAudioToolkit.a;
+			remoteRef = A9F5C0FF2060F24100DFA80E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
