@@ -6,6 +6,7 @@ import MemberListView from './members/MemberListView';
 import MemberDetailView from './members/MemberDetailView';
 import CameraActions from './attachments/CameraActions';
 import PhotoLibrary from './attachments/PhotoLibrary';
+import AudioUpload from './attachments/AudioUpload';
 
 import Application from '../constants/config';
 
@@ -18,6 +19,7 @@ if (!Application.containers.find(item => item.key === 'memberDetail')) {
   Application.addContainer('memberDetail', 'Member Info', '', MemberDetailView, true, true, NavBarBack);
   Application.addContainer('roomInfo', 'Group Info', '', MemberListView, true, true, NavBarBack);
   Application.addContainer('cameraActions', 'Camera', '', CameraActions, false, false, NavBackAbs);
+  Application.addContainer('uploadAudio', 'Upload Audio', '', AudioUpload, true, false, NavBackAbs);
   Application.addContainer('photoLibrary', 'Photo Library', '', PhotoLibrary, false, false, null);
   // attic, to be removed later
 }

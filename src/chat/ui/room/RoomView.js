@@ -492,7 +492,7 @@ class ChatRoomView extends React.Component {
                   attachMenu: !this.state.attachMenu,
                   text: '',
                 });
-                Actions.audioRecord({
+                Actions.uploadAudio({
                   group: this._group,
                   groupId: this._group._id,
                   progressCallback: this._progressCallback,
