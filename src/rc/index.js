@@ -208,9 +208,9 @@ class RC {
     this.meteor.call('sendMessage', { rid, msg }, cb);
   }
 
-  sendLocationMessage(roomid, long, lat, cb) {
+  sendLocationMessage(roomid, msgObj, lon, lat, cb) {
     this.meteor.call('sendMessage',
-    { rid: roomid, msg: '', location: { type: 'Point', coordinates: [long, lat] } }, cb);
+    { rid: roomid, msg: msgObj, location: { type: 'Point', coordinates: [lon, lat] } }, cb);
   }
 
   deleteMessage(msgID, cb) {

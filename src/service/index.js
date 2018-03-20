@@ -227,8 +227,8 @@ class ChatService {
   }
 
   // -- message calls
-  sendLocationMessage(groupObj, long, lat, cb) {
-    this.provider.sendLocationMessage(groupObj._id, long, lat, cb);
+  sendLocationMessage(groupObj, msgObj, lon, lat, cb) {
+    this.provider.sendLocationMessage(groupObj._id, msgObj, lon, lat, cb);
     // this.db.groups.addMessage(groupObj, msg);
   }
 
