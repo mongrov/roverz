@@ -50,6 +50,9 @@ export default class Group {
   get lastMessage() {
     return (this.messages.length > 0) ? this.sortedMessages[0] : null;
   }
+  get locationMessages() {
+    return this.messages.filtered(`type = ${Constants.M_TYPE_LOCATION}`);
+  }
 
   // --- find utilities ---
 

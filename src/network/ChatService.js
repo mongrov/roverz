@@ -373,7 +373,10 @@ class ChatService {
         }
       }
       m.likes = 0;
-      m.type = DBConstants.M_DELIVERED;
+      m.status = DBConstants.M_DELIVERED;
+      if (inM.location) {
+        m.location = inM.location;
+      }
       if (inM.reactions) {
         Object.keys(inM.reactions).forEach((key) => {
           if (key.indexOf('thumbsup') >= 0) {

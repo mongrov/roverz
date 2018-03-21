@@ -221,6 +221,11 @@ class Database {
               }
             }
           }
+          if (obj.location) {
+            obj.location = obj.text;
+            obj.text = '';
+            obj.type = Constants.M_TYPE_LOCATION;
+          }
           AppUtil.debug(obj, null);
           obj.original = JSON.stringify(obj.original);
           group.messages.push(obj);
@@ -262,6 +267,11 @@ class Database {
                 msg.text = res[1].trim();
               }
             }
+          }
+          if (msg.location) {
+            msg.location = msg.text;
+            msg.text = '';
+            msg.type = Constants.M_TYPE_LOCATION;
           }
           AppUtil.debug(msg, null);
           msg.original = JSON.stringify(msg.original);

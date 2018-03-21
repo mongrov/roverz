@@ -227,8 +227,8 @@ class ChatService {
   }
 
   // -- message calls
-  sendLocationMessage(groupObj, msgObj, lon, lat, cb) {
-    this.provider.sendLocationMessage(groupObj._id, msgObj, lon, lat, cb);
+  sendLocationMessage(rid, msgObj, lon, lat, cb) {
+    this.provider.sendLocationMessage(rid, msgObj, lon, lat, cb);
     // this.db.groups.addMessage(groupObj, msg);
   }
 
@@ -384,7 +384,10 @@ class ChatService {
         }
       }
       m.likes = 0;
-      m.type = DBConstants.M_DELIVERED;
+      m.status = DBConstants.M_DELIVERED;
+      if (inM.location) {
+        m.location = inM.location;
+      }
       if (inM.reactions) {
         Object.keys(inM.reactions).forEach((key) => {
           if (key.indexOf('thumbsup') >= 0) {

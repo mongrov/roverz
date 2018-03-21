@@ -13,7 +13,8 @@ const MessageSchema = {
     replyMessageId: { type: 'string', optional: true },
 
     // -- type & status
-    type: { type: 'int', default: 0 }, // text, image
+    // text, image, video, audio, location
+    type: { type: 'int', default: 0 },
     isReply: { type: 'bool', default: false },
     status: { type: 'int', default: Constants.M_LOCAL }, // delivered, read
     likes: { type: 'int', default: 0 }, // thumsup value
@@ -23,8 +24,9 @@ const MessageSchema = {
     text: 'string',
     image: { type: 'string', optional: true },
     remoteFile: { type: 'string', optional: true },  // needs to be used to fetch the image url
+    location: { type: 'string', optional: true }, // optional - store the original message
 
-    // -- meta data
+  // -- meta data
     createdAt: { type: 'date', optional: true },
     updatedAt: { type: 'date', optional: true },
   },

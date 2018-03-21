@@ -36,4 +36,12 @@ export default {
   M_LOCAL: 0,
   M_DELIVERED: 10,
   M_READ: 100,
+
+  // Message type
+  M_TYPE_TEXT: 0,
+  M_TYPE_IMAGE: 1,
+  M_TYPE_VIDEO: 2,
+  M_TYPE_AUDIO: 3,
+  M_TYPE_LOCATION: 4,
+
 };

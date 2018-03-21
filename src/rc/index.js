@@ -210,7 +210,7 @@ class RC {
 
   sendLocationMessage(roomid, msgObj, lon, lat, cb) {
     this.meteor.call('sendMessage',
-    { rid: roomid, msg: msgObj, location: { type: 'Point', coordinates: [lon, lat] } }, cb);
+    { rid: roomid, msg: JSON.stringify(msgObj), location: { type: 'Point', coordinates: [lon, lat] } }, cb);
   }
 
   deleteMessage(msgID, cb) {
