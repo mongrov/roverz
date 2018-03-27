@@ -120,6 +120,8 @@ class ChatRoomView extends React.Component {
       attach: this.attach,
       composerText: '',
       attachMenu: false,
+      attachAudio: false,
+      recordTime: 0,
       height: 44,
       text: '',
       layout: {
@@ -381,6 +383,128 @@ class ChatRoomView extends React.Component {
   }
 
   renderChatFooter() {
+    console.log('renderChat', this.state.attachMenu);
+    if (this.state.attachAudio) {
+      return (
+        <View
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            borderRadius: 5,
+            padding: 5,
+            backgroundColor: AppColors.brand().fourth,
+          }}
+        >
+          <View
+            style={{
+              padding: 3,
+              flexDirection: 'row',
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: 5,
+                width: 70,
+                marginRight: 20,
+              }}
+            >
+              <Icon
+                raised
+                name="microphone"
+                type="material-community"
+                color={'#ff5608'}
+                reverse
+              />
+              <Text
+                numberOfLines={1}
+                ellipsizeMode={'tail'}
+                style={{
+                  color: '#fff',
+                }}
+              >Record</Text>
+            </TouchableOpacity>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: 5,
+                width: 70,
+                marginRight: 20,
+              }}
+            >
+              <Text
+                numberOfLines={1}
+                ellipsizeMode={'tail'}
+                style={{
+                  color: '#fff',
+                  paddingBottom: 20,
+                  fontSize: 20,
+                }}
+              >15:00</Text>
+            </View>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: 5,
+                width: 70,
+                marginRight: 20,
+              }}
+            >
+              <Icon
+                raised
+                name="done"
+                type="MaterialIcons"
+                // color={'#ff5608'}
+                color={'green'}
+                reverse
+              />
+              <Text
+                numberOfLines={1}
+                ellipsizeMode={'tail'}
+                style={{
+                  color: '#fff',
+                }}
+              >Send</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: 5,
+                width: 70,
+              }}
+              onPress={() => {
+                this.setState({ attachAudio: !this.state.attachAudio });
+              }}
+            >
+              <Icon
+                raised
+                name="cancel"
+                type="Navigation"
+                color={'red'}
+                reverse
+              />
+              <Text
+                numberOfLines={1}
+                ellipsizeMode={'tail'}
+                style={{
+                  color: '#fff',
+                }}
+              >Cancel</Text>
+            </TouchableOpacity>
+            <View style={{ flex: 2 }} />
+          </View>
+        </View>
+      );
+    }
     if (this.state.attachMenu) {
       return (
         <View
@@ -490,13 +614,8 @@ class ChatRoomView extends React.Component {
                 Keyboard.dismiss();
                 this.setState({
                   attachMenu: !this.state.attachMenu,
+                  attachAudio: !this.state.attachAudio,
                   text: '',
-                });
-                Actions.uploadAudio({
-                  group: this._group,
-                  groupId: this._group._id,
-                  progressCallback: this._progressCallback,
-                  duration: 0,
                 });
               }}
             >
