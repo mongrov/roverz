@@ -16,6 +16,7 @@ import {
   Recorder,
   // MediaStates,
 } from 'react-native-audio-toolkit';
+import moment from 'moment';
 
 import { Icon } from 'react-native-elements';
 // import { CircularProgress } from 'react-native-circular-progress';
@@ -135,8 +136,10 @@ export default class AttachAudio extends React.Component {
       console.log('KRec 2', this.recorder);
       this.setState({ filePath: this.recorder._fsPath });
       this._recordInterval = setInterval(() => {
-        if (this.state.recordTime < 300) {
+        if (this.state.recordTime < 60) {
+          console.log('time', this.state.recordTime);
           this.setState({ recordTime: this.state.recordTime + 1 });
+          console.log('running-time', this.state.recordTime);
         } else {
           clearInterval(this._recordInterval);
           this._toggleRecord();
@@ -211,7 +214,7 @@ export default class AttachAudio extends React.Component {
       this.recorder.destroy();
     }
 
-    this.recorder = new Recorder(filename, {
+    this.recorder = new Recorder(`${moment().unix().toString()}.mp4`, {
       bitrate: 256000,
       channels: 2,
       sampleRate: 44100,
@@ -226,6 +229,7 @@ export default class AttachAudio extends React.Component {
   }
 
   _toggleRecord() {
+    console.log('record');
     if (this.player) {
       this.player.destroy();
     }
@@ -255,8 +259,9 @@ export default class AttachAudio extends React.Component {
         Actions.refresh({
           attachAudio: false,
         });
+      } else if (!stopped) {
+        this._updateState();
       }
-      this._updateState();
     });
   }
 
@@ -294,13 +299,13 @@ export default class AttachAudio extends React.Component {
               alignItems: 'center',
               justifyContent: 'center',
               margin: 5,
-              width: 70,
+              width: 80,
               marginRight: 20,
             }}
           >
             <Icon
               raised
-              name="microphone"
+              name="record"
               type="material-community"
               color={'#ff5608'}
               reverse
@@ -339,7 +344,7 @@ export default class AttachAudio extends React.Component {
               justifyContent: 'center',
               margin: 5,
               width: 70,
-              marginRight: 20,
+              marginRight: 10,
             }}
             onPress={() => {
               this._toggleRecord();
@@ -347,9 +352,7 @@ export default class AttachAudio extends React.Component {
           >
             <Icon
               raised
-              name="done"
-              type="MaterialIcons"
-              // color={'#ff5608'}
+              name="send"
               color={'green'}
               reverse
             />
@@ -376,8 +379,7 @@ export default class AttachAudio extends React.Component {
           >
             <Icon
               raised
-              name="cancel"
-              type="Navigation"
+              name="delete"
               color={'red'}
               reverse
             />
