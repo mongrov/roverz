@@ -32,6 +32,7 @@ import AppUtil from '../../../lib/util';
 import Network from '../../../network';
 import Group from '../../../models/group';
 import { ProgressBar } from '../../../components/ui/';
+import AudioUpload from '../../attachments/AttachAudio';
 
 import { AppStyles, AppSizes, AppColors } from '../../../theme/';
 import Application from '../../../constants/config';
@@ -219,6 +220,9 @@ class ChatRoomView extends React.Component {
       });
       this.sendCameraImage(nextProps.attach.cameraData, nextProps.attach.cameraMessage, nextProps.attach.video);
     }
+    this.setState({
+      attachAudio: nextProps.attachAudio,
+    });
   }
 
   componentWillUnmount() {
@@ -386,123 +390,7 @@ class ChatRoomView extends React.Component {
     console.log('renderChat', this.state.attachMenu);
     if (this.state.attachAudio) {
       return (
-        <View
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            borderRadius: 5,
-            padding: 5,
-            backgroundColor: AppColors.brand().fourth,
-          }}
-        >
-          <View
-            style={{
-              padding: 3,
-              flexDirection: 'row',
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: 5,
-                width: 70,
-                marginRight: 20,
-              }}
-            >
-              <Icon
-                raised
-                name="microphone"
-                type="material-community"
-                color={'#ff5608'}
-                reverse
-              />
-              <Text
-                numberOfLines={1}
-                ellipsizeMode={'tail'}
-                style={{
-                  color: '#fff',
-                }}
-              >Record</Text>
-            </TouchableOpacity>
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: 5,
-                width: 70,
-                marginRight: 20,
-              }}
-            >
-              <Text
-                numberOfLines={1}
-                ellipsizeMode={'tail'}
-                style={{
-                  color: '#fff',
-                  paddingBottom: 20,
-                  fontSize: 20,
-                }}
-              >15:00</Text>
-            </View>
-            <TouchableOpacity
-              style={{
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: 5,
-                width: 70,
-                marginRight: 20,
-              }}
-            >
-              <Icon
-                raised
-                name="done"
-                type="MaterialIcons"
-                // color={'#ff5608'}
-                color={'green'}
-                reverse
-              />
-              <Text
-                numberOfLines={1}
-                ellipsizeMode={'tail'}
-                style={{
-                  color: '#fff',
-                }}
-              >Send</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: 5,
-                width: 70,
-              }}
-              onPress={() => {
-                this.setState({ attachAudio: !this.state.attachAudio });
-              }}
-            >
-              <Icon
-                raised
-                name="cancel"
-                type="Navigation"
-                color={'red'}
-                reverse
-              />
-              <Text
-                numberOfLines={1}
-                ellipsizeMode={'tail'}
-                style={{
-                  color: '#fff',
-                }}
-              >Cancel</Text>
-            </TouchableOpacity>
-            <View style={{ flex: 2 }} />
-          </View>
-        </View>
+        <AudioUpload />
       );
     }
     if (this.state.attachMenu) {
@@ -1019,11 +907,13 @@ class ChatRoomView extends React.Component {
 ChatRoomView.defaultProps = {
   obj: {},
   attach: {},
+  attachAudio: false,
 };
 
 ChatRoomView.propTypes = {
   obj: PropTypes.instanceOf(Group).isRequired,
   attach: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  attachAudio: React.PropTypes.bool,
 };
 
 /* Export Component ==================================================================== */
