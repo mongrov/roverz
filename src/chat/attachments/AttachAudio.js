@@ -289,18 +289,20 @@ export default class AttachAudio extends React.Component {
       >
         <View
           style={{
-            padding: 3,
+            flex: 1,
             flexDirection: 'row',
+            // borderWidth: 1,
           }}
         >
           <View
             style={{
+              flex: 1,
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
               margin: 5,
-              width: 80,
-              marginRight: 20,
+              // borderWidth: 1,
+
             }}
           >
             <Icon
@@ -320,11 +322,11 @@ export default class AttachAudio extends React.Component {
           </View>
           <View
             style={{
+              flex: 1,
               alignItems: 'center',
               justifyContent: 'center',
               margin: 5,
-              width: 70,
-              marginRight: 20,
+              // borderWidth: 1,
             }}
           >
             <Text
@@ -335,16 +337,18 @@ export default class AttachAudio extends React.Component {
                 paddingBottom: 20,
                 fontSize: 20,
               }}
-            >{`${(this.state.recordTime) < 10 ? '0' : ''}${this.state.recordTime}:00`}</Text>
+            >
+              {`00:${(this.state.recordTime) < 10 ? '0' : ''}${this.state.recordTime}`}
+            </Text>
           </View>
           <TouchableOpacity
             style={{
+              flex: 1,
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
               margin: 5,
-              width: 70,
-              marginRight: 10,
+              // borderWidth: 1,
             }}
             onPress={() => {
               this._toggleRecord();
@@ -366,11 +370,12 @@ export default class AttachAudio extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={{
+              flex: 1,
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
               margin: 5,
-              width: 70,
+              // borderWidth: 1,
             }}
             onPress={() => {
               this.setState({ cancelled: true });
@@ -391,7 +396,6 @@ export default class AttachAudio extends React.Component {
               }}
             >Cancel</Text>
           </TouchableOpacity>
-          <View style={{ flex: 2 }} />
         </View>
       </View>
     );
