@@ -100,7 +100,6 @@ const styl = {
 };
 
 /* Component ==================================================================== */
-
 class ChatRoomView extends React.Component {
   constructor(props) {
     super(props);
@@ -827,6 +826,70 @@ class ChatRoomView extends React.Component {
   }
 
   renderChat() {
+    if (this._group.readonly === false) {
+      console.log('readonly', this.state.readonly);
+      return (
+        <GiftedChat
+          // **** start base
+          messages={this.state.messages}
+          text={this.state.text}
+          onSend={this.onSend}
+          user={{
+            _id: Application.userId,
+          }}
+          loadEarlier={this.state.loadEarlier}
+          onLoadEarlier={this.onLoadEarlier}
+          keyboardShouldPersistTaps={'handled'}
+          renderAvatarOnTop={true}
+          isAnimated={true}
+          // **** end base
+
+          // **** start custom renders
+          renderAvatar={this.renderAvatar}
+          renderInputToolbar={this.renderInputToolbar}
+          renderBubble={this.renderBubble}
+          renderLoading={this.renderLoading}
+          renderFooter={this.renderFooter}
+          renderChatFooter={this.renderChatFooter}
+          renderComposer={this.renderComposer}
+          renderActions={this.renderActions}
+          renderSend={() => {}}
+          // renderInputToolbar={() => null}
+          // renderComposer={() => null}
+          // minInputToolbarHeight={0}
+          // **** end custom renders
+
+          // onLongPress={() => alert('hi')}
+
+          parsePatterns={() => [
+            { type: 'url',
+              style: styl.left.link,
+              onPress: (url) => {
+                Linking.openURL(url).catch(err => console.error('An error occurred', err));
+              },
+            },
+            { type: 'phone',
+              style: styl.left.link,
+              onPress: (url) => {
+                Linking.openURL(`tel:${url}`).catch(err => console.error('An error occurred', err));
+              },
+            },
+          ]}
+          // renderSend={this.renderSend}
+          // renderAccessory={() => <View style={{ height: 50, backgroundColor: 'teal' }} />}
+          // minInputToolbarHeight={this.state.height}
+          // renderFooter={() => <View style={{ flex: 1, height: 30, backgroundColor: 'yellow' }} />}
+          // onPressActionButton={() => alert('ji')}
+          // renderChatFooter={() => <View style={{ height: 20, backgroundColor: 'red' }} />}
+          // renderCustomView={() => <View style={{ height: 20, backgroundColor: 'green' }} />}
+          // renderCustomView={this.renderCustomView}
+          // renderMessageText={this.isMarkDownEnabled() ? this.renderMessageText : null}
+          // isLoadingEarlier={this.state.isLoadingEarlier}
+          // renderLoading={this.renderLoading}
+          // style={{ backgroundColor: 'red', zIndex: 100 }}
+        />
+      );
+    }
     return (
       <GiftedChat
         // **** start base
@@ -845,14 +908,17 @@ class ChatRoomView extends React.Component {
 
         // **** start custom renders
         renderAvatar={this.renderAvatar}
-        renderInputToolbar={this.renderInputToolbar}
+        // renderInputToolbar={this.renderInputToolbar}
         renderBubble={this.renderBubble}
         renderLoading={this.renderLoading}
         renderFooter={this.renderFooter}
         renderChatFooter={this.renderChatFooter}
-        renderComposer={this.renderComposer}
-        renderActions={this.renderActions}
+        // renderComposer={this.renderComposer}
+        // renderActions={this.renderActions}
         renderSend={() => {}}
+        renderInputToolbar={() => null}
+        renderComposer={() => null}
+        minInputToolbarHeight={0}
         // **** end custom renders
 
         // onLongPress={() => alert('hi')}

@@ -136,7 +136,7 @@ export default class AttachAudio extends React.Component {
       console.log('KRec 2', this.recorder);
       this.setState({ filePath: this.recorder._fsPath });
       this._recordInterval = setInterval(() => {
-        if (this.state.recordTime < 60) {
+        if (this.state.recordTime < 300) {      // Timeout 5 Min  to send
           console.log('time', this.state.recordTime);
           this.setState({ recordTime: this.state.recordTime + 1 });
           console.log('running-time', this.state.recordTime);
@@ -275,6 +275,9 @@ export default class AttachAudio extends React.Component {
   }
 
   render() {
+    const recT = this.state.recordTime;
+    const recM = (recT - (recT % 60)) / 60;
+    const recS = (recT % 60);
     return (
       <View
         style={{
@@ -289,20 +292,18 @@ export default class AttachAudio extends React.Component {
       >
         <View
           style={{
-            flex: 1,
+            padding: 3,
             flexDirection: 'row',
-            // borderWidth: 1,
           }}
         >
           <View
             style={{
-              flex: 1,
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
               margin: 5,
-              // borderWidth: 1,
-
+              width: 80,
+              marginRight: 20,
             }}
           >
             <Icon
@@ -322,11 +323,11 @@ export default class AttachAudio extends React.Component {
           </View>
           <View
             style={{
-              flex: 1,
               alignItems: 'center',
               justifyContent: 'center',
               margin: 5,
-              // borderWidth: 1,
+              width: 70,
+              marginRight: 20,
             }}
           >
             <Text
@@ -337,18 +338,16 @@ export default class AttachAudio extends React.Component {
                 paddingBottom: 20,
                 fontSize: 20,
               }}
-            >
-              {`00:${(this.state.recordTime) < 10 ? '0' : ''}${this.state.recordTime}`}
-            </Text>
+            >{`${recM < 10 ? '0' : ''}${recM}:${recS < 10 ? '0' : ''}${recS}`}</Text>
           </View>
           <TouchableOpacity
             style={{
-              flex: 1,
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
               margin: 5,
-              // borderWidth: 1,
+              width: 70,
+              marginRight: 10,
             }}
             onPress={() => {
               this._toggleRecord();
@@ -370,12 +369,11 @@ export default class AttachAudio extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              flex: 1,
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
               margin: 5,
-              // borderWidth: 1,
+              width: 70,
             }}
             onPress={() => {
               this.setState({ cancelled: true });
@@ -396,9 +394,9 @@ export default class AttachAudio extends React.Component {
               }}
             >Cancel</Text>
           </TouchableOpacity>
+          <View style={{ flex: 2 }} />
         </View>
       </View>
     );
   }
 }
-
