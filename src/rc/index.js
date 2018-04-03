@@ -464,7 +464,7 @@ class RC {
         // sync from last date when the group had message
         let lastMessageAt = _super.service._lastMessageAt(gID);
         if (lastMessageAt === 0) {
-          lastMessageAt = lastSyncTs;
+          lastMessageAt = new Date(lastSyncTs);
         }
         console.log('==== group ====', group.name, new Date(lastSyncTs), gID, lastMessageAt);
         // rid, lastMessage.ts
