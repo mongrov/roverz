@@ -19,6 +19,8 @@ import {
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import emoji from 'node-emoji';
+import ImagePicker from 'react-native-image-crop-picker';
+
 
 import {
   GiftedChat,
@@ -41,6 +43,7 @@ import ChatAvatar from './ChatAvatar';
 import Bubble from './Bubble';
 import ImageUtil from '../../attachments/ImageUtil';
 import t from '../../../i18n';
+
 
 const NO_OF_MSGS = 30;
 
@@ -180,6 +183,7 @@ class ChatRoomView extends React.Component {
     };
     this._group.messages.addListener(this._changeListener);
 
+
     // this._userTyping = this._network.meteor.monitorChanges('stream-notify-room', (result) => {
     //   // AppUtil.debug(result, '[Performance] RoomView userTyping');
     //   // user is typing message here result[0].args
@@ -299,6 +303,69 @@ class ChatRoomView extends React.Component {
       _super._progressCallback(fuFileName, fuMsg, percentage, 1, 0);
       console.log('APPSTATE RV - sendCameraImage callback');
     });
+  }
+  pickMultipleVideos() {
+    ImagePicker.openPicker({
+      multiple: true,
+      waitAnimationEnd: false,
+      includeExif: true,
+      mediaType: 'video',
+      maxFiles: 10,
+    }).then((videos) => {
+      console.log('received image 1', videos);
+      videos.map((video) => {
+        const _progressCallback = this._progressCallback;
+        new ImageUtil().uploadImage(video, this._group._id, false, 'Video',
+        (fuFileName, fuPercent, fuMsg) => {
+          console.log(fuFileName, ':', fuPercent, ':', fuMsg);
+          const fileNameCount = fuFileName;
+          const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
+          if (_progressCallback) {
+            _progressCallback(fileNameCount, fuMsg, percentage, 1, 0);
+          }
+        });
+        return null;
+      });
+      this.setState({
+        image: null,
+        videos: videos.map((i) => {
+          console.log('received image 2', i);
+          return { uri: i.path, width: i.width, height: i.height, mime: i.mime };
+        }),
+      });
+    }).catch(e => console.log(e));
+  }
+
+  pickMultiplePhotos() {
+    ImagePicker.openPicker({
+      multiple: true,
+      waitAnimationEnd: false,
+      includeExif: true,
+      mediaType: 'photo',
+      maxFiles: 10,
+    }).then((images) => {
+      console.log('ph-received image 1', images);
+      images.map((image) => {
+        const _progressCallback = this._progressCallback;
+        new ImageUtil().uploadImage(image, this._group._id, true, 'Image',
+        (fuFileName, fuPercent, fuMsg) => {
+          console.log('ph', fuFileName, ':', fuPercent, ':', fuMsg);
+          const fileNameCount = fuFileName;
+          const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
+          if (_progressCallback) {
+            _progressCallback(fileNameCount, fuMsg, percentage, 1, 0);
+          }
+        });
+        return null;
+      });
+      this.setState({
+        image: null,
+        images: images.map((i) => {
+          console.log('ph-received image 2', i);
+          return { uri: i.path, width: i.width, height: i.height, mime: i.mime };
+        }),
+      });
+    }).catch(e => console.log(e));
   }
 
   _progressCallback(id, msg, percent, totalFiles, fileCount) {
@@ -428,11 +495,7 @@ class ChatRoomView extends React.Component {
                   attachMenu: !this.state.attachMenu,
                   text: '',
                 });
-                Actions.photoLibrary({
-                  groupId: this._group._id,
-                  progressCallback: this._progressCallback,
-                  duration: 0,
-                });
+                this.pickMultiplePhotos();
               }}
             >
               <Icon
@@ -448,7 +511,40 @@ class ChatRoomView extends React.Component {
                 style={{
                   color: '#fff',
                 }}
-              >{t('txt_gallery')}</Text>
+              >Photos</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: 5,
+                width: 60,
+              }}
+              onPress={() => {
+                Keyboard.dismiss();
+                this.setState({
+                  attachMenu: !this.state.attachMenu,
+                  text: '',
+                });
+                this.pickMultipleVideos();
+              }}
+            >
+              <Icon
+                raised
+                name={'video-library'}
+                type={'MaterialIcons'}
+                color={'#609'}
+                reverse
+              />
+              <Text
+                numberOfLines={1}
+                ellipsizeMode={'tail'}
+                style={{
+                  color: '#fff',
+                }}
+              >Videos</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -974,6 +1070,7 @@ ChatRoomView.defaultProps = {
   obj: {},
   attach: {},
   attachAudio: false,
+
 };
 
 ChatRoomView.propTypes = {
