@@ -64,7 +64,10 @@
     "redux": "3.7.2",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.2.0",
-    "tcomb-form-native": "0.6.11"
+    "tcomb-form-native": "0.6.11",
+    "react-native-image-crop-picker": "^0.19.1",
+    "react-native-button": "1.6.0",
+    "react-native-slider": "^0.11.0"
   },
   "peerDependencies": {},
   "devDependencies": {

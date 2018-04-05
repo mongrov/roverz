@@ -36,7 +36,7 @@ export default class Group {
     return this.title || this.name;
   }
   get sortedMessages() {
-    return this.messages.sorted(Constants.CREATED_AT, true);
+    return this.messages.filtered(`type != ${Constants.M_TYPE_LOCATION}`).sorted(Constants.CREATED_AT, true);
   }
   get isPrivate() {
     return this.type === Constants.G_PRIVATE;

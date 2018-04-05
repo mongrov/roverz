@@ -9,6 +9,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import { Icon } from 'react-native-elements';
+import AudioPlay from './AudioPlay';
 
 const styles = StyleSheet.create({
   container: {
@@ -71,6 +72,13 @@ export default class MessageImage extends React.Component {
 
   render() {
     if (this.props.currentMessage.video) {
+      if (this.props.currentMessage.text === 'Audio message') {
+        return (
+          <View style={[styles.container]}>
+            <AudioPlay audioFile={this.props.currentMessage.video} />
+          </View>
+        );
+      }
       return (
         <View style={[styles.container]}>
           <TouchableOpacity
