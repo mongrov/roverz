@@ -314,16 +314,22 @@ class ChatRoomView extends React.Component {
     }).then((videos) => {
       console.log('received image 1', videos);
       videos.map((video) => {
-        const _progressCallback = this._progressCallback;
-        new ImageUtil().uploadImage(video, this._group._id, false, 'Video',
-        (fuFileName, fuPercent, fuMsg) => {
-          console.log(fuFileName, ':', fuPercent, ':', fuMsg);
-          const fileNameCount = fuFileName;
-          const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
-          if (_progressCallback) {
-            _progressCallback(fileNameCount, fuMsg, percentage, 1, 0);
-          }
-        });
+        for (let i = 0; i <= videos.length; i += 1) {
+          console.log('PM - imageafter', video);
+          const videoAdd = { path: videos[i].path };
+          console.log('PM - roomview', videoAdd);
+          const _progressCallback = this._progressCallback;
+          new ImageUtil().uploadImage(videoAdd, this._group._id, false, 'Video',
+          (fuFileName, fuPercent, fuMsg) => {
+            console.log(fuFileName, ':', fuPercent, ':', fuMsg);
+            const fileNameCount = fuFileName;
+            console.log('PM - fileNameCount', fileNameCount);
+            const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
+            if (_progressCallback) {
+              _progressCallback(fileNameCount, fuMsg, percentage, videos.length, i);
+            }
+          });
+        }
         return null;
       });
       this.setState({
@@ -344,18 +350,47 @@ class ChatRoomView extends React.Component {
       mediaType: 'photo',
       maxFiles: 10,
     }).then((images) => {
-      console.log('ph-received image 1', images);
+      console.log('PM - images', images);
       images.map((image) => {
-        const _progressCallback = this._progressCallback;
-        new ImageUtil().uploadImage(image, this._group._id, true, 'Image',
-        (fuFileName, fuPercent, fuMsg) => {
-          console.log('ph', fuFileName, ':', fuPercent, ':', fuMsg);
-          const fileNameCount = fuFileName;
-          const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
-          if (_progressCallback) {
-            _progressCallback(fileNameCount, fuMsg, percentage, 1, 0);
+        if (images && images.length > 0) {
+          if (images.length === 1) {
+            ImagePicker.openCropper({
+              path: images[0].path,
+              width: 300,
+              height: 400,
+            }).then((data) => {
+              console.log('PM - data', data);
+              const _progressCallback = this._progressCallback;
+              new ImageUtil().uploadImage(data, this._group._id, true, 'Image',
+              (fuFileName, fuPercent, fuMsg) => {
+                console.log(fuFileName, ':', fuPercent, ':', fuMsg);
+                const fileNameCount = fuFileName;
+                const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
+                if (_progressCallback) {
+                  _progressCallback(fileNameCount, fuMsg, percentage, 1, 0);
+                }
+              });
+            });
+          } else {
+            // console.log('PM - imagebrfore', image);
+            for (let i = 0; i <= images.length; i += 1) {
+              console.log('PM - imageafter', image);
+              const imageAdd = { path: images[i].path };
+              // console.log('PM - roomview', imaging);
+              const _progressCallback = this._progressCallback;
+              new ImageUtil().uploadImage(imageAdd, this._group._id, true, 'Image',
+              (fuFileName, fuPercent, fuMsg) => {
+                console.log(fuFileName, ':', fuPercent, ':', fuMsg);
+                const fileNameCount = fuFileName;
+                console.log('PM - fileNameCount', fileNameCount);
+                const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
+                if (_progressCallback) {
+                  _progressCallback(fileNameCount, fuMsg, percentage, images.length, i);
+                }
+              });
+            }
           }
-        });
+        }
         return null;
       });
       this.setState({
