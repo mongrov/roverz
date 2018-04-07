@@ -541,7 +541,14 @@ class RC {
       for (let i = 0; i < inSubscriptions.length; i += 1) {
         const obj = inSubscriptions[i];
         if (obj.t !== 'l') { // ignore live chat for now
-          let r = { _id: obj.rid, name: obj.name, title: obj.fname, updatedAt: obj._updatedAt, unread: obj.unread };
+          let r = {
+            _id: obj.rid,
+            name: obj.name,
+            title: obj.fname,
+            updatedAt: obj._updatedAt,
+            unread: obj.unread,
+            type: obj.t,
+          };
           r = AppUtil.removeEmptyValues(r);
           if (r._id) {
             groups[r._id] = r;
