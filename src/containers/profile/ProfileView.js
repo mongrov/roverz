@@ -93,7 +93,7 @@ class ProfileView extends Component {
         <View
           style={{ backgroundColor: AppColors.brand().primary }}
         >
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={Actions.cropImage}
             style={[styles.logout]}
           >
@@ -118,7 +118,7 @@ class ProfileView extends Component {
             <Text
               style={[styles.logoutText]}
             >{t('txt_change_password')}</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
             onPress={() => {
               Alert.alert(

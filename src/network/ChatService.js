@@ -259,7 +259,7 @@ class ChatService {
       const m = urlMessages[i];
       const tmp = Object.assign({}, m);
       const orig = JSON.parse(tmp.original);
-      if (orig.attachments && orig.attachments[0].video_url) {
+      if (orig.attachments && orig.attachments[0] && orig.attachments[0].video_url) {
         tmp.video = orig.attachments[0].video_url;
         // dirty fix
 //        tmp.image = tmp.video;
