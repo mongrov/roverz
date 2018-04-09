@@ -34,6 +34,8 @@ import Network from '../../../network';
 import { AppColors } from '../../../theme/';
 import t from '../../../i18n';
 import Color from './Color';
+import Constants from '../../../models/constants';
+
 
 export default class Bubble extends React.Component {
 
@@ -42,12 +44,14 @@ export default class Bubble extends React.Component {
     this.onLongPress = this.onLongPress.bind(this);
     this._network = new Network();
     this.obj = this.props.obj;
+    this.roomType = this.obj.type;
     this.pressLong = this.pressLong.bind(this);
     const likes = this.props.currentMessage.likes;
     const isReply = this.props.currentMessage.isReply;
     const original = JSON.parse(this.props.currentMessage.original);
     const canDelete = this._network.service.canDelete(original);
     this.state = {
+      roomType: this.roomType,
       showActions: false,
       likes,
       isReply,
@@ -534,6 +538,25 @@ export default class Bubble extends React.Component {
     }
     return null;
   }
+  renderUsername() {
+    if (this.state.roomType !== Constants.G_DIRECT) {
+      const username = this.props.currentMessage.user.name;
+      if (username) {
+        console.log('renderUsername', username);
+        const { containerStyle, wrapperStyle, ...usernameProps } = this.props;
+        if (this.props.renderUsername) {
+          return this.props.renderUsername(usernameProps);
+        }
+        return (
+          <Text style={[styles.standardFont, styles.headerItem, styles.username, this.props.usernameStyle]}>
+            {username}:
+          </Text>
+        );
+      }
+      return null;
+    }
+  }
+
 
   renderCustomView() {
     // if (this.props.renderCustomView) {
@@ -689,10 +712,19 @@ export default class Bubble extends React.Component {
                   justifyContent: 'space-between',
                 }}
               >
-                <View>
-                  {this.renderMessageImage()}
-                  {this.renderMessageText()}
-                </View>
+                {
+            (this.props.position === 'left' &&
+              <View>
+                {this.renderUsername()}
+                {this.renderMessageImage()}
+                {this.renderMessageText()}
+              </View>)
+              ||
+              <View>
+                {this.renderMessageImage()}
+                {this.renderMessageText()}
+              </View>
+            }
               </View>
               <View style={[styles.bottom, this.props.bottomContainerStyle[this.props.position]]}>
                 {this.renderActionsModal()}
@@ -740,6 +772,16 @@ const styles = {
     },
     containerToPrevious: {
       borderTopLeftRadius: 3,
+    },
+    standardFont: {
+      fontSize: 15,
+    },
+    username: {
+      fontWeight: 'bold',
+      color: AppColors.brand().primary,
+    },
+    headerItem: {
+      marginLeft: 10,
     },
   }),
   right: StyleSheet.create({
@@ -804,6 +846,16 @@ const styles = {
     borderColor: 'rgba(0,0,0,0.1)',
     borderWidth: 1,
   },
+  standardFont: {
+    fontSize: 15,
+  },
+  username: {
+    fontWeight: 'bold',
+    color: AppColors.brand().primary,
+  },
+  headerItem: {
+    marginLeft: 5,
+  },
 };
 
 Bubble.contextTypes = {
@@ -812,6 +864,7 @@ Bubble.contextTypes = {
 
 Bubble.defaultProps = {
   touchableProps: {},
+  renderUsername: null,
   onLongPress: null,
   renderMessageImage: null,
   renderMessageText: null,
@@ -830,6 +883,7 @@ Bubble.defaultProps = {
   replyStyle: {},
   wrapperStyle: {},
   bottomContainerStyle: {},
+  usernameStyle: {},
   tickStyle: {},
   containerToNextStyle: {},
   containerToPreviousStyle: {},
@@ -843,6 +897,7 @@ Bubble.defaultProps = {
 
 Bubble.propTypes = {
   touchableProps: PropTypes.object,  // eslint-disable-line react/forbid-prop-types
+  renderUsername: PropTypes.func,
   onLongPress: PropTypes.func,
   renderMessageImage: PropTypes.func,
   renderMessageText: PropTypes.func,
@@ -866,6 +921,7 @@ Bubble.propTypes = {
     left: ViewPropTypes.style,
     right: ViewPropTypes.style,
   }),
+  usernameStyle: Text.propTypes.style,
   tickStyle: Text.propTypes.style,
   containerToNextStyle: PropTypes.shape({
     left: ViewPropTypes.style,
