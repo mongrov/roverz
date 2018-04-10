@@ -154,7 +154,7 @@ export default class SelectServer extends React.Component {
     // Validation for alphanumeric, dash and dots
     if (inputServerVal) {
 //      inputServerVal = inputServerVal.replace(`.${Application.brandName}`, '');
-      const regexp = /^[a-zA-Z0-9-.]+$/;
+      const regexp = /^[[a-zA-Z].*]|[a-zA-Z0-9]+$/;
       if (regexp.test(inputServerVal)) {
         Application.resetInstance(inputServerVal);
         this.setState({

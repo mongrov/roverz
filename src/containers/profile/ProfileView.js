@@ -10,7 +10,7 @@ import {
   Icon,
 } from 'react-native-elements';
 
-import { Actions } from 'react-native-router-flux';
+// import { Actions } from 'react-native-router-flux';
 
 import t from '../../i18n/';
 import { Text } from '../../components/ui/';
