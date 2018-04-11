@@ -7,6 +7,9 @@
 import React, { PropTypes } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { AppColors } from '../../../theme';
+
+const iconColor = AppColors.brand().twenty_eighth;
 
 /* Component ==================================================================== */
 const NavbarMenuButton = ({ toggleSideMenu }) => (
@@ -16,7 +19,7 @@ const NavbarMenuButton = ({ toggleSideMenu }) => (
     style={{ top: 2 }}
     hitSlop={{ top: 7, right: 7, bottom: 7, left: 7 }}
   >
-    <Icon name={'menu'} size={32} color={'#FFF'} />
+    <Icon name={'menu'} size={32} color={iconColor} />
   </TouchableOpacity>
 );
 

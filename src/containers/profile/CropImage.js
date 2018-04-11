@@ -6,6 +6,8 @@ import {
 
 import Video from 'react-native-video';
 import { Button, Spacer } from '../../components/ui';
+import { AppColors } from '../../theme/';
+
 
 var ImagePicker = NativeModules.ImageCropPicker;
 
@@ -16,11 +18,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: AppColors.brand().nineteenth,
     marginBottom: 10,
   },
   text: {
-    color: 'white',
+    color: AppColors.brand().twentieth,
     fontSize: 20,
     textAlign: 'center',
   },

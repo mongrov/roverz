@@ -29,7 +29,7 @@ import t from '../../../i18n';
 
 
 /* Styles ==================================================================== */
-const MENU_BG_COLOR = '#345291';
+const MENU_BG_COLOR = AppColors.brand().twenty_fourth;
 
 const styles = StyleSheet.create({
   backgroundFill: {
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     lineHeight: parseInt(18 + (18 * 0.5), 10),
     fontWeight: '500',
     marginTop: 10,
-    color: '#EEEFF0',
+    color: AppColors.brand().twenty_fifth,
   },
 
   // Menu Bottom
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   menuBottom_text: {
-    color: '#EEEFF0',
+    color: AppColors.brand().twenty_sixth,
   },
   avatarImage: {
     width: 100,
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     left: 0,
     // borderRadius: 8,
     borderWidth: 3,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: AppColors.brand().twenty_seventh,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -3,16 +3,36 @@ import {
   // StatusBar,
   View,
   TouchableOpacity,
-  // StyleSheet,
+  StyleSheet,
   // Dimensions,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Icon } from 'react-native-elements';
 import Video from 'react-native-video-player';
 import PropTypes from 'prop-types';
+import { AppColors } from '../../theme';
 
 // const VIMEO_ID = '179859217'; // 179859217
 const thumbnailImg = require('../../images/video-thumb.jpg');
+
+const iconColor = AppColors.brand().thirty_first;
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: AppColors.brand().twenty_ninth,
+    flex: 1,
+    justifyContent: 'center',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    padding: 5,
+    backgroundColor: AppColors.brand().thirtieth,
+    borderRadius: 20,
+    zIndex: 999,
+  },
+});
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -152,32 +172,21 @@ export default class VideoPlayer extends Component {
     this.setState({ isBuffering });
   }
 
+
   render() {
     // const { height, width } = Dimensions.get('window');
     return (
       <View
-        style={{
-          backgroundColor: '#000',
-          flex: 1,
-          justifyContent: 'center',
-        }}
+        style={styles.container}
       >
         <TouchableOpacity
-          style={[{
-            position: 'absolute',
-            top: 20,
-            left: 20,
-            padding: 5,
-            backgroundColor: 'rgba(143, 143, 143, 0.65)',
-            borderRadius: 20,
-            zIndex: 999,
-          }]}
+          style={[styles.backButton]}
           onPress={Actions.pop}
         >
           <Icon
             name="arrow-back"
             size={30}
-            color={'rgba(255,255,255,0.75)'}
+            color={iconColor}
             width={30}
           />
         </TouchableOpacity>

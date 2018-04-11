@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     marginBottom: (Platform.OS === 'ios') ? 16 : 0,
   },
   textInput: {
-    backgroundColor: '#F5F5F5',
+    backgroundColor: AppColors.brand().fourteenth,
     borderRadius: 3,
     padding: 5,
     marginRight: 8,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   keyboardView: {
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: AppColors.brand().fifteenth,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -156,7 +156,7 @@ export default class ImagePreview extends React.Component {
           <Icon
             name="arrow-back"
             size={20}
-            color="#000"
+            color={AppColors.brand().sixteenth}
             width={20}
           />
         </TouchableOpacity>

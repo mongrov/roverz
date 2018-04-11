@@ -3,13 +3,15 @@ import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import Image from 'react-native-transformable-image';
 import PropTypes from 'prop-types';
 import t from '../../i18n/';
+import { AppColors } from '../../theme';
+
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000' },
+  container: { flex: 1, backgroundColor: AppColors.brand().tenth },
   captionContainer: {
     bottom: 0,
     height: 65,
-    backgroundColor: 'rgba(0,0,0,0.05)',
+    backgroundColor: AppColors.brand().eleventh,
     width: '100%',
     position: 'absolute',
     justifyContent: 'center',
@@ -23,7 +25,7 @@ const styles = StyleSheet.create({
   header: {
     top: 0,
     height: 65,
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+    backgroundColor: AppColors.brand().twelfth,
     width: '100%',
     position: 'absolute',
     justifyContent: 'center',
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
   galleryCount: {
     top: 0,
     height: 65,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: AppColors.brand().thirteenth,
     width: '100%',
     position: 'absolute',
     justifyContent: 'center',

@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   logoutText: {
     marginLeft: 10,
-    color: '#FFF',
+    color: AppColors.brand().seventeenth,
     fontSize: 16,
     fontWeight: '400',
   },
@@ -146,7 +146,7 @@ class ChangePassword extends Component {
     return (
       <View style={[styles.container]}>
         <NavBarBack />
-        <View style={{ backgroundColor: '#FFF', flex: 1, padding: 15, paddingTop: 70 }}>
+        <View style={{ backgroundColor: AppColors.brand().eighteenth, flex: 1, padding: 15, paddingTop: 70 }}>
           <Alerts
             status={this.state.resultMsg.status}
             success={this.state.resultMsg.success}

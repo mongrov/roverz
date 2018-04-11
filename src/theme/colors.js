@@ -17,6 +17,40 @@ const brand = {
     fourth: '#7D7FA7',
     fifth: '#636AFF',
     sixth: '#4C4D75',
+    // aboutview
+    seventh: 'rgba(255,255,255,0.7)',
+    eighth: 'rgba(255,255,255,0.5)',
+    ninth: 'rgba(255,255,255,1)',
+    // ImageGallery
+    tenth: '#000',
+    eleventh: 'rgba(0,0,0,0.05)',
+    twelfth: 'rgba(0, 0, 0, 0.05)',
+    thirteenth: 'rgba(0, 0, 0, 0.7)',
+    // ImagePreview
+    fourteenth: '#F5F5F5',
+    fifteenth: 'rgba(0,0,0,0.4)',
+    sixteenth: '#000',
+    // Change Password
+    seventeenth: '#FFF',
+    eighteenth: '#FFF',
+    // Crop Image
+    nineteenth: 'blue',
+    twentieth: 'white',
+    // ProfileView
+    twenty_first: 'rgba(255,255,255,0.3)',
+    twenty_second: '#FFF',
+    twenty_third: 'rgba(255,255,255,0.4)',
+    // MenuView
+    twenty_fourth: '#345291',
+    twenty_fifth: '#EEEFF0',
+    twenty_sixth: '#EEEFF0',
+    twenty_seventh: 'rgba(255, 255, 255, 0.2)',
+    // NavbarMenuButtonView
+    twenty_eighth: '#FFF',
+    // VideoPlayer
+    twenty_ninth: '#000',
+    thirtieth: 'rgba(143, 143, 143, 0.65)',
+    thirty_first: 'rgba(255,255,255,0.75)',
   },
   chatColors: {
     bubbleLeft: '#f0f0f0',

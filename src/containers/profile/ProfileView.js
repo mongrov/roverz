@@ -20,6 +20,8 @@ import Network from '../../network';
 import { AppColors } from '../../theme/';
 import Application from '../../constants/config';
 
+const iconColor = AppColors.brand().twenty_third;
+
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
@@ -31,11 +33,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255,255,255,0.3)',
+    borderBottomColor: AppColors.brand().twenty_first,
   },
   logoutText: {
     marginLeft: 10,
-    color: '#FFF',
+    color: AppColors.brand().twenty_second,
     fontSize: 16,
     fontWeight: '400',
   },
@@ -140,7 +142,7 @@ class ProfileView extends Component {
             <Icon
               name={'logout-variant'}
               type={'material-community'}
-              color={'rgba(255,255,255,0.4)'}
+              color={iconColor}
             />
             <Text
               style={[styles.logoutText]}
