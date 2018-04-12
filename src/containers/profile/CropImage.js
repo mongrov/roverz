@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    backgroundColor: AppColors.brand().nineteenth,
+    backgroundColor: AppColors.brand().cI_buttonBg,
     marginBottom: 10,
   },
   text: {
-    color: AppColors.brand().twentieth,
+    color: AppColors.brand().cI_textColor,
     fontSize: 20,
     textAlign: 'center',
   },

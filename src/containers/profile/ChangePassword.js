@@ -27,6 +27,12 @@ const styles = StyleSheet.create({
     position: 'relative',
     flex: 1,
   },
+  subContainer: {
+    backgroundColor: AppColors.brand().cP_subContainerBg,
+    flex: 1,
+    padding: 15,
+    paddingTop: 70,
+  },
   logout: {
     flexDirection: 'row',
     paddingVertical: 12,
@@ -37,7 +43,7 @@ const styles = StyleSheet.create({
   },
   logoutText: {
     marginLeft: 10,
-    color: AppColors.brand().seventeenth,
+    color: AppColors.brand().cP_logoutTextColor,
     fontSize: 16,
     fontWeight: '400',
   },
@@ -146,7 +152,7 @@ class ChangePassword extends Component {
     return (
       <View style={[styles.container]}>
         <NavBarBack />
-        <View style={{ backgroundColor: AppColors.brand().eighteenth, flex: 1, padding: 15, paddingTop: 70 }}>
+        <View style={styles.subContainer}>
           <Alerts
             status={this.state.resultMsg.status}
             success={this.state.resultMsg.success}

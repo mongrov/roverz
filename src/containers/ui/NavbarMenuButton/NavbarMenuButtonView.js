@@ -9,7 +9,7 @@ import { TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { AppColors } from '../../../theme';
 
-const iconColor = AppColors.brand().twenty_eighth;
+const iconColor = AppColors.brand().nav_iconColor;
 
 /* Component ==================================================================== */
 const NavbarMenuButton = ({ toggleSideMenu }) => (

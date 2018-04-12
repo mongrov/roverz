@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Text,
   View,
-  // StyleSheet,
+  StyleSheet,
   // Switch,
   // Slider,
   TouchableOpacity,
@@ -21,10 +21,65 @@ import moment from 'moment';
 import { Icon } from 'react-native-elements';
 // import { CircularProgress } from 'react-native-circular-progress';
 import { Actions } from 'react-native-router-flux';
-import { AppColors } from 'roverz-chat';
+import { AppColors } from '../../theme';
 // import AudioUtil from './AudioUtil';
 
 const filename = 'mongrov-voice-test.mp4';
+const sendIconColor = AppColors.brand().aA_sendIconColor;
+const cancelColor = AppColors.brand().aA_cancelColor;
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: 5,
+    padding: 5,
+  },
+  subcontainer: {
+    padding: 3,
+    flexDirection: 'row',
+  },
+  recordView: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
+    width: 80,
+    marginRight: 20,
+  },
+  timerView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
+    width: 70,
+    marginRight: 20,
+  },
+  textColor: {
+    color: AppColors.brand().aA_textColor,
+  },
+  timerText: {
+    color: AppColors.brand().aA_textColor,
+    paddingBottom: 20,
+    fontSize: 20,
+  },
+  sendView: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
+    width: 70,
+    marginRight: 10,
+  },
+  cancelView: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
+    width: 70,
+  },
+});
 
 // var styles = StyleSheet.create({
 //   button: {
@@ -280,31 +335,13 @@ export default class AttachAudio extends React.Component {
     const recS = (recT % 60);
     return (
       <View
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          borderRadius: 5,
-          padding: 5,
-          backgroundColor: AppColors.brand().fourth,
-        }}
+        style={[styles.container, { backgroundColor: AppColors.brand().fourth }]}
       >
         <View
-          style={{
-            padding: 3,
-            flexDirection: 'row',
-          }}
+          style={styles.subcontainer}
         >
           <View
-            style={{
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: 5,
-              width: 80,
-              marginRight: 20,
-            }}
+            style={styles.recordView}
           >
             <Icon
               raised
@@ -316,39 +353,20 @@ export default class AttachAudio extends React.Component {
             <Text
               numberOfLines={1}
               ellipsizeMode={'tail'}
-              style={{
-                color: '#fff',
-              }}
+              style={styles.textColor}
             >Recording...</Text>
           </View>
           <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: 5,
-              width: 70,
-              marginRight: 20,
-            }}
+            style={styles.timerView}
           >
             <Text
               numberOfLines={1}
               ellipsizeMode={'tail'}
-              style={{
-                color: '#fff',
-                paddingBottom: 20,
-                fontSize: 20,
-              }}
+              style={[styles.timerText]}
             >{`${recM < 10 ? '0' : ''}${recM}:${recS < 10 ? '0' : ''}${recS}`}</Text>
           </View>
           <TouchableOpacity
-            style={{
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: 5,
-              width: 70,
-              marginRight: 10,
-            }}
+            style={styles.sendView}
             onPress={() => {
               this._toggleRecord();
             }}
@@ -356,25 +374,17 @@ export default class AttachAudio extends React.Component {
             <Icon
               raised
               name="send"
-              color={'green'}
+              color={sendIconColor}
               reverse
             />
             <Text
               numberOfLines={1}
               ellipsizeMode={'tail'}
-              style={{
-                color: '#fff',
-              }}
+              style={styles.textColor}
             >Send</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: 5,
-              width: 70,
-            }}
+            style={styles.cancelView}
             onPress={() => {
               this.setState({ cancelled: true });
               this._toggleRecord();
@@ -383,15 +393,13 @@ export default class AttachAudio extends React.Component {
             <Icon
               raised
               name="delete"
-              color={'red'}
+              color={cancelColor}
               reverse
             />
             <Text
               numberOfLines={1}
               ellipsizeMode={'tail'}
-              style={{
-                color: '#fff',
-              }}
+              style={styles.textColor}
             >Cancel</Text>
           </TouchableOpacity>
           <View style={{ flex: 2 }} />

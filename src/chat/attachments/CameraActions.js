@@ -12,12 +12,20 @@ import { Icon } from 'react-native-elements';
 import Camera from 'react-native-camera';
 import { Actions } from 'react-native-router-flux';
 import ImagePicker from 'react-native-image-crop-picker';
+import { AppColors } from '../../theme';
 
 // import Loading from '@components/general/Loading';
 import ImageUtil from './ImageUtil';
 import Group from '../../models/group';
 
+const camUnderlayColor = AppColors.brand().cA_camUnderlayColor;
+const cameraIconColor = AppColors.brand().cA_cameraIconColor;
+const closeIconColor = AppColors.brand().cA_closeIconColor;
+
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   preview: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -39,14 +47,14 @@ const styles = StyleSheet.create({
   },
   bottomOverlay: {
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: AppColors.brand().cA_bottomOverlayBg,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
   captureButton: {
     padding: 15,
-    backgroundColor: 'white',
+    backgroundColor: AppColors.brand().cA_captureButtonBg,
     borderRadius: 40,
   },
   typeButton: {
@@ -57,7 +65,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     padding: 5,
-    backgroundColor: 'white',
+    backgroundColor: AppColors.brand().cA_closeButtonBg,
     borderRadius: 40,
   },
   messageContainer: {
@@ -66,7 +74,7 @@ const styles = StyleSheet.create({
     marginBottom: (Platform.OS === 'ios') ? 16 : 0,
   },
   textInput: {
-    backgroundColor: '#F5F5F5',
+    backgroundColor: AppColors.brand().cA_textInputBg,
     borderRadius: 3,
     padding: 5,
     marginRight: 8,
@@ -82,6 +90,22 @@ const styles = StyleSheet.create({
   buttonsSpace: {
     width: 30,
   },
+  iconBottomView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  timerView: {
+    backgroundColor: AppColors.brand().cA_timerViewBg,
+  },
+  timerText: {
+    color: AppColors.brand().cA_timerTextColor,
+    fontSize: 18,
+  },
+  videoRecordView: {
+    backgroundColor: AppColors.brand().cA_videoRecorderBg,
+  },
+
 });
 
 export default class CameraActions extends React.Component {
@@ -291,9 +315,7 @@ export default class CameraActions extends React.Component {
     const recS = (recT % 60);
     return (
       <View
-        style={{
-          flex: 1,
-        }}
+        style={styles.container}
       >
         <Camera
           ref={(cam) => {
@@ -311,7 +333,7 @@ export default class CameraActions extends React.Component {
           mirrorImage={false}
         />
         <View style={[styles.overlay, styles.bottomOverlay]}>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+          <View style={styles.iconBottomView}>
             {
                 (!this.state.isRecording
                 &&
@@ -325,9 +347,9 @@ export default class CameraActions extends React.Component {
                 </TouchableOpacity>)
                 ||
                 <View
-                  style={[styles.captureButton, { backgroundColor: 'red' }]}
+                  style={[styles.captureButton, styles.timerView]}
                 >
-                  <Text style={{ color: '#fff', fontSize: 18 }}>
+                  <Text style={[styles.timerText]}>
                     {`${recM < 10 ? '0' : ''}${recM}:${recS < 10 ? '0' : ''}${recS}`}</Text>
                 </View>
                 }
@@ -342,12 +364,12 @@ export default class CameraActions extends React.Component {
                   }}
                   disabled={this.state.isRecording}
                   activeOpacity={0.3}
-                  underlayColor={'rgba(0,0,0,0.3)'}
+                  underlayColor={camUnderlayColor}
                 >
                   <Icon
                     name="camera-enhance"
                     size={32}
-                    color="#000"
+                    color={cameraIconColor}
                     width={30}
                   />
                 </TouchableOpacity>
@@ -367,7 +389,7 @@ export default class CameraActions extends React.Component {
                 </TouchableOpacity>)
                 ||
                 <TouchableOpacity
-                  style={[styles.captureButton, { backgroundColor: 'red' }]}
+                  style={[styles.captureButton, styles.videoRecordView]}
                   onPress={this.stopRecording}
                   activeOpacity={0.3}
                 >
@@ -405,7 +427,7 @@ export default class CameraActions extends React.Component {
           <Icon
             name="close"
             size={30}
-            color="#000"
+            color={closeIconColor}
             width={30}
           />
         </TouchableOpacity>

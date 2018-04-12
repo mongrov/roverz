@@ -15,11 +15,11 @@ import { AppColors } from '../../theme';
 // const VIMEO_ID = '179859217'; // 179859217
 const thumbnailImg = require('../../images/video-thumb.jpg');
 
-const iconColor = AppColors.brand().thirty_first;
+const iconColor = AppColors.brand().vP_iconColor;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: AppColors.brand().twenty_ninth,
+    backgroundColor: AppColors.brand().vP_containerBg,
     flex: 1,
     justifyContent: 'center',
   },
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     top: 20,
     left: 20,
     padding: 5,
-    backgroundColor: AppColors.brand().thirtieth,
+    backgroundColor: AppColors.brand().vP_backButtonBg,
     borderRadius: 20,
     zIndex: 999,
   },

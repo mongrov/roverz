@@ -20,7 +20,7 @@ import Network from '../../network';
 import { AppColors } from '../../theme/';
 import Application from '../../constants/config';
 
-const iconColor = AppColors.brand().twenty_third;
+const iconColor = AppColors.brand().pV_iconColor;
 
 const styles = StyleSheet.create({
   container: {
@@ -33,11 +33,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: AppColors.brand().twenty_first,
+    borderBottomColor: AppColors.brand().pV_logoutBorderBottomColor,
   },
   logoutText: {
     marginLeft: 10,
-    color: AppColors.brand().twenty_second,
+    color: AppColors.brand().pV_logoutTextColor,
     fontSize: 16,
     fontWeight: '400',
   },

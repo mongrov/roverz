@@ -7,25 +7,25 @@ import { AppColors } from '../../theme';
 
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: AppColors.brand().tenth },
+  container: { flex: 1, backgroundColor: AppColors.brand().iG_containerBg },
   captionContainer: {
     bottom: 0,
     height: 65,
-    backgroundColor: AppColors.brand().eleventh,
+    backgroundColor: AppColors.brand().iG_captionContainerBg,
     width: '100%',
     position: 'absolute',
     justifyContent: 'center',
   },
   captionText: {
     textAlign: 'center',
-    color: 'white',
+    color: AppColors.brand().iG_captionTextColor,
     fontSize: 15,
     fontStyle: 'italic',
   },
   header: {
     top: 0,
     height: 65,
-    backgroundColor: AppColors.brand().twelfth,
+    backgroundColor: AppColors.brand().iG_headerBg,
     width: '100%',
     position: 'absolute',
     justifyContent: 'center',
@@ -33,26 +33,26 @@ const styles = StyleSheet.create({
   galleryCount: {
     top: 0,
     height: 65,
-    backgroundColor: AppColors.brand().thirteenth,
+    backgroundColor: AppColors.brand().iG_galleryCountBg,
     width: '100%',
     position: 'absolute',
     justifyContent: 'center',
   },
   galleryText: {
     textAlign: 'right',
-    color: 'white',
+    color: AppColors.brand().iG_galleryTextColor,
     fontSize: 15,
     fontStyle: 'italic',
     paddingRight: '10%',
   },
   error: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: AppColors.brand().iG_errorBg,
     alignItems: 'center',
     justifyContent: 'center',
   },
   errorText: {
-    color: 'white',
+    color: AppColors.brand().iG_errorTextColor,
     fontSize: 15,
     fontStyle: 'italic',
   },

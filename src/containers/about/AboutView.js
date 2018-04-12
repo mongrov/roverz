@@ -16,17 +16,17 @@ const styles = StyleSheet.create({
   paraText: {
     fontSize: 14,
     fontFamily: 'OpenSans-Regular',
-    color: AppColors.brand().seventh,
+    color: AppColors.brand().aV_paraText,
   },
   paraTextLight: {
     fontSize: 14,
     fontFamily: 'OpenSans-Regular',
-    color: AppColors.brand().eighth,
+    color: AppColors.brand().aV_paraTextLight,
   },
   headText: {
     fontSize: 16,
     fontFamily: 'OpenSans-Regular',
-    color: AppColors.brand().ninth,
+    color: AppColors.brand().aV_headText,
   },
 });
 
