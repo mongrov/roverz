@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     flexDirection: 'column',
-    borderBottomColor: 'rgba(0,0,0,0.3)',
+    borderBottomColor: AppColors.brand().mL_detailViewBorderBottomColor,
     borderBottomWidth: 1,
     paddingBottom: 15,
     paddingTop: 300,
@@ -124,7 +124,7 @@ export default class MemberListView extends Component {
     const userObj = this._service.chat.service.db.users.findById(rowData._id);
     const avatar = userObj.avatar;
     const status = userObj.status;
-    let statColor = '#a8a8a8';
+    let statColor = AppColors.brand().mL_statColor;
     switch (status) {
       case Constants.U_ONLINE:
         statColor = AppColors.status().online; break;

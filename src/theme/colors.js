@@ -72,6 +72,26 @@ const brand = {
     cA_camUnderlayColor: 'rgba(0,0,0,0.3)',
     cA_cameraIconColor: '#000',
     cA_closeIconColor: '#000',
+      // PhotoLibrary - file not using now
+      // GroupView
+    gV_subTitleText01: '#4B5155',
+    gV_subTitleText02: '#7B8287',
+    gV_subTitleMessage: '#7B8287',
+    gV_badgeTextColor: 'white',
+    gV_badgeContainerBg: '#37C7A1',
+    gV_plusButtonShadowColor: '#000000',
+    gV_toastTextColor: '#fff',
+    gV_addIconColor: '#fff',
+      // MemberDetailView
+    mD_imageBg: 'rgba(0,0,0,0.05)',
+    mD_dataContainerBorderTopColor: 'rgba(0,0,0,0.1)',
+    mD_statusTextColor: 'rgba(0,0,0,0.5)',
+    mD_statColor: 'rgba(0,0,0,0.3)',
+      // MemberListView
+    mL_detailViewBorderBottomColor: 'rgba(0,0,0,0.3)',
+    mL_statColor: '#a8a8a8',
+      // SearchRoomView
+    sR_listStyleBg: '#fff',
   },
   chatColors: {
     bubbleLeft: '#f0f0f0',

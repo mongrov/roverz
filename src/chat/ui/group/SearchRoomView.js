@@ -13,6 +13,7 @@ import {
   StatusBar,
   TextInput,
   View,
+  StyleSheet,
   Keyboard,
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -29,6 +30,22 @@ import {
 } from '../';
 
 const memberListData = [];
+
+const styles = StyleSheet.create({
+  listStyle: {
+    paddingTop: 0,
+    backgroundColor: AppColors.brand().sR_listStyleBg,
+  },
+  textInputView: {
+    borderBottomWidth: 1,
+    marginHorizontal: 10,
+  },
+  textInputStyle: {
+    height: 40,
+    fontSize: 16,
+    fontFamily: 'OpenSans-Regular',
+  },
+});
 
 export default class SearchRoomView extends Component {
 
@@ -123,18 +140,10 @@ export default class SearchRoomView extends Component {
       >
         <StatusBar barStyle="light-content" />
         <View
-          style={{
-            borderBottomColor: AppColors.brand().third,
-            borderBottomWidth: 1,
-            marginHorizontal: 10,
-          }}
+          style={[styles.textInputView, { borderBottomColor: AppColors.brand().third }]}
         >
           <TextInput
-            style={{
-              height: 40,
-              fontSize: 16,
-              fontFamily: 'OpenSans-Regular',
-            }}
+            style={styles.textInputStyle}
             autoCorrect={false}
             autoFocus={true}
             placeholder={t('ph_search_roomname')}
@@ -143,7 +152,7 @@ export default class SearchRoomView extends Component {
             underlineColorAndroid={'transparent'}
           />
         </View>
-        <List keyboardShouldPersistTaps={'always'} style={{ paddingTop: 0, backgroundColor: '#fff' }}>
+        <List keyboardShouldPersistTaps={'always'} style={styles.listStyle}>
           <ListView
             renderRow={this.renderRow}
             dataSource={this.state.dataSource}

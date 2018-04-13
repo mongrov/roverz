@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     zIndex: 999,
-    backgroundColor: 'rgba(0,0,0,0.05)',
+    backgroundColor: AppColors.brand().mD_imageBg,
   },
   avatar: {
     position: 'absolute',
@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   dataContainer: {
-    borderTopColor: 'rgba(0,0,0,0.1)',
+    borderTopColor: AppColors.brand().mD_dataContainerBorderTopColor,
+    // borderTopColor: 'red',
     borderTopWidth: 1,
     width: 150,
     flexDirection: 'row',
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   statusText: {
-    color: 'rgba(0,0,0,0.5)',
+    color: AppColors.brand().mD_statusTextColor,
   },
 });
 
@@ -79,7 +80,7 @@ export default class MemberDetailView extends Component {
         avatar: '',
         type: '',
         status: '',
-        statColor: 'rgba(0,0,0,0.3)',
+        statColor: AppColors.brand().mD_statColor,
       },
       layout: {
         height,

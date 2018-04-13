@@ -28,6 +28,7 @@ import {
 import t from '../../i18n';
 
 /* Styles ==================================================================== */
+const addIconColor = '#fff';
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
@@ -36,11 +37,11 @@ const styles = StyleSheet.create({
   lItemTitle: { paddingRight: 40 },
   lItemSubTitle: { paddingTop: 0, marginLeft: 0, flex: 1, flexDirection: 'column' },
   row: { flexDirection: 'row' },
-  subTitleText01: { textAlign: 'left', color: '#4B5155', fontSize: 14, flex: 1 },
-  subTitleText02: { textAlign: 'right', color: '#7B8287', fontSize: 12 },
-  subTitleMessage: { textAlign: 'left', color: '#7B8287', fontSize: 12, marginRight: 40 },
+  subTitleText01: { textAlign: 'left', color: AppColors.brand().gV_subTitleText01, fontSize: 14, flex: 1 },
+  subTitleText02: { textAlign: 'right', color: AppColors.brand().gV_subTitleText02, fontSize: 12 },
+  subTitleMessage: { textAlign: 'left', color: AppColors.brand().gV_subTitleMessage, fontSize: 12, marginRight: 40 },
   badgeText: {
-    color: 'white',
+    color: AppColors.brand().gV_badgeTextColor,
     width: 24,
     height: 24,
     paddingTop: 5,
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     right: 0,
     top: 0,
-    backgroundColor: '#37C7A1',
+    backgroundColor: AppColors.brand().gV_badgeContainerBg,
     width: 24,
     height: 24,
     borderRadius: 12,
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     bottom: 90,
     right: 30,
     zIndex: 200,
-    shadowColor: '#000000',
+    shadowColor: AppColors.brand().gV_plusButtonShadowColor,
     shadowOffset: {
       width: 1,
       height: 1,
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 5,
   },
-  toastText: { color: '#fff', fontSize: 12 },
+  toastText: { color: AppColors.brand().gV_toastTextColor, fontSize: 12 },
   list: { paddingBottom: 110 },
 });
 
@@ -250,7 +251,7 @@ class GroupList extends Component {
             name="add"
             type="MaterialIcons"
             size={45}
-            color={'#fff'}
+            color={addIconColor}
           />
         </TouchableOpacity>
         {
