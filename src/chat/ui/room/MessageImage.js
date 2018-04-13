@@ -10,6 +10,10 @@ import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
 import { Icon } from 'react-native-elements';
 import AudioPlay from './AudioPlay';
+import { AppColors } from '../../../theme/';
+
+const playCircleIconColor = AppColors.brand().mI_playCircleIconColor;
+const activityIndicatorColor = AppColors.brand().mI_activityIndicatorColor;
 
 const styles = StyleSheet.create({
   container: {
@@ -31,7 +35,7 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 13,
     margin: 3,
-    backgroundColor: 'white',
+    backgroundColor: AppColors.brand().mI_mapViewBg,
   },
 });
 
@@ -91,7 +95,7 @@ export default class MessageImage extends React.Component {
               <Icon
                 name="play-circle-filled"
                 size={48}
-                color={'#000'}
+                color={playCircleIconColor}
               />
             </CachedImage>
           </TouchableOpacity>
@@ -130,7 +134,7 @@ export default class MessageImage extends React.Component {
                   <ActivityIndicator
                     animating
                     size={'large'}
-                    color={'#AAA'}
+                    color={activityIndicatorColor}
                   />
                 </View>
               )

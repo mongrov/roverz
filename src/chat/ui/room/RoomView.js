@@ -46,9 +46,23 @@ import t from '../../../i18n';
 
 
 const NO_OF_MSGS = 30;
+const photoIconColor = AppColors.brand().room_photoIconColor;
+const videoIconColor = AppColors.brand().room_videoIconColor;
+const cameraIconColor = AppColors.brand().room_cameraIconColor;
+const audioIconColor = AppColors.brand().room_audioIconColor;
+const sentBgColor = AppColors.brand().room_sentBgColor;
+const failedBgColor = AppColors.brand().room_failedBgColor;
+const playlistAddIconColor = AppColors.brand().room_playlistAddIconColor;
+const placeholderTextColor = AppColors.brand().room_placeholderTextColor;
+const inputToolbarBg = AppColors.brand().room_inputToolbarBg;
+const loadingIndicator = AppColors.brand().room_loadingIndicator;
 
 /* Styles ==================================================================== */
 const styles = StyleSheet.create({
+  container: {
+    position: 'relative',
+    backgroundColor: AppColors.brand().room_containerBg,
+  },
   footerContainer: {
     marginTop: 5,
     marginLeft: 10,
@@ -57,8 +71,42 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 14,
-    color: '#aaa',
+    color: AppColors.brand().room_footerTextColor,
     marginBottom: 10,
+  },
+  chatFooterText: {
+    color: AppColors.brand().room_chatFooterTextColor,
+  },
+  footerView: {
+    backgroundColor: AppColors.brand().room_footerViewBg,
+    borderRadius: 3,
+    padding: 10,
+    marginVertical: 5,
+  },
+  textInputStyleAndroid: {
+    flex: 1,
+    padding: 5,
+    fontSize: 16,
+    fontFamily: 'OpenSans-Regular',
+    borderRadius: 5,
+    minHeight: 44,
+    maxHeight: 120,
+    backgroundColor: AppColors.brand().room_textInputStyleBg,
+  },
+  textInputStyleIos: {
+    backgroundColor: AppColors.brand().room_textInputStyleBg,
+    borderRadius: 3,
+    padding: 5,
+    marginRight: 5,
+    marginLeft: 0,
+    lineHeight: 16,
+    fontSize: 16,
+    fontFamily: 'OpenSans-Regular',
+  },
+  toastText: {
+    color: AppColors.brand().room_toastTextColor,
+    fontFamily: 'OpenSans-Regular',
+    fontSize: 12,
   },
 });
 
@@ -537,15 +585,13 @@ class ChatRoomView extends React.Component {
                 raised
                 name={'image-multiple'}
                 type={'material-community'}
-                color={'#ff5608'}
+                color={photoIconColor}
                 reverse
               />
               <Text
                 numberOfLines={1}
                 ellipsizeMode={'tail'}
-                style={{
-                  color: '#fff',
-                }}
+                style={styles.chatFooterText}
               >Photos</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -570,15 +616,13 @@ class ChatRoomView extends React.Component {
                 raised
                 name={'video-library'}
                 type={'MaterialIcons'}
-                color={'#609'}
+                color={videoIconColor}
                 reverse
               />
               <Text
                 numberOfLines={1}
                 ellipsizeMode={'tail'}
-                style={{
-                  color: '#fff',
-                }}
+                style={styles.chatFooterText}
               >Videos</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -608,15 +652,13 @@ class ChatRoomView extends React.Component {
                 raised
                 name={'camera'}
                 type={'material-community'}
-                color={'#01bcd7'}
+                color={cameraIconColor}
                 reverse
               />
               <Text
                 numberOfLines={1}
                 ellipsizeMode={'tail'}
-                style={{
-                  color: '#fff',
-                }}
+                style={styles.chatFooterText}
               >{t('txt_camera')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -641,15 +683,13 @@ class ChatRoomView extends React.Component {
                 raised
                 name={'microphone'}
                 type={'material-community'}
-                color={'#0ba83a'}
+                color={audioIconColor}
                 reverse
               />
               <Text
                 numberOfLines={1}
                 ellipsizeMode={'tail'}
-                style={{
-                  color: '#fff',
-                }}
+                style={styles.chatFooterText}
               >{'Audio'}</Text>
             </TouchableOpacity>
             <View style={{ flex: 2 }} />
@@ -678,12 +718,7 @@ class ChatRoomView extends React.Component {
           uploadProgress.push(
             <View
               key={i}
-              style={{
-                backgroundColor: '#F3F3F3',
-                borderRadius: 3,
-                padding: 10,
-                marginVertical: 5,
-              }}
+              style={styles.footerView}
             >
               <Text style={styles.footerText}>
                 {`Uploading: ${this.state.uploadingFile[i].id}, ${this.state.uploadingFile[i].percent}% Completed..`}
@@ -696,9 +731,9 @@ class ChatRoomView extends React.Component {
           // const visible = true;
 
           if (this.state.uploadingFile[i].msg === 'SENT') {
-            bgColor = '#A7FED7';
+            bgColor = sentBgColor;
           } else if (this.state.uploadingFile[i].msg === 'FAILED') {
-            bgColor = '#F59F96';
+            bgColor = failedBgColor;
           }
 
           if (this.state.uploadingFile[i].modal) {
@@ -750,7 +785,7 @@ class ChatRoomView extends React.Component {
       <Icon
         name={'playlist-add'}
         size={28}
-        color={'rgba(0,0,0,0.4)'}
+        color={playlistAddIconColor}
       />
     </TouchableOpacity>
   )
@@ -769,19 +804,11 @@ class ChatRoomView extends React.Component {
           <TextInput
             multiline
             placeholder={t('ph_type_message')}
-            placeholderTextColor={'rgba(0,0,0,0.3)'}
-            style={{
-              flex: 1,
-              padding: 5,
-              fontSize: 16,
-              fontFamily: 'OpenSans-Regular',
-              borderRadius: 5,
-              minHeight: 44,
-              maxHeight: 120,
-              backgroundColor: '#FFF',
-              width: this.state.width,
-              height: Math.min(120, Math.max(44, this.state.height)),
-            }}
+            placeholderTextColor={placeholderTextColor}
+            style={[styles.textInputStyleAndroid,
+              { width: this.state.width,
+                height: Math.min(120, Math.max(44, this.state.height)),
+              }]}
             onChange={(event) => {
               this.setState({
                 height: event.nativeEvent.contentSize.height,
@@ -847,16 +874,7 @@ class ChatRoomView extends React.Component {
             },
           }}
           numberOfLines={6}
-          textInputStyle={{
-            backgroundColor: '#FFF',
-            borderRadius: 3,
-            padding: 5,
-            marginRight: 5,
-            marginLeft: 0,
-            lineHeight: 16,
-            fontSize: 16,
-            fontFamily: 'OpenSans-Regular',
-          }}
+          textInputStyle={styles.textInputStyleIos}
         />
         {
           this.state.text.length > 0 &&
@@ -886,7 +904,7 @@ class ChatRoomView extends React.Component {
     (<InputToolbar
       {...props}
       containerStyle={{
-        backgroundColor: '#f4f4f4',
+        backgroundColor: inputToolbarBg,
         paddingVertical: 3,
         width: Dimensions.get('window').width,
       }}
@@ -925,11 +943,7 @@ class ChatRoomView extends React.Component {
             }}
           >
             <Text
-              style={{
-                color: '#fff',
-                fontFamily: 'OpenSans-Regular',
-                fontSize: 12,
-              }}
+              style={styles.toastText}
             >
               {t('txt_copy_clipboard')}</Text>
           </View>
@@ -950,7 +964,7 @@ class ChatRoomView extends React.Component {
         <ActivityIndicator
           animating
           size={'large'}
-          color={'rgba(0,0,0,0.3)'}
+          color={loadingIndicator}
         />
       </View>
     );
@@ -1087,10 +1101,8 @@ class ChatRoomView extends React.Component {
   render() {
     return (
       <View
-        style={[AppStyles.container, {
+        style={[AppStyles.container, styles.container, {
           marginTop: AppSizes.navbarHeight,
-          position: 'relative',
-          backgroundColor: '#FFF',
         }]}
         testID={'chatroom-display'}
       >

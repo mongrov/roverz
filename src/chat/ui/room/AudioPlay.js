@@ -12,11 +12,14 @@ import Slider from 'react-native-slider';
 
 import { AppColors } from '../../../theme/';
 
+const sliderTintColor = AppColors.brand().aP_sliderTintColor;
+const iconColor = AppColors.brand().aP_iconColor;
+
 var styles = StyleSheet.create({
   button: {
     padding: 20,
     fontSize: 20,
-    backgroundColor: 'white',
+    backgroundColor: AppColors.brand().aP_buttonBg,
   },
   slider: {
     height: 10,
@@ -36,7 +39,7 @@ var styles = StyleSheet.create({
   container: {
     borderRadius: 4,
     borderWidth: 0.5,
-    borderColor: '#d6d7da',
+    borderColor: AppColors.brand().aP_containerBorderColor,
   },
   title: {
     fontSize: 19,
@@ -48,7 +51,7 @@ var styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     padding: 10,
-    color: 'red',
+    color: AppColors.brand().aP_errorMessageColor,
   },
 });
 
@@ -197,7 +200,7 @@ export default class AudioPlay extends React.Component {
                   name={'play'}
                   type="material-community"
                   size={20}
-                  color={'#FFF'}
+                  color={iconColor}
                 />
               </View>
             </Button>
@@ -223,7 +226,7 @@ export default class AudioPlay extends React.Component {
                   name={'stop'}
                   type="material-community"
                   size={20}
-                  color={'#FFF'}
+                  color={iconColor}
                 />
               </View>
             </Button>
@@ -236,7 +239,7 @@ export default class AudioPlay extends React.Component {
             onValueChange={percentage => this._seek(percentage)}
             value={this.state.progress}
             minimumTrackTintColor={AppColors.brand().third}
-            maximumTrackTintColor={'#a4bef2'}
+            maximumTrackTintColor={sliderTintColor}
             thumbStyle={{
               width: 10,
               height: 10,

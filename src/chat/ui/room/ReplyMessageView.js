@@ -39,6 +39,15 @@ import ChatAvatar from './ChatAvatar';
 import t from '../../../i18n';
 import Constants from '../../../models/constants';
 
+const loadingIconColor = AppColors.brand().mIV_loadingIconColor;
+const deleteIconColor = AppColors.brand().mIV_deleteIconColor;
+const popIconColor = AppColors.brand().mIV_popIconColor;
+const thumbIconColor = AppColors.brand().mIV_thumbIconColor;
+const bubbleRightColor = AppColors.brand().mIV_bubbleRightColor;
+const toolthumbIconColor = AppColors.brand().mIV_toolthumbIconColor;
+const heartIconColor = AppColors.brand().mIV_heartIconColor;
+const textDisplayBg = AppColors.brand().rMV_textDisplayBg;
+
 const textStyle = {
   // fontSize: 30,
   // lineHeight: 20,
@@ -69,6 +78,37 @@ const styles = StyleSheet.create({
     height: 26,
     flex: 1,
   },
+  inputToolbarSubView: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    backgroundColor: AppColors.brand().mIV_inputToolbarSubViewBg,
+    borderTopColor: AppColors.brand().mIV_inputToolbarSubViewBTC,
+    borderTopWidth: 1,
+  },
+  composerInputStyle: {
+    backgroundColor: AppColors.brand().mIV_composerInputStyleBg,
+    borderRadius: 3,
+    lineHeight: 20,
+    fontFamily: 'OpenSans-Regular',
+  },
+  renderComposerTextStyle: {
+    backgroundColor: AppColors.brand().mIV_renderComposerTextStyleBg,
+    borderRadius: 3,
+    paddingLeft: 8,
+    paddingRight: 8,
+    marginRight: 5,
+    fontFamily: 'OpenSans-Regular',
+  },
+  renderContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: AppColors.brand().mIV_renderContainerBg,
+  },
+  likeTextStyle: {
+    color: AppColors.brand().mIV_likeTextStyleColor,
+    fontSize: 12,
+    marginHorizontal: 5,
+  },
 });
 
 const bubbleStyl = {
@@ -92,7 +132,7 @@ const bubbleStyl = {
       paddingRight: 5,
     },
     text: {
-      color: 'white',
+      color: AppColors.brand().mIV_bubbleStylRightTextColor,
       ...textStyle,
     },
     link: {
@@ -310,7 +350,7 @@ export default class ReplyMessageView extends React.Component {
         <ActivityIndicator
           animating
           size={'large'}
-          color={'rgba(255,255,255,0.3)'}
+          color={loadingIconColor}
           style={[AppStyles.windowSize, AppStyles.containerCentered]}
         />
       );
@@ -412,7 +452,7 @@ export default class ReplyMessageView extends React.Component {
           <Icon
             name="delete"
             size={24}
-            color={'#FFF'}
+            color={deleteIconColor}
           />
         </NavButton>
       );
@@ -436,7 +476,7 @@ export default class ReplyMessageView extends React.Component {
           <Icon
             name="keyboard-arrow-left"
             size={32}
-            color={'#FFF'}
+            color={popIconColor}
           />
         </NavButton>
         <View
@@ -482,7 +522,7 @@ export default class ReplyMessageView extends React.Component {
           <Icon
             name={'thumb-up'}
             size={28}
-            color={'#b2b2b2'}
+            color={thumbIconColor}
             width={30}
           />
         </TouchableOpacity>
@@ -510,7 +550,7 @@ export default class ReplyMessageView extends React.Component {
             fontFamily: 'OpenSans-Regular',
           },
           right: {
-            color: '#FFF',
+            color: bubbleRightColor,
             fontFamily: 'OpenSans-Regular',
           },
         }}
@@ -541,14 +581,7 @@ export default class ReplyMessageView extends React.Component {
           flexDirection: 'column',
         }}
       >
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'flex-end',
-          backgroundColor: 'rgba(0,0,0,0.05)',
-          borderTopColor: 'rgba(0,0,0,0.15)',
-          borderTopWidth: 1,
-        }}
-        >
+        <View style={styles.inputToolbarSubView}>
           {
             this.state.showActions && (
               <TouchableOpacity
@@ -567,7 +600,7 @@ export default class ReplyMessageView extends React.Component {
                 <Icon
                   name={'thumb-up'}
                   size={28}
-                  color={'rgba(0,0,0,0.4)'}
+                  color={toolthumbIconColor}
                 />
               </TouchableOpacity>
             )
@@ -579,12 +612,7 @@ export default class ReplyMessageView extends React.Component {
               // disableFullscreenUI: true,
             }}
             numberOfLines={6}
-            textInputStyle={{
-              backgroundColor: '#FFF',
-              borderRadius: 3,
-              lineHeight: 20,
-              fontFamily: 'OpenSans-Regular',
-            }}
+            textInputStyle={styles.composerInputStyle}
           />
           <Send
             {...props}
@@ -642,14 +670,7 @@ export default class ReplyMessageView extends React.Component {
           left: 0,
           right: 0,
         }}
-        textInputStyle={{
-          backgroundColor: '#F5F5F5',
-          borderRadius: 3,
-          paddingLeft: 8,
-          paddingRight: 8,
-          marginRight: 5,
-          fontFamily: 'OpenSans-Regular',
-        }}
+        textInputStyle={styles.renderComposerTextStyle}
       />
     );
   }
@@ -684,11 +705,7 @@ export default class ReplyMessageView extends React.Component {
 
     return (
       <View
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          backgroundColor: '#fff',
-        }}
+        style={styles.renderContainer}
       >
         {this.renderNav()}
         <StatusBar barStyle="light-content" />
@@ -696,7 +713,7 @@ export default class ReplyMessageView extends React.Component {
           style={{
             // alignItems: 'center',
             position: 'relative',
-            backgroundColor: '#f0f0f0',
+            backgroundColor: textDisplayBg,
             flexDirection: 'row',
             alignItems: 'flex-start',
             justifyContent: 'flex-start',
@@ -722,17 +739,13 @@ export default class ReplyMessageView extends React.Component {
             }}
           >
             <Text
-              style={{
-                color: '#FFF',
-                fontSize: 12,
-                marginHorizontal: 5,
-              }}
+              style={styles.likeTextStyle}
             >{this.state.msgLikes}</Text>
             <Icon
               name={'heart-outline'}
               type={'material-community'}
               size={20}
-              color={'#FFF'}
+              color={heartIconColor}
             />
           </View>
         </View>

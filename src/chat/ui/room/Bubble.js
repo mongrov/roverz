@@ -36,6 +36,39 @@ import t from '../../../i18n';
 import Color from './Color';
 import Constants from '../../../models/constants';
 
+const iconColor = AppColors.brand().bubble_iconColor;
+
+const styl = StyleSheet.create({
+  bubbleView: {
+    width: '100%',
+    height: 1,
+    backgroundColor: AppColors.brand().bubble_bubbleViewBg,
+  },
+  bubbleText: {
+    paddingLeft: 5,
+    fontSize: 18,
+    fontFamily: 'OpenSans-Regular',
+    color: AppColors.brand().bubble_bubbleTextColor,
+  },
+  modalAction: {
+    flex: 1,
+    backgroundColor: AppColors.brand().bubble_modalActionBg,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  animated: {
+    backgroundColor: AppColors.brand().bubble_animatedBg,
+    borderRadius: 5,
+    padding: 15,
+    width: 300,
+  },
+  likeText: {
+    fontFamily: 'OpenSans-Regular',
+    fontSize: 12,
+    color: AppColors.brand().bubble_likeTextColor,
+  },
+});
+
 
 export default class Bubble extends React.Component {
 
@@ -295,13 +328,7 @@ export default class Bubble extends React.Component {
             size={22}
             color={AppColors.brand().secondary}
           />
-          <Text style={{
-            paddingLeft: 5,
-            fontSize: 18,
-            fontFamily: 'OpenSans-Regular',
-            color: '#000000',
-          }}
-          >{t('txt_delete')}</Text>
+          <Text style={styl.bubbleText}>{t('txt_delete')}</Text>
         </TouchableOpacity>);
     }
     return null;
@@ -320,22 +347,11 @@ export default class Bubble extends React.Component {
           }}
         >
           <TouchableOpacity
-            style={{
-              flex: 1,
-              backgroundColor: 'rgba(0,0,0,0.6)',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+            style={styl.modalAction}
             onPress={this.toggleModalActions}
           >
             <Animated.View
-              style={[{
-                backgroundColor: '#FFF',
-                borderRadius: 5,
-                padding: 15,
-                width: 300,
-                // height: 300,
-              }, animatedStyle]}
+              style={[styl.animated, animatedStyle]}
             >
               <View
                 style={{
@@ -355,15 +371,9 @@ export default class Bubble extends React.Component {
                     size={22}
                     color={AppColors.brand().secondary}
                   />
-                  <Text style={{
-                    paddingLeft: 5,
-                    fontSize: 18,
-                    fontFamily: 'OpenSans-Regular',
-                    color: '#000000',
-                  }}
-                  >{t('txt_like_txt')}</Text>
+                  <Text style={styl.bubbleText}>{t('txt_like_txt')}</Text>
                 </TouchableOpacity>
-                <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(0,0,0,0.5)' }} />
+                <View style={styl.bubbleView} />
                 <TouchableOpacity
                   style={[styles.actionBtn]}
                   onPress={this._handleComments}
@@ -374,15 +384,9 @@ export default class Bubble extends React.Component {
                     size={22}
                     color={AppColors.brand().secondary}
                   />
-                  <Text style={{
-                    paddingLeft: 5,
-                    fontSize: 18,
-                    fontFamily: 'OpenSans-Regular',
-                    color: '#000000',
-                  }}
-                  >{t('txt_rply')}</Text>
+                  <Text style={styl.bubbleText}>{t('txt_rply')}</Text>
                 </TouchableOpacity>
-                <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(0,0,0,0.5)' }} />
+                <View style={styl.bubbleView} />
                 {
                   !this.props.currentMessage.image &&
                   (
@@ -396,17 +400,11 @@ export default class Bubble extends React.Component {
                         size={22}
                         color={AppColors.brand().secondary}
                       />
-                      <Text style={{
-                        paddingLeft: 5,
-                        fontSize: 18,
-                        fontFamily: 'OpenSans-Regular',
-                        color: '#000000',
-                      }}
-                      >{t('txt_copy')}</Text>
+                      <Text style={styl.bubbleText}>{t('txt_copy')}</Text>
                     </TouchableOpacity>
                   )
                 }
-                <View style={{ width: '100%', height: 1, backgroundColor: 'rgba(0,0,0,0.5)' }} />
+                <View style={styl.bubbleView} />
                 {this.renderDelete()}
               </View>
             </Animated.View>
@@ -605,14 +603,10 @@ export default class Bubble extends React.Component {
             name={'heart-outline'}
             type={'material-community'}
             size={16}
-            color={'#FFF'}
+            color={iconColor}
           />
           <Text
-            style={{
-              fontFamily: 'OpenSans-Regular',
-              fontSize: 12,
-              color: '#fff',
-            }}
+            style={styl.likeText}
           >{this.state.likes > 0 ? this.state.likes : t('txt_like')}</Text>
         </View>
       );
@@ -643,7 +637,7 @@ export default class Bubble extends React.Component {
                 name={'heart-outline'}
                 type={'material-community'}
                 size={22}
-                color={'#FFF'}
+                color={iconColor}
               />
             </TouchableOpacity>
             <TouchableOpacity
@@ -654,7 +648,7 @@ export default class Bubble extends React.Component {
                 name={'comment-text-outline'}
                 type={'material-community'}
                 size={22}
-                color={'#FFF'}
+                color={iconColor}
               />
             </TouchableOpacity>
             {
@@ -668,7 +662,7 @@ export default class Bubble extends React.Component {
                     name={'content-copy'}
                     type={'material-community'}
                     size={22}
-                    color={'#FFF'}
+                    color={iconColor}
                   />
                 </TouchableOpacity>
               )
@@ -746,6 +740,7 @@ export default class Bubble extends React.Component {
 const chatColors = {
   replyBubbleR: AppColors.chat().replyBubbleR,
 };
+
 
 const styles = {
   left: StyleSheet.create({
@@ -843,7 +838,7 @@ const styles = {
     padding: 8,
     margin: 5,
     borderRadius: 3,
-    borderColor: 'rgba(0,0,0,0.1)',
+    borderColor: AppColors.brand().bubble_replyWrapperBorderColor,
     borderWidth: 1,
   },
   standardFont: {
