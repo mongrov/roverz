@@ -675,6 +675,7 @@ export default class Bubble extends React.Component {
   }
 
   render() {
+    // console.log('aumess', JSON.parse(this.props.currentMessage.original));
     return (
       <View
         style={[

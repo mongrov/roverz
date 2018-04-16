@@ -34,7 +34,7 @@ import AppUtil from '../../../lib/util';
 import Network from '../../../network';
 import Group from '../../../models/group';
 import { ProgressBar } from '../../../components/ui/';
-import AudioUpload from '../../attachments/AttachAudio';
+import AttachAudio from '../../attachments/AttachAudio';
 
 import { AppStyles, AppSizes, AppColors } from '../../../theme/';
 import Application from '../../../constants/config';
@@ -49,7 +49,7 @@ const NO_OF_MSGS = 30;
 const photoIconColor = AppColors.brand().room_photoIconColor;
 const videoIconColor = AppColors.brand().room_videoIconColor;
 const cameraIconColor = AppColors.brand().room_cameraIconColor;
-const audioIconColor = AppColors.brand().room_audioIconColor;
+// const audioIconColor = AppColors.brand().room_audioIconColor;
 const sentBgColor = AppColors.brand().room_sentBgColor;
 const failedBgColor = AppColors.brand().room_failedBgColor;
 const playlistAddIconColor = AppColors.brand().room_playlistAddIconColor;
@@ -404,8 +404,8 @@ class ChatRoomView extends React.Component {
           if (images.length === 1) {
             ImagePicker.openCropper({
               path: images[0].path,
-              width: 300,
-              height: 400,
+              width: 1000,
+              height: 1000,
             }).then((data) => {
               console.log('PM - data', data);
               const _progressCallback = this._progressCallback;
@@ -539,7 +539,7 @@ class ChatRoomView extends React.Component {
     console.log('renderChat', this.state.attachMenu);
     if (this.state.attachAudio) {
       return (
-        <AudioUpload />
+        <AttachAudio />
       );
     }
     if (this.state.attachMenu) {
@@ -661,7 +661,7 @@ class ChatRoomView extends React.Component {
                 style={styles.chatFooterText}
               >{t('txt_camera')}</Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 flex: 1,
                 flexDirection: 'column',
@@ -691,7 +691,7 @@ class ChatRoomView extends React.Component {
                 ellipsizeMode={'tail'}
                 style={styles.chatFooterText}
               >{'Audio'}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View style={{ flex: 2 }} />
           </View>
         </View>
@@ -830,25 +830,48 @@ class ChatRoomView extends React.Component {
             }}
           />
           {
-            this.state.text.length > 0 &&
-            (
-              <TouchableOpacity
-                style={{
-                  width: 44,
-                  height: 44,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                onPress={this.onSend}
-              >
-                <Icon
-                  name="send"
-                  size={30}
-                  color={AppColors.brand().third}
-                />
-              </TouchableOpacity>
-            )
-          }
+            (this.state.text.length > 0
+             &&
+             <TouchableOpacity
+               style={{
+                 width: 44,
+                 height: 44,
+                 alignItems: 'center',
+                 justifyContent: 'center',
+               }}
+               onPress={this.onSend}
+             >
+               <Icon
+                 name="send"
+                 size={30}
+                 color={AppColors.brand().third}
+               />
+             </TouchableOpacity>)
+            ||
+            <TouchableOpacity
+              style={{
+                width: 44,
+                height: 44,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              onPress={() => {
+                Keyboard.dismiss();
+                this.setState({
+                  attachMenu: false,
+                  attachAudio: !this.state.attachAudio,
+                  text: '',
+                });
+              }}
+            >
+              <Icon
+                name={'microphone'}
+                type={'material-community'}
+                size={30}
+                color={AppColors.brand().third}
+              />
+            </TouchableOpacity>
+            }
         </View>
       );
     }
@@ -877,8 +900,24 @@ class ChatRoomView extends React.Component {
           textInputStyle={styles.textInputStyleIos}
         />
         {
-          this.state.text.length > 0 &&
-          (
+            (this.state.text.length > 0
+             &&
+             <TouchableOpacity
+               style={{
+                 width: 44,
+                 height: 44,
+                 alignItems: 'center',
+                 justifyContent: 'center',
+               }}
+               onPress={this.onSend}
+             >
+               <Icon
+                 name="send"
+                 size={30}
+                 color={AppColors.brand().third}
+               />
+             </TouchableOpacity>)
+            ||
             <TouchableOpacity
               style={{
                 width: 44,
@@ -886,16 +925,23 @@ class ChatRoomView extends React.Component {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              onPress={this.onSend}
+              onPress={() => {
+                Keyboard.dismiss();
+                this.setState({
+                  attachMenu: false,
+                  attachAudio: !this.state.attachAudio,
+                  text: '',
+                });
+              }}
             >
               <Icon
-                name="send"
+                name={'microphone'}
+                type={'material-community'}
                 size={30}
                 color={AppColors.brand().third}
               />
             </TouchableOpacity>
-          )
-        }
+            }
       </View>
     );
   }

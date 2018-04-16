@@ -252,8 +252,8 @@ export default class CameraActions extends React.Component {
         .then((data) => {
           ImagePicker.openCropper({
             path: data.path,
-            width: 300,
-            height: 400,
+            width: 1000,
+            height: 1000,
           }).then((image) => {
             console.log('crop', image);
             Actions.captureImagePreview({

@@ -24,7 +24,7 @@ import { Actions } from 'react-native-router-flux';
 import { AppColors } from '../../theme';
 // import AudioUtil from './AudioUtil';
 
-const filename = 'mongrov-voice-test.mp4';
+const filename = Platform.OS === 'ios' ? 'audio-message.mp4' : 'audio-message.mp3';
 const sendIconColor = AppColors.brand().aA_sendIconColor;
 const cancelColor = AppColors.brand().aA_cancelColor;
 
@@ -269,7 +269,8 @@ export default class AttachAudio extends React.Component {
       this.recorder.destroy();
     }
 
-    this.recorder = new Recorder(`${moment().unix().toString()}.mp4`, {
+    this.recorder = new Recorder(Platform.OS === 'ios' ?
+    `${moment().unix().toString()}.mp4` : `${moment().unix().toString()}.mp3`, {
       bitrate: 256000,
       channels: 2,
       sampleRate: 44100,

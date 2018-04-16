@@ -88,6 +88,9 @@ export default class AudioPlay extends React.Component {
     // console.log('unmount');
     // TODO
     clearInterval(this._progressInterval);
+    if (this.player !== null) {
+      this._stop();
+    }
   }
 
   _shouldUpdateProgressBar() {
@@ -209,7 +212,7 @@ export default class AudioPlay extends React.Component {
             (!this.state.playButtonDisabled) &&
             <Button
               onPress={() => {
-                this._stop();
+                this._playPause();
               }}
             >
               <View
