@@ -1,6 +1,8 @@
 /*
  * Group data structure
  */
+
+import moment from 'moment';
 import Application from '../constants/config';
 import Constants from './constants';
 
@@ -51,7 +53,16 @@ export default class Group {
     return (this.messages.length > 0) ? this.sortedMessages[0] : null;
   }
   get locationMessages() {
-    return this.messages.filtered(`type = ${Constants.M_TYPE_LOCATION}`);
+    var res = this.messages.filtered(`type = ${Constants.M_TYPE_LOCATION}`);
+    if (!res || res.length <= 0) {
+      return res;
+    }
+    const filtered = res.filter((msg) => {
+      const msgTs = moment(msg.createdAt);
+      const currentTsDiff = moment().diff(msgTs, 'day');
+      return currentTsDiff < 1;
+    });
+    return filtered;
   }
 
   // --- find utilities ---
