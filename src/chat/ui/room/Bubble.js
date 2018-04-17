@@ -707,15 +707,15 @@ export default class Bubble extends React.Component {
                 }}
               >
                 {
-            (this.props.position === 'left' &&
-              <View>
-                {this.renderUsername()}
-                {this.renderMessageImage()}
-                {this.renderMessageText()}
-              </View>)
+              ((this.props.currentMessage.image || this.props.currentMessage.video)
+               &&
+               <View>
+                 {this.props.position === 'left' ? this.renderUsername() : null}
+                 {this.renderMessageImage()}
+               </View>)
               ||
               <View>
-                {this.renderMessageImage()}
+                {this.props.position === 'left' ? this.renderUsername() : null}
                 {this.renderMessageText()}
               </View>
             }
