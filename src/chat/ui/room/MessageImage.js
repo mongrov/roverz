@@ -56,16 +56,14 @@ export default class MessageImage extends React.Component {
   componentWillMount = () => {
     // console.log(this.props.currentMessage.image);
     // Image.prefetch('this.props.currentMessage.image', id => console.log(id));
-    // if (this.props.currentMessage.video) {
-    //   this._network.chat.fixS3Urls(
-    //     [this.props.currentMessage.video],
-    //     (res) => {
-    //       console.log('fixS3Urls', res);
-    //       // console.log();
-    //     },
-    //     true,
-    //   );
-    // }
+    // this._network.chat.fixS3Urls(
+    //   [this.props.currentMessage.image],
+    //   (res) => {
+    //     console.log('fixS3Urls');
+    //     console.log(res);
+    //   },
+    //   true,
+    // );
     // Image.getSize('https://facebook.github.io/react-native/img/header_logo.png', (width, height) => {
     //   // this.setState({width, height})
     //   console.log(width, height);
@@ -78,18 +76,10 @@ export default class MessageImage extends React.Component {
 
   render() {
     if (this.props.currentMessage.video) {
-      const cMessageOriginal = JSON.parse(this.props.currentMessage.original);
-      console.log('rrl', cMessageOriginal);
-      // if (this.props.currentMessage.text === 'Audio message') {
-      if ((cMessageOriginal.file.name &&
-        cMessageOriginal.file.name.substr(cMessageOriginal.file.name.length - 11)
-        === 'message.mp3') || (cMessageOriginal.file.name &&
-        cMessageOriginal.file.name.substr(cMessageOriginal.file.name.length - 11)
-        === 'message.mp4')) {
+      if (this.props.currentMessage.text === 'Audio message') {
         return (
           <View style={[styles.container]}>
             <AudioPlay audioFile={this.props.currentMessage.video} />
-            {/* <AudioPlay audioFile={'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'} /> */}
           </View>
         );
       }

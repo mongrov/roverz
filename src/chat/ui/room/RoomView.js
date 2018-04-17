@@ -180,6 +180,7 @@ class ChatRoomView extends React.Component {
         width: Dimensions.get('window').width,
       },
       appState: AppState.currentState,
+      attachAudioBtn: false,
     };
     console.log('APPSTATE RV - constructor', `${AppState.currentState}`);
     this.onSend = this.onSend.bind(this);
@@ -197,6 +198,11 @@ class ChatRoomView extends React.Component {
   }
 
   componentWillMount() {
+    const mgAudio = this._network.getServerSetting('Message_AudioRecorderEnabled');
+    const mgAudioEnabled = mgAudio && mgAudio.value;
+    if (mgAudioEnabled) {
+      this.setState({ attachAudioBtn: true });
+    }
     console.log('APPSTATE RV - componentWillMount');
   }
 
@@ -790,6 +796,54 @@ class ChatRoomView extends React.Component {
     </TouchableOpacity>
   )
 
+  renderSendButton = () => {
+    if (this.state.text.length > 0) {
+      return (
+        <TouchableOpacity
+          style={{
+            width: 44,
+            height: 44,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onPress={this.onSend}
+        >
+          <Icon
+            name="send"
+            size={30}
+            color={AppColors.brand().third}
+          />
+        </TouchableOpacity>
+      );
+    } else if (this.state.text.length === 0 && this.state.attachAudioBtn) {
+      return (
+        <TouchableOpacity
+          style={{
+            width: 44,
+            height: 44,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onPress={() => {
+            Keyboard.dismiss();
+            this.setState({
+              attachMenu: false,
+              attachAudio: !this.state.attachAudio,
+              text: '',
+            });
+          }}
+        >
+          <Icon
+            name={'microphone'}
+            type={'material-community'}
+            size={30}
+            color={AppColors.brand().third}
+          />
+        </TouchableOpacity>
+      );
+    }
+  }
+
   renderComposer(props) {
     if (Platform.OS !== 'ios') {
       return (
@@ -829,49 +883,7 @@ class ChatRoomView extends React.Component {
               });
             }}
           />
-          {
-            (this.state.text.length > 0
-             &&
-             <TouchableOpacity
-               style={{
-                 width: 44,
-                 height: 44,
-                 alignItems: 'center',
-                 justifyContent: 'center',
-               }}
-               onPress={this.onSend}
-             >
-               <Icon
-                 name="send"
-                 size={30}
-                 color={AppColors.brand().third}
-               />
-             </TouchableOpacity>)
-            ||
-            <TouchableOpacity
-              style={{
-                width: 44,
-                height: 44,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={() => {
-                Keyboard.dismiss();
-                this.setState({
-                  attachMenu: false,
-                  attachAudio: !this.state.attachAudio,
-                  text: '',
-                });
-              }}
-            >
-              <Icon
-                name={'microphone'}
-                type={'material-community'}
-                size={30}
-                color={AppColors.brand().third}
-              />
-            </TouchableOpacity>
-            }
+          {this.renderSendButton()}
         </View>
       );
     }
@@ -899,49 +911,7 @@ class ChatRoomView extends React.Component {
           numberOfLines={6}
           textInputStyle={styles.textInputStyleIos}
         />
-        {
-            (this.state.text.length > 0
-             &&
-             <TouchableOpacity
-               style={{
-                 width: 44,
-                 height: 44,
-                 alignItems: 'center',
-                 justifyContent: 'center',
-               }}
-               onPress={this.onSend}
-             >
-               <Icon
-                 name="send"
-                 size={30}
-                 color={AppColors.brand().third}
-               />
-             </TouchableOpacity>)
-            ||
-            <TouchableOpacity
-              style={{
-                width: 44,
-                height: 44,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={() => {
-                Keyboard.dismiss();
-                this.setState({
-                  attachMenu: false,
-                  attachAudio: !this.state.attachAudio,
-                  text: '',
-                });
-              }}
-            >
-              <Icon
-                name={'microphone'}
-                type={'material-community'}
-                size={30}
-                color={AppColors.brand().third}
-              />
-            </TouchableOpacity>
-            }
+        {this.renderSendButton()}
       </View>
     );
   }
