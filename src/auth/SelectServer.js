@@ -22,6 +22,8 @@ import t from '../i18n';
 import { AppColors, AppStyles } from '../theme/';
 import Application from '../constants/config';
 
+const backColorW = AppColors.brand().sS_style;
+
 const styles = StyleSheet.create({
   messageContainer: {
     flex: 1,
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
     marginBottom: (Platform.OS === 'ios') ? 16 : 0,
   },
   textInput: {
-    backgroundColor: '#F5F5F5',
+    backgroundColor: AppColors.brand().sS_textInput,
     borderRadius: 5,
     padding: 10,
     height: 40,
@@ -48,14 +50,14 @@ const styles = StyleSheet.create({
   logo: { opacity: 1 },
   loadText: {
     fontSize: 14,
-    color: 'rgba(255,255,255,0.7)',
+    color: AppColors.brand().sS_loadText,
   },
   centerAll: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  workspace: { color: '#FFF', fontSize: 16 },
+  workspace: { color: AppColors.brand().sS_workspace, fontSize: 16 },
 });
 
 export default class SelectServer extends React.Component {
@@ -248,7 +250,7 @@ export default class SelectServer extends React.Component {
                   paddingHorizontal: 15,
                   paddingVertical: 2,
                   marginTop: 20,
-                  borderColor: '#fff',
+                  borderColor: backColorW,
                   borderRadius: 3,
                   alignItems: 'center',
                   justifyContent: 'center',

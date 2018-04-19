@@ -5,9 +5,11 @@ import {
   Text,
 } from 'react-native';
 import PropTypes from 'prop-types';
-
+import { AppColors } from '../../theme/';
 import t from '../../i18n';
 
+const pTColor = AppColors.brand().pB_progressTintColor;
+const tTColor = AppColors.brand().pB_trackTintColor;
 
 export default class ProgressBar extends React.Component {
   constructor(props) {
@@ -29,8 +31,8 @@ export default class ProgressBar extends React.Component {
       return (
         <ProgressViewIOS
           progress={this.state.progress}
-          progressTintColor={'#43D35D'}
-          trackTintColor={'#DCDCDC'}
+          progressTintColor={pTColor}
+          trackTintColor={tTColor}
         />
       );
     }

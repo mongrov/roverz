@@ -1,10 +1,24 @@
 import React from 'react';
 import {
   TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
+import { AppColors } from '../../theme/';
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    padding: 5,
+    backgroundColor: AppColors.brand().nA_style,
+    borderRadius: 40,
+  },
+});
+const icon = AppColors.brand().nA_Icon;
 
 export default class NavBackAbs extends React.Component {
   constructor(props) {
@@ -27,20 +41,13 @@ export default class NavBackAbs extends React.Component {
   render() {
     return (
       <TouchableOpacity
-        style={[{
-          position: 'absolute',
-          top: 20,
-          left: 20,
-          padding: 5,
-          backgroundColor: 'white',
-          borderRadius: 40,
-        }]}
+        style={styles.container}
         onPress={Actions.pop}
       >
         <Icon
           name="arrow-back"
           size={30}
-          color="#000"
+          color={icon}
           width={30}
         />
       </TouchableOpacity>

@@ -11,24 +11,26 @@ import PropTypes from 'prop-types';
 import { View, ActivityIndicator } from 'react-native';
 
 // Consts and Libs
-import { AppStyles } from '../../theme/';
+import { AppStyles, AppColors } from '../../theme/';
 
 // Components
 import { Spacer, Text } from '../ui/';
 
+const animateColor = AppColors.brand().lD_anim1Color;
+const animate2Color = AppColors.brand().lD_anim2Color;
 /* Component ==================================================================== */
 const Loading = ({ text, transparent }) => (
   <View
     style={[
       AppStyles.container,
       AppStyles.containerCentered,
-      transparent && { backgroundColor: 'rgba(255,255,255,0.75)' },
+      transparent && { backgroundColor: AppColors.brand().lD_style },
     ]}
   >
     <ActivityIndicator
       animating
       size={'large'}
-      color={transparent ? '#000' : '#AAA'}
+      color={transparent ? animateColor : animate2Color }
     />
 
     <Spacer size={10} />

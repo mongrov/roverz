@@ -38,7 +38,7 @@ const TabIcon = ({ icon, selected, subTitle }) => (
     />
     <Text
       style={{
-        color: '#A3A3A3',
+        color: AppColors.brand().tI_style,
         fontSize: 10,
         marginBottom: 5,
       }}

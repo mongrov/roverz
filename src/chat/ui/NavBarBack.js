@@ -9,6 +9,8 @@ import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { AppStyles, AppColors } from '../../theme/';
 
+const icon = AppColors.brand().nB_Icon;
+
 export default class NavBarBack extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +51,7 @@ export default class NavBarBack extends React.Component {
           <Icon
             name="keyboard-arrow-left"
             size={32}
-            color={'#FFF'}
+            color={icon}
           />
         </NavButton>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginRight: 30 }}>

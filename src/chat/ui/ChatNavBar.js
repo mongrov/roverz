@@ -19,6 +19,8 @@ import Network from '../../network';
 import { ListItemAvatar } from './';
 import Constants from '../../models/constants';
 
+const iconAColor = AppColors.brand().cB_Icon;
+const iconColorReturn = AppColors.brand().cB_iconColor;
 
 const styles = StyleSheet.create({
   navContainer: {
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   titleText: {
-    color: 'rgba(255,255,255,0.5)',
+    color: AppColors.brand().cB_titleText,
     fontSize: 12,
     marginBottom: 5,
     paddingLeft: 2,
@@ -166,7 +168,7 @@ class ChatNavBar extends React.Component {
   _renderAvatar() {
     if (this.state.showAvatar) {
       if (this.state.roomType === Constants.G_DIRECT) {
-        let statColor = '#a8a8a8';
+        let statColor = AppColors.brand().cB_statColor;
         switch (this.state.status) {
           case Constants.U_ONLINE:
             statColor = AppColors.status().online; break;
@@ -216,7 +218,7 @@ class ChatNavBar extends React.Component {
   }
 
   iconColor() {
-    return 'rgba(255, 255, 255, 0.7)';
+    return iconColorReturn;
   }
 
   goToRoomInfo() {
@@ -245,7 +247,7 @@ class ChatNavBar extends React.Component {
         <Icon
           name="search"
           size={24}
-          color={'#FFF'}
+          color={iconAColor}
         />
       </NavButton>
     );
@@ -267,7 +269,7 @@ class ChatNavBar extends React.Component {
           <Icon
             name="keyboard-arrow-left"
             size={32}
-            color={'#FFF'}
+            color={iconAColor}
           />
         </NavButton>
         <TouchableOpacity
