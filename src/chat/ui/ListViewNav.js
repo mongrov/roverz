@@ -12,6 +12,8 @@ import Network from '../../network';
 import { AppStyles, AppColors } from '../../theme/';
 import ModuleConfig from '../../constants/config';
 
+const icon = AppColors.brand().lN_Icon;
+
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
@@ -140,7 +142,7 @@ class ListViewNav extends React.Component {
             name={'account-outline'}
             type="material-community"
             size={24}
-            color={'#FFF'}
+            color={icon}
           />
         </TouchableOpacity>
       </View>

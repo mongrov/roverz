@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: '#0084ff',
+    color: AppColors.brand().sD_text,
     fontWeight: '600',
     fontSize: 17,
     backgroundColor: 'transparent',

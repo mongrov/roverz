@@ -7,6 +7,7 @@ import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
 import PropTypes from 'prop-types';
 import AppUtil from '../../lib/util';
+import { AppColors } from '../../theme';
 
 
 const styles = StyleSheet.create({
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
   },
   avatar: {
     position: 'relative',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: AppColors.brand().lA_avatar,
     justifyContent: 'center',
     alignItems: 'center',
   },

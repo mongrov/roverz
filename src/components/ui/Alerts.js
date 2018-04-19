@@ -16,7 +16,7 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-
+import { AppColors } from '../../theme/';
 // Components
 import { Spacer, Text } from './';
 
@@ -27,38 +27,38 @@ const styles = StyleSheet.create({
     right: 0,
   },
 
-  // Success
+ // Success
   msg: {
     right: 0,
     left: 0,
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderLeftWidth: 3,
-    borderColor: '#1C854C',
-    backgroundColor: '#59DC9A',
+    borderColor: AppColors.brand().aT_msgborderColor,
+    backgroundColor: AppColors.brand().aT_msgbackgroundColor,
   },
   msg_text: {
     textAlign: 'center',
-    color: '#16693c',
+    color: AppColors.brand().aT_msgtextborderColor,
     fontWeight: '300',
   },
 
-  // Error
+// Error
   msgError: {
-    borderColor: '#C02827',
-    backgroundColor: '#FB6567',
+    borderColor: AppColors.brand().aT_msgErrorborderColor,
+    backgroundColor: AppColors.brand().aT_msgErrorbackgroundColor,
   },
   msgError_text: {
-    color: '#7f1a1a',
+    color: AppColors.brand().aT_msgErrorTextColor,
   },
 
-  // Status
+// Status
   msgStatus: {
-    borderColor: '#408491',
-    backgroundColor: '#8EDBE5',
+    borderColor: AppColors.brand().aT_msgStatusBorderColor,
+    backgroundColor: AppColors.brand().aT_msgStatusbackgroundColor,
   },
   msgStatus_text: {
-    color: '#2f606a',
+    color: AppColors.brand().aT_msgStatustextColor,
   },
 });
 

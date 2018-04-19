@@ -146,6 +146,72 @@ const brand = {
     room_loadingIndicator: 'rgba(0,0,0,0.3)',
     room_containerBg: '#FFF',
       // SendImageMessage - file not using now
+      // ChatNavBar
+    cB_titleText: 'rgba(255,255,255,0.5)',
+    cB_Icon: '#FFF',
+    cB_statColor: '#a8a8a8',
+    cB_iconColor: 'rgba(255, 255, 255, 0.7)',
+    // Send
+    sD_text: '#0084ff',
+    // NavBarMessages
+    nM_Icon: '#FFF',
+    // NavBarBack
+    nB_Icon: '#FFF',
+     // NavBackAbs
+    nA_style: 'white',
+    nA_Icon: '#000',
+    // ListViewNav
+    lN_Icon: '#FFF',
+    // ListItemAvatar
+    lA_avatar: '#f0f0f0',
+    // auth folder
+       // LoginView
+    lV_viewContainer: 'yellow',
+    lV_workspaceTxt: '#FFF',
+    lV_textWork: '#FFF',
+    lV_ssoTxt: 'white',
+    lV_formContainer: 'white',
+    // SelectServer
+    sS_textInput: '#F5F5F5',
+    sS_loadText: 'rgba(255,255,255,0.7)',
+    sS_workspace: '#FFF',
+    sS_style: '#fff',
+
+    //  Components
+// ActivityIndicator.js
+    aI_preloader: 'rgba(255,255,255,0.3)',
+
+//  Error.js
+    eR_iconColor: '#CCC',
+
+//  Loading.js
+    lD_style: 'rgba(255,255,255,0.75)',
+    lD_animYesColor: '#000',
+    lD_animNoColor: '#AAA',
+//  ui
+//  Alerts.js
+    aT_msg_borderColor: '#1C854C',
+    aT_msg_backgroundColor: '#59DC9A',
+    aT_msgtextborderColor: '#16693c',
+    aT_msgErrorborderColor: '#C02827',
+    aT_msgErrorbackgroundColor: '#FB6567',
+    aT_msgErrorTextColor: '#7f1a1a',
+    aT_msgStatusBorderColor: '#408491',
+    aT_msgStatusbackgroundColor: '#8EDBE5',
+    aT_msgStatustextColor: '#2f606a',
+//  Button.js
+    bN_props: '#fff',
+    // FormInput
+    fI_containerStyle: 'rgba(255,255,255,0.05)',
+    //  ProgressBar.js
+    pB_progressTintColor: '#43D35D',
+    pB_trackTintColor: '#DCDCDC',
+
+// TabIcon.js
+    tI_style: '#A3A3A3',
+
+// TextInput.js
+    tP_containerStyle: 'rgba(255,255,255,0.05)',
   },
   chatColors: {
     bubbleLeft: '#f0f0f0',

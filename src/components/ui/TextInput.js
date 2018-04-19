@@ -37,7 +37,7 @@ class CustomFormInput extends Component {
       containerStyle: [{
         borderBottomColor: AppColors.border,
         borderBottomWidth: 1,
-        backgroundColor: 'rgba(255,255,255,0.05)',
+        backgroundColor: AppColors.brand().tP_containerStyle,
         marginTop: 10,
         marginLeft: 20,
         marginRight: 20,

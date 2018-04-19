@@ -3,6 +3,9 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { AppColors } from '../../theme/';
+
+const activityColor = AppColors.brand().aI_preloader;
 
 export default class Preloader extends React.Component {
   constructor(props) {
@@ -31,7 +34,7 @@ export default class Preloader extends React.Component {
 
 Preloader.defaultProps = {
   size: 'large',
-  color: 'rgba(255,255,255,0.3)',
+  color: activityColor,
   style: [],
 };
 

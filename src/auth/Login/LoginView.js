@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'yellow',
+    backgroundColor: AppColors.brand().lV_viewContainer,
   },
   topContainer: {
     flex: 1,
@@ -61,12 +61,15 @@ const styles = StyleSheet.create({
   },
   workspaceTxt: {
     fontSize: 15,
-    color: '#FFF',
+    color: AppColors.brand().lV_workspaceTxt,
   },
-  formContainer: { backgroundColor: 'white' },
+  formContainer: { backgroundColor: AppColors.brand().lV_formContainer },
   textWork: {
     fontSize: 12,
-    color: '#FFF',
+    color: AppColors.brand().lV_textWork,
+  },
+  ssoTxt: {
+    color: AppColors.brand().lV_ssoTxt,
   },
 });
 
@@ -304,7 +307,7 @@ class Login extends Component {
             style={[styles.ssoContainer, { backgroundColor: AppColors.brand().third }]}
             onPress={Actions.samlLogin}
           >
-            <Text style={{ color: 'white' }}>{this.state.ssoText}</Text>
+            <Text style={[styles.ssoTxt]}>{this.state.ssoText}</Text>
           </TouchableOpacity>
         </View>
       );
