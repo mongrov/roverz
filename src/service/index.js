@@ -95,7 +95,8 @@ class ChatService {
     this.provider.connect(serverName);
     this.provider.getPublicSettings((err, settings) => {
       this.settings = settings;
-      // console.log("**** settings retrieved as *****", Object.keys(settings).filter(v=> /^Accounts_Registration/.test(v)));
+      // console.log("**** settings retrieved as *****",
+      // Object.keys(settings).filter(v=> /^Accounts_Registration/.test(v)));
       cb(err, settings);
     });
   }
