@@ -11,6 +11,7 @@ import {
   Image,
   StyleSheet,
   ScrollView,
+  Keyboard,
 } from 'react-native';
 import FormValidation from 'tcomb-form-native';
 import { Actions } from 'react-native-router-flux';
@@ -229,6 +230,8 @@ class Login extends Component {
 
   renderForm() {
     const Form = FormValidation.form.Form;
+    const mgSignup = this._service.getServerSetting('Accounts_RegistrationForm');
+    const mgSignupEnabled = mgSignup && mgSignup.value === 'Public';
     if (this.state.showForm) {
       return (
         <View
@@ -259,6 +262,20 @@ class Login extends Component {
                 style={[]}
                 testID={'login-button'}
               />
+              <Spacer size={10} />
+              {
+                mgSignupEnabled &&
+                <Button
+                  title={'Sign up'}
+                  onPress={() => {
+                    Keyboard.dismiss();
+                    Actions.register();
+                  }}
+                  backgroundColor="#2e2e2e"
+                  style={[]}
+                  // testID={'login-button'}
+                />
+              }
             </View>
           </View>
         </View>
