@@ -95,6 +95,7 @@ class ChatService {
     this.provider.connect(serverName);
     this.provider.getPublicSettings((err, settings) => {
       this.settings = settings;
+      // console.log("**** settings retrieved as *****", Object.keys(settings).filter(v=> /^Accounts_Registration/.test(v)));
       cb(err, settings);
     });
   }
@@ -170,6 +171,11 @@ class ChatService {
   // Todo
   // - these can be disabled in UI and can be shown only
   //   only if connectivity present ? - TBD
+
+  registerUser(email, pass, name, cb) {
+    // for now, just connect to provider register
+    this.provider.registerUser(email, pass, name, cb);
+  }
 
   // Direct messages (DMs) are private, 1-on-1 conversation between team members. You can
   // think of a DM as a private group with only two members.

@@ -130,6 +130,11 @@ class RC {
     return this.meteor.loggedInUser;
   }
 
+  registerUser(email, pass, name, cb) {
+    // for now, just connect to provider register
+    this.meteor.call('registerUser', {name:name, email:email, pass:pass}, cb);
+  }
+  
   // use like createDirectMessage('ananth');
   createDirectMessage(userName, cb) {
     this.meteor.call('createDirectMessage', userName, cb);
