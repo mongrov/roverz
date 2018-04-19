@@ -26,6 +26,8 @@ import { AppStyles, AppColors } from '../../theme/';
 import Application from '../../constants/config';
 
 /* Styles ==================================================================== */
+
+const buttonColor = AppColors.brand().lV_signupBg;
 const styles = StyleSheet.create({
   ssoContainer: {
     flex: 1,
@@ -261,7 +263,7 @@ class Login extends Component {
               <Button
                 title={t('lbl_login_btn')}
                 onPress={this.login}
-                backgroundColor="transparent"
+                backgroundColor={buttonColor}
                 style={[]}
                 testID={'login-button'}
               />
@@ -274,7 +276,7 @@ class Login extends Component {
                     Keyboard.dismiss();
                     Actions.register();
                   }}
-                  backgroundColor="#2e2e2e"
+                  backgroundColor={buttonColor}
                   style={[]}
                   // testID={'login-button'}
                 />

@@ -171,12 +171,14 @@ const brand = {
     lV_textWork: '#FFF',
     lV_ssoTxt: 'white',
     lV_formContainer: 'white',
+    lV_signupBg: 'transparent',
     // SelectServer
     sS_textInput: '#F5F5F5',
     sS_loadText: 'rgba(255,255,255,0.7)',
     sS_workspace: '#FFF',
     sS_style: '#fff',
-
+    // Register
+    res_signBg: '#1855ba',
     //  Components
 // ActivityIndicator.js
     aI_preloader: 'rgba(255,255,255,0.3)',

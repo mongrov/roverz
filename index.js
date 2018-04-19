@@ -20,6 +20,8 @@ import * as UserActions from './src/redux/user/actions';
 import AuthLogin from './src/auth/Login/LoginContainer';
 import SelectServer from './src/auth/SelectServer';
 import SamlLogin from './src/auth/SamlLogin';
+import Register from './src/auth/Login/Register';
+
 
 import Network from './src/network';
 
@@ -59,6 +61,8 @@ export {
     AuthLogin,
     SelectServer,
     SamlLogin,
+    Register,
+
 
     // utils
     Analytics,

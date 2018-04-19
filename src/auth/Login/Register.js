@@ -60,6 +60,12 @@ const styles = StyleSheet.create({
     color: '#ff5132',
     marginTop: 5,
   },
+  signup: {
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: AppColors.brand().res_signBg,
+  },
 });
 
 export default class Register extends Component {
@@ -232,12 +238,7 @@ export default class Register extends Component {
           </TouchableOpacity>
         </ScrollView>
         <TouchableOpacity
-          style={{
-            height: 50,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#636363',
-          }}
+          style={[styles.signup]}
           onPress={() => {
             Keyboard.dismiss();
             this.validateRegistrationForm();
