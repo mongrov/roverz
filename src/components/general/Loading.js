@@ -16,8 +16,8 @@ import { AppStyles, AppColors } from '../../theme/';
 // Components
 import { Spacer, Text } from '../ui/';
 
-const animateColor = AppColors.brand().lD_anim1Color;
-const animate2Color = AppColors.brand().lD_anim2Color;
+const animateYesColor = AppColors.brand().lD_animYesColor;
+const animateNoColor = AppColors.brand().lD_animNoColor;
 /* Component ==================================================================== */
 const Loading = ({ text, transparent }) => (
   <View
@@ -30,7 +30,7 @@ const Loading = ({ text, transparent }) => (
     <ActivityIndicator
       animating
       size={'large'}
-      color={transparent ? animateColor : animate2Color }
+      color={transparent ? animateYesColor : animateNoColor}
     />
 
     <Spacer size={10} />

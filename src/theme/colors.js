@@ -186,8 +186,8 @@ const brand = {
 
 //  Loading.js
     lD_style: 'rgba(255,255,255,0.75)',
-    lD_anim1Color: '#000',
-    lD_anim2Color: '#AAA',
+    lD_animYesColor: '#000',
+    lD_animNoColor: '#AAA',
 //  ui
 //  Alerts.js
     aT_msg_borderColor: '#1C854C',
