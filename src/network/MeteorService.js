@@ -19,6 +19,10 @@ class MeteorService {
     });
   }
 
+  get accounts() {
+    return Meteor.Accounts;
+  }
+
   get status() {
     return Meteor.status();
   }

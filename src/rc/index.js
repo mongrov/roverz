@@ -131,8 +131,16 @@ class RC {
   }
 
   registerUser(email, pass, name, cb) {
-    // for now, just connect to provider register
     this.meteor.call('registerUser', { name, email, pass }, cb);
+  }
+  getUsernameSuggestion(cb) {
+    this.meteor.call('getUsernameSuggestion', cb);
+  }
+  setUsername(name, cb) {
+    this.meteor.call('setUsername', name, cb);
+  }
+  changePassword(oldPassword, newPassword, cb) {
+    this.meteor.accounts.changePassword(oldPassword, newPassword, cb);
   }
 
   // use like createDirectMessage('ananth');

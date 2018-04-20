@@ -174,8 +174,16 @@ class ChatService {
   //   only if connectivity present ? - TBD
 
   registerUser(email, pass, name, cb) {
-    // for now, just connect to provider register
     this.provider.registerUser(email, pass, name, cb);
+  }
+  getUsernameSuggestion(cb) {
+    this.provider.getUsernameSuggestion(cb);
+  }
+  setUsername(name, cb) {
+    this.provider.setUsername(name, cb);
+  }
+  changePassword(oldPassword, newPassword, cb) {
+    this.provider.changePassword(oldPassword, newPassword, cb);
   }
 
   // Direct messages (DMs) are private, 1-on-1 conversation between team members. You can
