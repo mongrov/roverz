@@ -38,23 +38,14 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   subcontainer: {
-    padding: 3,
+    flex: 1,
     flexDirection: 'row',
   },
-  recordView: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 5,
-    width: 80,
-    marginRight: 20,
-  },
   timerView: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 5,
-    width: 70,
-    marginRight: 20,
   },
   textColor: {
     color: AppColors.brand().aA_textColor,
@@ -64,20 +55,12 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     fontSize: 20,
   },
-  sendView: {
+  iconView: {
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     margin: 5,
-    width: 70,
-    marginRight: 10,
-  },
-  cancelView: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 5,
-    width: 70,
   },
 });
 
@@ -341,7 +324,7 @@ export default class AttachAudio extends React.Component {
           style={styles.subcontainer}
         >
           <View
-            style={styles.recordView}
+            style={styles.iconView}
           >
             <Icon
               raised
@@ -366,7 +349,7 @@ export default class AttachAudio extends React.Component {
             >{`${recM < 10 ? '0' : ''}${recM}:${recS < 10 ? '0' : ''}${recS}`}</Text>
           </View>
           <TouchableOpacity
-            style={styles.sendView}
+            style={styles.iconView}
             onPress={() => {
               this._toggleRecord();
             }}
@@ -384,7 +367,7 @@ export default class AttachAudio extends React.Component {
             >Send</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.cancelView}
+            style={styles.iconView}
             onPress={() => {
               this.setState({ cancelled: true });
               this._toggleRecord();
@@ -402,7 +385,6 @@ export default class AttachAudio extends React.Component {
               style={styles.textColor}
             >Cancel</Text>
           </TouchableOpacity>
-          <View style={{ flex: 2 }} />
         </View>
       </View>
     );
