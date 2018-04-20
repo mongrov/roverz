@@ -19,6 +19,10 @@ export function login(credentials) {
   });
 }
 
+export function loginAfterRegister(credentials, cb) {
+  Meteor.loginWithPassword(credentials.username, credentials.password, cb);
+}
+
 /**
   * Logout
   */

@@ -304,6 +304,10 @@ class ChatService {
   }
 
   _onLogin(serverName, userName) {
+    console.log('onLogink service index _onLogin', serverName, userName);
+    if (!userName) {
+      return;
+    }
     const uname = userName || DEFAULT_USER;
     // lets set the user to db
     this.db.switchDb(serverName, uname);

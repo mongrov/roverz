@@ -80,9 +80,11 @@ class Network {
   switchToLoggedInUser() {
     // @todo - kludge, this code needs to move out/removed
     setTimeout(() => {
-      this.chat.resetDbHandle(Network._db);
-      this.dbSync();
-      console.log('************* dbSync done **************');
+      if (this.service.loggedInUser.username) {
+        this.chat.resetDbHandle(Network._db);
+        this.dbSync();
+        console.log('************* dbSync done **************');
+      }
     }, 1000);
   }
 

@@ -18,6 +18,8 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
+import * as UserActions from '../../redux/user/actions';
+
 // import { Icon } from 'react-native-elements';
 
 import Application from '../../constants/config';
@@ -27,6 +29,7 @@ import Network from '../../network';
 
 const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 const namePattern = /^[a-zA-Z. ]{3,20}$/;
+const unamePattern = /^[a-zA-Z.]{3,20}$/;
 const passPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
 const styles = StyleSheet.create({
@@ -72,11 +75,12 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     this._net = new Network();
-    console.log('RegCB1');
+    // console.log('RegCB1');
     this.state = {
       inputName: '',
       inputEmail: '',
       inputPass: '',
+      inputUsername: '',
       alert: {
         status: '',
         success: '',
@@ -86,7 +90,9 @@ export default class Register extends Component {
         name: false,
         email: false,
         password: false,
+        username: false,
       },
+      setUsername: false,
     };
   }
 
@@ -113,119 +119,142 @@ export default class Register extends Component {
       passPattern.test(this.state.inputPass)) {
       this._net.service.registerUser(this.state.inputEmail,
       this.state.inputPass, this.state.inputName, (err, res) => {
-        console.log('RegCB', err, res);
-        if (err) {
+        // console.log('RegCB', err, res);
+        if (err && !res) {
           this.setState({ alert: { error: 'Error in registration!' } });
         }
         this.setState({ alert: { success: 'Registration successful!' } });
-        Alert.alert(
-          'Sign up',
-          'Please check your email for verification. You can login after verification.',
-          [
-            { text: 'OK',
-              onPress: () => {
-                Actions.login({ type: 'replace' });
-              },
-            },
-          ],
-          { cancelable: false },
-        );
+        UserActions.loginAfterRegister({
+          username: this.state.inputEmail,
+          password: this.state.inputPass,
+        }, () => {
+          // console.log('RegCB 01', lerr, lres);
+          if (this._net.service.loggedInUser && this._net.service.loggedInUser.username) {
+            Actions.app({ type: 'reset' });
+          } else {
+            this.setState({ setUsername: true, alert: { success: '' } });
+            this._net.service.getUsernameSuggestion((Uerr, Ures) => {
+              if (Uerr) {
+                this.setState({ alert: { error: 'Error fetching username!' } });
+              } else if (Ures) {
+                this.setState({ inputUsername: Ures });
+              }
+            });
+          }
+        });
       });
     } else {
       this.setState({ alert: { error: 'Enter valid details' } });
     }
   }
 
-  render() {
+  renderRegistration = () => {
     const { height } = Dimensions.get('window');
-    return (
-      <View
-        style={{
-          flex: 1,
-          zIndex: 100,
-        }}
-      >
-        <ScrollView style={{
-          flexDirection: 'column',
-          backgroundColor: AppColors.brand().third,
-        }}
+    if (!this.state.setUsername) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            zIndex: 100,
+          }}
         >
-          <View style={{
-            height: height / 3,
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            paddingVertical: 15,
+          <ScrollView style={{
+            flexDirection: 'column',
+            backgroundColor: AppColors.brand().third,
           }}
           >
-            <Image
-              source={Application.logo}
-              style={{ width: 250, height: 50 }}
-            />
-            <Text style={styles.titleText}>Create a new account</Text>
-          </View>
-          <KeyboardAvoidingView behavior={'position'} style={{ paddingVertical: 15, paddingHorizontal: 30 }}>
-            <Alerts
-              status={this.state.alert.status}
-              success={this.state.alert.success}
-              error={this.state.alert.error}
-            />
-            <Text style={styles.inputLabel}>Name</Text>
-            <TextInput
-              placeholder={'Your name'}
-              onChangeText={inputName => this.setState({ inputName })}
-              value={this.state.name}
-              autoCorrect={false}
-              clearButtonMode={'while-editing'}
-              autoCapitalize="none"
-              disableFullscreenUI
-              style={styles.inputStyle}
-            />
-            {
-              this.state.inputError.name &&
-              <Text style={styles.errorMessage}>Please enter a valid name</Text>
-            }
-            <Text style={styles.inputLabel}>Email</Text>
-            <TextInput
-              placeholder={'you@domain.com'}
-              onChangeText={inputEmail => this.setState({ inputEmail })}
-              autoCorrect={false}
-              value={this.state.email}
-              keyboardType="email-address"
-              clearButtonMode={'while-editing'}
-              autoCapitalize="none"
-              disableFullscreenUI
-              style={styles.inputStyle}
-            />
-            {
-              this.state.inputError.email &&
-              <Text style={styles.errorMessage}>Please enter a valid email</Text>
-            }
-            <Text style={styles.inputLabel}>Password</Text>
-            <TextInput
-              placeholder={'Create a new password'}
-              onChangeText={inputPass => this.setState({ inputPass })}
-              value={this.state.password}
-              secureTextEntry
-              autoCorrect={false}
-              clearButtonMode={'while-editing'}
-              autoCapitalize="none"
-              disableFullscreenUI
-              style={styles.inputStyle}
-            />
-            {
-              this.state.inputError.password &&
-              <Text style={styles.errorMessage}>Please enter a stronger password</Text>
-            }
-          </KeyboardAvoidingView>
-          <TouchableOpacity
-            style={{
-              height: 40,
+            <View style={{
+              height: height / 3,
               alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: 30,
+              justifyContent: 'flex-end',
+              paddingVertical: 15,
             }}
+            >
+              <Image
+                source={Application.logo}
+                style={{ width: 250, height: 50 }}
+              />
+              <Text style={styles.titleText}>Create a new account</Text>
+            </View>
+            <KeyboardAvoidingView behavior={'position'} style={{ paddingVertical: 15, paddingHorizontal: 30 }}>
+              <Alerts
+                status={this.state.alert.status}
+                success={this.state.alert.success}
+                error={this.state.alert.error}
+              />
+              <Text style={styles.inputLabel}>Name</Text>
+              <TextInput
+                placeholder={'Your name'}
+                onChangeText={inputName => this.setState({ inputName })}
+                value={this.state.name}
+                autoCorrect={false}
+                clearButtonMode={'while-editing'}
+                autoCapitalize="none"
+                disableFullscreenUI
+                style={styles.inputStyle}
+              />
+              {
+                this.state.inputError.name &&
+                <Text style={styles.errorMessage}>Please enter a valid name</Text>
+              }
+              <Text style={styles.inputLabel}>Email</Text>
+              <TextInput
+                placeholder={'you@domain.com'}
+                onChangeText={inputEmail => this.setState({ inputEmail })}
+                autoCorrect={false}
+                value={this.state.email}
+                keyboardType="email-address"
+                clearButtonMode={'while-editing'}
+                autoCapitalize="none"
+                disableFullscreenUI
+                style={styles.inputStyle}
+              />
+              {
+                this.state.inputError.email &&
+                <Text style={styles.errorMessage}>Please enter a valid email</Text>
+              }
+              <Text style={styles.inputLabel}>Password</Text>
+              <TextInput
+                placeholder={'Create a new password'}
+                onChangeText={inputPass => this.setState({ inputPass })}
+                value={this.state.password}
+                secureTextEntry
+                autoCorrect={false}
+                clearButtonMode={'while-editing'}
+                autoCapitalize="none"
+                disableFullscreenUI
+                style={styles.inputStyle}
+              />
+              {
+                this.state.inputError.password &&
+                <Text style={styles.errorMessage}>Please enter a stronger password</Text>
+              }
+            </KeyboardAvoidingView>
+            <TouchableOpacity
+              style={{
+                height: 40,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: 30,
+              }}
+              onPress={() => {
+                Actions.pop();
+              }}
+            >
+              <Text style={{
+                marginLeft: 10,
+                color: '#FFF',
+                fontSize: 16,
+                fontWeight: '400',
+              }}
+              >Cancel</Text>
+            </TouchableOpacity>
+          </ScrollView>
+          <TouchableOpacity
+            style={[styles.signup]}
             onPress={() => {
-              Actions.pop();
+              Keyboard.dismiss();
+              this.validateRegistrationForm();
             }}
           >
             <Text style={{
@@ -234,24 +263,118 @@ export default class Register extends Component {
               fontSize: 16,
               fontWeight: '400',
             }}
-            >Cancel</Text>
+            >Sign up</Text>
           </TouchableOpacity>
-        </ScrollView>
-        <TouchableOpacity
-          style={[styles.signup]}
-          onPress={() => {
-            Keyboard.dismiss();
-            this.validateRegistrationForm();
+        </View>
+      );
+    }
+  }
+
+  renderSetUsername = () => {
+    const { height } = Dimensions.get('window');
+    if (this.state.setUsername) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            zIndex: 100,
           }}
         >
-          <Text style={{
-            marginLeft: 10,
-            color: '#FFF',
-            fontSize: 16,
-            fontWeight: '400',
+          <ScrollView style={{
+            flexDirection: 'column',
+            backgroundColor: AppColors.brand().third,
           }}
-          >Sign up</Text>
-        </TouchableOpacity>
+          >
+            <View style={{
+              height: height / 3,
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              paddingVertical: 15,
+            }}
+            >
+              <Image
+                source={Application.logo}
+                style={{ width: 250, height: 50 }}
+              />
+              <Text style={styles.titleText}>Choose your username</Text>
+            </View>
+            <KeyboardAvoidingView behavior={'position'} style={{ paddingVertical: 15, paddingHorizontal: 30 }}>
+              <Alerts
+                status={this.state.alert.status}
+                success={this.state.alert.success}
+                error={this.state.alert.error}
+              />
+              <Text style={styles.inputLabel}>Username</Text>
+              <TextInput
+                placeholder={'Your username'}
+                onChangeText={inputUsername => this.setState({ inputUsername })}
+                value={this.state.inputUsername}
+                autoCorrect={false}
+                clearButtonMode={'while-editing'}
+                autoCapitalize="none"
+                disableFullscreenUI
+                style={styles.inputStyle}
+              />
+              {
+                this.state.inputError.name &&
+                <Text style={styles.errorMessage}>Please enter a valid username</Text>
+              }
+            </KeyboardAvoidingView>
+          </ScrollView>
+          <TouchableOpacity
+            style={[styles.signup]}
+            onPress={() => {
+              Keyboard.dismiss();
+              const errorStates = {};
+              if (!unamePattern.test(this.state.inputUsername)) {
+                errorStates.username = true;
+                this.setState({ inputError: errorStates });
+              } else if (unamePattern.test(this.state.inputUsername)) {
+                this._net.service.setUsername(this.state.inputUsername, (err, res) => {
+                  // console.log('another', err, res);
+                  if (err && !res) {
+                    this.setState({ alert: { error: 'Try another username!' } });
+                  } else {
+                    Alert.alert(
+                      'Success',
+                      'Please login with your username and password.',
+                      [
+                        { text: 'OK',
+                          onPress: () => {
+                            this._net.logout();
+                          },
+                        },
+                      ],
+                      { cancelable: false },
+                    );
+                  }
+                });
+              }
+            }}
+          >
+            <Text style={{
+              marginLeft: 10,
+              color: '#FFF',
+              fontSize: 16,
+              fontWeight: '400',
+            }}
+            >Set username</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+  }
+
+  render() {
+    return (
+      <View
+        style={{
+          flex: 1,
+          zIndex: 100,
+        }}
+      >
+        {this.renderRegistration()}
+        {this.renderSetUsername()}
       </View>
     );
   }

@@ -155,11 +155,12 @@ class Login extends Component {
     AppUtil.debug(new Date().toLocaleString(), '[Performance] LoginView');
     // @todo: This would clash with the regular skip/login buttons
     // to fix that
-    this._service.onLogin(() => {
+    this._service.onLogin((err, res) => {
+      // console.log('onLogink', err, res, this._service.service.loggedInUser);
       if (this._mounted && this._service.service.loggedInUser) {
-//        this._service.switchToLoggedInUser();
-        // looks like we have logged in as an user, skip this screen
-        Actions.app({ type: 'reset' });
+        if (this._service.service.loggedInUser.username) {
+          Actions.app({ type: 'reset' });
+        }
       }
     });
     this._mounted = true;
@@ -204,12 +205,15 @@ class Login extends Component {
     * Login
     */
   login = () => {
+    // console.log('onLogink 01');
     // Get new credentials and update
     const credentials = this.form.getValue();
 
     // Form is valid
     if (credentials) {
+      // console.log('onLogink 02');
       this.setState({ form_values: credentials }, () => {
+        // console.log('onLogink 03', credentials.Email_or_Username.trim(), credentials.Password);
         this.setState({ resultMsg: { status: t('info_logging_in') } });
 
         // Scroll to top, to show message
@@ -220,12 +224,14 @@ class Login extends Component {
           username: credentials.Email_or_Username.trim(),
           password: credentials.Password,
         }, true).then(() => {
+          // console.log('onLogink 04');
           if (this._mounted) {
             this.setState({
               resultMsg: { success: t('info_logged_in') },
             });
           }
         }).catch(() => {
+          // console.log('onLogink 05');
           const error = t('err_login_failed'); // AppAPI.handleError(err);
           this.setState({ resultMsg: { error } });
         });
