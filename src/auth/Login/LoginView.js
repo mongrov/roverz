@@ -155,7 +155,7 @@ class Login extends Component {
     AppUtil.debug(new Date().toLocaleString(), '[Performance] LoginView');
     // @todo: This would clash with the regular skip/login buttons
     // to fix that
-    this._service.onLogin((err, res) => {
+    this._service.onLogin((/* err, */ /* res */) => {
       // console.log('onLogink', err, res, this._service.service.loggedInUser);
       if (this._mounted && this._service.service.loggedInUser) {
         if (this._service.service.loggedInUser.username) {

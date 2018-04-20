@@ -15,6 +15,7 @@ import {
   ScrollView,
   Dimensions,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: AppColors.brand().res_signBg,
+    marginTop: 15,
   },
 });
 
@@ -163,20 +164,23 @@ export default class Register extends Component {
             backgroundColor: AppColors.brand().third,
           }}
           >
-            <View style={{
-              height: height / 3,
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              paddingVertical: 15,
-            }}
+            <KeyboardAvoidingView
+              behavior={(Platform.OS === 'ios') ? 'position' : null}
+              style={{ paddingVertical: 15, paddingHorizontal: 30 }}
             >
-              <Image
-                source={Application.logo}
-                style={{ width: 250, height: 50 }}
-              />
-              <Text style={styles.titleText}>Create a new account</Text>
-            </View>
-            <KeyboardAvoidingView behavior={'position'} style={{ paddingVertical: 15, paddingHorizontal: 30 }}>
+              <View style={{
+                height: height / 3,
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                paddingVertical: 15,
+              }}
+              >
+                <Image
+                  source={Application.logo}
+                  style={{ width: 250, height: 50 }}
+                />
+                <Text style={styles.titleText}>Create a new account</Text>
+              </View>
               <Alerts
                 status={this.state.alert.status}
                 success={this.state.alert.success}
@@ -229,42 +233,42 @@ export default class Register extends Component {
                 this.state.inputError.password &&
                 <Text style={styles.errorMessage}>Please enter a stronger password</Text>
               }
+              <TouchableOpacity
+                style={[styles.signup, { backgroundColor: AppColors.brand().res_signBg }]}
+                onPress={() => {
+                  Keyboard.dismiss();
+                  this.validateRegistrationForm();
+                }}
+              >
+                <Text style={{
+                  marginLeft: 10,
+                  color: '#FFF',
+                  fontSize: 16,
+                  fontWeight: '400',
+                }}
+                >Sign up</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  height: 40,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: 30,
+                }}
+                onPress={() => {
+                  Actions.pop();
+                }}
+              >
+                <Text style={{
+                  marginLeft: 10,
+                  color: '#FFF',
+                  fontSize: 16,
+                  fontWeight: '400',
+                }}
+                >Cancel</Text>
+              </TouchableOpacity>
             </KeyboardAvoidingView>
-            <TouchableOpacity
-              style={{
-                height: 40,
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: 30,
-              }}
-              onPress={() => {
-                Actions.pop();
-              }}
-            >
-              <Text style={{
-                marginLeft: 10,
-                color: '#FFF',
-                fontSize: 16,
-                fontWeight: '400',
-              }}
-              >Cancel</Text>
-            </TouchableOpacity>
           </ScrollView>
-          <TouchableOpacity
-            style={[styles.signup]}
-            onPress={() => {
-              Keyboard.dismiss();
-              this.validateRegistrationForm();
-            }}
-          >
-            <Text style={{
-              marginLeft: 10,
-              color: '#FFF',
-              fontSize: 16,
-              fontWeight: '400',
-            }}
-            >Sign up</Text>
-          </TouchableOpacity>
         </View>
       );
     }
@@ -285,20 +289,23 @@ export default class Register extends Component {
             backgroundColor: AppColors.brand().third,
           }}
           >
-            <View style={{
-              height: height / 3,
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              paddingVertical: 15,
-            }}
+            <KeyboardAvoidingView
+              behavior={(Platform.OS === 'ios') ? 'position' : null}
+              style={{ paddingVertical: 15, paddingHorizontal: 30 }}
             >
-              <Image
-                source={Application.logo}
-                style={{ width: 250, height: 50 }}
-              />
-              <Text style={styles.titleText}>Choose your username</Text>
-            </View>
-            <KeyboardAvoidingView behavior={'position'} style={{ paddingVertical: 15, paddingHorizontal: 30 }}>
+              <View style={{
+                height: height / 3,
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                paddingVertical: 15,
+              }}
+              >
+                <Image
+                  source={Application.logo}
+                  style={{ width: 250, height: 50 }}
+                />
+                <Text style={styles.titleText}>Choose your username</Text>
+              </View>
               <Alerts
                 status={this.state.alert.status}
                 success={this.state.alert.success}
@@ -319,47 +326,47 @@ export default class Register extends Component {
                 this.state.inputError.name &&
                 <Text style={styles.errorMessage}>Please enter a valid username</Text>
               }
+              <TouchableOpacity
+                style={[styles.signup, { backgroundColor: AppColors.brand().res_signBg }]}
+                onPress={() => {
+                  Keyboard.dismiss();
+                  const errorStates = {};
+                  if (!unamePattern.test(this.state.inputUsername)) {
+                    errorStates.username = true;
+                    this.setState({ inputError: errorStates });
+                  } else if (unamePattern.test(this.state.inputUsername)) {
+                    this._net.service.setUsername(this.state.inputUsername, (err, res) => {
+                      // console.log('another', err, res);
+                      if (err && !res) {
+                        this.setState({ alert: { error: 'Try another username!' } });
+                      } else {
+                        Alert.alert(
+                          'Success',
+                          'Please login with your username and password.',
+                          [
+                            { text: 'OK',
+                              onPress: () => {
+                                this._net.logout();
+                              },
+                            },
+                          ],
+                          { cancelable: false },
+                        );
+                      }
+                    });
+                  }
+                }}
+              >
+                <Text style={{
+                  marginLeft: 10,
+                  color: '#FFF',
+                  fontSize: 16,
+                  fontWeight: '400',
+                }}
+                >Set username</Text>
+              </TouchableOpacity>
             </KeyboardAvoidingView>
           </ScrollView>
-          <TouchableOpacity
-            style={[styles.signup]}
-            onPress={() => {
-              Keyboard.dismiss();
-              const errorStates = {};
-              if (!unamePattern.test(this.state.inputUsername)) {
-                errorStates.username = true;
-                this.setState({ inputError: errorStates });
-              } else if (unamePattern.test(this.state.inputUsername)) {
-                this._net.service.setUsername(this.state.inputUsername, (err, res) => {
-                  // console.log('another', err, res);
-                  if (err && !res) {
-                    this.setState({ alert: { error: 'Try another username!' } });
-                  } else {
-                    Alert.alert(
-                      'Success',
-                      'Please login with your username and password.',
-                      [
-                        { text: 'OK',
-                          onPress: () => {
-                            this._net.logout();
-                          },
-                        },
-                      ],
-                      { cancelable: false },
-                    );
-                  }
-                });
-              }
-            }}
-          >
-            <Text style={{
-              marginLeft: 10,
-              color: '#FFF',
-              fontSize: 16,
-              fontWeight: '400',
-            }}
-            >Set username</Text>
-          </TouchableOpacity>
         </View>
       );
     }
