@@ -538,20 +538,24 @@ export default class Bubble extends React.Component {
   }
   renderUsername() {
     if (this.state.roomType !== Constants.G_DIRECT) {
-      const username = this.props.currentMessage.user.name;
-      if (username) {
-        console.log('renderUsername', username);
-        const { containerStyle, wrapperStyle, ...usernameProps } = this.props;
-        if (this.props.renderUsername) {
-          return this.props.renderUsername(usernameProps);
+      if (
+        !isSameUser(this.props.currentMessage, this.props.previousMessage)
+        ) {
+        const username = this.props.currentMessage.user.name;
+        if (username) {
+          console.log('renderUsername', username);
+          const { containerStyle, wrapperStyle, ...usernameProps } = this.props;
+          if (this.props.renderUsername) {
+            return this.props.renderUsername(usernameProps);
+          }
+          return (
+            <Text style={[styles.standardFont, styles.headerItem, styles.username, this.props.usernameStyle]}>
+              {username}:
+            </Text>
+          );
         }
-        return (
-          <Text style={[styles.standardFont, styles.headerItem, styles.username, this.props.usernameStyle]}>
-            {username}:
-          </Text>
-        );
+        return null;
       }
-      return null;
     }
   }
 
