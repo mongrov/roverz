@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
+  Keyboard,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { CachedImage } from 'react-native-img-cache';
@@ -86,7 +87,10 @@ export default class MessageImage extends React.Component {
       return (
         <View style={[styles.container]}>
           <TouchableOpacity
-            onPress={() => Actions.videoPreview({ videoUrl: this.props.currentMessage.video })}
+            onPress={() => {
+              Keyboard.dismiss();
+              Actions.videoPreview({ videoUrl: this.props.currentMessage.video });
+            }}
           >
             <CachedImage
               style={[styles.image]}
@@ -106,6 +110,7 @@ export default class MessageImage extends React.Component {
       <View style={[styles.container, this.props.containerStyle]}>
         <TouchableOpacity
           onPress={() => {
+            Keyboard.dismiss();
             Actions.imageGallery({
               imgUrl: this.props.currentMessage.image,
               imgTitle: this.props.currentMessage.text,
