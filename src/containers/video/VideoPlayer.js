@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   // Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Icon } from 'react-native-elements';
@@ -137,6 +138,7 @@ export default class VideoPlayer extends Component {
       skin: 'embed',
       ignoreSilentSwitch: null,
       isBuffering: false,
+      opacity: 0,
     };
 
     this.onLoad = this.onLoad.bind(this);
@@ -159,17 +161,21 @@ export default class VideoPlayer extends Component {
     });
   }
 
+  onLoadStart = () => {
+    this.setState({ opacity: 1 });
+  }
+
   onLoad(data) {
     // console.log('On load fired!');
-    this.setState({ duration: data.duration });
+    this.setState({ duration: data.duration, opacity: 0 });
   }
 
   onProgress(data) {
     this.setState({ currentTime: data.currentTime });
   }
 
-  onBuffer(isBuffering) {
-    this.setState({ isBuffering });
+  onBuffer = ({ isBuffering }) => {
+    this.setState({ opacity: isBuffering ? 1 : 0 });
   }
 
 
@@ -215,6 +221,19 @@ export default class VideoPlayer extends Component {
           onHideControls={this.onHideControls}
           onShowControls={this.onShowControls}
           repeat={true}
+          onLoadStart={this.onLoadStart}
+        />
+        <ActivityIndicator
+          animating
+          size="large"
+          color={'#FFF'}
+          style={{
+            position: 'absolute',
+            left: 70,
+            right: 70,
+            height: 50,
+            opacity: this.state.opacity,
+          }}
         />
       </View>
     );
