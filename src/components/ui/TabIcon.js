@@ -16,6 +16,7 @@ import { Icon } from 'react-native-elements';
 
 import { AppColors } from '../../theme/';
 
+const tabText = AppColors.brand().tI_style;
 /* Component ==================================================================== */
 const TabIcon = ({ icon, selected, subTitle }) => (
   /* */
@@ -38,7 +39,7 @@ const TabIcon = ({ icon, selected, subTitle }) => (
     />
     <Text
       style={{
-        color: AppColors.brand().tI_style,
+        color: tabText,
         fontSize: 10,
         marginBottom: 5,
       }}
