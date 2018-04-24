@@ -538,9 +538,8 @@ export default class Bubble extends React.Component {
   }
   renderUsername() {
     if (this.state.roomType !== Constants.G_DIRECT) {
-      if (
-        !isSameUser(this.props.currentMessage, this.props.previousMessage)
-        ) {
+      if ((this.props.currentMessage.image || this.props.currentMessage.video) ||
+      !isSameUser(this.props.currentMessage, this.props.previousMessage)) {
         const username = this.props.currentMessage.user.name;
         if (username) {
           console.log('renderUsername', username);
