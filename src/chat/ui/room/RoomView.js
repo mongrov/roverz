@@ -407,7 +407,7 @@ class ChatRoomView extends React.Component {
       console.log('PM - images', images);
       images.map((image) => {
         if (images && images.length > 0) {
-          if (images.length === 1) {
+          if (images.length === 1 && Platform.OS !== 'ios') {
             ImagePicker.openCropper({
               path: images[0].path,
               width: 1000,
