@@ -405,28 +405,29 @@ class ChatRoomView extends React.Component {
       maxFiles: 10,
     }).then((images) => {
       console.log('PM - images', images);
-      images.map((image) => {
-        if (images && images.length > 0) {
-          if (images.length === 1 && Platform.OS !== 'ios') {
-            ImagePicker.openCropper({
-              path: images[0].path,
-              width: 1000,
-              height: 1000,
-            }).then((data) => {
-              console.log('PM - data', data);
-              const _progressCallback = this._progressCallback;
-              new ImageUtil().uploadImage(data, this._group._id, true, 'Image',
-              (fuFileName, fuPercent, fuMsg) => {
-                console.log(fuFileName, ':', fuPercent, ':', fuMsg);
-                const fileNameCount = fuFileName;
-                const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
-                if (_progressCallback) {
-                  _progressCallback(fileNameCount, fuMsg, percentage, 1, 0);
-                }
-              });
+      if (images && images.length > 0) {
+        if (images.length === 1 && images[0].mime !== 'image/gif' && Platform.OS !== 'ios') {
+          // Cropper
+          ImagePicker.openCropper({
+            path: images[0].path,
+            width: 1000,
+            height: 1000,
+          }).then((data) => {
+            console.log('PM - data', data);
+            const _progressCallback = this._progressCallback;
+            new ImageUtil().uploadImage(data, this._group._id, true, 'Image',
+            (fuFileName, fuPercent, fuMsg) => {
+              console.log(fuFileName, ':', fuPercent, ':', fuMsg);
+              const fileNameCount = fuFileName;
+              const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
+              if (_progressCallback) {
+                _progressCallback(fileNameCount, fuMsg, percentage, 1, 0);
+              }
             });
-          } else {
-            // console.log('PM - imagebrfore', image);
+          });
+        } else {
+          // send
+          images.map((image) => {
             for (let i = 0; i <= images.length; i += 1) {
               console.log('PM - imageafter', image);
               const imageAdd = { path: images[i].path };
@@ -443,10 +444,10 @@ class ChatRoomView extends React.Component {
                 }
               });
             }
-          }
+            return null;
+          });
         }
-        return null;
-      });
+      }
       this.setState({
         image: null,
         images: images.map((i) => {
