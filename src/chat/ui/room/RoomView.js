@@ -828,7 +828,7 @@ class ChatRoomView extends React.Component {
             Keyboard.dismiss();
             this.setState({
               attachMenu: false,
-              attachAudio: !this.state.attachAudio,
+              attachAudio: true,
               text: '',
             });
           }}
