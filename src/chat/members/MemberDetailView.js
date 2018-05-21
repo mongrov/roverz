@@ -98,7 +98,9 @@ export default class MemberDetailView extends Component {
 
   componentWillUnmount() {
     this._mounted = false;
-    this.userDetailList.removeListener(this._changeListener);
+    if (this.userDetailList) {
+      this.userDetailList.removeListener(this._changeListener);
+    }
     this._changeListener = null;
   }
 
