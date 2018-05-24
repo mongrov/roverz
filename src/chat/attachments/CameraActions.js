@@ -11,12 +11,13 @@ import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements';
 import Camera from 'react-native-camera';
 import { Actions } from 'react-native-router-flux';
-import ImagePicker from 'react-native-image-crop-picker';
+// import ImagePicker from 'react-native-image-crop-picker';
 import { AppColors } from '../../theme';
 
 // import Loading from '@components/general/Loading';
 import ImageUtil from './ImageUtil';
 import Group from '../../models/group';
+
 
 const camUnderlayColor = AppColors.brand().cA_camUnderlayColor;
 const cameraIconColor = AppColors.brand().cA_cameraIconColor;
@@ -246,27 +247,46 @@ export default class CameraActions extends React.Component {
     }
   }
 
+  // captureImageAndPreview() {
+  //   console.log('LogOut - captureImageAndPreview', this._network.service.loggedInUser);
+  //   if (this.camera) {
+  //     this.camera.capture()
+  //       .then((data) => {
+  //         console.log('LogOut - capture', this._network.service.loggedInUser);
+  //         ImagePicker.openCropper({
+  //           path: data.path,
+  //           width: 1000,
+  //           height: 1000,
+  //         }).then((image) => {
+  //           console.log('crop', image);
+  //           console.log('LogOut - croppedphoto', this._network.service.loggedInUser);
+  //           Actions.captureImagePreview({
+  //             group: this.props.group,
+  //             cameraData: image,
+  //             imageUrl: image.path,
+  //             progressCallback: this.props.progressCallback,
+  //             duration: 0,
+  //           });
+  //         });
+  //       }).catch(err => console.error('crop error', err));
+  //   }
+  // }
+
   captureImageAndPreview() {
     if (this.camera) {
       this.camera.capture()
-        .then((data) => {
-          ImagePicker.openCropper({
-            path: data.path,
-            width: 1000,
-            height: 1000,
-          }).then((image) => {
-            console.log('crop', image);
-            Actions.captureImagePreview({
-              group: this.props.group,
-              cameraData: image,
-              imageUrl: image.path,
-              progressCallback: this.props.progressCallback,
-              duration: 0,
-            });
+        .then((image) => {
+          Actions.captureImagePreview({
+            group: this.props.group,
+            cameraData: image,
+            imageUrl: image.path,
+            progressCallback: this.props.progressCallback,
+            duration: 0,
           });
-        }).catch(err => console.error('crop error', err));
+        });
     }
   }
+
 
   sendCameraImage() {
     const _progressCallback = this.props.progressCallback;

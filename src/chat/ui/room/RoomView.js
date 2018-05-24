@@ -47,7 +47,7 @@ import t from '../../../i18n';
 
 const NO_OF_MSGS = 30;
 const photoIconColor = AppColors.brand().room_photoIconColor;
-const videoIconColor = AppColors.brand().room_videoIconColor;
+// const videoIconColor = AppColors.brand().room_videoIconColor;
 const cameraIconColor = AppColors.brand().room_cameraIconColor;
 // const audioIconColor = AppColors.brand().room_audioIconColor;
 const sentBgColor = AppColors.brand().room_sentBgColor;
@@ -292,6 +292,7 @@ class ChatRoomView extends React.Component {
     AppUtil.debug('Component unmounted', '[Performance] RoomView');
   }
 
+
   onSend() {
     if (this.state.text.trim().length > 0) {
       const unEmoMsg = emoji.unemojify(this.state.text.trim());
@@ -397,28 +398,34 @@ class ChatRoomView extends React.Component {
   }
 
   pickMultiplePhotos() {
+    console.log('LogOut - pickMultiplePhotos', this._network.service.loggedInUser);
     ImagePicker.openPicker({
       multiple: true,
       waitAnimationEnd: false,
       includeExif: true,
       mediaType: 'photo',
       maxFiles: 10,
-    }).then((images) => {
+    })
+    .then((images) => {
+      console.log('LogOut - imagemap', this._network.service.loggedInUser);
       console.log('PM - images', images);
       if (images && images.length > 0) {
         if (images.length === 1 && images[0].mime !== 'image/gif' && Platform.OS !== 'ios') {
+          console.log('LogOut - singleimageselection', this._network.service.loggedInUser);
           // Cropper
           ImagePicker.openCropper({
             path: images[0].path,
             width: 1000,
             height: 1000,
           }).then((data) => {
+            console.log('LogOut - singleimagecrop', this._network.service.loggedInUser);
             console.log('PM - data', data);
             const _progressCallback = this._progressCallback;
             new ImageUtil().uploadImage(data, this._group._id, true, 'Image',
             (fuFileName, fuPercent, fuMsg) => {
               console.log(fuFileName, ':', fuPercent, ':', fuMsg);
               const fileNameCount = fuFileName;
+              console.log('LogOut - roomview', this._network.service.loggedInUser);
               const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
               if (_progressCallback) {
                 _progressCallback(fileNameCount, fuMsg, percentage, 1, 0);
@@ -429,6 +436,7 @@ class ChatRoomView extends React.Component {
           // send
           images.map((image) => {
             for (let i = 0; i <= images.length; i += 1) {
+              console.log('LogOut - multipleimageselection', this._network.service.loggedInUser);
               console.log('PM - imageafter', image);
               const imageAdd = { path: images[i].path };
               // console.log('PM - roomview', imaging);
@@ -438,6 +446,7 @@ class ChatRoomView extends React.Component {
                 console.log(fuFileName, ':', fuPercent, ':', fuMsg);
                 const fileNameCount = fuFileName;
                 console.log('PM - fileNameCount', fileNameCount);
+                console.log('LogOut - roomview', this._network.service.loggedInUser);
                 const percentage = Math.round(Number(parseFloat(fuPercent).toFixed(2) * 100));
                 if (_progressCallback) {
                   _progressCallback(fileNameCount, fuMsg, percentage, images.length, i);
@@ -455,7 +464,8 @@ class ChatRoomView extends React.Component {
           return { uri: i.path, width: i.width, height: i.height, mime: i.mime };
         }),
       });
-    }).catch(e => console.log(e));
+    })
+    .catch(e => console.log(e));
   }
 
   _progressCallback(id, msg, percent, totalFiles, fileCount) {
@@ -585,7 +595,12 @@ class ChatRoomView extends React.Component {
                   attachMenu: !this.state.attachMenu,
                   text: '',
                 });
-                this.pickMultiplePhotos();
+                Actions.photoLibrary({
+                  group: this._group,
+                  groupId: this._group._id,
+                  progressCallback: this._progressCallback,
+                  duration: 0,
+                });
               }}
             >
               <Icon
@@ -601,7 +616,7 @@ class ChatRoomView extends React.Component {
                 style={styles.chatFooterText}
               >Photos</Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            { /* <TouchableOpacity
               style={{
                 flex: 1,
                 flexDirection: 'column',
@@ -631,7 +646,7 @@ class ChatRoomView extends React.Component {
                 ellipsizeMode={'tail'}
                 style={styles.chatFooterText}
               >Videos</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
               style={{
                 flex: 1,
@@ -995,6 +1010,9 @@ class ChatRoomView extends React.Component {
           // **** start base
           messages={this.state.messages}
           text={this.state.text}
+          textInputProps={{
+            autoCorrect: false,
+          }}
           onSend={this.onSend}
           user={{
             _id: Application.userId,
@@ -1057,6 +1075,7 @@ class ChatRoomView extends React.Component {
         // **** start base
         messages={this.state.messages}
         text={this.state.text}
+        onInputTextChanged={text => this.setCustomText(text)}
         onSend={this.onSend}
         user={{
           _id: Application.userId,
