@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   AppState,
+  Platform,
 } from 'react-native';
 
 import { ListView } from 'realm/react-native';
@@ -162,7 +163,9 @@ class GroupList extends Component {
   componentWillUnmount() {
     this._mounted = false;
     AppState.removeEventListener('change', this._handleAppStateChange);
-    RNExitApp.exitApp();
+    if (Platform.OS === 'android') {
+      RNExitApp.exitApp();
+    }
   }
 
   getUser = (msg) => {
