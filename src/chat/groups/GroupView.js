@@ -16,6 +16,7 @@ import {
 import { ListView } from 'realm/react-native';
 import moment from 'moment';
 import { Badge, Icon } from 'react-native-elements';
+import RNExitApp from 'react-native-exit-app';
 import { List, ListItem } from '../../components/ui';
 import Loading from '../../components/general/Loading';
 
@@ -161,6 +162,7 @@ class GroupList extends Component {
   componentWillUnmount() {
     this._mounted = false;
     AppState.removeEventListener('change', this._handleAppStateChange);
+    RNExitApp.exitApp();
   }
 
   getUser = (msg) => {
