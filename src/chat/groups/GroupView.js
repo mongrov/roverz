@@ -11,13 +11,11 @@ import {
   TouchableOpacity,
   StyleSheet,
   AppState,
-  Platform,
 } from 'react-native';
 
 import { ListView } from 'realm/react-native';
 import moment from 'moment';
 import { Badge, Icon } from 'react-native-elements';
-import RNExitApp from 'react-native-exit-app';
 import { List, ListItem } from '../../components/ui';
 import Loading from '../../components/general/Loading';
 
@@ -119,7 +117,6 @@ class GroupList extends Component {
   }
 
   componentWillMount() {
-    console.log('Exitapp - componentWillMount');
   }
 
   componentDidMount() {
@@ -132,7 +129,6 @@ class GroupList extends Component {
     //     console.log('APPSTATE GV - switchToLoggedInUser');
     //   }
     // });
-    console.log('Exitapp - componentDidMount');
     this._insideStateUpdate = false;
     this._service.db.groups.list.addListener(() => {
       if (!this._mounted
@@ -162,25 +158,9 @@ class GroupList extends Component {
     AppState.addEventListener('change', this._handleAppStateChange);
   }
 
-  componentWillReceiveProps() {
-    console.log('Exitapp - componentWillReceiveProps');
-  }
-
-  // shouldComponentUpdate() {
-  //   console.log('Exitapp - shouldComponentUpdate');
-  // }
-
-  componentDidUpdate() {
-    console.log('Exitapp - componentDidUpdate');
-  }
-
   componentWillUnmount() {
-    console.log('Exitapp - componentWillUnmount');
     this._mounted = false;
     AppState.removeEventListener('change', this._handleAppStateChange);
-    if (Platform.OS === 'android') {
-      RNExitApp.exitApp();
-    }
   }
 
   getUser = (msg) => {
@@ -264,7 +244,7 @@ class GroupList extends Component {
     return (
       <View style={[styles.mainContainer]} testID={'group-view'} >
         <TouchableOpacity
-          style={[styles.plusButton, { backgroundColor: AppColors.brand().third, bottom: 30 }]}
+          style={[styles.plusButton, { backgroundColor: AppColors.brand().third }]}
           onPress={Actions.searchRoom}
         >
           <Icon

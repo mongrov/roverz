@@ -1,5 +1,7 @@
 import RNRestart from 'react-native-restart';
-import { NetInfo, AppState } from 'react-native';
+import { NetInfo, AppState, Platform } from 'react-native';
+import RNExitApp from 'react-native-exit-app';
+
 
 import Database from '../models';
 import Service from '../service';
@@ -148,6 +150,9 @@ class Network {
     if (nextAppState === 'background') {
       PushNotification.cancelAllLocalNotifications();
       this.service.setUserPresence('away');
+      if (Platform.OS === 'android') {
+        RNExitApp.exitApp();
+      }
     } else if (nextAppState === 'active') {
       PushNotification.cancelAllLocalNotifications();
       // this.reconnectMeteor();
