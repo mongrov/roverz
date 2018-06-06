@@ -130,6 +130,18 @@ class RC {
     return this.meteor.loggedInUser;
   }
 
+  mgbdGetBoardDetails(roomName, cb) {
+    this.meteor.call('mgbdGetBoardDetails', roomName, cb);
+  }
+
+  mgbdGetList(roomName, cb) {
+    this.meteor.call('mgbdGetList', roomName, cb);
+  }
+
+  mgbdGetCardList(listID, cb) {
+    this.meteor.call('mgbdGetCardList', listID, cb);
+  }
+
   registerUser(email, pass, name, cb) {
     this.meteor.call('registerUser', { name, email, pass }, cb);
   }

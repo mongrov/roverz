@@ -10,6 +10,7 @@ export default {
   Message: 'Message',
   User: 'User',
   RemoteFile: 'RemoteFile',
+  Card: 'Card',
 
   // server
   Servers: 'app:servers',

@@ -120,6 +120,36 @@ class ChatService {
     this.provider.logout();
   }
 
+  mgbdGetList(roomName, cb) {
+    this.provider.mgbdGetList(roomName, (error, res) => {
+      if (error) {
+        console.log('Ezhil error ', error);
+      } else {
+        console.log('Ezhil res ', res);
+        let bdId;
+        res.forEach((bdList) => {
+          if (bdList && bdList._id) {
+            if (!bdId) {
+              bdId = bdList.boardId;
+            }
+            this.mgbdGetCardList(bdList._id, cb);
+          }
+        });
+        cb(error, bdId);
+      }
+    });
+  }
+
+  mgbdGetCardList(listID, cb) {
+    this.provider.mgbdGetCardList(listID, (error, res) => {
+      if (error) {
+        console.log('Ezhil error ', error);
+      } else {
+        this.db.cards.addAll(res);
+      }
+    });
+  }
+
   // ---- init section over, service methods follow ----
 
   // return available channels/groups to display

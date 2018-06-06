@@ -14,6 +14,7 @@ import AppManager from './AppManager';
 import GroupManager from './GroupManager';
 import UserManager from './UserManager';
 import RemoteFileManager from './RemoteFileManager';
+import CardManager from './board/CardManager';
 
 /*
 * Todos
@@ -50,6 +51,11 @@ class Database {
     return Database._rf;
   }
 
+  // refer to cards for methods that can be accessed
+  get cards() {
+    return Database._card;
+  }
+
   get userId() {
     return Database._userId;
   }
@@ -60,6 +66,7 @@ class Database {
     Database._gm = new GroupManager(realm);
     Database._um = new UserManager(realm);
     Database._rf = new RemoteFileManager(realm);
+    Database._card = new CardManager(realm);
   }
 
   // switch realm database
