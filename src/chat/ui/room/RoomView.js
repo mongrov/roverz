@@ -1010,9 +1010,6 @@ class ChatRoomView extends React.Component {
           // **** start base
           messages={this.state.messages}
           text={this.state.text}
-          textInputProps={{
-            autoCorrect: false,
-          }}
           onSend={this.onSend}
           user={{
             _id: Application.userId,
@@ -1075,7 +1072,6 @@ class ChatRoomView extends React.Component {
         // **** start base
         messages={this.state.messages}
         text={this.state.text}
-        onInputTextChanged={text => this.setCustomText(text)}
         onSend={this.onSend}
         user={{
           _id: Application.userId,

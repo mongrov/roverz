@@ -141,6 +141,7 @@ class ChatService {
   }
 
   mgbdGetCardList(listID, cb) {
+    console.log('callback', cb);
     this.provider.mgbdGetCardList(listID, (error, res) => {
       if (error) {
         console.log('Ezhil error ', error);
