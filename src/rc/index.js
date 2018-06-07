@@ -130,6 +130,14 @@ class RC {
     return this.meteor.loggedInUser;
   }
 
+  mgbdGetChecklists(cardID, cb) {
+    this.meteor.call('mgbdGetChecklists', cardID, cb);
+  }
+
+  mgbdGetCardComments(cardID, cb) {
+    this.meteor.call('mgbdGetCardComments', cardID, cb);
+  }
+
   mgbdGetBoardDetails(roomName, cb) {
     this.meteor.call('mgbdGetBoardDetails', roomName, cb);
   }

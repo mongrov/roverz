@@ -120,12 +120,26 @@ class ChatService {
     this.provider.logout();
   }
 
+  mgbdGetBoardDetails(roomName, cb) {
+    this.provider.mgbdGetBoardDetails(roomName, (error, res) => {
+      if (!error) {
+        this.db.boards.addBoard(res);
+        let bdId;
+        if (res && res._id) {
+          if (!bdId) {
+            bdId = res._id;
+          }
+          this.mgbdGetList(roomName, cb);
+        }
+        cb(error, bdId);
+      }
+    });
+  }
+
   mgbdGetList(roomName, cb) {
     this.provider.mgbdGetList(roomName, (error, res) => {
-      if (error) {
-        console.log('Ezhil error ', error);
-      } else {
-        console.log('Ezhil res ', res);
+      if (!error) {
+        this.db.bdlists.addAll(res);
         let bdId;
         res.forEach((bdList) => {
           if (bdList && bdList._id) {
@@ -135,18 +149,34 @@ class ChatService {
             this.mgbdGetCardList(bdList._id, cb);
           }
         });
-        cb(error, bdId);
       }
     });
   }
 
   mgbdGetCardList(listID, cb) {
-    console.log('callback', cb);
     this.provider.mgbdGetCardList(listID, (error, res) => {
-      if (error) {
-        console.log('Ezhil error ', error);
-      } else {
+      if (!error) {
         this.db.cards.addAll(res);
+        res.forEach((cardList) => {
+          this.mgbdGetCardComments(cardList._id, cb);
+          this.mgbdGetChecklists(cardList._id, cb);
+        });
+      }
+    });
+  }
+
+  mgbdGetCardComments(cardID, cb) {
+    this.provider.mgbdGetCardComments(cardID, (error, res) => {
+      if (!error) {
+        this.db.cardComments.addAll(res);
+      }
+    });
+  }
+
+  mgbdGetChecklists(cardID, cb) {
+    this.provider.mgbdGetChecklists(cardID, (error, res) => {
+      if (!error) {
+        this.db.bdchecklist.addAll(res);
       }
     });
   }
