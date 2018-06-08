@@ -30,11 +30,11 @@ export default class BoardManager {
         archived: boardObj.archived,
         createdAt: boardObj.createdAt,
         stars: boardObj.stars,
+        members: boardObj.members,
       };
       AppUtil.debug(objToStore, null);
       this._realm.create(Constants.Board, objToStore, true);
     });
   }
-
 
 }

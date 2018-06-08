@@ -18,6 +18,14 @@
      isOvertime: { type: 'bool', default: false },
      createdAt: { type: 'date', optional: true },
      dateLastActivity: { type: 'date', optional: true },
+     listId: 'string',
+     description: { type: 'string', optional: true },
+     dueAt: { type: 'date', optional: true },
+     receivedAt: { type: 'date', optional: true },
+     startAt: { type: 'date', optional: true },
+     endAt: { type: 'date', optional: true },
+     spentTime: { type: 'date', optional: true },
+     members: 'string',
    },
  };
  export default class Card {

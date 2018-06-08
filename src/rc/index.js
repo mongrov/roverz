@@ -130,6 +130,10 @@ class RC {
     return this.meteor.loggedInUser;
   }
 
+  mgbdGetChecklistItems(cardID, cb) {
+    this.meteor.call('mgbdGetChecklistItems', cardID, cb);
+  }
+  
   mgbdGetChecklists(cardID, cb) {
     this.meteor.call('mgbdGetChecklists', cardID, cb);
   }

@@ -123,6 +123,7 @@ class ChatService {
   mgbdGetBoardDetails(roomName, cb) {
     this.provider.mgbdGetBoardDetails(roomName, (error, res) => {
       if (!error) {
+        
         this.db.boards.addBoard(res);
         let bdId;
         if (res && res._id) {
@@ -177,10 +178,20 @@ class ChatService {
     this.provider.mgbdGetChecklists(cardID, (error, res) => {
       if (!error) {
         this.db.bdchecklist.addAll(res);
+        res.forEach((checkList) => {
+          this.mgbdGetChecklistItems(checkList._id, cb);
+        });
       }
     });
   }
 
+  mgbdGetChecklistItems(checklistID, cb) {
+    this.provider.mgbdGetChecklistItems(checklistID, (error, res) => {
+      if (!error) {
+        this.db.bdchecklistitems.addAll(res);
+      }
+    });
+  }
   // ---- init section over, service methods follow ----
 
   // return available channels/groups to display

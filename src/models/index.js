@@ -20,6 +20,7 @@ import ListsManager from './board/ListsManager';
 import CardManager from './board/CardManager';
 import CardCommentsManager from './board/CardCommentsManager';
 import ChecklistsManager from './board/ChecklistsManager';
+import ChecklistitemsManager from './board/ChecklistitemsManager';
 
 /*
 * Todos
@@ -85,6 +86,10 @@ class Database {
     return Database._bdchecklist;
   }
   
+  get bdchecklistitems() {
+    return Database._bdchecklistitems;
+  }
+
   // init variables
   initManagers(realm) {
     Database._app = new AppManager(realm);
@@ -96,6 +101,7 @@ class Database {
     Database._dblists = new ListsManager(realm);
     Database._cardComments = new CardCommentsManager(realm);
     Database._bdchecklist = new ChecklistsManager(realm);
+    Database._bdchecklistitems = new ChecklistitemsManager(realm);
   }
 
   // switch realm database

@@ -32,6 +32,10 @@ export default class CardManager {
     this._realm.write(() => {
       Object.keys(cardList).forEach((k) => {
         var obj = cardList[k];
+        var membersList = '';
+        if(obj.members){
+          membersList = JSON.stringify(obj.members);
+        }
         obj = AppUtil.removeEmptyValues(obj);
         if (obj._id) {
           const objToStore = {
@@ -44,6 +48,14 @@ export default class CardManager {
             isOvertime: obj.isOvertime,
             createdAt: obj.createdAt,
             dateLastActivity: obj.dateLastActivity,
+            listId: obj.listId,
+            description: obj.description,
+            dueAt: obj.dueAt,
+            receivedAt: obj.receivedAt,
+            startAt: obj.startAt,
+            endAt: obj.endAt,
+            spentTime: obj.spentTime,
+            members: membersList,
           };
           AppUtil.debug(objToStore, null);
           this._realm.create(Constants.Card, objToStore, true);
