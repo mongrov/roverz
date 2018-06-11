@@ -133,13 +133,21 @@ class RC {
   mgbdGetChecklistItems(cardID, cb) {
     this.meteor.call('mgbdGetChecklistItems', cardID, cb);
   }
-  
+
   mgbdGetChecklists(cardID, cb) {
     this.meteor.call('mgbdGetChecklists', cardID, cb);
   }
 
   mgbdGetCardComments(cardID, cb) {
     this.meteor.call('mgbdGetCardComments', cardID, cb);
+  }
+
+  mgbdCreateCardComments(boardID, cardID, cardComments, cb) {
+    this.meteor.call('mgbdCreateCardComments', boardID, cardID, cardComments, cb);
+  }
+
+  mgbdUpdateChecklistItems(checklistID, title, isFinished, cb) {
+    this.meteor.call('mgbdUpdateChecklistItems', checklistID, title, isFinished, cb);
   }
 
   mgbdGetBoardDetails(roomName, cb) {

@@ -123,7 +123,6 @@ class ChatService {
   mgbdGetBoardDetails(roomName, cb) {
     this.provider.mgbdGetBoardDetails(roomName, (error, res) => {
       if (!error) {
-        
         this.db.boards.addBoard(res);
         let bdId;
         if (res && res._id) {
@@ -167,10 +166,21 @@ class ChatService {
   }
 
   mgbdGetCardComments(cardID, cb) {
+    console.log('callback', cb);
     this.provider.mgbdGetCardComments(cardID, (error, res) => {
       if (!error) {
         this.db.cardComments.addAll(res);
       }
+    });
+  }
+
+  mgbdCreateCardComments(boardID, cardID, cardComments, cb) {
+    this.provider.mgbdCreateCardComments(boardID, cardID, cardComments, cb);
+  }
+
+  mgbdUpdateChecklistItems(checklistID, title, isFinished, cb) {
+    this.provider.mgbdUpdateChecklistItems(checklistID, title, isFinished, (error, res) => {
+      cb(error, res);
     });
   }
 
@@ -186,6 +196,7 @@ class ChatService {
   }
 
   mgbdGetChecklistItems(checklistID, cb) {
+    console.log('callback', cb);
     this.provider.mgbdGetChecklistItems(checklistID, (error, res) => {
       if (!error) {
         this.db.bdchecklistitems.addAll(res);
