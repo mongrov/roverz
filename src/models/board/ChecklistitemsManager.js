@@ -30,7 +30,7 @@ export default class ChecklistitemsManager {
           const objToStore = {
             _id: obj._id,
             title: obj.title,
-            userId: obj.userId,
+            userId: obj.userId ? obj.userId : 'unknown',
             sort: obj.sort,
             cardId: obj.cardId,
             checklistId: obj.checklistId,
