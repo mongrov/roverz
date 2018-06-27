@@ -174,9 +174,28 @@ class ChatService {
     });
   }
 
+  mgbdCreateCards(cardObj, cb) {
+    this.provider.mgbdCreateCards(cardObj, cb);
+  }
+
+  mgbdCreateChecklists(checklistObj, cb) {
+    this.provider.mgbdCreateChecklists(checklistObj, cb);
+  }
+
+  mgbdCreateChecklistItems(checklistItemsObj, cb) {
+    this.provider.mgbdCreateChecklistItems(checklistItemsObj, cb);
+  }
+
+
   mgbdCreateCardComments(boardID, cardID, cardComments, cb) {
     this.provider.mgbdCreateCardComments(boardID, cardID, cardComments, cb);
   }
+
+
+  mgbdUpdateCards(cardID, cardObj, cb) {
+    this.provider.mgbdUpdateCards(cardID, cardObj, cb);
+  }
+
 
   mgbdUpdateChecklistItems(checklistID, title, isFinished, cb) {
     this.provider.mgbdUpdateChecklistItems(checklistID, title, isFinished, (error, res) => {

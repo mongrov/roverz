@@ -142,6 +142,22 @@ class RC {
     this.meteor.call('mgbdGetCardComments', cardID, cb);
   }
 
+  mgbdCreateCards(cardObj, cb) {
+    this.meteor.call('mgbdCreateCards', cardObj, cb);
+  }
+
+  mgbdCreateChecklists(checklistObj, cb) {
+    this.meteor.call('mgbdCreateChecklists', checklistObj, cb);
+  }
+
+  mgbdCreateChecklistItems(checklistItemsObj, cb) {
+    this.meteor.call('mgbdCreateChecklistItems', checklistItemsObj, cb);
+  }
+
+  mgbdUpdateCards(cardID, cardObj, cb) {
+    this.meteor.call('mgbdUpdateCards', cardID, cardObj, cb);
+  }
+
   mgbdCreateCardComments(boardID, cardID, cardComments, cb) {
     this.meteor.call('mgbdCreateCardComments', boardID, cardID, cardComments, cb);
   }
