@@ -20,11 +20,15 @@ export default class CardManager {
     return (res && res.length > 0) ? res['0'] : null;
   }
 
-
-  findByBoardIdAsList(bid) {
-    const res = this.list.filtered(`boardId = "${bid}"`);
+  findByListId(lid) {
+    const res = this.list.filtered(`listId = "${lid}"`);
     return (res && res.length > 0) ? res : null;
   }
+
+  // findByBoardIdAsList(bid) {
+  //   const res = this.list.filtered(`boardId = "${bid}"`);
+  //   return (res && res.length > 0) ? res : null;
+  // }
 
   addAll(cardList) {
     if (!cardList || Object.keys(cardList).length <= 0) return;
@@ -33,7 +37,7 @@ export default class CardManager {
       Object.keys(cardList).forEach((k) => {
         var obj = cardList[k];
         var membersList = '';
-        if(obj.members){
+        if (obj.members) {
           membersList = JSON.stringify(obj.members);
         }
         obj = AppUtil.removeEmptyValues(obj);
