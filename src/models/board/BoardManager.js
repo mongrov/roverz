@@ -24,13 +24,17 @@ export default class BoardManager {
     if (!boardObj || !boardObj._id) return;
     AppUtil.debug(null, `${Constants.MODULE}: addBoard`);
     this._realm.write(() => {
+      var membersList = '';
+      if (boardObj.members) {
+        membersList = JSON.stringify(boardObj.members);
+      }
       const objToStore = {
         _id: boardObj._id,
         title: boardObj.title,
         archived: boardObj.archived,
         createdAt: boardObj.createdAt,
         stars: boardObj.stars,
-        members: boardObj.members,
+        members: membersList,
       };
       AppUtil.debug(objToStore, null);
       this._realm.create(Constants.Board, objToStore, true);

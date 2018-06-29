@@ -15,7 +15,7 @@ const BoardSchema = {
     archived: { type: 'bool', default: false },
     createdAt: { type: 'date', optional: true },
     stars: { type: 'int', default: 0 },
-    members: { type: 'list', objectType: Constants.Members },
+    members: 'string',
   },
 };
 export default class Board {
