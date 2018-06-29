@@ -158,12 +158,24 @@ class RC {
     this.meteor.call('mgbdUpdateCards', cardID, cardObj, cb);
   }
 
+  mgbdCreateLists(listObj, cb){
+    this.meteor.call('mgbdCreateLists', listObj, cb);
+  }
+
+  mgbdUpdateLists(listID, listObj, cb){
+    this.meteor.call('mgbdUpdateLists',listID, listObj, cb);
+  }
+
+  mgbdUpdateCheckLists(checklistID, checklistObj, cb){
+    this.meteor.call('mgbdUpdateCheckLists',checklistID, checklistObj, cb);
+  }
+
   mgbdCreateCardComments(boardID, cardID, cardComments, cb) {
     this.meteor.call('mgbdCreateCardComments', boardID, cardID, cardComments, cb);
   }
 
-  mgbdUpdateChecklistItems(checklistID, title, isFinished, cb) {
-    this.meteor.call('mgbdUpdateChecklistItems', checklistID, title, isFinished, cb);
+  mgbdUpdateChecklistItems(checklistIDval, title, isFinished, cb) {
+    this.meteor.call('mgbdUpdateChecklistItems', checklistIDval, title, isFinished, cb);
   }
 
   mgbdGetBoardDetails(roomName, cb) {
@@ -190,6 +202,7 @@ class RC {
   changePassword(oldPassword, newPassword, cb) {
     this.meteor.accounts.changePassword(oldPassword, newPassword, cb);
   }
+  
 
   // use like createDirectMessage('ananth');
   createDirectMessage(userName, cb) {

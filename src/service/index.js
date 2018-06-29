@@ -196,9 +196,21 @@ class ChatService {
     this.provider.mgbdUpdateCards(cardID, cardObj, cb);
   }
 
+  mgbdCreateLists(listObj, cb){
+    this.provider.mgbdCreateLists(listObj, cb);
+  }
 
-  mgbdUpdateChecklistItems(checklistID, title, isFinished, cb) {
-    this.provider.mgbdUpdateChecklistItems(checklistID, title, isFinished, (error, res) => {
+  mgbdUpdateLists(listID, listObj, cb){
+    this.provider.mgbdUpdateLists(listID, listObj, cb);
+  }
+
+  mgbdUpdateCheckLists(checklistID, checklistObj, cb){
+    this.provider.mgbdUpdateCheckLists(checklistID, checklistObj, cb);
+  }
+
+
+  mgbdUpdateChecklistItems(checklistIDval, title, isFinished, cb) {
+    this.provider.mgbdUpdateChecklistItems(checklistIDval, title, isFinished, (error, res) => {
       cb(error, res);
     });
   }
