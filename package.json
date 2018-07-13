@@ -62,6 +62,7 @@
     "react-redux": "5.0.6",
     "realm": "2.0.12",
     "redux": "3.7.2",
+    "redux-immutablejs": "0.0.8",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.2.0",
     "tcomb-form-native": "0.6.11",
