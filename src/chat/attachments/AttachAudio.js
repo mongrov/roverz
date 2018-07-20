@@ -10,7 +10,7 @@ import {
   Platform,
 } from 'react-native';
 // import Button from 'react-native-button';
-
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import {
   Player,
   Recorder,
@@ -318,7 +318,10 @@ export default class AttachAudio extends React.Component {
     const recS = (recT % 60);
     return (
       <View
-        style={[styles.container, { backgroundColor: AppColors.brand().fourth }]}
+        style={[styles.container,
+          { backgroundColor: AppColors.brand().fourth,
+            paddingBottom: isIphoneX() ? 35 : null,
+          }]}
       >
         <View
           style={styles.subcontainer}

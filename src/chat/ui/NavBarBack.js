@@ -6,6 +6,7 @@ import {
 import { Icon } from 'react-native-elements';
 import { NavButton } from 'react-native-nav';
 import { Actions } from 'react-native-router-flux';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import PropTypes from 'prop-types';
 import { AppStyles, AppColors } from '../../theme/';
 
@@ -42,6 +43,8 @@ export default class NavBarBack extends React.Component {
         alignItems: 'center',
         backgroundColor: AppColors.brand().secondary,
         zIndex: 999,
+        height: isIphoneX() ? 90 : AppStyles.navbarHeight.height,
+        paddingTop: isIphoneX() ? 30 : AppStyles.navbarHeight.paddingTop,
       }]}
       >
         <NavButton

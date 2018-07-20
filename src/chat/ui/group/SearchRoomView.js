@@ -17,6 +17,7 @@ import {
   Keyboard,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import Loading from '../../../components/general/Loading';
 
 import Network from '../../../network';
@@ -136,7 +137,10 @@ export default class SearchRoomView extends Component {
       <ScrollView
         automaticallyAdjustContentInsets={false}
         keyboardShouldPersistTaps={'always'}
-        style={[AppStyles.container, { paddingTop: AppSizes.navbarHeight }]}
+        style={[AppStyles.container, {
+          paddingTop: AppSizes.navbarHeight,
+          marginTop: isIphoneX() ? 26 : null,
+        }]}
       >
         <StatusBar barStyle="light-content" />
         <View
