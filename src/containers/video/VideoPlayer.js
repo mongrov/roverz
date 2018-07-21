@@ -11,6 +11,7 @@ import { Actions } from 'react-native-router-flux';
 import { Icon } from 'react-native-elements';
 import Video from 'react-native-video-player';
 import PropTypes from 'prop-types';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import { AppColors } from '../../theme';
 
 // const VIMEO_ID = '179859217'; // 179859217
@@ -186,7 +187,7 @@ export default class VideoPlayer extends Component {
         style={styles.container}
       >
         <TouchableOpacity
-          style={[styles.backButton]}
+          style={[styles.backButton, { top: isIphoneX() ? 40 : 20 }]}
           onPress={Actions.pop}
         >
           <Icon

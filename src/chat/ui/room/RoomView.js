@@ -800,7 +800,6 @@ class ChatRoomView extends React.Component {
         height: 44,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: isIphoneX() ? 30 : null,
       }}
       onPress={() => {
         Keyboard.dismiss();
@@ -912,7 +911,7 @@ class ChatRoomView extends React.Component {
           flex: 1,
           flexDirection: 'row',
           alignItems: 'flex-end',
-          marginBottom: isIphoneX() ? 30 : null,
+          // marginBottom: isIphoneX() ? 30 : null,
         }}
       >
         <Composer
@@ -1139,7 +1138,7 @@ class ChatRoomView extends React.Component {
       <View
         style={[AppStyles.container, styles.container, {
           marginTop: AppSizes.navbarHeight,
-          paddingTop: isIphoneX() ? 26 : null,
+          marginBottom: isIphoneX() ? 30 : null,
         }]}
         testID={'chatroom-display'}
       >

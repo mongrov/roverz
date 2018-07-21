@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements';
 import Camera from 'react-native-camera';
 import { Actions } from 'react-native-router-flux';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 // import ImagePicker from 'react-native-image-crop-picker';
 import { AppColors } from '../../theme';
 
@@ -433,7 +434,7 @@ export default class CameraActions extends React.Component {
         <TouchableOpacity
           style={[styles.closeButton, {
             position: 'absolute',
-            top: 20,
+            top: isIphoneX() ? 40 : 20,
             left: 20,
           }]}
           onPress={() => {
