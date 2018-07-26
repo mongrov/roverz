@@ -130,6 +130,66 @@ class RC {
     return this.meteor.loggedInUser;
   }
 
+  mgbdGetChecklistItems(cardID, cb) {
+    this.meteor.call('mgbdGetChecklistItems', cardID, cb);
+  }
+
+  mgbdGetChecklists(cardID, cb) {
+    this.meteor.call('mgbdGetChecklists', cardID, cb);
+  }
+
+  mgbdGetCardComments(cardID, cb) {
+    this.meteor.call('mgbdGetCardComments', cardID, cb);
+  }
+
+  mgbdCreateCards(cardObj, cb) {
+    this.meteor.call('mgbdCreateCards', cardObj, cb);
+  }
+
+  mgbdCreateChecklists(checklistObj, cb) {
+    this.meteor.call('mgbdCreateChecklists', checklistObj, cb);
+  }
+
+  mgbdCreateChecklistItems(checklistItemsObj, cb) {
+    this.meteor.call('mgbdCreateChecklistItems', checklistItemsObj, cb);
+  }
+
+  mgbdUpdateCards(cardID, cardObj, cb) {
+    this.meteor.call('mgbdUpdateCards', cardID, cardObj, cb);
+  }
+
+  mgbdCreateLists(listObj, cb){
+    this.meteor.call('mgbdCreateLists', listObj, cb);
+  }
+
+  mgbdUpdateLists(listID, listObj, cb){
+    this.meteor.call('mgbdUpdateLists',listID, listObj, cb);
+  }
+
+  mgbdUpdateCheckLists(checklistID, checklistObj, cb){
+    this.meteor.call('mgbdUpdateCheckLists',checklistID, checklistObj, cb);
+  }
+
+  mgbdCreateCardComments(boardID, cardID, cardComments, cb) {
+    this.meteor.call('mgbdCreateCardComments', boardID, cardID, cardComments, cb);
+  }
+
+  mgbdUpdateChecklistItems(checklistIDval, title, isFinished, cb) {
+    this.meteor.call('mgbdUpdateChecklistItems', checklistIDval, title, isFinished, cb);
+  }
+
+  mgbdGetBoardDetails(roomName, cb) {
+    this.meteor.call('mgbdGetBoardDetails', roomName, cb);
+  }
+
+  mgbdGetList(roomName, cb) {
+    this.meteor.call('mgbdGetList', roomName, cb);
+  }
+
+  mgbdGetCardList(listID, cb) {
+    this.meteor.call('mgbdGetCardList', listID, cb);
+  }
+
   registerUser(email, pass, name, cb) {
     this.meteor.call('registerUser', { name, email, pass }, cb);
   }
@@ -142,6 +202,7 @@ class RC {
   changePassword(oldPassword, newPassword, cb) {
     this.meteor.accounts.changePassword(oldPassword, newPassword, cb);
   }
+  
 
   // use like createDirectMessage('ananth');
   createDirectMessage(userName, cb) {

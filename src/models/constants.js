@@ -10,6 +10,13 @@ export default {
   Message: 'Message',
   User: 'User',
   RemoteFile: 'RemoteFile',
+  Board: 'Board',
+  Members: 'Members',
+  Lists: 'Lists',
+  Card: 'Card',
+  CardComments: 'CardComments',
+  Checklists: 'Checklists',
+  Checklistitems: 'Checklistitems',
 
   // server
   Servers: 'app:servers',

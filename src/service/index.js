@@ -120,6 +120,120 @@ class ChatService {
     this.provider.logout();
   }
 
+  mgbdGetBoardDetails(roomName, cb) {
+    this.provider.mgbdGetBoardDetails(roomName, (error, res) => {
+      if (!error) {
+        this.db.boards.addBoard(res);
+        let bdId;
+        if (res && res._id) {
+          if (!bdId) {
+            bdId = res._id;
+          }
+          this.mgbdGetList(roomName, cb);
+        }
+        cb(error, bdId);
+      }
+    });
+  }
+
+  mgbdGetList(roomName, cb) {
+    this.provider.mgbdGetList(roomName, (error, res) => {
+      if (!error) {
+        this.db.bdlists.addAll(res);
+        let bdId;
+        res.forEach((bdList) => {
+          if (bdList && bdList._id) {
+            if (!bdId) {
+              bdId = bdList.boardId;
+            }
+            this.mgbdGetCardList(bdList._id, cb);
+          }
+        });
+      }
+    });
+  }
+
+  mgbdGetCardList(listID, cb) {
+    this.provider.mgbdGetCardList(listID, (error, res) => {
+      if (!error) {
+        this.db.cards.addAll(res);
+        res.forEach((cardList) => {
+          this.mgbdGetCardComments(cardList._id, cb);
+          this.mgbdGetChecklists(cardList._id, cb);
+        });
+      }
+    });
+  }
+
+  mgbdGetCardComments(cardID, cb) {
+    console.log('callback', cb);
+    this.provider.mgbdGetCardComments(cardID, (error, res) => {
+      if (!error) {
+        this.db.cardComments.addAll(res);
+      }
+    });
+  }
+
+  mgbdCreateCards(cardObj, cb) {
+    this.provider.mgbdCreateCards(cardObj, cb);
+  }
+
+  mgbdCreateChecklists(checklistObj, cb) {
+    this.provider.mgbdCreateChecklists(checklistObj, cb);
+  }
+
+  mgbdCreateChecklistItems(checklistItemsObj, cb) {
+    this.provider.mgbdCreateChecklistItems(checklistItemsObj, cb);
+  }
+
+
+  mgbdCreateCardComments(boardID, cardID, cardComments, cb) {
+    this.provider.mgbdCreateCardComments(boardID, cardID, cardComments, cb);
+  }
+
+
+  mgbdUpdateCards(cardID, cardObj, cb) {
+    this.provider.mgbdUpdateCards(cardID, cardObj, cb);
+  }
+
+  mgbdCreateLists(listObj, cb){
+    this.provider.mgbdCreateLists(listObj, cb);
+  }
+
+  mgbdUpdateLists(listID, listObj, cb){
+    this.provider.mgbdUpdateLists(listID, listObj, cb);
+  }
+
+  mgbdUpdateCheckLists(checklistID, checklistObj, cb){
+    this.provider.mgbdUpdateCheckLists(checklistID, checklistObj, cb);
+  }
+
+
+  mgbdUpdateChecklistItems(checklistIDval, title, isFinished, cb) {
+    this.provider.mgbdUpdateChecklistItems(checklistIDval, title, isFinished, (error, res) => {
+      cb(error, res);
+    });
+  }
+
+  mgbdGetChecklists(cardID, cb) {
+    this.provider.mgbdGetChecklists(cardID, (error, res) => {
+      if (!error) {
+        this.db.bdchecklist.addAll(res);
+        res.forEach((checkList) => {
+          this.mgbdGetChecklistItems(checkList._id, cb);
+        });
+      }
+    });
+  }
+
+  mgbdGetChecklistItems(checklistID, cb) {
+    console.log('callback', cb);
+    this.provider.mgbdGetChecklistItems(checklistID, (error, res) => {
+      if (!error) {
+        this.db.bdchecklistitems.addAll(res);
+      }
+    });
+  }
   // ---- init section over, service methods follow ----
 
   // return available channels/groups to display

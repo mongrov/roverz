@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import {
   Icon,
 } from 'react-native-elements';
@@ -15,7 +15,7 @@ import {
 import t from '../../i18n/';
 import { Text } from '../../components/ui/';
 import MemberDetailView from '../../chat/members/MemberDetailView';
-import NavBarBack from '../../chat/ui/NavBarBack';
+// import NavBarBack from '../../chat/ui/NavBarBack';
 import Network from '../../network';
 import { AppColors } from '../../theme/';
 import Application from '../../constants/config';
@@ -90,7 +90,7 @@ class ProfileView extends Component {
   render() {
     return (
       <View style={[styles.container]}>
-        <NavBarBack />
+        {/* <NavBarBack /> */}
         <MemberDetailView memberId={Application.userId} avHeight={300} />
         <View
           style={{ backgroundColor: AppColors.brand().primary }}
@@ -137,7 +137,7 @@ class ProfileView extends Component {
                 { cancelable: false },
               );
             }}
-            style={[styles.logout]}
+            style={[styles.logout, { paddingBottom: isIphoneX() ? 50 : null }]}
           >
             <Icon
               name={'logout-variant'}

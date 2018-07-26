@@ -16,6 +16,7 @@ import {
   Platform,
   AppState,
 } from 'react-native';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import { Icon } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import emoji from 'node-emoji';
@@ -570,6 +571,7 @@ class ChatRoomView extends React.Component {
             borderRadius: 5,
             padding: 5,
             backgroundColor: AppColors.brand().fourth,
+            paddingBottom: isIphoneX() ? 35 : null,
           }}
         >
           <View
@@ -909,6 +911,7 @@ class ChatRoomView extends React.Component {
           flex: 1,
           flexDirection: 'row',
           alignItems: 'flex-end',
+          // marginBottom: isIphoneX() ? 30 : null,
         }}
       >
         <Composer
@@ -1010,9 +1013,6 @@ class ChatRoomView extends React.Component {
           // **** start base
           messages={this.state.messages}
           text={this.state.text}
-          textInputProps={{
-            autoCorrect: false,
-          }}
           onSend={this.onSend}
           user={{
             _id: Application.userId,
@@ -1075,7 +1075,6 @@ class ChatRoomView extends React.Component {
         // **** start base
         messages={this.state.messages}
         text={this.state.text}
-        onInputTextChanged={text => this.setCustomText(text)}
         onSend={this.onSend}
         user={{
           _id: Application.userId,
@@ -1139,6 +1138,7 @@ class ChatRoomView extends React.Component {
       <View
         style={[AppStyles.container, styles.container, {
           marginTop: AppSizes.navbarHeight,
+          marginBottom: isIphoneX() ? 30 : null,
         }]}
         testID={'chatroom-display'}
       >

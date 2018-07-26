@@ -28,6 +28,7 @@ import { MarkdownView } from 'react-native-markdown-view';
 import { CachedImage } from 'react-native-img-cache';
 import UserAvatar from 'react-native-user-avatar';
 import emoji from 'node-emoji';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import AppUtil from '../../../lib/util';
 
 import Network from '../../../network';
@@ -467,6 +468,8 @@ export default class ReplyMessageView extends React.Component {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: AppColors.brand().secondary,
+        height: isIphoneX() ? 90 : AppStyles.navbarHeight.height,
+        paddingTop: isIphoneX() ? 30 : AppStyles.navbarHeight.paddingTop,
       }]}
       >
         <NavButton
@@ -705,7 +708,7 @@ export default class ReplyMessageView extends React.Component {
 
     return (
       <View
-        style={styles.renderContainer}
+        style={[styles.renderContainer, { paddingBottom: isIphoneX() ? 30 : null }]}
       >
         {this.renderNav()}
         <StatusBar barStyle="light-content" />

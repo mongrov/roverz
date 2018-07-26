@@ -1,11 +1,11 @@
 /**
  * Combine All Reducers
  */
-
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux-immutablejs';
 
 // Our custom reducers
 // We need to import each one here and add them to the combiner at the bottom
+import { reducer as form } from 'redux-form/immutable';
 import router from './router/reducer';
 import sideMenu from './sidemenu/reducer';
 import user from './user/reducer';
@@ -15,6 +15,7 @@ const appReducer = combineReducers({
   router,
   sideMenu,
   user,
+  form,
 });
 
 // Setup root reducer

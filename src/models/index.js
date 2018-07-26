@@ -15,6 +15,13 @@ import GroupManager from './GroupManager';
 import UserManager from './UserManager';
 import RemoteFileManager from './RemoteFileManager';
 
+import BoardManager from './board/BoardManager';
+import ListsManager from './board/ListsManager';
+import CardManager from './board/CardManager';
+import CardCommentsManager from './board/CardCommentsManager';
+import ChecklistsManager from './board/ChecklistsManager';
+import ChecklistitemsManager from './board/ChecklistitemsManager';
+
 /*
 * Todos
 *  - need to use realm to handle user and server
@@ -50,8 +57,37 @@ class Database {
     return Database._rf;
   }
 
+  // refer to boards for methods that can be accessed
+  get boards() {
+    return Database._board;
+  }
+
+  // refer to board lists for methods that can be accessed
+  get bdlists() {
+    return Database._dblists;
+  }
+
+  // refer to cards for methods that can be accessed
+  get cards() {
+    return Database._card;
+  }
+
+    // refer to cards for methods that can be accessed
+  get cardComments() {
+    return Database._cardComments;
+  }
+
   get userId() {
     return Database._userId;
+  }
+
+  // refer to board lists for methods that can be accessed
+  get bdchecklist() {
+    return Database._bdchecklist;
+  }
+  
+  get bdchecklistitems() {
+    return Database._bdchecklistitems;
   }
 
   // init variables
@@ -60,6 +96,12 @@ class Database {
     Database._gm = new GroupManager(realm);
     Database._um = new UserManager(realm);
     Database._rf = new RemoteFileManager(realm);
+    Database._board = new BoardManager(realm);
+    Database._card = new CardManager(realm);
+    Database._dblists = new ListsManager(realm);
+    Database._cardComments = new CardCommentsManager(realm);
+    Database._bdchecklist = new ChecklistsManager(realm);
+    Database._bdchecklistitems = new ChecklistitemsManager(realm);
   }
 
   // switch realm database

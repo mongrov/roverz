@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import Network from '../../network';
 import { AppStyles, AppColors } from '../../theme/';
 import ModuleConfig from '../../constants/config';
@@ -119,6 +120,8 @@ class ListViewNav extends React.Component {
     return (
       <View style={[AppStyles.navbar, AppStyles.navbarHeight, styles.container, {
         backgroundColor: AppColors.brand().secondary,
+        height: isIphoneX() ? 90 : AppStyles.navbarHeight.height,
+        paddingTop: isIphoneX() ? 30 : AppStyles.navbarHeight.paddingTop,
       }]}
       >
         <View style={[styles.widthView]} />

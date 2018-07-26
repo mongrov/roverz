@@ -20,7 +20,7 @@ if (!Application.containers.find(item => item.key === 'aboutView')) {
   // lets init reusable containers
   // key, title, subTitle, component, nav, tab, navBar
   Application.addContainer('aboutView', 'About', '', AboutView, true, true, NavBarBack);
-  Application.addContainer('profileView', 'Profile', '', ProfileView, true, true, null);
+  Application.addContainer('profileView', 'Profile', '', ProfileView, true, true, NavBarBack);
   Application.addContainer('changePassword', 'Change Password', '', ChangePassword, true, true, null);
   Application.addContainer('imageGallery', 'Image Preview', '', ImageGallery, true, false, NavBackAbs);
   Application.addContainer('captureImagePreview', 'Image Preview', '', ImagePreview, true, true, NavBackAbs);

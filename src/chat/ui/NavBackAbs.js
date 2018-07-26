@@ -6,6 +6,7 @@ import {
 import { Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import { AppColors } from '../../theme/';
 
 const styles = StyleSheet.create({
@@ -41,7 +42,7 @@ export default class NavBackAbs extends React.Component {
   render() {
     return (
       <TouchableOpacity
-        style={styles.container}
+        style={[styles.container, { top: isIphoneX() ? 40 : 20 }]}
         onPress={Actions.pop}
       >
         <Icon

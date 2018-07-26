@@ -16,6 +16,7 @@ import {
 import { ListView } from 'realm/react-native';
 import moment from 'moment';
 import { Badge, Icon } from 'react-native-elements';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import { List, ListItem } from '../../components/ui';
 import Loading from '../../components/general/Loading';
 
@@ -242,7 +243,7 @@ class GroupList extends Component {
       return (<Loading />);
     }
     return (
-      <View style={[styles.mainContainer]} testID={'group-view'} >
+      <View style={[styles.mainContainer, { marginTop: isIphoneX() ? 26 : null }]} testID={'group-view'} >
         <TouchableOpacity
           style={[styles.plusButton, { backgroundColor: AppColors.brand().third }]}
           onPress={Actions.searchRoom}

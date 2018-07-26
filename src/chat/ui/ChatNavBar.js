@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Keyboard,
 } from 'react-native';
-
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import PropTypes from 'prop-types';
 import { NavButton } from 'react-native-nav';
 import { Actions } from 'react-native-router-flux';
@@ -258,6 +258,8 @@ class ChatNavBar extends React.Component {
       <View
         style={[AppStyles.navbar, AppStyles.navbarHeight, styles.navContainer, {
           backgroundColor: AppColors.brand().secondary,
+          height: isIphoneX() ? 90 : AppStyles.navbarHeight.height,
+          paddingTop: isIphoneX() ? 30 : AppStyles.navbarHeight.paddingTop,
         },
         ]}
       >

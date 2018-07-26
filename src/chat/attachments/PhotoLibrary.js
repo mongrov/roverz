@@ -13,6 +13,7 @@ import {
 import PropTypes from 'prop-types';
 import { Icon } from 'react-native-elements';
 import CameraRollPicker from 'react-native-camera-roll-picker';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 import { Actions } from 'react-native-router-flux';
 import NavBar, {
   NavButton,
@@ -167,6 +168,7 @@ export default class PhotoLibrary extends React.Component {
         },
         navBar: {
           backgroundColor: '#FFF',
+          marginTop: isIphoneX() ? 25 : null,
         },
       }}
       >
@@ -257,7 +259,7 @@ export default class PhotoLibrary extends React.Component {
         <TouchableOpacity
           style={[styles.captureButton, {
             position: 'absolute',
-            top: 20,
+            top: isIphoneX() ? 40 : 20,
             left: 20,
           }]}
           onPress={() => {
